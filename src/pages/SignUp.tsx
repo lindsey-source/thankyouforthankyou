@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Heart, ArrowLeft, Loader2 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/lib/supabase";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -43,23 +44,36 @@ const SignUp = () => {
     setIsLoading(true);
     
     try {
-      // Simulate account creation
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // Store user data in localStorage for now
-      localStorage.setItem('user', JSON.stringify({
-        name: formData.name,
+      // Create user with Supabase Auth
+      const { data, error } = await supabase.auth.signUp({
         email: formData.email,
-        organization: formData.organization
-      }));
-      
-      toast({
-        title: "Account Created Successfully!",
-        description: "Welcome to Thank you for Thank you. Let's start spreading gratitude!",
+        password: formData.password,
+        options: {
+          data: {
+            full_name: formData.name,
+            organization: formData.organization
+          }
+        }
       });
-      
-      // Navigate to dashboard
-      navigate('/dashboard');
+
+      if (error) {
+        toast({
+          title: "Sign Up Failed",
+          description: error.message,
+          variant: "destructive",
+        });
+        return;
+      }
+
+      if (data.user) {
+        toast({
+          title: "Account Created Successfully!",
+          description: "Welcome to Thank you for Thank you. Please check your email to verify your account.",
+        });
+        
+        // Navigate to dashboard
+        navigate('/dashboard');
+      }
     } catch (error) {
       toast({
         title: "Something went wrong",
