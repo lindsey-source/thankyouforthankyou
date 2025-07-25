@@ -38,7 +38,7 @@ const SignUp = () => {
           </Link>
           <div className="flex items-center justify-center gap-2 mb-4">
             <Heart className="h-8 w-8 text-white" />
-            <span className="text-3xl font-bold text-white">GiveThanks</span>
+            <span className="text-3xl font-bold text-white">Thank you for Thank you</span>
           </div>
           <h1 className="text-2xl font-bold text-white mb-2">Create Your Account</h1>
           <p className="text-white/80">Join thousands spreading gratitude and giving back</p>

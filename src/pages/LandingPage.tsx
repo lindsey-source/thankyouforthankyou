@@ -4,6 +4,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Heart, Users, Gift, TrendingUp, ArrowRight, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import heroImage from "@/assets/hero-image.jpg";
+import starryNight from "@/assets/starry-night.jpg";
+import oceanWave from "@/assets/ocean-wave.jpg";
+import pineTree from "@/assets/pine-trees.jpg";
+import thankYouCard from "@/assets/thank-you-card.jpg";
 
 const LandingPage = () => {
   return (
@@ -15,7 +19,7 @@ const LandingPage = () => {
             <div className="flex items-center gap-2">
               <Heart className="h-8 w-8 text-primary" />
               <span className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-                GiveThanks
+                Thank you for Thank you
               </span>
             </div>
             <div className="flex items-center gap-4">
@@ -38,12 +42,12 @@ const LandingPage = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-left">
               <h1 className="text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-                Send Thanks,
+                Express Gratitude,
                 <br />
-                <span className="text-yellow-200">Spread Good</span>
+                <span className="text-blue-200">Make a Difference</span>
               </h1>
               <p className="text-xl text-white/90 mb-8 leading-relaxed">
-                GiveThanks helps you send personalized thank-you eCards in bulk – and donate to charity with each one. 
+                Thank you for Thank you helps you send personalized thank-you eCards in bulk – and donate to charity with each one. 
                 Upload your contacts, write a note, and we do the rest. Every 'thank you' includes a $5 donation to a charity, 
                 making your gratitude twice as meaningful.
               </p>
@@ -58,10 +62,22 @@ const LandingPage = () => {
               </div>
             </div>
             <div className="relative">
+              <div className="grid grid-cols-2 gap-4 mb-4">
+                <img 
+                  src={oceanWave} 
+                  alt="Peaceful ocean wave" 
+                  className="w-full h-48 object-cover rounded-xl shadow-glow"
+                />
+                <img 
+                  src={starryNight} 
+                  alt="Beautiful starry night sky" 
+                  className="w-full h-48 object-cover rounded-xl shadow-glow"
+                />
+              </div>
               <img 
-                src={heroImage} 
-                alt="People sharing gratitude and giving to charity" 
-                className="w-full h-auto rounded-2xl shadow-glow"
+                src={thankYouCard} 
+                alt="Beautiful thank you card design" 
+                className="w-full h-64 object-cover rounded-2xl shadow-glow"
               />
             </div>
           </div>
@@ -122,7 +138,7 @@ const LandingPage = () => {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-foreground mb-4">Why Choose GiveThanks?</h2>
+            <h2 className="text-4xl font-bold text-foreground mb-4">Why Choose Thank you for Thank you?</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               The perfect blend of convenience, personalization, and positive impact
             </p>
@@ -175,6 +191,60 @@ const LandingPage = () => {
         </div>
       </section>
 
+      {/* Beautiful Gallery Section */}
+      <section className="py-20 bg-muted/30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-foreground mb-4">Inspiration Gallery</h2>
+            <p className="text-xl text-muted-foreground">Beautiful moments that inspire gratitude</p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            <Card className="overflow-hidden hover:shadow-soft transition-all duration-300 group">
+              <div className="relative">
+                <img 
+                  src={pineTree} 
+                  alt="Peaceful pine forest" 
+                  className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                <div className="absolute bottom-4 left-4 text-white">
+                  <h3 className="text-xl font-semibold">Nature's Gratitude</h3>
+                  <p className="text-white/80">Find peace in simple moments</p>
+                </div>
+              </div>
+            </Card>
+            <Card className="overflow-hidden hover:shadow-soft transition-all duration-300 group">
+              <div className="relative">
+                <img 
+                  src={oceanWave} 
+                  alt="Ocean wave at sunset" 
+                  className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                <div className="absolute bottom-4 left-4 text-white">
+                  <h3 className="text-xl font-semibold">Endless Possibilities</h3>
+                  <p className="text-white/80">Every wave brings new hope</p>
+                </div>
+              </div>
+            </Card>
+            <Card className="overflow-hidden hover:shadow-soft transition-all duration-300 group">
+              <div className="relative">
+                <img 
+                  src={starryNight} 
+                  alt="Starry night sky" 
+                  className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                <div className="absolute bottom-4 left-4 text-white">
+                  <h3 className="text-xl font-semibold">Infinite Wonder</h3>
+                  <p className="text-white/80">Gratitude lights up the darkness</p>
+                </div>
+              </div>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-20 bg-gradient-primary text-white">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
@@ -216,7 +286,7 @@ const LandingPage = () => {
           <div className="text-center">
             <div className="flex items-center justify-center gap-2 mb-4">
               <Heart className="h-6 w-6 text-primary" />
-              <span className="text-xl font-bold">GiveThanks</span>
+              <span className="text-xl font-bold">Thank you for Thank you</span>
             </div>
             <p className="text-muted-foreground mb-6">
               Making every "thank you" a force for good

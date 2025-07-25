@@ -49,7 +49,7 @@ const Dashboard = () => {
             <div className="flex items-center gap-2">
               <Heart className="h-8 w-8 text-primary" />
               <span className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-                GiveThanks
+                Thank you for Thank you
               </span>
             </div>
             <div className="flex items-center gap-4">
