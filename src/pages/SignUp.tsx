@@ -3,8 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Heart, ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Heart, ArrowLeft, Loader2 } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -13,11 +14,61 @@ const SignUp = () => {
     password: "",
     organization: ""
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement sign up logic
-    console.log("Sign up:", formData);
+    
+    // Basic validation
+    if (!formData.name.trim() || !formData.email.trim() || !formData.password.trim()) {
+      toast({
+        title: "Missing Information",
+        description: "Please fill in all required fields.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (formData.password.length < 6) {
+      toast({
+        title: "Password Too Short",
+        description: "Password must be at least 6 characters long.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsLoading(true);
+    
+    try {
+      // Simulate account creation
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // Store user data in localStorage for now
+      localStorage.setItem('user', JSON.stringify({
+        name: formData.name,
+        email: formData.email,
+        organization: formData.organization
+      }));
+      
+      toast({
+        title: "Account Created Successfully!",
+        description: "Welcome to Thank you for Thank you. Let's start spreading gratitude!",
+      });
+      
+      // Navigate to dashboard
+      navigate('/dashboard');
+    } catch (error) {
+      toast({
+        title: "Something went wrong",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -112,8 +163,15 @@ const SignUp = () => {
                 </p>
               </div>
 
-              <Button type="submit" variant="hero" size="lg" className="w-full">
-                Create Account & Start Thanking
+              <Button type="submit" variant="hero" size="lg" className="w-full" disabled={isLoading}>
+                {isLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Creating Account...
+                  </>
+                ) : (
+                  "Create Account & Start Thanking"
+                )}
               </Button>
             </form>
 
