@@ -42,15 +42,18 @@ const LandingPage = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-left">
               <h1 className="text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-                Express Gratitude,
+                Thank Differently.
                 <br />
-                <span className="text-blue-200">Make a Difference</span>
+                <span className="text-blue-200">Give Meaningfully.</span>
               </h1>
               <p className="text-xl text-white/90 mb-8 leading-relaxed">
-                Thank you for Thank you helps you send personalized thank-you eCards in bulk – and donate to charity with each one. 
-                Upload your contacts, write a note, and we do the rest. Every 'thank you' includes a $5 donation to a charity, 
-                making your gratitude twice as meaningful.
+                Send personalized thank-you e-cards at scale while supporting the causes you care about. 
+                Each beautifully designed card includes a charitable donation, transforming gratitude into impact. 
+                Perfect for weddings, celebrations, and any moment worth remembering.
               </p>
+              <div className="flex items-center gap-3 mb-8 text-white/80">
+                <span className="text-lg font-medium">Save time • Send love • Give back</span>
+              </div>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Button variant="hero" size="xl" className="bg-white text-primary hover:bg-white/90">
                   Get Started for Free
@@ -138,43 +141,43 @@ const LandingPage = () => {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-foreground mb-4">Why Choose Thank you for Thank you?</h2>
+            <h2 className="text-4xl font-bold text-foreground mb-4">Thoughtful. Effortless. Impactful.</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              The perfect blend of convenience, personalization, and positive impact
+              Perfect for weddings, celebrations, and life's meaningful moments that deserve appreciation
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
-                title: "Effortless Bulk Sending",
-                description: "Save time by thanking dozens or hundreds at once. No more writing individual emails or cards by hand.",
-                icon: "⚡"
+                title: "Perfect for Life's Moments",
+                description: "Ideal for weddings, baby showers, birthdays, bar/bat mitzvahs, and any celebration worth remembering.",
+                icon: "✨"
               },
               {
-                title: "Personal & Customizable", 
-                description: "Each message greets the recipient by name. Use our thoughtful card designs or your own branding.",
+                title: "Artist-Designed Cards", 
+                description: "Choose from elegant designs created by talented artists, many partnered with the charities you support.",
                 icon: "🎨"
               },
               {
-                title: "Charitable Impact",
-                description: "Every card delivers not just gratitude, but a real donation to charity. It's a thank-you that pays it forward.",
+                title: "Redirect Savings to Good",
+                description: "Skip paper, printing, envelopes, and postage. Redirect those savings into meaningful charitable donations.",
                 icon: "💝"
               },
               {
-                title: "Track Your Gratitude",
-                description: "Get feedback on who opened your card and which charities benefited. See your impact grow.",
+                title: "Recipient Choice",
+                description: "Let recipients choose their favorite charity from your curated list, making the gift even more personal.",
+                icon: "🎯"
+              },
+              {
+                title: "Time & Impact Tracking",
+                description: "See your gratitude's reach with delivery confirmations, charity selections, and cumulative impact reports.",
                 icon: "📊"
               },
               {
-                title: "Free & No-Fuss",
-                description: "The platform is free to use – you only pay the donations. No ads, no spam, just meaningful connections.",
-                icon: "🆓"
-              },
-              {
-                title: "Secure & Trusted",
-                description: "Your data is protected, payments are secure, and we never spam your contacts or sell their information.",
-                icon: "🔒"
+                title: "Premium Experience",
+                description: "No ads, no spam, just beautiful digital-with-soul experiences that recipients will treasure.",
+                icon: "🌟"
               }
             ].map((feature, index) => (
               <Card key={index} className="bg-card hover:shadow-soft transition-all duration-300 group">
@@ -245,36 +248,75 @@ const LandingPage = () => {
         </div>
       </section>
 
+      {/* Social Proof Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-foreground mb-4">Loved by Hosts Everywhere</h2>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            <Card className="bg-muted/20 border-none">
+              <CardContent className="p-8">
+                <div className="text-4xl mb-4">💍</div>
+                <p className="text-muted-foreground mb-6 italic">
+                  "After our wedding, I had 200+ thank-you notes to send. This platform saved me weeks of work and donated $1,000 to our favorite charity. Our guests loved the personal touch!"
+                </p>
+                <div className="font-semibold">— Sarah & Mike, Newlyweds</div>
+              </CardContent>
+            </Card>
+            <Card className="bg-muted/20 border-none">
+              <CardContent className="p-8">
+                <div className="text-4xl mb-4">🍼</div>
+                <p className="text-muted-foreground mb-6 italic">
+                  "Perfect for baby shower thank-yous! Instead of buying cards and stamps, I redirected that money to children's charities. The e-cards were beautiful and eco-friendly."
+                </p>
+                <div className="font-semibold">— Jennifer, New Mom</div>
+              </CardContent>
+            </Card>
+            <Card className="bg-muted/20 border-none">
+              <CardContent className="p-8">
+                <div className="text-4xl mb-4">🎉</div>
+                <p className="text-muted-foreground mb-6 italic">
+                  "Used this for my son's bar mitzvah. Guests could choose which charity to support - it sparked amazing conversations about giving back. Truly meaningful."
+                </p>
+                <div className="font-semibold">— David, Proud Father</div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-20 bg-gradient-primary text-white">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold mb-6">Ready to Spread Gratitude?</h2>
+          <h2 className="text-4xl font-bold mb-6">Start Your Gratitude Campaign</h2>
           <p className="text-xl mb-8 text-white/90">
-            Join thousands who are making gratitude meaningful. Start your first thank-you campaign today.
+            Transform your thank-you process into something beautiful, meaningful, and impactful. 
+            Your first 3 cards are on us.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/signup">
               <Button variant="hero" size="xl" className="bg-white text-primary hover:bg-white/90">
-                Start Your First Campaign
+                Get Started Free
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
             <Button variant="outline" size="xl" className="border-white text-white hover:bg-white/10">
-              Try Your First Thank-You On Us
+              See Sample Cards
             </Button>
           </div>
           <div className="flex items-center justify-center gap-6 mt-8 text-white/80">
             <div className="flex items-center gap-2">
               <CheckCircle className="h-5 w-5" />
-              <span>Free to start</span>
+              <span>3 free cards to start</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle className="h-5 w-5" />
-              <span>No hidden fees</span>
+              <span>No subscription required</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle className="h-5 w-5" />
-              <span>Instant impact</span>
+              <span>Tax receipts provided</span>
             </div>
           </div>
         </div>
