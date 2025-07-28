@@ -47,12 +47,24 @@ const LandingPage = () => {
                 <span className="text-blue-200">Give Meaningfully.</span>
               </h1>
               <p className="text-xl text-white/90 mb-8 leading-relaxed">
-                Send personalized thank-you e-cards at scale while supporting the causes you care about. 
-                Each beautifully designed card includes a charitable donation, transforming gratitude into impact. 
+                Send personalized thank-you e-cards at scale while turning traditional card costs into charitable impact. 
+                Instead of spending on paper, printing, envelopes, and postage, that same money goes directly to charity. 
                 Perfect for weddings, celebrations, and any moment worth remembering.
               </p>
-              <div className="flex items-center gap-3 mb-8 text-white/80">
-                <span className="text-lg font-medium">Save time • Send love • Give back</span>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 mb-8 border border-white/20">
+                <div className="text-white/90 text-center">
+                  <div className="text-sm font-medium mb-2">Traditional Card Costs → Charitable Impact</div>
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <span className="line-through opacity-70">Paper & Printing</span>
+                      <span className="block text-green-200 font-medium">→ Charity Donation</span>
+                    </div>
+                    <div>
+                      <span className="line-through opacity-70">Stamps & Postage</span>
+                      <span className="block text-green-200 font-medium">→ Charity Donation</span>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Button variant="hero" size="xl" className="bg-white text-primary hover:bg-white/90">
@@ -109,11 +121,11 @@ const LandingPage = () => {
                 title: "Write a Heartfelt Message", 
                 description: "Compose one message for all or customize each one. Pick a beautiful e-card design"
               },
-              {
-                icon: <Gift className="h-8 w-8" />,
-                title: "Choose the Giving",
-                description: "Decide on a charity or let recipients choose. You donate $5 per person securely"
-              },
+               {
+                 icon: <Gift className="h-8 w-8" />,
+                 title: "Redirect Card Costs",
+                 description: "Instead of paying for paper, printing, envelopes, and stamps, that same money becomes charitable donations"
+               },
               {
                 icon: <TrendingUp className="h-8 w-8" />,
                 title: "Send & Make Impact",
