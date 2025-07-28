@@ -19,7 +19,7 @@ const LandingPage = () => {
             <div className="flex items-center gap-2">
               <Heart className="h-8 w-8 text-primary" />
               <span className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-                Thank you for Thank you
+                Thank You for Thank You
               </span>
             </div>
             <div className="flex items-center gap-4">
@@ -340,7 +340,7 @@ const LandingPage = () => {
           <div className="text-center">
             <div className="flex items-center justify-center gap-2 mb-4">
               <Heart className="h-6 w-6 text-primary" />
-              <span className="text-xl font-bold">Thank you for Thank you</span>
+              <span className="text-xl font-bold">Thank You for Thank You</span>
             </div>
             <p className="text-muted-foreground mb-6">
               Making every "thank you" a force for good
