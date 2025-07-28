@@ -4,10 +4,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Heart, Users, Gift, TrendingUp, ArrowRight, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import heroImage from "@/assets/hero-image.jpg";
-import starryNight from "@/assets/starry-night.jpg";
-import oceanWave from "@/assets/ocean-wave.jpg";
-import pineTree from "@/assets/pine-trees.jpg";
-import thankYouCard from "@/assets/thank-you-card.jpg";
+import cardFloralPink from "@/assets/card-floral-pink.jpg";
+import cardGoldModern from "@/assets/card-gold-modern.jpg";
+import cardBotanicalRustic from "@/assets/card-botanical-rustic.jpg";
+import cardNavyStars from "@/assets/card-navy-stars.jpg";
+import cardCoralWatercolor from "@/assets/card-coral-watercolor.jpg";
 
 const LandingPage = () => {
   return (
@@ -81,19 +82,19 @@ const LandingPage = () => {
             <div className="relative">
               <div className="grid grid-cols-2 gap-4 mb-4">
                 <img 
-                  src={oceanWave} 
-                  alt="Peaceful ocean wave" 
+                  src={cardFloralPink} 
+                  alt="Elegant floral thank you card design" 
                   className="w-full h-48 object-cover rounded-xl shadow-glow"
                 />
                 <img 
-                  src={starryNight} 
-                  alt="Beautiful starry night sky" 
+                  src={cardGoldModern} 
+                  alt="Modern gold foil thank you card" 
                   className="w-full h-48 object-cover rounded-xl shadow-glow"
                 />
               </div>
               <img 
-                src={thankYouCard} 
-                alt="Beautiful thank you card design" 
+                src={cardBotanicalRustic} 
+                alt="Rustic botanical thank you card design" 
                 className="w-full h-64 object-cover rounded-2xl shadow-glow"
               />
             </div>
@@ -212,49 +213,49 @@ const LandingPage = () => {
       <section className="py-20 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-foreground mb-4">Inspiration Gallery</h2>
-            <p className="text-xl text-muted-foreground">Beautiful moments that inspire gratitude</p>
+            <h2 className="text-4xl font-bold text-foreground mb-4">Card Design Gallery</h2>
+            <p className="text-xl text-muted-foreground">Beautiful thank you cards that make an impact</p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             <Card className="overflow-hidden hover:shadow-soft transition-all duration-300 group">
               <div className="relative">
                 <img 
-                  src={pineTree} 
-                  alt="Peaceful pine forest" 
+                  src={cardNavyStars} 
+                  alt="Elegant navy starry thank you card" 
                   className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                 <div className="absolute bottom-4 left-4 text-white">
-                  <h3 className="text-xl font-semibold">Nature's Gratitude</h3>
-                  <p className="text-white/80">Find peace in simple moments</p>
+                  <h3 className="text-xl font-semibold">Elegant & Sophisticated</h3>
+                  <p className="text-white/80">Perfect for formal celebrations</p>
                 </div>
               </div>
             </Card>
             <Card className="overflow-hidden hover:shadow-soft transition-all duration-300 group">
               <div className="relative">
                 <img 
-                  src={oceanWave} 
-                  alt="Ocean wave at sunset" 
+                  src={cardCoralWatercolor} 
+                  alt="Vibrant coral watercolor thank you card" 
                   className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                 <div className="absolute bottom-4 left-4 text-white">
-                  <h3 className="text-xl font-semibold">Endless Possibilities</h3>
-                  <p className="text-white/80">Every wave brings new hope</p>
+                  <h3 className="text-xl font-semibold">Bright & Cheerful</h3>
+                  <p className="text-white/80">For joyful occasions</p>
                 </div>
               </div>
             </Card>
             <Card className="overflow-hidden hover:shadow-soft transition-all duration-300 group">
               <div className="relative">
                 <img 
-                  src={starryNight} 
-                  alt="Starry night sky" 
+                  src={cardFloralPink} 
+                  alt="Delicate floral thank you card" 
                   className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                 <div className="absolute bottom-4 left-4 text-white">
-                  <h3 className="text-xl font-semibold">Infinite Wonder</h3>
-                  <p className="text-white/80">Gratitude lights up the darkness</p>
+                  <h3 className="text-xl font-semibold">Soft & Romantic</h3>
+                  <p className="text-white/80">Ideal for weddings & baby showers</p>
                 </div>
               </div>
             </Card>
