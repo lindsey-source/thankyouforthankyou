@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import SendThanks from "./pages/SendThanks";
 import CardDesign from "./pages/CardDesign";
+import CSVManager from "./pages/CSVManager";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/send-thanks" element={<SendThanks />} />
           <Route path="/design-card" element={<CardDesign />} />
+          <Route path="/csv-upload" element={<CSVManager />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

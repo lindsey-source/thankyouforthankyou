@@ -4,9 +4,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Heart, ArrowLeft, Send, Loader2, Palette, Plus } from "lucide-react";
+import { Heart, ArrowLeft, Send, Loader2, Palette, Plus, Users } from "lucide-react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
+import { type GuestGiftData } from "@/lib/csvUtils";
 
 const SendThanks = () => {
   const [formData, setFormData] = useState({
@@ -18,11 +19,13 @@ const SendThanks = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [cardDesign, setCardDesign] = useState(null);
+  const [batchData, setBatchData] = useState<GuestGiftData[]>([]);
+  const [isBatchMode, setIsBatchMode] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Check if we received a card design from the card designer
+  // Check if we received data from other pages
   React.useEffect(() => {
     if (location.state?.cardDesign) {
       setCardDesign(location.state.cardDesign);
@@ -34,10 +37,21 @@ const SendThanks = () => {
         }));
       }
     }
+    
+    // Check if we received batch data from CSV upload
+    if (location.state?.batchData && location.state?.mode === 'batch') {
+      setBatchData(location.state.batchData);
+      setIsBatchMode(true);
+    }
   }, [location.state]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (isBatchMode) {
+      await handleBatchSubmit();
+      return;
+    }
     
     if (!formData.recipientName.trim() || !formData.recipientEmail.trim() || !formData.message.trim()) {
       toast({
@@ -72,6 +86,30 @@ const SendThanks = () => {
     }
   };
 
+  const handleBatchSubmit = async () => {
+    setIsLoading(true);
+    
+    try {
+      // Simulate batch sending
+      await new Promise(resolve => setTimeout(resolve, 3000));
+      
+      toast({
+        title: "Batch Campaign Sent!",
+        description: `Successfully sent ${batchData.length} thank-you cards with charitable donations.`,
+      });
+      
+      navigate('/dashboard');
+    } catch (error) {
+      toast({
+        title: "Batch send failed",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
@@ -92,8 +130,15 @@ const SendThanks = () => {
             <Heart className="h-8 w-8 text-white" />
             <span className="text-3xl font-bold text-white">Thank you for Thank you</span>
           </div>
-          <h1 className="text-2xl font-bold text-white mb-2">Send a Thank You</h1>
-          <p className="text-white/80">Express your gratitude and make a difference</p>
+          <h1 className="text-2xl font-bold text-white mb-2">
+            {isBatchMode ? 'Send Batch Thank You Campaign' : 'Send a Thank You'}
+          </h1>
+          <p className="text-white/80">
+            {isBatchMode 
+              ? `Ready to send ${batchData.length} personalized thank-you cards`
+              : 'Express your gratitude and make a difference'
+            }
+          </p>
         </div>
 
         {/* Send Thanks Form */}
@@ -104,7 +149,10 @@ const SendThanks = () => {
               Spread Gratitude
             </CardTitle>
             <CardDescription>
-              Send a heartfelt thank you message and optionally make a charitable donation
+              {isBatchMode 
+                ? 'Review and customize your batch thank-you campaign'
+                : 'Send a heartfelt thank you message and optionally make a charitable donation'
+              }
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -145,51 +193,98 @@ const SendThanks = () => {
                 </div>
               )}
             </div>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="recipientName">Recipient Name *</Label>
-                  <Input
-                    id="recipientName"
-                    name="recipientName"
-                    type="text"
-                    placeholder="Who are you thanking?"
-                    value={formData.recipientName}
-                    onChange={handleInputChange}
-                    required
-                    className="h-11"
-                  />
-                </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="recipientEmail">Recipient Email *</Label>
-                  <Input
-                    id="recipientEmail"
-                    name="recipientEmail"
-                    type="email"
-                    placeholder="their@email.com"
-                    value={formData.recipientEmail}
-                    onChange={handleInputChange}
-                    required
-                    className="h-11"
-                  />
+            {/* Batch Preview Section */}
+            {isBatchMode && (
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-lg font-semibold flex items-center gap-2">
+                      <Users className="h-5 w-5" />
+                      Batch Campaign Preview
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      {batchData.length} recipients ready to receive thank-you cards
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="bg-muted/50 rounded-lg p-4 max-h-48 overflow-y-auto">
+                  <div className="space-y-2">
+                    {batchData.slice(0, 5).map((guest, index) => (
+                      <div key={index} className="flex justify-between items-center text-sm">
+                        <span className="font-medium">{guest.guestName}</span>
+                        <span className="text-muted-foreground">{guest.emailAddress}</span>
+                      </div>
+                    ))}
+                    {batchData.length > 5 && (
+                      <div className="text-center text-sm text-muted-foreground py-2">
+                        ...and {batchData.length - 5} more recipients
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
+            )}
+
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {!isBatchMode && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="recipientName">Recipient Name *</Label>
+                    <Input
+                      id="recipientName"
+                      name="recipientName"
+                      type="text"
+                      placeholder="Who are you thanking?"
+                      value={formData.recipientName}
+                      onChange={handleInputChange}
+                      required
+                      className="h-11"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="recipientEmail">Recipient Email *</Label>
+                    <Input
+                      id="recipientEmail"
+                      name="recipientEmail"
+                      type="email"
+                      placeholder="their@email.com"
+                      value={formData.recipientEmail}
+                      onChange={handleInputChange}
+                      required
+                      className="h-11"
+                    />
+                  </div>
+                </div>
+              )}
 
               <div className="space-y-2">
-                <Label htmlFor="message">Your Thank You Message *</Label>
+                <Label htmlFor="message">
+                  {isBatchMode ? 'Global Thank You Message *' : 'Your Thank You Message *'}
+                </Label>
                 <Textarea
                   id="message"
                   name="message"
-                  placeholder={cardDesign ? "Your custom message from card design" : "Write your heartfelt thank you message here..."}
+                  placeholder={
+                    isBatchMode 
+                      ? "This message will be sent to all recipients (individual messages from CSV will be used if provided)"
+                      : cardDesign ? "Your custom message from card design" : "Write your heartfelt thank you message here..."
+                  }
                   value={formData.message}
                   onChange={handleInputChange}
                   required
                   className="min-h-[120px] resize-none"
                 />
-                {cardDesign && (
+                {cardDesign && !isBatchMode && (
                   <p className="text-xs text-muted-foreground">
                     💡 This message was imported from your card design. You can edit it here.
+                  </p>
+                )}
+                {isBatchMode && (
+                  <p className="text-xs text-muted-foreground">
+                    💡 Individual messages from your CSV will be used when available, otherwise this global message will be sent.
                   </p>
                 )}
               </div>
@@ -233,12 +328,15 @@ const SendThanks = () => {
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Sending Thank You...
+                    {isBatchMode ? 'Sending Batch Campaign...' : 'Sending Thank You...'}
                   </>
                 ) : (
                   <>
-                    <Send className="mr-2 h-4 w-4" />
-                    Send Thank You & Donation
+                    {isBatchMode ? <Users className="mr-2 h-4 w-4" /> : <Send className="mr-2 h-4 w-4" />}
+                    {isBatchMode 
+                      ? `Send ${batchData.length} Thank You Cards & Donations`
+                      : 'Send Thank You & Donation'
+                    }
                   </>
                 )}
               </Button>

@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Heart, Users, DollarSign, TrendingUp, Plus, BarChart3 } from "lucide-react";
+import { Heart, Users, DollarSign, TrendingUp, Plus, BarChart3, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Dashboard = () => {
@@ -191,10 +191,10 @@ const Dashboard = () => {
                     New Campaign
                   </Button>
                 </Link>
-                <Link to="/contacts">
+                <Link to="/csv-upload">
                   <Button variant="outline" className="w-full justify-start gap-3">
-                    <Users className="h-4 w-4" />
-                    Manage Contacts
+                    <FileText className="h-4 w-4" />
+                    Upload Guest List (CSV)
                   </Button>
                 </Link>
                 <Link to="/analytics">

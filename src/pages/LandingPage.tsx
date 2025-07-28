@@ -67,10 +67,12 @@ const LandingPage = () => {
                 </div>
               </div>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Button variant="hero" size="xl" className="bg-white text-primary hover:bg-white/90">
-                  Get Started for Free
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
+                <Link to="/signup">
+                  <Button variant="hero" size="xl" className="bg-white text-primary hover:bg-white/90">
+                    Get Started for Free
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </Link>
                 <Button variant="outline" size="xl" className="border-white text-white hover:bg-white/10">
                   See How It Works
                 </Button>
@@ -113,8 +115,8 @@ const LandingPage = () => {
             {[
               {
                 icon: <Users className="h-8 w-8" />,
-                title: "Upload Your Thanks List",
-                description: "Quickly import a list of people you want to thank from a CSV or add them manually"
+                title: "Download & Fill Template",
+                description: "Download our CSV template and fill in your guest names, emails, gifts, and custom thank-you messages"
               },
               {
                 icon: <Heart className="h-8 w-8" />,
