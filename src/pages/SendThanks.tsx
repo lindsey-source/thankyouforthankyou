@@ -4,8 +4,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Heart, ArrowLeft, Send, Loader2 } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Heart, ArrowLeft, Send, Loader2, Palette, Plus } from "lucide-react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 
 const SendThanks = () => {
@@ -17,8 +17,24 @@ const SendThanks = () => {
     charity: ""
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [cardDesign, setCardDesign] = useState(null);
   const { toast } = useToast();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Check if we received a card design from the card designer
+  React.useEffect(() => {
+    if (location.state?.cardDesign) {
+      setCardDesign(location.state.cardDesign);
+      // Pre-fill the message if it exists in the design
+      if (location.state.cardDesign.message) {
+        setFormData(prev => ({ 
+          ...prev, 
+          message: location.state.cardDesign.message 
+        }));
+      }
+    }
+  }, [location.state]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -92,6 +108,43 @@ const SendThanks = () => {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
+            {/* Card Design Section */}
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-lg font-semibold">Card Design</h3>
+                  <p className="text-sm text-muted-foreground">
+                    {cardDesign ? 'Your custom card design is ready!' : 'Add your personal touch with a custom card'}
+                  </p>
+                </div>
+                <Link to="/design-card">
+                  <Button variant="outline" size="sm">
+                    <Palette className="h-4 w-4 mr-2" />
+                    {cardDesign ? 'Edit Design' : 'Design Card'}
+                  </Button>
+                </Link>
+              </div>
+              
+              {cardDesign && (
+                <div className="bg-muted/50 rounded-lg p-4">
+                  <div className="flex items-center gap-4">
+                    {cardDesign.photo && (
+                      <img 
+                        src={cardDesign.photo.preview} 
+                        alt="Card preview" 
+                        className="w-16 h-20 object-cover rounded shadow-sm"
+                      />
+                    )}
+                    <div className="flex-1">
+                      <p className="font-medium text-sm">{cardDesign.template?.name}</p>
+                      <p className="text-xs text-muted-foreground">
+                        Custom photo • Personalized message
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
@@ -128,12 +181,17 @@ const SendThanks = () => {
                 <Textarea
                   id="message"
                   name="message"
-                  placeholder="Write your heartfelt thank you message here..."
+                  placeholder={cardDesign ? "Your custom message from card design" : "Write your heartfelt thank you message here..."}
                   value={formData.message}
                   onChange={handleInputChange}
                   required
                   className="min-h-[120px] resize-none"
                 />
+                {cardDesign && (
+                  <p className="text-xs text-muted-foreground">
+                    💡 This message was imported from your card design. You can edit it here.
+                  </p>
+                )}
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
