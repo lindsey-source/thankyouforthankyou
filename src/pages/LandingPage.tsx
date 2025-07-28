@@ -4,11 +4,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Heart, Users, Gift, TrendingUp, ArrowRight, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import heroImage from "@/assets/hero-image.jpg";
-import cardCherryBlossom from "@/assets/card-cherry-blossom.jpg";
-import cardEmeraldMarble from "@/assets/card-emerald-marble.jpg";
-import cardVintageBotanical from "@/assets/card-vintage-botanical.jpg";
-import cardSunsetMountains from "@/assets/card-sunset-mountains.jpg";
-import cardLineArtFlorals from "@/assets/card-line-art-florals.jpg";
+import cardBlushBotanical from "@/assets/card-blush-botanical.jpg";
+import cardNavyLinen from "@/assets/card-navy-linen.jpg";
+import cardSageAbstract from "@/assets/card-sage-abstract.jpg";
+import cardWildflowerInk from "@/assets/card-wildflower-ink.jpg";
+import cardEucalyptusGold from "@/assets/card-eucalyptus-gold.jpg";
 
 const LandingPage = () => {
   return (
@@ -82,20 +82,20 @@ const LandingPage = () => {
             <div className="relative">
               <div className="grid grid-cols-2 gap-4 mb-4">
                 <img 
-                  src={cardCherryBlossom} 
-                  alt="Artistic cherry blossom card design" 
-                  className="w-full h-48 object-cover rounded-xl shadow-glow"
+                  src={cardBlushBotanical} 
+                  alt="Minimalist blush botanical card design" 
+                  className="w-full h-48 object-cover rounded-xl shadow-glow hover-scale"
                 />
                 <img 
-                  src={cardEmeraldMarble} 
-                  alt="Elegant emerald marble card design" 
-                  className="w-full h-48 object-cover rounded-xl shadow-glow"
+                  src={cardNavyLinen} 
+                  alt="Sophisticated navy linen card design" 
+                  className="w-full h-48 object-cover rounded-xl shadow-glow hover-scale"
                 />
               </div>
               <img 
-                src={cardLineArtFlorals} 
-                alt="Minimalist line art floral card design" 
-                className="w-full h-64 object-cover rounded-2xl shadow-glow"
+                src={cardEucalyptusGold} 
+                alt="Elegant eucalyptus gold card design" 
+                className="w-full h-64 object-cover rounded-2xl shadow-glow hover-scale"
               />
             </div>
           </div>
@@ -220,42 +220,42 @@ const LandingPage = () => {
             <Card className="overflow-hidden hover:shadow-soft transition-all duration-300 group">
               <div className="relative">
                 <img 
-                  src={cardVintageBotanical} 
-                  alt="Vintage botanical illustration card" 
+                  src={cardSageAbstract} 
+                  alt="Modern sage abstract brushstroke card" 
                   className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
                 <div className="absolute bottom-4 left-4 text-white">
-                  <h3 className="text-xl font-semibold">Vintage Botanical</h3>
-                  <p className="text-white/80">Timeless pressed flower art</p>
+                  <h3 className="text-xl font-semibold">Modern Abstract</h3>
+                  <p className="text-white/90">Artist-designed brushstrokes</p>
                 </div>
               </div>
             </Card>
             <Card className="overflow-hidden hover:shadow-soft transition-all duration-300 group">
               <div className="relative">
                 <img 
-                  src={cardSunsetMountains} 
-                  alt="Dreamy sunset mountain landscape card" 
+                  src={cardWildflowerInk} 
+                  alt="Whimsical wildflower ink illustration card" 
                   className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
                 <div className="absolute bottom-4 left-4 text-white">
-                  <h3 className="text-xl font-semibold">Dreamy Landscapes</h3>
-                  <p className="text-white/80">Inspiring natural beauty</p>
+                  <h3 className="text-xl font-semibold">Wildflower Ink</h3>
+                  <p className="text-white/90">Hand-drawn organic details</p>
                 </div>
               </div>
             </Card>
             <Card className="overflow-hidden hover:shadow-soft transition-all duration-300 group">
               <div className="relative">
                 <img 
-                  src={cardCherryBlossom} 
-                  alt="Delicate cherry blossom art card" 
+                  src={cardBlushBotanical} 
+                  alt="Minimalist blush botanical card" 
                   className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
                 <div className="absolute bottom-4 left-4 text-white">
-                  <h3 className="text-xl font-semibold">Delicate Florals</h3>
-                  <p className="text-white/80">Japanese-inspired elegance</p>
+                  <h3 className="text-xl font-semibold">Blush Botanical</h3>
+                  <p className="text-white/90">Soft watercolor elegance</p>
                 </div>
               </div>
             </Card>
