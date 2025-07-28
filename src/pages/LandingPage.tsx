@@ -4,9 +4,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Heart, Users, Gift, TrendingUp, ArrowRight, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import heroImage from "@/assets/hero-image.jpg";
-import cardThankYouArtistic from "@/assets/card-thank-you-artistic.jpg";
-import cardYoureTheBestArtistic from "@/assets/card-youre-the-best-artistic.jpg";
-import cardWithThanksArtistic from "@/assets/card-with-thanks-artistic.jpg";
 import cardBlushBotanical from "@/assets/card-blush-botanical.jpg";
 import cardSageAbstract from "@/assets/card-sage-abstract.jpg";
 import cardWildflowerInk from "@/assets/card-wildflower-ink.jpg";
@@ -81,22 +78,10 @@ const LandingPage = () => {
               </div>
             </div>
             <div className="relative">
-              <div className="grid grid-cols-2 gap-4 mb-4">
-                <img 
-                  src={cardThankYouArtistic} 
-                  alt="Artistic thank you card with elegant calligraphy" 
-                  className="w-full h-48 object-cover rounded-xl shadow-glow hover-scale"
-                />
-                <img 
-                  src={cardYoureTheBestArtistic} 
-                  alt="Sophisticated 'You're the Best' card design" 
-                  className="w-full h-48 object-cover rounded-xl shadow-glow hover-scale"
-                />
-              </div>
               <img 
-                src={cardWithThanksArtistic} 
-                alt="Beautiful 'With Thanks' artistic card design" 
-                className="w-full h-64 object-cover rounded-2xl shadow-glow hover-scale"
+                src={heroImage} 
+                alt="Beautiful thank you card design showcase" 
+                className="w-full h-80 object-cover rounded-2xl shadow-glow hover-scale"
               />
             </div>
           </div>
