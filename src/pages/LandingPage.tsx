@@ -22,9 +22,6 @@ const LandingPage = () => {
               </span>
             </div>
             <div className="flex items-center gap-4">
-              <Link to="/help">
-                <Button variant="ghost">Help</Button>
-              </Link>
               <Link to="/login">
                 <Button variant="ghost">Sign In</Button>
               </Link>
@@ -340,6 +337,7 @@ const LandingPage = () => {
             <div className="flex justify-center gap-8 text-sm text-muted-foreground">
               <a href="#" className="hover:text-primary transition-colors">About Us</a>
               <a href="#" className="hover:text-primary transition-colors">Contact</a>
+              <Link to="/help" className="hover:text-primary transition-colors">Help</Link>
               <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
               <a href="#" className="hover:text-primary transition-colors">Terms of Service</a>
             </div>
