@@ -195,7 +195,7 @@ const SendThanks = () => {
           <p className="text-white/80">
             {isBatchMode 
               ? `Transform ${batchData.length} traditional cards into charitable impact`
-              : "Skip the store, skip the postage - send your gratitude digitally and donate what you'd normally spend on cards to charity instead"
+              : "Express your gratitude digitally and make a charitable impact"
             }
           </p>
         </div>
