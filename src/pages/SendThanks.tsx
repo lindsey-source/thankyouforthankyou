@@ -7,7 +7,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Heart, ArrowLeft, Send, Loader2, Palette, Plus, Users, Upload, FileText, Download, CheckCircle, AlertTriangle, Check, ChevronsUpDown } from "lucide-react";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Heart, ArrowLeft, Send, Loader2, Palette, Plus, Users, Upload, FileText, Download, CheckCircle, AlertTriangle, Check, ChevronsUpDown, X } from "lucide-react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { parseCSVFile, validateGuestData, generateCSVTemplate, type GuestGiftData } from "@/lib/csvUtils";
@@ -37,6 +38,11 @@ const POPULAR_CHARITIES = [
   "Big Brothers Big Sisters"
 ];
 
+interface Recipient {
+  name: string;
+  email: string;
+}
+
 const SendThanks = () => {
   const [formData, setFormData] = useState({
     recipientName: "",
@@ -45,6 +51,7 @@ const SendThanks = () => {
     donationAmount: "",
     charity: ""
   });
+  const [recipients, setRecipients] = useState<Recipient[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [cardDesign, setCardDesign] = useState(null);
   const [batchData, setBatchData] = useState<GuestGiftData[]>([]);
@@ -53,6 +60,8 @@ const SendThanks = () => {
   const [validationResults, setValidationResults] = useState<{ valid: GuestGiftData[], invalid: { row: number, errors: string[] }[] } | null>(null);
   const [charityOpen, setCharityOpen] = useState(false);
   const [customCharity, setCustomCharity] = useState("");
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false);
+  const [lastSentCount, setLastSentCount] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -86,10 +95,23 @@ const SendThanks = () => {
       return;
     }
     
-    if (!formData.recipientName.trim() || !formData.recipientEmail.trim() || !formData.message.trim()) {
+    // Check if we have recipients or individual form data
+    const hasRecipients = recipients.length > 0;
+    const hasIndividualData = formData.recipientName.trim() && formData.recipientEmail.trim();
+    
+    if (!hasRecipients && !hasIndividualData) {
       toast({
-        title: "Missing Information",
-        description: "Please fill in all required fields.",
+        title: "Missing Recipients",
+        description: "Please add at least one recipient or fill in the recipient fields.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    if (!formData.message.trim()) {
+      toast({
+        title: "Missing Message",
+        description: "Please write a thank you message.",
         variant: "destructive",
       });
       return;
@@ -101,13 +123,14 @@ const SendThanks = () => {
       // Simulate sending thank you
       await new Promise(resolve => setTimeout(resolve, 2000));
       
-      toast({
-        title: "Thank You Sent!",
-        description: `Your gratitude message has been sent to ${formData.recipientName}${formData.donationAmount ? ` with a $${formData.donationAmount} donation` : ""}.`,
-      });
+      const totalRecipients = hasRecipients ? recipients.length : 1;
+      const recipientNames = hasRecipients 
+        ? recipients.map(r => r.name).join(", ")
+        : formData.recipientName;
       
-      // Navigate to dashboard
-      navigate('/dashboard');
+      setLastSentCount(totalRecipients);
+      setShowSuccessDialog(true);
+      
     } catch (error) {
       toast({
         title: "Something went wrong",
@@ -126,12 +149,9 @@ const SendThanks = () => {
       // Simulate batch sending
       await new Promise(resolve => setTimeout(resolve, 3000));
       
-      toast({
-        title: "Batch Campaign Sent!",
-        description: `Successfully sent ${batchData.length} thank-you cards with charitable donations.`,
-      });
+      setLastSentCount(batchData.length);
+      setShowSuccessDialog(true);
       
-      navigate('/dashboard');
     } catch (error) {
       toast({
         title: "Batch send failed",
@@ -203,6 +223,68 @@ const SendThanks = () => {
     setIsBatchMode(false);
     setBatchData([]);
     setValidationResults(null);
+  };
+
+  const addRecipient = () => {
+    if (!formData.recipientName.trim() || !formData.recipientEmail.trim()) {
+      toast({
+        title: "Missing Information",
+        description: "Please fill in both name and email before adding a recipient.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Check for duplicate emails
+    if (recipients.some(r => r.email.toLowerCase() === formData.recipientEmail.toLowerCase())) {
+      toast({
+        title: "Duplicate Email",
+        description: "This email address has already been added.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setRecipients([...recipients, {
+      name: formData.recipientName.trim(),
+      email: formData.recipientEmail.trim()
+    }]);
+
+    // Clear recipient fields
+    setFormData(prev => ({
+      ...prev,
+      recipientName: "",
+      recipientEmail: ""
+    }));
+
+    toast({
+      title: "Recipient Added",
+      description: `${formData.recipientName} has been added to the recipient list.`,
+    });
+  };
+
+  const removeRecipient = (index: number) => {
+    setRecipients(recipients.filter((_, i) => i !== index));
+  };
+
+  const handleSendAnother = () => {
+    setShowSuccessDialog(false);
+    // Reset form for sending another
+    setFormData({
+      recipientName: "",
+      recipientEmail: "",
+      message: "",
+      donationAmount: "",
+      charity: ""
+    });
+    setRecipients([]);
+    setBatchData([]);
+    setIsBatchMode(false);
+    setValidationResults(null);
+  };
+
+  const handleGoToDashboard = () => {
+    navigate('/dashboard');
   };
 
   const handleCharitySelect = (charityName: string) => {
@@ -444,34 +526,82 @@ const SendThanks = () => {
 
             <form onSubmit={handleSubmit} className="space-y-4">
               {!isBatchMode && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="recipientName">Recipient Name *</Label>
-                    <Input
-                      id="recipientName"
-                      name="recipientName"
-                      type="text"
-                      placeholder="Who are you thanking?"
-                      value={formData.recipientName}
-                      onChange={handleInputChange}
-                      required
-                      className="h-11"
-                    />
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="recipientName">
+                        Recipient Name {recipients.length === 0 ? "*" : ""}
+                      </Label>
+                      <Input
+                        id="recipientName"
+                        name="recipientName"
+                        type="text"
+                        placeholder="Who are you thanking?"
+                        value={formData.recipientName}
+                        onChange={handleInputChange}
+                        required={recipients.length === 0}
+                        className="h-11"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="recipientEmail">
+                        Recipient Email {recipients.length === 0 ? "*" : ""}
+                      </Label>
+                      <div className="flex gap-2">
+                        <Input
+                          id="recipientEmail"
+                          name="recipientEmail"
+                          type="email"
+                          placeholder="their@email.com"
+                          value={formData.recipientEmail}
+                          onChange={handleInputChange}
+                          required={recipients.length === 0}
+                          className="h-11 flex-1"
+                        />
+                        <Button
+                          type="button"
+                          variant="outline"
+                          onClick={addRecipient}
+                          className="h-11 px-3"
+                          disabled={!formData.recipientName.trim() || !formData.recipientEmail.trim()}
+                        >
+                          <Plus className="h-4 w-4" />
+                        </Button>
+                      </div>
+                      <p className="text-xs text-muted-foreground">
+                        Add multiple recipients or leave as single recipient
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="recipientEmail">Recipient Email *</Label>
-                    <Input
-                      id="recipientEmail"
-                      name="recipientEmail"
-                      type="email"
-                      placeholder="their@email.com"
-                      value={formData.recipientEmail}
-                      onChange={handleInputChange}
-                      required
-                      className="h-11"
-                    />
-                  </div>
+                  {/* Recipients List */}
+                  {recipients.length > 0 && (
+                    <div className="space-y-2">
+                      <Label>Recipients ({recipients.length})</Label>
+                      <div className="bg-muted/50 rounded-lg p-3 max-h-40 overflow-y-auto">
+                        <div className="space-y-2">
+                          {recipients.map((recipient, index) => (
+                            <div key={index} className="flex items-center justify-between bg-background rounded px-3 py-2">
+                              <div className="flex-1">
+                                <p className="font-medium text-sm">{recipient.name}</p>
+                                <p className="text-xs text-muted-foreground">{recipient.email}</p>
+                              </div>
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => removeRecipient(index)}
+                                className="h-8 w-8 p-0 text-muted-foreground hover:text-destructive"
+                              >
+                                <X className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -612,7 +742,9 @@ const SendThanks = () => {
                     {isBatchMode ? <Users className="mr-2 h-4 w-4" /> : <Send className="mr-2 h-4 w-4" />}
                     {isBatchMode 
                       ? `Send ${batchData.length} Digital Cards & Donations`
-                      : 'Send Digital Thank You & Donation'
+                      : recipients.length > 0 
+                        ? `Send ${recipients.length + (formData.recipientName.trim() && formData.recipientEmail.trim() ? 1 : 0)} Digital Cards & Donations`
+                        : 'Send Digital Thank You & Donation'
                     }
                   </>
                 )}
@@ -620,6 +752,32 @@ const SendThanks = () => {
             </form>
           </CardContent>
         </Card>
+
+        {/* Success Dialog */}
+        <Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2">
+                <CheckCircle className="h-5 w-5 text-green-600" />
+                Thank You Cards Sent!
+              </DialogTitle>
+              <DialogDescription>
+                Successfully sent {lastSentCount} digital thank you {lastSentCount === 1 ? 'card' : 'cards'} with charitable donations.
+                Your gratitude is making a difference!
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter className="flex-col sm:flex-row gap-2">
+              <Button variant="outline" onClick={handleSendAnother} className="gap-2">
+                <Send className="h-4 w-4" />
+                Send Another
+              </Button>
+              <Button onClick={handleGoToDashboard} className="gap-2">
+                <ArrowLeft className="h-4 w-4" />
+                Go to Dashboard
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );
