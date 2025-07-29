@@ -486,68 +486,6 @@ const SendThanks = () => {
                 </div>
               )}
 
-              {/* CSV Upload Section */}
-              {!isBatchMode && (
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="text-lg font-semibold flex items-center gap-2">
-                        <Users className="h-5 w-5" />
-                        Send to Multiple People
-                      </h3>
-                      <p className="text-sm text-muted-foreground">
-                        Upload a spreadsheet to send thank you cards to many people at once
-                      </p>
-                    </div>
-                  </div>
-                  
-                  <div className="bg-muted/50 rounded-lg p-6 border-2 border-dashed border-muted-foreground/25">
-                    <div className="text-center space-y-4">
-                      <div className="mx-auto w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                        <Upload className="h-6 w-6 text-primary" />
-                      </div>
-                      <div>
-                        <h4 className="font-medium mb-1">Upload Your Guest List</h4>
-                        <p className="text-sm text-muted-foreground mb-4">
-                          Upload a CSV file with guest names, emails, and personalized messages
-                        </p>
-                      </div>
-                      <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                        <input
-                          ref={fileInputRef}
-                          type="file"
-                          accept=".csv"
-                          onChange={handleFileUpload}
-                          className="hidden"
-                          disabled={isProcessingCSV}
-                        />
-                        <Button
-                          variant="outline"
-                          onClick={() => fileInputRef.current?.click()}
-                          disabled={isProcessingCSV}
-                          className="gap-2"
-                        >
-                          {isProcessingCSV ? (
-                            <>
-                              <Loader2 className="h-4 w-4 animate-spin" />
-                              Processing...
-                            </>
-                          ) : (
-                            <>
-                              <Upload className="h-4 w-4" />
-                              Upload CSV
-                            </>
-                          )}
-                        </Button>
-                        <Button variant="ghost" onClick={handleDownloadTemplate} className="gap-2">
-                          <Download className="h-4 w-4" />
-                          Download Template
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
 
               {/* Batch Preview Section */}
               {isBatchMode && (
@@ -730,6 +668,69 @@ const SendThanks = () => {
                   </p>
                 </div>
               </div>
+
+              {/* CSV Upload Section */}
+              {!isBatchMode && (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="text-lg font-semibold flex items-center gap-2">
+                        <Users className="h-5 w-5" />
+                        Send to Multiple People
+                      </h3>
+                      <p className="text-sm text-muted-foreground">
+                        Upload a spreadsheet to send thank you cards to many people at once
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-muted/50 rounded-lg p-6 border-2 border-dashed border-muted-foreground/25">
+                    <div className="text-center space-y-4">
+                      <div className="mx-auto w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                        <Upload className="h-6 w-6 text-primary" />
+                      </div>
+                      <div>
+                        <h4 className="font-medium mb-1">Upload Your Guest List</h4>
+                        <p className="text-sm text-muted-foreground mb-4">
+                          Upload a CSV file with guest names, emails, and personalized messages
+                        </p>
+                      </div>
+                      <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                        <input
+                          ref={fileInputRef}
+                          type="file"
+                          accept=".csv"
+                          onChange={handleFileUpload}
+                          className="hidden"
+                          disabled={isProcessingCSV}
+                        />
+                        <Button
+                          variant="outline"
+                          onClick={() => fileInputRef.current?.click()}
+                          disabled={isProcessingCSV}
+                          className="gap-2"
+                        >
+                          {isProcessingCSV ? (
+                            <>
+                              <Loader2 className="h-4 w-4 animate-spin" />
+                              Processing...
+                            </>
+                          ) : (
+                            <>
+                              <Upload className="h-4 w-4" />
+                              Upload CSV
+                            </>
+                          )}
+                        </Button>
+                        <Button variant="ghost" onClick={handleDownloadTemplate} className="gap-2">
+                          <Download className="h-4 w-4" />
+                          Download Template
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               <Button type="submit" variant="hero" size="lg" className="w-full" disabled={isLoading}>
                 {isLoading ? (
