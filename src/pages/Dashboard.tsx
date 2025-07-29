@@ -154,26 +154,26 @@ const Dashboard = () => {
               <CardContent>
                 <div className="space-y-4">
                   {recentCampaigns.map((campaign) => (
-                    <div key={campaign.id} className="flex items-center justify-between p-4 border border-border rounded-lg hover:bg-muted/50 transition-colors">
-                      <div className="flex-1">
-                        <h4 className="font-semibold text-foreground">{campaign.name}</h4>
-                        <p className="text-sm text-muted-foreground">
-                          {campaign.recipients} recipients • ${campaign.donated} donated • {campaign.date}
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-4">
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                          campaign.status === 'Completed' 
-                            ? 'bg-accent/10 text-accent' 
-                            : 'bg-primary/10 text-primary'
-                        }`}>
-                          {campaign.status}
-                        </span>
-                        <Link to={`/campaign/${campaign.id}`}>
+                    <Link key={campaign.id} to={`/campaign/${campaign.id}`} className="block">
+                      <div className="flex items-center justify-between p-4 border border-border rounded-lg hover:bg-muted/50 transition-colors cursor-pointer">
+                        <div className="flex-1">
+                          <h4 className="font-semibold text-foreground">{campaign.name}</h4>
+                          <p className="text-sm text-muted-foreground">
+                            {campaign.recipients} recipients • ${campaign.donated} donated • {campaign.date}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-4">
+                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                            campaign.status === 'Completed' 
+                              ? 'bg-accent/10 text-accent' 
+                              : 'bg-primary/10 text-primary'
+                          }`}>
+                            {campaign.status}
+                          </span>
                           <Button variant="ghost" size="sm">View Details</Button>
-                        </Link>
+                        </div>
                       </div>
-                    </div>
+                    </Link>
                   ))}
                 </div>
                 <div className="mt-6">
