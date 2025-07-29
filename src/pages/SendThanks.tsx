@@ -5,10 +5,37 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Heart, ArrowLeft, Send, Loader2, Palette, Plus, Users, Upload, FileText, Download, CheckCircle, AlertTriangle } from "lucide-react";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Heart, ArrowLeft, Send, Loader2, Palette, Plus, Users, Upload, FileText, Download, CheckCircle, AlertTriangle, Check, ChevronsUpDown } from "lucide-react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { parseCSVFile, validateGuestData, generateCSVTemplate, type GuestGiftData } from "@/lib/csvUtils";
+import { cn } from "@/lib/utils";
+
+// Mock charity list
+const POPULAR_CHARITIES = [
+  "American Red Cross",
+  "Doctors Without Borders",
+  "UNICEF",
+  "World Wildlife Fund",
+  "Habitat for Humanity",
+  "Feeding America",
+  "Salvation Army",
+  "United Way",
+  "Goodwill",
+  "St. Jude Children's Research Hospital",
+  "American Cancer Society",
+  "Make-A-Wish Foundation",
+  "Local Food Bank",
+  "Local Animal Shelter",
+  "American Heart Association",
+  "Alzheimer's Association",
+  "Wounded Warrior Project",
+  "Boys & Girls Clubs of America",
+  "YMCA",
+  "Big Brothers Big Sisters"
+];
 
 const SendThanks = () => {
   const [formData, setFormData] = useState({
@@ -24,6 +51,8 @@ const SendThanks = () => {
   const [isBatchMode, setIsBatchMode] = useState(false);
   const [isProcessingCSV, setIsProcessingCSV] = useState(false);
   const [validationResults, setValidationResults] = useState<{ valid: GuestGiftData[], invalid: { row: number, errors: string[] }[] } | null>(null);
+  const [charityOpen, setCharityOpen] = useState(false);
+  const [customCharity, setCustomCharity] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -175,6 +204,34 @@ const SendThanks = () => {
     setBatchData([]);
     setValidationResults(null);
   };
+
+  const handleCharitySelect = (charityName: string) => {
+    setFormData({ ...formData, charity: charityName });
+    setCharityOpen(false);
+    setCustomCharity("");
+  };
+
+  const handleCustomCharityAdd = () => {
+    if (customCharity.trim()) {
+      // Basic validation for charity name
+      if (customCharity.length < 3) {
+        toast({
+          title: "Invalid Charity Name",
+          description: "Please enter a valid charity name (at least 3 characters).",
+          variant: "destructive",
+        });
+        return;
+      }
+      
+      setFormData({ ...formData, charity: customCharity.trim() });
+      setCharityOpen(false);
+      setCustomCharity("");
+    }
+  };
+
+  const filteredCharities = POPULAR_CHARITIES.filter(charity =>
+    charity.toLowerCase().includes(customCharity.toLowerCase())
+  );
 
   return (
     <div className="min-h-screen bg-gradient-hero flex items-center justify-center p-4">
@@ -467,17 +524,79 @@ const SendThanks = () => {
 
                 <div className="space-y-2">
                   <Label htmlFor="charity">Charity Beneficiary</Label>
-                  <Input
-                    id="charity"
-                    name="charity"
-                    type="text"
-                    placeholder="e.g., Red Cross, Local Food Bank"
-                    value={formData.charity}
-                    onChange={handleInputChange}
-                    className="h-11"
-                  />
+                  <Popover open={charityOpen} onOpenChange={setCharityOpen}>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        role="combobox"
+                        aria-expanded={charityOpen}
+                        className="h-11 w-full justify-between"
+                      >
+                        {formData.charity || "Select a charity or add your own..."}
+                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-full p-0" align="start">
+                      <Command>
+                        <CommandInput 
+                          placeholder="Search charities or type to add custom..." 
+                          value={customCharity}
+                          onValueChange={setCustomCharity}
+                        />
+                        <CommandList className="max-h-[200px] overflow-y-auto">
+                          <CommandEmpty>
+                            <div className="p-4 text-center space-y-2">
+                              <p className="text-sm text-muted-foreground">No charities found</p>
+                              {customCharity.trim().length >= 3 && (
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={handleCustomCharityAdd}
+                                  className="w-full gap-2"
+                                >
+                                  <Plus className="h-4 w-4" />
+                                  Add "{customCharity.trim()}"
+                                </Button>
+                              )}
+                            </div>
+                          </CommandEmpty>
+                          <CommandGroup>
+                            {filteredCharities.map((charity) => (
+                              <CommandItem
+                                key={charity}
+                                value={charity}
+                                onSelect={() => handleCharitySelect(charity)}
+                                className="cursor-pointer"
+                              >
+                                <Check
+                                  className={cn(
+                                    "mr-2 h-4 w-4",
+                                    formData.charity === charity ? "opacity-100" : "opacity-0"
+                                  )}
+                                />
+                                {charity}
+                              </CommandItem>
+                            ))}
+                            {customCharity.trim().length >= 3 && 
+                             !filteredCharities.some(charity => 
+                               charity.toLowerCase() === customCharity.toLowerCase()
+                             ) && (
+                              <CommandItem
+                                value={customCharity}
+                                onSelect={handleCustomCharityAdd}
+                                className="cursor-pointer border-t"
+                              >
+                                <Plus className="mr-2 h-4 w-4" />
+                                Add "{customCharity.trim()}"
+                              </CommandItem>
+                            )}
+                          </CommandGroup>
+                        </CommandList>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
                   <p className="text-sm text-muted-foreground">
-                    Where should your card savings go to make a difference?
+                    Choose from popular charities or add your own verified charity
                   </p>
                 </div>
               </div>
