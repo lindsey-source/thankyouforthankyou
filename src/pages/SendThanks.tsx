@@ -190,7 +190,7 @@ const SendThanks = () => {
             <span className="text-3xl font-bold text-white">Thank You for Thank You</span>
           </div>
           <h1 className="text-2xl font-bold text-white mb-2">
-            {isBatchMode ? 'Send Batch Thank You Campaign' : 'Send a Digital Thank You Card'}
+            {isBatchMode ? 'Send Batch Thank You Campaign' : 'Send Thank You Cards'}
           </h1>
           <p className="text-white/80">
             {isBatchMode 
