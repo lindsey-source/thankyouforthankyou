@@ -56,7 +56,8 @@ const SignUp = () => {
           data: {
             full_name: formData.name,
             organization: formData.organization
-          }
+          },
+          emailRedirectTo: `${window.location.origin}/dashboard`
         }
       });
 
