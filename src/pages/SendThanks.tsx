@@ -131,12 +131,12 @@ const SendThanks = () => {
             <span className="text-3xl font-bold text-white">Thank You for Thank You</span>
           </div>
           <h1 className="text-2xl font-bold text-white mb-2">
-            {isBatchMode ? 'Send Batch Thank You Campaign' : 'Send a Thank You'}
+            {isBatchMode ? 'Send Batch Thank You Campaign' : 'Send a Digital Thank You Card'}
           </h1>
           <p className="text-white/80">
             {isBatchMode 
-              ? `Ready to send ${batchData.length} personalized thank-you cards`
-              : 'Express your gratitude and make a difference'
+              ? `Transform ${batchData.length} traditional cards into charitable impact`
+              : "Skip the store, skip the postage - send your gratitude digitally and donate what you'd normally spend on cards to charity instead"
             }
           </p>
         </div>
@@ -150,19 +150,35 @@ const SendThanks = () => {
             </CardTitle>
             <CardDescription>
               {isBatchMode 
-                ? 'Review and customize your batch thank-you campaign'
-                : 'Send a heartfelt thank you message and optionally make a charitable donation'
+                ? 'Review and customize your batch thank you campaign - turning traditional card costs into charitable donations'
+                : 'Replace traditional thank you cards with digital ones and donate what you would have spent on cards, stamps, and time to charity'
               }
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
+            {/* Value Proposition Callout */}
+            <div className="bg-gradient-primary/10 border border-primary/20 rounded-lg p-4">
+              <div className="flex items-start gap-3">
+                <Heart className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <div>
+                  <h4 className="font-semibold text-primary mb-1">
+                    Your Thank You, Reimagined
+                  </h4>
+                  <p className="text-sm text-foreground/80 leading-relaxed">
+                    Traditional thank you cards cost $3-8 each (card + stamp + time). Instead of that expense, 
+                    send a beautiful digital card and donate that money to charity - turning your gratitude into greater good.
+                  </p>
+                </div>
+              </div>
+            </div>
+
             {/* Card Design Section */}
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="text-lg font-semibold">Card Design</h3>
+                  <h3 className="text-lg font-semibold">Digital Card Design</h3>
                   <p className="text-sm text-muted-foreground">
-                    {cardDesign ? 'Your custom card design is ready!' : 'Add your personal touch with a custom card'}
+                    {cardDesign ? 'Your custom digital card is ready!' : 'Create a beautiful digital card (no paper needed!)'}
                   </p>
                 </div>
                 <Link to="/design-card">
@@ -186,7 +202,7 @@ const SendThanks = () => {
                     <div className="flex-1">
                       <p className="font-medium text-sm">{cardDesign.template?.name}</p>
                       <p className="text-xs text-muted-foreground">
-                        Custom photo • Personalized message
+                        Custom photo • Personalized message • Eco-friendly
                       </p>
                     </div>
                   </div>
@@ -291,24 +307,24 @@ const SendThanks = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="donationAmount">Donation Amount (Optional)</Label>
+                  <Label htmlFor="donationAmount">Charitable Donation Amount</Label>
                   <Input
                     id="donationAmount"
                     name="donationAmount"
                     type="number"
-                    placeholder="25"
+                    placeholder="5"
                     value={formData.donationAmount}
                     onChange={handleInputChange}
                     className="h-11"
                     min="1"
                   />
                   <p className="text-sm text-muted-foreground">
-                    Make a charitable donation in their honor
+                    Suggested: $5 (typical cost of card + stamp + time)
                   </p>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="charity">Preferred Charity (Optional)</Label>
+                  <Label htmlFor="charity">Charity Beneficiary</Label>
                   <Input
                     id="charity"
                     name="charity"
@@ -319,7 +335,7 @@ const SendThanks = () => {
                     className="h-11"
                   />
                   <p className="text-sm text-muted-foreground">
-                    Suggest a charity for the donation
+                    Where should your card savings go to make a difference?
                   </p>
                 </div>
               </div>
@@ -328,14 +344,14 @@ const SendThanks = () => {
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    {isBatchMode ? 'Sending Batch Campaign...' : 'Sending Thank You...'}
+                    {isBatchMode ? 'Sending Digital Cards & Donations...' : 'Sending Digital Card & Donation...'}
                   </>
                 ) : (
                   <>
                     {isBatchMode ? <Users className="mr-2 h-4 w-4" /> : <Send className="mr-2 h-4 w-4" />}
                     {isBatchMode 
-                      ? `Send ${batchData.length} Thank You Cards & Donations`
-                      : 'Send Thank You & Donation'
+                      ? `Send ${batchData.length} Digital Cards & Donations`
+                      : 'Send Digital Thank You & Donation'
                     }
                   </>
                 )}
