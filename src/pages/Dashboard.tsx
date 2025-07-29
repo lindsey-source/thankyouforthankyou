@@ -169,7 +169,9 @@ const Dashboard = () => {
                         }`}>
                           {campaign.status}
                         </span>
-                        <Button variant="ghost" size="sm">View Details</Button>
+                        <Link to={`/campaign/${campaign.id}`}>
+                          <Button variant="ghost" size="sm">View Details</Button>
+                        </Link>
                       </div>
                     </div>
                   ))}
