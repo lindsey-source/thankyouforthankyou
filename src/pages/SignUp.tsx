@@ -75,7 +75,7 @@ const SignUp = () => {
       if (data.user) {
         toast({
           title: "Account Created Successfully!",
-          description: "Welcome to Thank you for Thank you. Please check your email to verify your account.",
+          description: "Welcome to Thank You for Thank You. Please check your email to verify your account.",
         });
         
         // Navigate to dashboard
@@ -110,7 +110,7 @@ const SignUp = () => {
           </Link>
           <div className="flex items-center justify-center gap-2 mb-4">
             <Heart className="h-8 w-8 text-white" />
-            <span className="text-3xl font-bold text-white">Thank you for Thank you</span>
+            <span className="text-3xl font-bold text-white">Thank You for Thank You</span>
           </div>
           <h1 className="text-2xl font-bold text-white mb-2">Create Your Account</h1>
           <p className="text-white/80">Join thousands spreading gratitude and giving back</p>

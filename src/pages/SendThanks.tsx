@@ -128,7 +128,7 @@ const SendThanks = () => {
           </Link>
           <div className="flex items-center justify-center gap-2 mb-4">
             <Heart className="h-8 w-8 text-white" />
-            <span className="text-3xl font-bold text-white">Thank you for Thank you</span>
+            <span className="text-3xl font-bold text-white">Thank You for Thank You</span>
           </div>
           <h1 className="text-2xl font-bold text-white mb-2">
             {isBatchMode ? 'Send Batch Thank You Campaign' : 'Send a Thank You'}
