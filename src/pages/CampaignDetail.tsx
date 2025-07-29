@@ -24,7 +24,7 @@ const CampaignDetail = () => {
 
   // Mock campaign data - in real app this would come from API based on ID
   const campaignData = {
-    1: {
+    "1": {
       id: 1,
       name: "Customer Appreciation 2024",
       description: "A heartfelt thank you campaign for our loyal customers who made this year amazing.",
@@ -45,7 +45,7 @@ const CampaignDetail = () => {
         { name: "David Wilson", email: "david@example.com", status: "Delivered", deliveryDate: "Dec 20, 2024" },
       ]
     },
-    2: {
+    "2": {
       id: 2,
       name: "Team Holiday Thanks",
       description: "Holiday appreciation for our amazing team members who worked hard all year.",
@@ -66,7 +66,7 @@ const CampaignDetail = () => {
         { name: "Eva Thompson", email: "eva@company.com", status: "Scheduled", deliveryDate: "Dec 19, 2024" },
       ]
     },
-    3: {
+    "3": {
       id: 3,
       name: "Volunteer Recognition",
       description: "Recognizing our dedicated volunteers who give their time to make a difference.",
@@ -88,7 +88,7 @@ const CampaignDetail = () => {
     }
   };
 
-  const campaign = id ? campaignData[parseInt(id) as keyof typeof campaignData] : undefined;
+  const campaign = id && campaignData[id as keyof typeof campaignData];
 
   if (!campaign) {
     return (
@@ -120,15 +120,19 @@ const CampaignDetail = () => {
   const getRecipientStatusBadge = (status: string) => {
     switch (status) {
       case 'Delivered':
-        return <Badge variant="outline" className="bg-accent/10 text-accent border-accent/20">
-          <CheckCircle className="h-3 w-3 mr-1" />
-          Delivered
-        </Badge>;
+        return (
+          <Badge variant="outline" className="bg-accent/10 text-accent border-accent/20">
+            <CheckCircle className="h-3 w-3 mr-1" />
+            Delivered
+          </Badge>
+        );
       case 'Scheduled':
-        return <Badge variant="outline" className="bg-orange-100 text-orange-700 border-orange-200">
-          <Clock className="h-3 w-3 mr-1" />
-          Scheduled
-        </Badge>;
+        return (
+          <Badge variant="outline" className="bg-orange-100 text-orange-700 border-orange-200">
+            <Clock className="h-3 w-3 mr-1" />
+            Scheduled
+          </Badge>
+        );
       default:
         return <Badge variant="secondary">{status}</Badge>;
     }
@@ -231,9 +235,8 @@ const CampaignDetail = () => {
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8">
-          {/* Campaign Details */}
+          {/* Recipients List */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Recipients List */}
             <Card className="bg-white">
               <CardHeader>
                 <div className="flex items-center justify-between">
