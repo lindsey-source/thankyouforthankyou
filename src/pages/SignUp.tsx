@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Heart, ArrowLeft, Loader2 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/lib/supabase";
+import { supabase, supabaseUrl, supabaseAnonKey } from "@/lib/supabase";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -44,6 +44,10 @@ const SignUp = () => {
     setIsLoading(true);
     
     try {
+      // Debug logging
+      console.log('Supabase URL:', supabaseUrl);
+      console.log('Supabase Key:', supabaseAnonKey);
+      
       // Create user with Supabase Auth
       const { data, error } = await supabase.auth.signUp({
         email: formData.email,
