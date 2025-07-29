@@ -3,8 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Heart, Users, DollarSign, TrendingUp, Plus, BarChart3, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Dashboard = () => {
+  const { signOut } = useAuth();
   // Mock data - in real app this would come from API
   const stats = {
     thankYousSent: 45,
@@ -53,9 +55,13 @@ const Dashboard = () => {
               </span>
             </div>
             <div className="flex items-center gap-4">
-              <Button variant="ghost">Settings</Button>
-              <Button variant="ghost">Help</Button>
-              <Button variant="outline">Sign Out</Button>
+              <Link to="/settings">
+                <Button variant="ghost">Settings</Button>
+              </Link>
+              <Link to="/help">
+                <Button variant="ghost">Help</Button>
+              </Link>
+              <Button variant="outline" onClick={signOut}>Sign Out</Button>
             </div>
           </div>
         </div>
