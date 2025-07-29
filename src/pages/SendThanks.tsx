@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Heart, ArrowLeft, Send, Loader2, Palette, Plus, Users } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Heart, ArrowLeft, Send, Loader2, Palette, Plus, Users, Upload, FileText, Download, CheckCircle, AlertTriangle } from "lucide-react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
-import { type GuestGiftData } from "@/lib/csvUtils";
+import { parseCSVFile, validateGuestData, generateCSVTemplate, type GuestGiftData } from "@/lib/csvUtils";
 
 const SendThanks = () => {
   const [formData, setFormData] = useState({
@@ -21,6 +22,9 @@ const SendThanks = () => {
   const [cardDesign, setCardDesign] = useState(null);
   const [batchData, setBatchData] = useState<GuestGiftData[]>([]);
   const [isBatchMode, setIsBatchMode] = useState(false);
+  const [isProcessingCSV, setIsProcessingCSV] = useState(false);
+  const [validationResults, setValidationResults] = useState<{ valid: GuestGiftData[], invalid: { row: number, errors: string[] }[] } | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
   const navigate = useNavigate();
   const location = useLocation();
@@ -117,6 +121,61 @@ const SendThanks = () => {
     });
   };
 
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    if (!file.name.toLowerCase().endsWith('.csv')) {
+      toast({
+        title: "Invalid File Type",
+        description: "Please upload a CSV file.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsProcessingCSV(true);
+    try {
+      const data = await parseCSVFile(file);
+      const results = validateGuestData(data);
+      
+      setBatchData(data);
+      setValidationResults(results);
+      setIsBatchMode(true);
+      
+      toast({
+        title: "CSV Processed Successfully",
+        description: `Found ${results.valid.length} valid entries${results.invalid.length > 0 ? ` and ${results.invalid.length} invalid entries` : ''}.`,
+      });
+    } catch (error) {
+      toast({
+        title: "Upload Failed",
+        description: error instanceof Error ? error.message : "Failed to process CSV file",
+        variant: "destructive",
+      });
+    } finally {
+      setIsProcessingCSV(false);
+      // Reset file input
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    }
+  };
+
+  const handleDownloadTemplate = () => {
+    generateCSVTemplate();
+    toast({
+      title: "Template Downloaded",
+      description: "Check your downloads folder for the CSV template.",
+    });
+  };
+
+  const switchToSingleMode = () => {
+    setIsBatchMode(false);
+    setBatchData([]);
+    setValidationResults(null);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-hero flex items-center justify-center p-4">
       <div className="w-full max-w-2xl">
@@ -210,6 +269,69 @@ const SendThanks = () => {
               )}
             </div>
 
+            {/* CSV Upload Section */}
+            {!isBatchMode && (
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-lg font-semibold flex items-center gap-2">
+                      <Users className="h-5 w-5" />
+                      Send to Multiple People
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      Upload a spreadsheet to send thank you cards to many people at once
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="bg-muted/50 rounded-lg p-6 border-2 border-dashed border-muted-foreground/25">
+                  <div className="text-center space-y-4">
+                    <div className="mx-auto w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                      <Upload className="h-6 w-6 text-primary" />
+                    </div>
+                    <div>
+                      <h4 className="font-medium mb-1">Upload Your Guest List</h4>
+                      <p className="text-sm text-muted-foreground mb-4">
+                        Upload a CSV file with guest names, emails, and personalized messages
+                      </p>
+                    </div>
+                    <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                      <input
+                        ref={fileInputRef}
+                        type="file"
+                        accept=".csv"
+                        onChange={handleFileUpload}
+                        className="hidden"
+                        disabled={isProcessingCSV}
+                      />
+                      <Button
+                        variant="outline"
+                        onClick={() => fileInputRef.current?.click()}
+                        disabled={isProcessingCSV}
+                        className="gap-2"
+                      >
+                        {isProcessingCSV ? (
+                          <>
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                            Processing...
+                          </>
+                        ) : (
+                          <>
+                            <Upload className="h-4 w-4" />
+                            Upload CSV
+                          </>
+                        )}
+                      </Button>
+                      <Button variant="ghost" onClick={handleDownloadTemplate} className="gap-2">
+                        <Download className="h-4 w-4" />
+                        Download Template
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Batch Preview Section */}
             {isBatchMode && (
               <div className="space-y-4">
@@ -220,10 +342,33 @@ const SendThanks = () => {
                       Batch Campaign Preview
                     </h3>
                     <p className="text-sm text-muted-foreground">
-                      {batchData.length} recipients ready to receive thank-you cards
+                      {batchData.length} recipients ready to receive thank you cards
                     </p>
                   </div>
+                  <Button variant="ghost" size="sm" onClick={switchToSingleMode}>
+                    Switch to Single Card
+                  </Button>
                 </div>
+
+                {/* Validation Results */}
+                {validationResults && validationResults.invalid.length > 0 && (
+                  <Alert className="border-orange-200 bg-orange-50">
+                    <AlertTriangle className="h-4 w-4 text-orange-600" />
+                    <AlertDescription className="text-orange-800">
+                      {validationResults.invalid.length} entries have issues and will be skipped. 
+                      {validationResults.valid.length} valid entries will be processed.
+                    </AlertDescription>
+                  </Alert>
+                )}
+
+                {validationResults && validationResults.valid.length > 0 && (
+                  <Alert className="border-green-200 bg-green-50">
+                    <CheckCircle className="h-4 w-4 text-green-600" />
+                    <AlertDescription className="text-green-800">
+                      {validationResults.valid.length} recipients are ready to receive digital thank you cards.
+                    </AlertDescription>
+                  </Alert>
+                )}
                 
                 <div className="bg-muted/50 rounded-lg p-4 max-h-48 overflow-y-auto">
                   <div className="space-y-2">
