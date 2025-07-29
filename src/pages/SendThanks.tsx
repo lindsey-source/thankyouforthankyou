@@ -213,22 +213,13 @@ const SendThanks = () => {
           </CardHeader>
           <CardContent className="space-y-6">
             {/* Value Proposition Callout */}
-            <div className="bg-gradient-primary/10 border border-primary/20 rounded-lg p-6">
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0">
-                  <img 
-                    src="https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=80&h=80&fit=crop&crop=center&auto=format" 
-                    alt="Innovative idea" 
-                    className="w-16 h-16 rounded-full object-cover shadow-md"
-                  />
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Heart className="h-5 w-5 text-primary flex-shrink-0" />
-                    <h4 className="font-semibold text-primary">
-                      Your Thank You, Reimagined
-                    </h4>
-                  </div>
+            <div className="bg-gradient-primary/10 border border-primary/20 rounded-lg p-4">
+              <div className="flex items-start gap-3">
+                <Heart className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <div>
+                  <h4 className="font-semibold text-primary mb-1">
+                    Your Thank You, Reimagined
+                  </h4>
                   <p className="text-sm text-foreground/80 leading-relaxed">
                     Traditional thank you cards cost $3-8 each (card + stamp + time). Instead of that expense, 
                     send a beautiful digital card and donate that money to charity - turning your gratitude into greater good.
