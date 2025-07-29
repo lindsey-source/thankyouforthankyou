@@ -80,7 +80,7 @@ const Dashboard = () => {
             <Link to="/send-thanks">
               <Button variant="hero" size="lg" className="gap-2">
                 <Plus className="h-5 w-5" />
-                Send New Thank-You Campaign
+                Send New Thank You Campaign
               </Button>
             </Link>
             <Button variant="warm" size="lg" className="gap-2">
