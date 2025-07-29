@@ -90,6 +90,11 @@ const CampaignDetail = () => {
 
   const campaign = id && campaignData[id as keyof typeof campaignData];
 
+  // Debug logging
+  console.log("Campaign ID from URL:", id);
+  console.log("Available campaign IDs:", Object.keys(campaignData));
+  console.log("Found campaign:", campaign);
+
   if (!campaign) {
     return (
       <div className="min-h-screen bg-muted/30 flex items-center justify-center">
