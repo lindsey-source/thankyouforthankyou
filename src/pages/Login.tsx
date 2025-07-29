@@ -32,10 +32,13 @@ const Login = () => {
     setIsLoading(true);
     
     try {
+      console.log('Attempting login with:', formData.email);
       const { data, error } = await supabase.auth.signInWithPassword({
         email: formData.email,
         password: formData.password,
       });
+
+      console.log('Login response:', { data, error });
 
       if (error) {
         toast({
