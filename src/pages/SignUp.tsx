@@ -57,7 +57,9 @@ const SignUp = () => {
             full_name: formData.name,
             organization: formData.organization
           },
-          emailRedirectTo: `${window.location.origin}/dashboard`
+          emailRedirectTo: window.location.origin === 'http://localhost:5173' 
+            ? 'http://localhost:5173/dashboard' 
+            : `${window.location.origin}/dashboard`
         }
       });
 
