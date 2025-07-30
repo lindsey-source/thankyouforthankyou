@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, ArrowLeft, Save } from 'lucide-react';
@@ -37,11 +37,22 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
     senderName: initialDesign.senderName || '',
   });
   const [showBackgroundRemover, setShowBackgroundRemover] = useState(false);
+  const stepContentRef = useRef<HTMLDivElement>(null);
 
   // Track design state changes for debugging
   useEffect(() => {
     console.log('Design state changed:', design);
   }, [design]);
+
+  // Auto-scroll to step content when step changes
+  useEffect(() => {
+    if (stepContentRef.current) {
+      stepContentRef.current.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start' 
+      });
+    }
+  }, [currentStep]);
 
   const steps = [
     { id: 1, title: 'Choose Template', description: 'Select card layout' },
@@ -163,7 +174,7 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Left Column - Design Tools */}
-          <div className="space-y-6">
+          <div ref={stepContentRef} className="space-y-6">{/* Added ref here */}
             {currentStep === 1 && (
               <CardTemplates 
                 selectedTemplate={design.template?.id || null}
