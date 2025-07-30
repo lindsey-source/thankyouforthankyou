@@ -40,14 +40,13 @@ export const CardPreview: React.FC<CardPreviewProps> = ({
 
   const renderCard = () => {
     const { layout, textPosition, backgroundColor, textColor, accentColor } = template.style;
-
-    const cardStyles = {
-      backgroundColor: backgroundColor === 'transparent' ? 'rgba(0,0,0,0.1)' : backgroundColor,
-      color: textColor,
-      backgroundImage: layout === 'full-background' && photo ? `url(${photo.preview})` : undefined,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-    };
+    
+    console.log('Rendering card with styles:', {
+      layout,
+      backgroundColor,
+      textColor,
+      accentColor
+    });
 
     const messageText = message || `Dear ${recipientName || 'Friend'}, thank you so much for your thoughtful gift!`;
     const signature = senderName ? `With gratitude, ${senderName}` : 'With gratitude';
@@ -55,7 +54,15 @@ export const CardPreview: React.FC<CardPreviewProps> = ({
     switch (layout) {
       case 'full-background':
         return (
-          <div className="relative w-full h-full rounded-lg overflow-hidden" style={cardStyles}>
+          <div 
+            className="relative w-full h-full rounded-lg overflow-hidden" 
+            style={{ 
+              backgroundColor: backgroundColor === 'transparent' ? 'rgba(0,0,0,0.1)' : backgroundColor,
+              backgroundImage: photo ? `url(${photo.preview})` : undefined,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center'
+            }}
+          >
             {photo && (
               <div className="absolute inset-0 bg-black/30"></div>
             )}
@@ -133,8 +140,8 @@ export const CardPreview: React.FC<CardPreviewProps> = ({
 
       default:
         return (
-          <div className="w-full h-full flex items-center justify-center" style={cardStyles}>
-            <p className="text-xs">Preview not available</p>
+          <div className="w-full h-full flex items-center justify-center bg-gray-50">
+            <p className="text-xs text-gray-500">Preview not available</p>
           </div>
         );
     }
