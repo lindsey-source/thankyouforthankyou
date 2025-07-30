@@ -17,12 +17,21 @@ export const CardPreview: React.FC<CardPreviewProps> = ({
   recipientName,
   senderName 
 }) => {
+  console.log('CardPreview received template:', template);
+  console.log('CardPreview received photo:', photo);
+  
   if (!template) {
     return (
-      <Card className="h-80 border-2 border-dashed border-muted">
-        <CardContent className="h-full flex items-center justify-center">
-          <div className="text-center text-muted-foreground">
-            <p>Select a template to preview your card</p>
+      <Card className="bg-white/95 backdrop-blur-sm">
+        <CardContent className="p-6">
+          <div className="text-center space-y-4">
+            <h3 className="text-lg font-semibold">Card Preview</h3>
+            <div className="aspect-[3/4] border-2 border-dashed border-muted rounded-lg flex items-center justify-center text-muted-foreground">
+              <div className="text-center space-y-2">
+                <div className="text-4xl">📄</div>
+                <p>Select a template to see your card preview</p>
+              </div>
+            </div>
           </div>
         </CardContent>
       </Card>
