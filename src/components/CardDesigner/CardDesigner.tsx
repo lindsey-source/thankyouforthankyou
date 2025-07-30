@@ -51,6 +51,7 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
   ];
 
   const handlePhotoUpload = (file: File, preview: string) => {
+    console.log('Photo uploaded:', { file: file.name, preview: preview.substring(0, 50) + '...' });
     setDesign(prev => ({ ...prev, photo: { file, preview } }));
     setShowBackgroundRemover(true);
   };

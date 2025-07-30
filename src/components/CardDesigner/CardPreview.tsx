@@ -74,11 +74,19 @@ export const CardPreview: React.FC<CardPreviewProps> = ({
             className="w-full h-full p-4" 
             style={{ background: backgroundColor }}
           >
-            <div className="w-full h-2/3 mb-4 rounded-lg bg-gray-100 flex items-center justify-center">
-              <div className="text-center text-gray-400">
-                <div className="text-2xl mb-2">📷</div>
-                <p className="text-xs">Your photo will appear here</p>
-              </div>
+            <div className="w-full h-2/3 mb-4 rounded-lg bg-gray-100 flex items-center justify-center overflow-hidden">
+              {photo ? (
+                <img 
+                  src={photo.preview} 
+                  alt="Your uploaded photo" 
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="text-center text-gray-400">
+                  <div className="text-2xl mb-2">📷</div>
+                  <p className="text-xs">Your photo will appear here</p>
+                </div>
+              )}
             </div>
             <div className="text-center space-y-2">
               <p className="text-sm" style={{ color: textColor }}>{messageText}</p>
@@ -93,11 +101,21 @@ export const CardPreview: React.FC<CardPreviewProps> = ({
             className="w-full h-full flex rounded-lg overflow-hidden" 
             style={{ background: backgroundColor }}
           >
-            <div className="w-1/2 h-full bg-gray-100 flex items-center justify-center">
-              <div className="text-center text-gray-400">
-                <div className="text-2xl mb-2">📷</div>
-                <p className="text-xs">Photo</p>
-              </div>
+            <div className="w-1/2 h-full overflow-hidden">
+              {photo ? (
+                <img 
+                  src={photo.preview} 
+                  alt="Your uploaded photo" 
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="w-full h-full bg-gray-100 flex items-center justify-center">
+                  <div className="text-center text-gray-400">
+                    <div className="text-2xl mb-2">📷</div>
+                    <p className="text-xs">Photo</p>
+                  </div>
+                </div>
+              )}
             </div>
             <div className="w-1/2 h-full flex flex-col justify-center p-4">
               <div className="space-y-3">
@@ -114,11 +132,11 @@ export const CardPreview: React.FC<CardPreviewProps> = ({
             className="relative w-full h-full rounded-lg overflow-hidden"
             style={{ background: backgroundColor }}
           >
-            {/* Show template preview image if no photo */}
+            {/* Show uploaded photo or template preview image */}
             <div className="absolute inset-0">
               <img 
-                src={template.preview}
-                alt="Template background"
+                src={photo ? photo.preview : template.preview}
+                alt={photo ? "Your uploaded photo" : "Template background"}
                 className="w-full h-full object-cover"
                 onError={(e) => {
                   // Fallback to solid background if image fails
