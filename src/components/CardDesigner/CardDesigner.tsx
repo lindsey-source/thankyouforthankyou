@@ -7,6 +7,7 @@ import { CardTemplates, CardTemplate } from './CardTemplates';
 import { BackgroundRemover } from './BackgroundRemover';
 import { MessageCustomizer } from './MessageCustomizer';
 import { CardPreview } from './CardPreview';
+import { CampaignSaveDialog } from '@/components/CampaignSaveDialog';
 import { toast } from 'sonner';
 
 interface CardDesign {
@@ -275,10 +276,27 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
                     <ArrowRight className="h-4 w-4 ml-2" />
                   </Button>
                 ) : (
-                  <Button onClick={handleSaveDesign} variant="highlight">
-                    <Save className="h-4 w-4 mr-2" />
-                    Save Card Design
-                  </Button>
+                  <div className="flex gap-2">
+                    <CampaignSaveDialog 
+                      cardDesign={{
+                        template: design.template,
+                        message: design.message,
+                        recipientName: design.recipientName,
+                        senderName: design.senderName,
+                        uploadedImage: design.photo?.preview
+                      }}
+                      trigger={
+                        <Button variant="outline">
+                          <Save className="h-4 w-4 mr-2" />
+                          Save Campaign
+                        </Button>
+                      }
+                    />
+                    <Button onClick={handleSaveDesign} variant="highlight">
+                      <Save className="h-4 w-4 mr-2" />
+                      Save Card Design
+                    </Button>
+                  </div>
                 )}
               </div>
             </div>

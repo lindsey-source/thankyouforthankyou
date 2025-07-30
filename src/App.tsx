@@ -11,6 +11,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import SendThanks from "./pages/SendThanks";
 import CardDesign from "./pages/CardDesign";
+import SavedCampaigns from "./pages/SavedCampaigns";
 import CSVManager from "./pages/CSVManager";
 import Analytics from "./pages/Analytics";
 import Settings from "./pages/Settings";
@@ -48,10 +49,18 @@ const App = () => (
               } 
             />
             <Route 
-              path="/design-card" 
+              path="/card-design" 
               element={
                 <ProtectedRoute>
                   <CardDesign />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/saved-campaigns" 
+              element={
+                <ProtectedRoute>
+                  <SavedCampaigns />
                 </ProtectedRoute>
               } 
             />
