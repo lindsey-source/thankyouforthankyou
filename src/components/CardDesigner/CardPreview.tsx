@@ -55,42 +55,33 @@ export const CardPreview: React.FC<CardPreviewProps> = ({
       case 'full-background':
         return (
           <div 
-            className="relative w-full h-full rounded-lg overflow-hidden" 
+            className="relative w-full h-full rounded-lg overflow-hidden p-6 flex items-center justify-center" 
             style={{ 
-              backgroundColor: backgroundColor === 'transparent' ? 'rgba(0,0,0,0.1)' : backgroundColor,
-              backgroundImage: photo ? `url(${photo.preview})` : undefined,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center'
+              background: backgroundColor,
+              color: textColor
             }}
           >
-            {photo && (
-              <div className="absolute inset-0 bg-black/30"></div>
-            )}
-            <div className="relative z-10 h-full flex flex-col justify-center items-center p-6 text-center">
-              <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4 max-w-sm">
-                <p className="text-sm leading-relaxed mb-3">{messageText}</p>
-                <p className="text-xs font-medium" style={{ color: accentColor }}>{signature}</p>
-              </div>
+            <div className="text-center bg-black bg-opacity-20 p-4 rounded">
+              <p className="text-sm font-medium mb-2" style={{ color: textColor }}>{messageText}</p>
+              <p className="text-xs" style={{ color: accentColor }}>{signature}</p>
             </div>
           </div>
         );
 
       case 'photo-frame':
         return (
-          <div className="w-full h-full p-4" style={{ backgroundColor }}>
-            {/* Always show a placeholder area for photo, even if no photo */}
-            <div className="w-full h-2/3 mb-4 rounded-lg overflow-hidden shadow-soft bg-gray-100 flex items-center justify-center">
-              {photo ? (
-                <img src={photo.preview} alt="Card" className="w-full h-full object-cover" />
-              ) : (
-                <div className="text-center text-gray-400">
-                  <div className="text-2xl mb-2">📷</div>
-                  <p className="text-xs">Your photo will appear here</p>
-                </div>
-              )}
+          <div 
+            className="w-full h-full p-4" 
+            style={{ background: backgroundColor }}
+          >
+            <div className="w-full h-2/3 mb-4 rounded-lg bg-gray-100 flex items-center justify-center">
+              <div className="text-center text-gray-400">
+                <div className="text-2xl mb-2">📷</div>
+                <p className="text-xs">Your photo will appear here</p>
+              </div>
             </div>
             <div className="text-center space-y-2">
-              <p className="text-xs leading-relaxed" style={{ color: textColor }}>{messageText}</p>
+              <p className="text-sm" style={{ color: textColor }}>{messageText}</p>
               <p className="text-xs font-medium" style={{ color: accentColor }}>{signature}</p>
             </div>
           </div>
@@ -98,22 +89,19 @@ export const CardPreview: React.FC<CardPreviewProps> = ({
 
       case 'split-layout':
         return (
-          <div className="w-full h-full flex rounded-lg overflow-hidden" style={{ backgroundColor }}>
-            <div className="w-1/2 h-full">
-              {photo ? (
-                <img src={photo.preview} alt="Card" className="w-full h-full object-cover" />
-              ) : (
-                <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                  <div className="text-center text-gray-400">
-                    <div className="text-2xl mb-2">📷</div>
-                    <p className="text-xs">Your photo here</p>
-                  </div>
-                </div>
-              )}
+          <div 
+            className="w-full h-full flex rounded-lg overflow-hidden" 
+            style={{ background: backgroundColor }}
+          >
+            <div className="w-1/2 h-full bg-gray-100 flex items-center justify-center">
+              <div className="text-center text-gray-400">
+                <div className="text-2xl mb-2">📷</div>
+                <p className="text-xs">Photo</p>
+              </div>
             </div>
             <div className="w-1/2 h-full flex flex-col justify-center p-4">
               <div className="space-y-3">
-                <p className="text-sm leading-relaxed font-medium" style={{ color: textColor }}>{messageText}</p>
+                <p className="text-sm font-medium" style={{ color: textColor }}>{messageText}</p>
                 <p className="text-xs font-bold" style={{ color: accentColor }}>{signature}</p>
               </div>
             </div>
@@ -122,17 +110,27 @@ export const CardPreview: React.FC<CardPreviewProps> = ({
 
       case 'overlay-text':
         return (
-          <div className="relative w-full h-full rounded-lg overflow-hidden">
-            {photo && (
-              <img src={photo.preview} alt="Card" className="w-full h-full object-cover" />
-            )}
-            <div 
-              className="absolute bottom-0 left-0 right-0 p-4"
-              style={{ backgroundColor: 'rgba(0,0,0,0.6)' }}
-            >
-              <div className="text-center space-y-2">
-                <p className="text-xs leading-relaxed text-white">{messageText}</p>
-                <p className="text-xs font-medium" style={{ color: accentColor }}>{signature}</p>
+          <div 
+            className="relative w-full h-full rounded-lg overflow-hidden"
+            style={{ background: backgroundColor }}
+          >
+            {/* Show template preview image if no photo */}
+            <div className="absolute inset-0">
+              <img 
+                src={template.preview}
+                alt="Template background"
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  // Fallback to solid background if image fails
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
+            </div>
+            <div className="absolute inset-0 bg-black bg-opacity-30"></div>
+            <div className="relative z-10 h-full flex items-center justify-center p-4">
+              <div className="text-center bg-black bg-opacity-40 p-4 rounded">
+                <p className="text-sm font-medium mb-2 text-white">{messageText}</p>
+                <p className="text-xs text-white" style={{ color: accentColor }}>{signature}</p>
               </div>
             </div>
           </div>
@@ -140,8 +138,14 @@ export const CardPreview: React.FC<CardPreviewProps> = ({
 
       default:
         return (
-          <div className="w-full h-full flex items-center justify-center bg-gray-50">
-            <p className="text-xs text-gray-500">Preview not available</p>
+          <div 
+            className="w-full h-full flex items-center justify-center rounded-lg"
+            style={{ background: backgroundColor || '#f3f4f6' }}
+          >
+            <div className="text-center">
+              <p className="text-sm font-medium" style={{ color: textColor || '#000' }}>{messageText}</p>
+              <p className="text-xs mt-2" style={{ color: accentColor || '#666' }}>{signature}</p>
+            </div>
           </div>
         );
     }
