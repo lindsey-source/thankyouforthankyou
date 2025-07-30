@@ -39,8 +39,8 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
   const [showBackgroundRemover, setShowBackgroundRemover] = useState(false);
 
   const steps = [
-    { id: 1, title: 'Upload Photo', description: 'Add your special moment' },
-    { id: 2, title: 'Choose Template', description: 'Select card layout' },
+    { id: 1, title: 'Choose Template', description: 'Select card layout' },
+    { id: 2, title: 'Add Photo (Optional)', description: 'Upload your special moment' },
     { id: 3, title: 'Customize Message', description: 'Write your thank you' },
     { id: 4, title: 'Preview & Save', description: 'Review your card' },
   ];
@@ -66,14 +66,11 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
   };
 
   const handleNextStep = () => {
-    if (currentStep === 1 && !design.photo) {
-      toast.error('Please upload a photo first');
-      return;
-    }
-    if (currentStep === 2 && !design.template) {
+    if (currentStep === 1 && !design.template) {
       toast.error('Please select a card template');
       return;
     }
+    // Step 2 (photo upload) is optional - no validation needed
     if (currentStep === 3 && !design.message.trim()) {
       toast.error('Please write a thank you message');
       return;
@@ -91,8 +88,8 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
   };
 
   const handleSaveDesign = () => {
-    if (!design.photo || !design.template || !design.message.trim()) {
-      toast.error('Please complete all steps before saving');
+    if (!design.template || !design.message.trim()) {
+      toast.error('Please select a template and write a message before saving');
       return;
     }
     
@@ -102,10 +99,10 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
 
   const isStepComplete = (stepId: number) => {
     switch (stepId) {
-      case 1: return !!design.photo;
-      case 2: return !!design.template;
+      case 1: return !!design.template;
+      case 2: return true; // Photo step is optional
       case 3: return !!design.message.trim();
-      case 4: return !!design.photo && !!design.template && !!design.message.trim();
+      case 4: return !!design.template && !!design.message.trim();
       default: return false;
     }
   };
@@ -155,6 +152,13 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
           {/* Left Column - Design Tools */}
           <div className="space-y-6">
             {currentStep === 1 && (
+              <CardTemplates 
+                selectedTemplate={design.template?.id || null}
+                onTemplateSelect={handleTemplateSelect}
+              />
+            )}
+
+            {currentStep === 2 && (
               <div className="space-y-6">
                 <PhotoUpload 
                   onPhotoUpload={handlePhotoUpload}
@@ -169,13 +173,6 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
                   />
                 )}
               </div>
-            )}
-
-            {currentStep === 2 && (
-              <CardTemplates 
-                selectedTemplate={design.template?.id || null}
-                onTemplateSelect={handleTemplateSelect}
-              />
             )}
 
             {currentStep === 3 && (
@@ -200,7 +197,9 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
                         <span>Photo:</span>
-                        <span className="text-accent">✓ Uploaded</span>
+                        <span className={design.photo ? "text-accent" : "text-muted-foreground"}>
+                          {design.photo ? "✓ Uploaded" : "○ Optional"}
+                        </span>
                       </div>
                       <div className="flex justify-between">
                         <span>Template:</span>
