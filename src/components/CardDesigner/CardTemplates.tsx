@@ -22,7 +22,7 @@ const templates: CardTemplate[] = [
     id: 'elegant-frame',
     name: 'Elegant Frame',
     description: 'Classic border with photo centered',
-    preview: '🖼️',
+    preview: '/src/assets/card-navy-linen.jpg',
     style: {
       layout: 'photo-frame',
       textPosition: 'bottom',
@@ -35,7 +35,7 @@ const templates: CardTemplate[] = [
     id: 'full-background',
     name: 'Full Background',
     description: 'Photo fills entire card with overlay text',
-    preview: '🌅',
+    preview: '/src/assets/card-sunset-mountains.jpg',
     style: {
       layout: 'full-background',
       textPosition: 'center',
@@ -48,7 +48,7 @@ const templates: CardTemplate[] = [
     id: 'split-modern',
     name: 'Modern Split',
     description: 'Photo on left, message on right',
-    preview: '📱',
+    preview: '/src/assets/card-gold-modern.jpg',
     style: {
       layout: 'split-layout',
       textPosition: 'side',
@@ -61,7 +61,7 @@ const templates: CardTemplate[] = [
     id: 'minimal-overlay',
     name: 'Minimal Overlay',
     description: 'Subtle text overlay on photo',
-    preview: '✨',
+    preview: '/src/assets/card-sage-abstract.jpg',
     style: {
       layout: 'overlay-text',
       textPosition: 'bottom',
@@ -74,7 +74,7 @@ const templates: CardTemplate[] = [
     id: 'botanical-frame',
     name: 'Botanical Frame',
     description: 'Nature-inspired border with elegant typography',
-    preview: '🌿',
+    preview: '/src/assets/card-botanical-rustic.jpg',
     style: {
       layout: 'photo-frame',
       textPosition: 'bottom',
@@ -87,7 +87,7 @@ const templates: CardTemplate[] = [
     id: 'sunset-gradient',
     name: 'Sunset Gradient',
     description: 'Warm gradient background with photo overlay',
-    preview: '🌇',
+    preview: '/src/assets/card-coral-watercolor.jpg',
     style: {
       layout: 'overlay-text',
       textPosition: 'top',
@@ -100,7 +100,7 @@ const templates: CardTemplate[] = [
     id: 'polaroid-vintage',
     name: 'Vintage Polaroid',
     description: 'Classic polaroid style with handwritten feel',
-    preview: '📸',
+    preview: '/src/assets/card-vintage-botanical.jpg',
     style: {
       layout: 'photo-frame',
       textPosition: 'bottom',
@@ -113,7 +113,7 @@ const templates: CardTemplate[] = [
     id: 'ocean-wave',
     name: 'Ocean Wave',
     description: 'Flowing wave design with coastal vibes',
-    preview: '🌊',
+    preview: '/src/assets/card-navy-stars.jpg',
     style: {
       layout: 'split-layout',
       textPosition: 'side',
@@ -126,7 +126,7 @@ const templates: CardTemplate[] = [
     id: 'golden-hour',
     name: 'Golden Hour',
     description: 'Warm, luxurious gold accents with photo',
-    preview: '✨',
+    preview: '/src/assets/card-eucalyptus-gold.jpg',
     style: {
       layout: 'full-background',
       textPosition: 'center',
@@ -139,7 +139,7 @@ const templates: CardTemplate[] = [
     id: 'minimalist-zen',
     name: 'Minimalist Zen',
     description: 'Clean, simple design with plenty of white space',
-    preview: '⚪',
+    preview: '/src/assets/card-line-art-florals.jpg',
     style: {
       layout: 'photo-frame',
       textPosition: 'bottom',
@@ -152,7 +152,7 @@ const templates: CardTemplate[] = [
     id: 'cherry-blossom',
     name: 'Cherry Blossom',
     description: 'Soft pink theme with delicate spring vibes',
-    preview: '🌸',
+    preview: '/src/assets/card-cherry-blossom.jpg',
     style: {
       layout: 'overlay-text',
       textPosition: 'bottom',
@@ -165,7 +165,7 @@ const templates: CardTemplate[] = [
     id: 'starry-night',
     name: 'Starry Night',
     description: 'Deep blue night sky with starlight accents',
-    preview: '⭐',
+    preview: '/src/assets/starry-night.jpg',
     style: {
       layout: 'full-background',
       textPosition: 'center',
@@ -178,7 +178,7 @@ const templates: CardTemplate[] = [
     id: 'rustic-wood',
     name: 'Rustic Wood',
     description: 'Warm wooden texture with handcrafted feel',
-    preview: '🪵',
+    preview: '/src/assets/pine-trees.jpg',
     style: {
       layout: 'split-layout',
       textPosition: 'side',
@@ -191,7 +191,7 @@ const templates: CardTemplate[] = [
     id: 'marble-luxury',
     name: 'Marble Luxury',
     description: 'Elegant marble pattern with sophisticated text',
-    preview: '💎',
+    preview: '/src/assets/card-emerald-marble.jpg',
     style: {
       layout: 'photo-frame',
       textPosition: 'bottom',
@@ -204,13 +204,52 @@ const templates: CardTemplate[] = [
     id: 'watercolor-splash',
     name: 'Watercolor Splash',
     description: 'Artistic watercolor background with flowing design',
-    preview: '🎨',
+    preview: '/src/assets/ocean-wave.jpg',
     style: {
       layout: 'overlay-text',
       textPosition: 'top',
       backgroundColor: 'rgba(129, 236, 236, 0.3)',
       textColor: '#0D7377',
       accentColor: '#14A085'
+    }
+  },
+  {
+    id: 'floral-pink',
+    name: 'Floral Pink',
+    description: 'Delicate pink florals with romantic feel',
+    preview: '/src/assets/card-floral-pink.jpg',
+    style: {
+      layout: 'photo-frame',
+      textPosition: 'bottom',
+      backgroundColor: '#FFF0F5',
+      textColor: '#8B008B',
+      accentColor: '#FF69B4'
+    }
+  },
+  {
+    id: 'blush-botanical',
+    name: 'Blush Botanical',
+    description: 'Soft blush tones with botanical elements',
+    preview: '/src/assets/card-blush-botanical.jpg',
+    style: {
+      layout: 'overlay-text',
+      textPosition: 'bottom',
+      backgroundColor: 'rgba(255, 218, 185, 0.4)',
+      textColor: '#8B4513',
+      accentColor: '#CD853F'
+    }
+  },
+  {
+    id: 'wildflower-ink',
+    name: 'Wildflower Ink',
+    description: 'Hand-drawn wildflowers with ink details',
+    preview: '/src/assets/card-wildflower-ink.jpg',
+    style: {
+      layout: 'split-layout',
+      textPosition: 'side',
+      backgroundColor: '#F5F5F0',
+      textColor: '#2F4F4F',
+      accentColor: '#6B8E23'
     }
   }
 ];
@@ -246,7 +285,27 @@ export const CardTemplates: React.FC<CardTemplatesProps> = ({
           >
             <CardContent className="p-4">
               <div className="flex items-start gap-3">
-                <div className="text-3xl">{template.preview}</div>
+                {/* Template preview image */}
+                <div className="w-16 h-20 flex-shrink-0 rounded overflow-hidden border">
+                  <img 
+                    src={template.preview}
+                    alt={template.name}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      // Fallback to emoji if image fails to load
+                      const img = e.currentTarget as HTMLImageElement;
+                      const fallback = img.nextElementSibling as HTMLDivElement;
+                      img.style.display = 'none';
+                      fallback.style.display = 'flex';
+                    }}
+                  />
+                  <div 
+                    className="w-full h-full bg-muted flex items-center justify-center text-2xl" 
+                    style={{ display: 'none' }}
+                  >
+                    🎨
+                  </div>
+                </div>
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-1">
                     <h4 className="font-medium">{template.name}</h4>
@@ -259,23 +318,6 @@ export const CardTemplates: React.FC<CardTemplatesProps> = ({
                   <p className="text-sm text-muted-foreground">
                     {template.description}
                   </p>
-                </div>
-              </div>
-              
-              {/* Template preview */}
-              <div className="mt-3 h-20 rounded border-2 border-dashed border-muted relative overflow-hidden">
-                <div 
-                  className="w-full h-full flex items-center justify-center text-xs"
-                  style={{ 
-                    backgroundColor: template.style.backgroundColor === 'transparent' 
-                      ? '#f0f0f0' 
-                      : template.style.backgroundColor 
-                  }}
-                >
-                  <div className="text-center space-y-1">
-                    <div className="w-8 h-6 bg-gray-300 mx-auto rounded"></div>
-                    <div className="w-12 h-1 bg-gray-400 mx-auto rounded"></div>
-                  </div>
                 </div>
               </div>
             </CardContent>
