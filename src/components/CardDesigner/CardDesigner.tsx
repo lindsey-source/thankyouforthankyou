@@ -62,21 +62,28 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
   };
 
   const handleTemplateSelect = (template: CardTemplate) => {
+    console.log('Template selected:', template);
     setDesign(prev => ({ ...prev, template }));
   };
 
   const handleNextStep = () => {
+    console.log('Next step clicked, current step:', currentStep);
+    console.log('Current design state:', design);
+    
     if (currentStep === 1 && !design.template) {
+      console.log('No template selected, showing error');
       toast.error('Please select a card template');
       return;
     }
     // Step 2 (photo upload) is optional - no validation needed
     if (currentStep === 3 && !design.message.trim()) {
+      console.log('No message entered, showing error');
       toast.error('Please write a thank you message');
       return;
     }
     
     if (currentStep < steps.length) {
+      console.log('Moving to next step:', currentStep + 1);
       setCurrentStep(currentStep + 1);
     }
   };

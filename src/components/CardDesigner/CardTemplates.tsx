@@ -3,6 +3,26 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Check } from 'lucide-react';
 
+// Import all card template images
+import cardNavyLinen from '@/assets/card-navy-linen.jpg';
+import cardSunsetMountains from '@/assets/card-sunset-mountains.jpg';
+import cardGoldModern from '@/assets/card-gold-modern.jpg';
+import cardSageAbstract from '@/assets/card-sage-abstract.jpg';
+import cardBotanicalRustic from '@/assets/card-botanical-rustic.jpg';
+import cardCoralWatercolor from '@/assets/card-coral-watercolor.jpg';
+import cardVintageBotanical from '@/assets/card-vintage-botanical.jpg';
+import cardNavyStars from '@/assets/card-navy-stars.jpg';
+import cardEucalyptusGold from '@/assets/card-eucalyptus-gold.jpg';
+import cardLineArtFlorals from '@/assets/card-line-art-florals.jpg';
+import cardCherryBlossom from '@/assets/card-cherry-blossom.jpg';
+import starryNight from '@/assets/starry-night.jpg';
+import pineTrees from '@/assets/pine-trees.jpg';
+import cardEmeraldMarble from '@/assets/card-emerald-marble.jpg';
+import oceanWave from '@/assets/ocean-wave.jpg';
+import cardFloralPink from '@/assets/card-floral-pink.jpg';
+import cardBlushBotanical from '@/assets/card-blush-botanical.jpg';
+import cardWildflowerInk from '@/assets/card-wildflower-ink.jpg';
+
 export interface CardTemplate {
   id: string;
   name: string;
@@ -22,7 +42,7 @@ const templates: CardTemplate[] = [
     id: 'elegant-frame',
     name: 'Elegant Frame',
     description: 'Classic border with photo centered',
-    preview: '/src/assets/card-navy-linen.jpg',
+    preview: cardNavyLinen,
     style: {
       layout: 'photo-frame',
       textPosition: 'bottom',
@@ -35,7 +55,7 @@ const templates: CardTemplate[] = [
     id: 'full-background',
     name: 'Full Background',
     description: 'Photo fills entire card with overlay text',
-    preview: '/src/assets/card-sunset-mountains.jpg',
+    preview: cardSunsetMountains,
     style: {
       layout: 'full-background',
       textPosition: 'center',
@@ -48,7 +68,7 @@ const templates: CardTemplate[] = [
     id: 'split-modern',
     name: 'Modern Split',
     description: 'Photo on left, message on right',
-    preview: '/src/assets/card-gold-modern.jpg',
+    preview: cardGoldModern,
     style: {
       layout: 'split-layout',
       textPosition: 'side',
@@ -61,7 +81,7 @@ const templates: CardTemplate[] = [
     id: 'minimal-overlay',
     name: 'Minimal Overlay',
     description: 'Subtle text overlay on photo',
-    preview: '/src/assets/card-sage-abstract.jpg',
+    preview: cardSageAbstract,
     style: {
       layout: 'overlay-text',
       textPosition: 'bottom',
@@ -74,7 +94,7 @@ const templates: CardTemplate[] = [
     id: 'botanical-frame',
     name: 'Botanical Frame',
     description: 'Nature-inspired border with elegant typography',
-    preview: '/src/assets/card-botanical-rustic.jpg',
+    preview: cardBotanicalRustic,
     style: {
       layout: 'photo-frame',
       textPosition: 'bottom',
@@ -87,7 +107,7 @@ const templates: CardTemplate[] = [
     id: 'sunset-gradient',
     name: 'Sunset Gradient',
     description: 'Warm gradient background with photo overlay',
-    preview: '/src/assets/card-coral-watercolor.jpg',
+    preview: cardCoralWatercolor,
     style: {
       layout: 'overlay-text',
       textPosition: 'top',
@@ -100,7 +120,7 @@ const templates: CardTemplate[] = [
     id: 'polaroid-vintage',
     name: 'Vintage Polaroid',
     description: 'Classic polaroid style with handwritten feel',
-    preview: '/src/assets/card-vintage-botanical.jpg',
+    preview: cardVintageBotanical,
     style: {
       layout: 'photo-frame',
       textPosition: 'bottom',
@@ -113,7 +133,7 @@ const templates: CardTemplate[] = [
     id: 'ocean-wave',
     name: 'Ocean Wave',
     description: 'Flowing wave design with coastal vibes',
-    preview: '/src/assets/card-navy-stars.jpg',
+    preview: cardNavyStars,
     style: {
       layout: 'split-layout',
       textPosition: 'side',
@@ -126,7 +146,7 @@ const templates: CardTemplate[] = [
     id: 'golden-hour',
     name: 'Golden Hour',
     description: 'Warm, luxurious gold accents with photo',
-    preview: '/src/assets/card-eucalyptus-gold.jpg',
+    preview: cardEucalyptusGold,
     style: {
       layout: 'full-background',
       textPosition: 'center',
@@ -139,7 +159,7 @@ const templates: CardTemplate[] = [
     id: 'minimalist-zen',
     name: 'Minimalist Zen',
     description: 'Clean, simple design with plenty of white space',
-    preview: '/src/assets/card-line-art-florals.jpg',
+    preview: cardLineArtFlorals,
     style: {
       layout: 'photo-frame',
       textPosition: 'bottom',
@@ -152,7 +172,7 @@ const templates: CardTemplate[] = [
     id: 'cherry-blossom',
     name: 'Cherry Blossom',
     description: 'Soft pink theme with delicate spring vibes',
-    preview: '/src/assets/card-cherry-blossom.jpg',
+    preview: cardCherryBlossom,
     style: {
       layout: 'overlay-text',
       textPosition: 'bottom',
@@ -165,7 +185,7 @@ const templates: CardTemplate[] = [
     id: 'starry-night',
     name: 'Starry Night',
     description: 'Deep blue night sky with starlight accents',
-    preview: '/src/assets/starry-night.jpg',
+    preview: starryNight,
     style: {
       layout: 'full-background',
       textPosition: 'center',
@@ -178,7 +198,7 @@ const templates: CardTemplate[] = [
     id: 'rustic-wood',
     name: 'Rustic Wood',
     description: 'Warm wooden texture with handcrafted feel',
-    preview: '/src/assets/pine-trees.jpg',
+    preview: pineTrees,
     style: {
       layout: 'split-layout',
       textPosition: 'side',
@@ -191,7 +211,7 @@ const templates: CardTemplate[] = [
     id: 'marble-luxury',
     name: 'Marble Luxury',
     description: 'Elegant marble pattern with sophisticated text',
-    preview: '/src/assets/card-emerald-marble.jpg',
+    preview: cardEmeraldMarble,
     style: {
       layout: 'photo-frame',
       textPosition: 'bottom',
@@ -204,7 +224,7 @@ const templates: CardTemplate[] = [
     id: 'watercolor-splash',
     name: 'Watercolor Splash',
     description: 'Artistic watercolor background with flowing design',
-    preview: '/src/assets/ocean-wave.jpg',
+    preview: oceanWave,
     style: {
       layout: 'overlay-text',
       textPosition: 'top',
@@ -217,7 +237,7 @@ const templates: CardTemplate[] = [
     id: 'floral-pink',
     name: 'Floral Pink',
     description: 'Delicate pink florals with romantic feel',
-    preview: '/src/assets/card-floral-pink.jpg',
+    preview: cardFloralPink,
     style: {
       layout: 'photo-frame',
       textPosition: 'bottom',
@@ -230,7 +250,7 @@ const templates: CardTemplate[] = [
     id: 'blush-botanical',
     name: 'Blush Botanical',
     description: 'Soft blush tones with botanical elements',
-    preview: '/src/assets/card-blush-botanical.jpg',
+    preview: cardBlushBotanical,
     style: {
       layout: 'overlay-text',
       textPosition: 'bottom',
@@ -243,7 +263,7 @@ const templates: CardTemplate[] = [
     id: 'wildflower-ink',
     name: 'Wildflower Ink',
     description: 'Hand-drawn wildflowers with ink details',
-    preview: '/src/assets/card-wildflower-ink.jpg',
+    preview: cardWildflowerInk,
     style: {
       layout: 'split-layout',
       textPosition: 'side',
