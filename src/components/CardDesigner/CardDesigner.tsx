@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, ArrowLeft, Save } from 'lucide-react';
@@ -37,6 +37,11 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
     senderName: initialDesign.senderName || '',
   });
   const [showBackgroundRemover, setShowBackgroundRemover] = useState(false);
+
+  // Track design state changes for debugging
+  useEffect(() => {
+    console.log('Design state changed:', design);
+  }, [design]);
 
   const steps = [
     { id: 1, title: 'Choose Template', description: 'Select card layout' },

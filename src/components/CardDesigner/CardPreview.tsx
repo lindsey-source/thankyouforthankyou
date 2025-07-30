@@ -71,11 +71,17 @@ export const CardPreview: React.FC<CardPreviewProps> = ({
       case 'photo-frame':
         return (
           <div className="w-full h-full p-4" style={{ backgroundColor }}>
-            {photo && (
-              <div className="w-full h-2/3 mb-4 rounded-lg overflow-hidden shadow-soft">
+            {/* Always show a placeholder area for photo, even if no photo */}
+            <div className="w-full h-2/3 mb-4 rounded-lg overflow-hidden shadow-soft bg-gray-100 flex items-center justify-center">
+              {photo ? (
                 <img src={photo.preview} alt="Card" className="w-full h-full object-cover" />
-              </div>
-            )}
+              ) : (
+                <div className="text-center text-gray-400">
+                  <div className="text-2xl mb-2">📷</div>
+                  <p className="text-xs">Your photo will appear here</p>
+                </div>
+              )}
+            </div>
             <div className="text-center space-y-2">
               <p className="text-xs leading-relaxed" style={{ color: textColor }}>{messageText}</p>
               <p className="text-xs font-medium" style={{ color: accentColor }}>{signature}</p>
@@ -132,25 +138,25 @@ export const CardPreview: React.FC<CardPreviewProps> = ({
   };
 
   return (
-    <div className="space-y-4">
-      <div>
-        <h3 className="text-lg font-semibold mb-2">Card Preview</h3>
-        <p className="text-sm text-muted-foreground">
-          How your thank you card will look
-        </p>
-      </div>
-      
-      <Card className="shadow-soft">
-        <CardContent className="p-0">
-          <div className="aspect-[3/4] w-full max-w-sm mx-auto">
+    <Card className="bg-white/95 backdrop-blur-sm">
+      <CardContent className="p-6">
+        <div className="space-y-4">
+          <div>
+            <h3 className="text-lg font-semibold mb-2">Card Preview</h3>
+            <p className="text-sm text-muted-foreground">
+              How your thank you card will look
+            </p>
+          </div>
+          
+          <div className="aspect-[3/4] w-full max-w-sm mx-auto border rounded-lg overflow-hidden bg-white shadow-sm">
             {renderCard()}
           </div>
-        </CardContent>
-      </Card>
 
-      <div className="text-center text-xs text-muted-foreground">
-        Template: {template.name}
-      </div>
-    </div>
+          <div className="text-center text-xs text-muted-foreground">
+            Template: {template.name}
+          </div>
+        </div>
+      </CardContent>
+    </Card>
   );
 };
