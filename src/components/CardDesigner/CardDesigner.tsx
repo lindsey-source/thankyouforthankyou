@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, ArrowLeft, Save } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { PhotoUpload } from './PhotoUpload';
 import { CardTemplates, CardTemplate } from './CardTemplates';
 import { BackgroundRemover } from './BackgroundRemover';
@@ -29,6 +30,7 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
   onCancel, 
   initialDesign = {} 
 }) => {
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [design, setDesign] = useState<CardDesign>({
     photo: initialDesign.photo || null,
@@ -120,6 +122,11 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
     
     onSaveDesign(design);
     toast.success('Card design saved successfully!');
+  };
+
+  const handleCampaignSaved = (campaignId: string) => {
+    toast.success('Campaign saved successfully!');
+    navigate('/dashboard');
   };
 
   const isStepComplete = (stepId: number) => {
@@ -285,6 +292,7 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
                         senderName: design.senderName,
                         uploadedImage: design.photo?.preview
                       }}
+                      onSaved={handleCampaignSaved}
                       trigger={
                         <Button variant="outline">
                           <Save className="h-4 w-4 mr-2" />
