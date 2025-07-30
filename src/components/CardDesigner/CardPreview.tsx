@@ -91,20 +91,23 @@ export const CardPreview: React.FC<CardPreviewProps> = ({
 
       case 'split-layout':
         return (
-          <div className="w-full h-full flex" style={{ backgroundColor }}>
+          <div className="w-full h-full flex rounded-lg overflow-hidden" style={{ backgroundColor }}>
             <div className="w-1/2 h-full">
               {photo ? (
                 <img src={photo.preview} alt="Card" className="w-full h-full object-cover" />
               ) : (
                 <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                  <span className="text-gray-400 text-xs">Photo</span>
+                  <div className="text-center text-gray-400">
+                    <div className="text-2xl mb-2">📷</div>
+                    <p className="text-xs">Your photo here</p>
+                  </div>
                 </div>
               )}
             </div>
             <div className="w-1/2 h-full flex flex-col justify-center p-4">
-              <div className="space-y-2">
-                <p className="text-xs leading-relaxed" style={{ color: textColor }}>{messageText}</p>
-                <p className="text-xs font-medium" style={{ color: accentColor }}>{signature}</p>
+              <div className="space-y-3">
+                <p className="text-sm leading-relaxed font-medium" style={{ color: textColor }}>{messageText}</p>
+                <p className="text-xs font-bold" style={{ color: accentColor }}>{signature}</p>
               </div>
             </div>
           </div>
