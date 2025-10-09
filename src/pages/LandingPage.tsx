@@ -66,9 +66,9 @@ const LandingPage = () => {
                 </div>
               </div>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Link to="/signup">
+                <Link to="/auth">
                   <Button variant="hero" size="xl" className="bg-white text-primary hover:bg-white/90">
-                    Get Started for Free
+                    Create Your Card Now
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>

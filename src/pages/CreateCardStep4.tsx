@@ -1,0 +1,254 @@
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useCardWizard } from '@/contexts/CardWizardContext';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { motion } from 'framer-motion';
+import { ArrowLeft, ArrowRight, Upload, X } from 'lucide-react';
+import { toast } from 'sonner';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
+
+const envelopeColors = [
+  { id: 'cream', color: '#F5E6D3', name: 'Classic Cream' },
+  { id: 'pink', color: '#FFF0F5', name: 'Blush Pink' },
+  { id: 'blue', color: '#E8EDF4', name: 'Sky Blue' },
+  { id: 'green', color: '#F8FBF8', name: 'Sage Green' }
+];
+
+const textures = [
+  { id: 'smooth', name: 'Smooth' },
+  { id: 'linen', name: 'Linen' },
+  { id: 'watercolor', name: 'Watercolor' }
+];
+
+const signatureStyles = [
+  { id: 'none', name: 'No Signature' },
+  { id: 'handwritten', name: 'Handwritten Script' },
+  { id: 'typed', name: 'Typed Name' }
+];
+
+export default function CreateCardStep4() {
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const { cardData, updateCardData, setCurrentStep } = useCardWizard();
+  const [uploading, setUploading] = useState(false);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const [selectedEnvelope, setSelectedEnvelope] = useState(envelopeColors[0].id);
+  const [selectedTexture, setSelectedTexture] = useState(textures[0].id);
+  const [selectedSignature, setSelectedSignature] = useState(signatureStyles[0].id);
+
+  const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      toast.error('Please upload an image file');
+      return;
+    }
+
+    // Validate file size (5MB max)
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error('Image must be less than 5MB');
+      return;
+    }
+
+    setUploading(true);
+    
+    try {
+      // Create preview
+      const preview = URL.createObjectURL(file);
+      setPhotoPreview(preview);
+
+      // Upload to Supabase Storage
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${user?.id}-${Date.now()}.${fileExt}`;
+      const filePath = `card-photos/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('card-photos')
+        .upload(filePath, file);
+
+      if (uploadError) throw uploadError;
+
+      // Get public URL
+      const { data: urlData } = supabase.storage
+        .from('card-photos')
+        .getPublicUrl(filePath);
+
+      updateCardData({ photoUrl: urlData.publicUrl });
+      toast.success('Photo uploaded successfully!');
+    } catch (error: any) {
+      console.error('Upload error:', error);
+      toast.error(error.message || 'Failed to upload photo');
+      setPhotoPreview(null);
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleRemovePhoto = () => {
+    setPhotoPreview(null);
+    updateCardData({ photoUrl: null });
+  };
+
+  const handleNext = () => {
+    updateCardData({
+      envelopeColor: selectedEnvelope,
+      texture: selectedTexture,
+      signatureStyle: selectedSignature
+    });
+    setCurrentStep(5);
+    navigate('/create-card/step5');
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-hero p-4 md:p-8">
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-8">
+          <motion.h1 
+            className="text-3xl md:text-4xl font-bold text-white mb-2"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            Add finishing touches
+          </motion.h1>
+          <p className="text-white/90">Make your card uniquely yours</p>
+        </div>
+
+        <div className="space-y-6">
+          {/* Photo Upload */}
+          <Card className="bg-white/95 backdrop-blur-sm">
+            <CardContent className="p-6">
+              <Label className="text-lg font-semibold mb-4 block">Add a Photo (Optional)</Label>
+              {!photoPreview ? (
+                <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-primary transition-colors">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handlePhotoUpload}
+                    className="hidden"
+                    id="photo-upload"
+                    disabled={uploading}
+                  />
+                  <label htmlFor="photo-upload" className="cursor-pointer">
+                    <Upload className="w-12 h-12 mx-auto mb-4 text-gray-400" />
+                    <p className="text-sm text-muted-foreground mb-2">
+                      {uploading ? 'Uploading...' : 'Click to upload or drag and drop'}
+                    </p>
+                    <p className="text-xs text-muted-foreground">PNG, JPG up to 5MB</p>
+                  </label>
+                </div>
+              ) : (
+                <div className="relative">
+                  <img
+                    src={photoPreview}
+                    alt="Preview"
+                    className="w-full h-64 object-cover rounded-lg"
+                  />
+                  <button
+                    onClick={handleRemovePhoto}
+                    className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Envelope Color */}
+          <Card className="bg-white/95 backdrop-blur-sm">
+            <CardContent className="p-6">
+              <Label className="text-lg font-semibold mb-4 block">Envelope Color</Label>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {envelopeColors.map((env) => (
+                  <div
+                    key={env.id}
+                    onClick={() => setSelectedEnvelope(env.id)}
+                    className={`cursor-pointer p-4 rounded-lg border-2 transition-all ${
+                      selectedEnvelope === env.id
+                        ? 'border-primary ring-2 ring-primary'
+                        : 'border-gray-200 hover:border-gray-300'
+                    }`}
+                  >
+                    <div
+                      className="w-full h-16 rounded-lg mb-2"
+                      style={{ backgroundColor: env.color }}
+                    />
+                    <p className="text-sm font-medium text-center">{env.name}</p>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Paper Texture */}
+          <Card className="bg-white/95 backdrop-blur-sm">
+            <CardContent className="p-6">
+              <Label className="text-lg font-semibold mb-4 block">Paper Texture</Label>
+              <div className="grid grid-cols-3 gap-4">
+                {textures.map((texture) => (
+                  <div
+                    key={texture.id}
+                    onClick={() => setSelectedTexture(texture.id)}
+                    className={`cursor-pointer p-4 rounded-lg border-2 text-center transition-all ${
+                      selectedTexture === texture.id
+                        ? 'border-primary ring-2 ring-primary bg-primary/5'
+                        : 'border-gray-200 hover:border-gray-300'
+                    }`}
+                  >
+                    <p className="font-medium">{texture.name}</p>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Signature Style */}
+          <Card className="bg-white/95 backdrop-blur-sm">
+            <CardContent className="p-6">
+              <Label className="text-lg font-semibold mb-4 block">Add My Signature</Label>
+              <div className="grid grid-cols-3 gap-4">
+                {signatureStyles.map((style) => (
+                  <div
+                    key={style.id}
+                    onClick={() => setSelectedSignature(style.id)}
+                    className={`cursor-pointer p-4 rounded-lg border-2 text-center transition-all ${
+                      selectedSignature === style.id
+                        ? 'border-primary ring-2 ring-primary bg-primary/5'
+                        : 'border-gray-200 hover:border-gray-300'
+                    }`}
+                  >
+                    <p className="font-medium">{style.name}</p>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Navigation */}
+        <div className="mt-8 flex justify-between items-center">
+          <Button
+            variant="outline"
+            onClick={() => navigate('/create-card/step3')}
+            className="bg-white/95"
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back
+          </Button>
+          
+          <p className="text-sm text-white/70">Step 4 of 5</p>
+          
+          <Button variant="hero" onClick={handleNext}>
+            Next
+            <ArrowRight className="w-4 h-4 ml-2" />
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
