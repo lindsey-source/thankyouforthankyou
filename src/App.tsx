@@ -32,74 +32,15 @@ const App = () => (
             <Route path="/" element={<LandingPage />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
-            <Route 
-              path="/dashboard" 
-              element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/send-thanks" 
-              element={
-                <ProtectedRoute>
-                  <SendThanks />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/card-design" 
-              element={
-                <ProtectedRoute>
-                  <CardDesign />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/saved-campaigns" 
-              element={
-                <ProtectedRoute>
-                  <SavedCampaigns />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/csv-upload" 
-              element={
-                <ProtectedRoute>
-                  <CSVManager />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/analytics" 
-              element={
-                <ProtectedRoute>
-                  <Analytics />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/settings" 
-              element={
-                <ProtectedRoute>
-                  <Settings />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/help" 
-              element={<Help />} 
-            />
-            <Route 
-              path="/campaign/:id" 
-              element={
-                <ProtectedRoute>
-                  <CampaignDetail />
-                </ProtectedRoute>
-              } 
-            />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/send-thanks" element={<SendThanks />} />
+            <Route path="/card-design" element={<CardDesign />} />
+            <Route path="/saved-campaigns" element={<SavedCampaigns />} />
+            <Route path="/csv-upload" element={<CSVManager />} />
+            <Route path="/analytics" element={<Analytics />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/help" element={<Help />} />
+            <Route path="/campaign/:id" element={<CampaignDetail />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
