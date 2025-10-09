@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Check } from 'lucide-react';
 
 // Import all card template images
@@ -23,10 +24,13 @@ import cardFloralPink from '@/assets/card-floral-pink.jpg';
 import cardBlushBotanical from '@/assets/card-blush-botanical.jpg';
 import cardWildflowerInk from '@/assets/card-wildflower-ink.jpg';
 
+export type TemplateCategory = 'wedding' | 'baby' | 'baby-shower' | 'general' | 'celebration';
+
 export interface CardTemplate {
   id: string;
   name: string;
   description: string;
+  category: TemplateCategory;
   preview: string;
   style: {
     layout: 'full-background' | 'photo-frame' | 'split-layout' | 'overlay-text';
@@ -42,6 +46,7 @@ const templates: CardTemplate[] = [
     id: 'elegant-frame',
     name: 'Elegant Frame',
     description: 'Classic border with photo centered',
+    category: 'wedding',
     preview: cardNavyLinen,
     style: {
       layout: 'photo-frame',
@@ -55,6 +60,7 @@ const templates: CardTemplate[] = [
     id: 'full-background',
     name: 'Full Background',
     description: 'Photo fills entire card with overlay text',
+    category: 'general',
     preview: cardSunsetMountains,
     style: {
       layout: 'full-background',
@@ -68,6 +74,7 @@ const templates: CardTemplate[] = [
     id: 'split-modern',
     name: 'Modern Split',
     description: 'Photo on left, message on right',
+    category: 'wedding',
     preview: cardGoldModern,
     style: {
       layout: 'split-layout',
@@ -81,6 +88,7 @@ const templates: CardTemplate[] = [
     id: 'minimal-overlay',
     name: 'Minimal Overlay',
     description: 'Subtle text overlay on photo',
+    category: 'general',
     preview: cardSageAbstract,
     style: {
       layout: 'overlay-text',
@@ -94,6 +102,7 @@ const templates: CardTemplate[] = [
     id: 'botanical-frame',
     name: 'Botanical Frame',
     description: 'Nature-inspired border with elegant typography',
+    category: 'baby-shower',
     preview: cardBotanicalRustic,
     style: {
       layout: 'photo-frame',
@@ -107,6 +116,7 @@ const templates: CardTemplate[] = [
     id: 'sunset-gradient',
     name: 'Sunset Gradient',
     description: 'Warm gradient background with photo overlay',
+    category: 'celebration',
     preview: cardCoralWatercolor,
     style: {
       layout: 'overlay-text',
@@ -120,6 +130,7 @@ const templates: CardTemplate[] = [
     id: 'polaroid-vintage',
     name: 'Vintage Polaroid',
     description: 'Classic polaroid style with handwritten feel',
+    category: 'baby',
     preview: cardVintageBotanical,
     style: {
       layout: 'photo-frame',
@@ -133,6 +144,7 @@ const templates: CardTemplate[] = [
     id: 'ocean-wave',
     name: 'Ocean Wave',
     description: 'Flowing wave design with coastal vibes',
+    category: 'baby-shower',
     preview: cardNavyStars,
     style: {
       layout: 'split-layout',
@@ -146,6 +158,7 @@ const templates: CardTemplate[] = [
     id: 'golden-hour',
     name: 'Golden Hour',
     description: 'Warm, luxurious gold accents with photo',
+    category: 'wedding',
     preview: cardEucalyptusGold,
     style: {
       layout: 'full-background',
@@ -159,6 +172,7 @@ const templates: CardTemplate[] = [
     id: 'minimalist-zen',
     name: 'Minimalist Zen',
     description: 'Clean, simple design with plenty of white space',
+    category: 'general',
     preview: cardLineArtFlorals,
     style: {
       layout: 'photo-frame',
@@ -172,6 +186,7 @@ const templates: CardTemplate[] = [
     id: 'cherry-blossom',
     name: 'Cherry Blossom',
     description: 'Soft pink theme with delicate spring vibes',
+    category: 'baby-shower',
     preview: cardCherryBlossom,
     style: {
       layout: 'overlay-text',
@@ -185,6 +200,7 @@ const templates: CardTemplate[] = [
     id: 'starry-night',
     name: 'Starry Night',
     description: 'Deep blue night sky with starlight accents',
+    category: 'celebration',
     preview: starryNight,
     style: {
       layout: 'full-background',
@@ -198,6 +214,7 @@ const templates: CardTemplate[] = [
     id: 'rustic-wood',
     name: 'Rustic Wood',
     description: 'Warm wooden texture with handcrafted feel',
+    category: 'wedding',
     preview: pineTrees,
     style: {
       layout: 'split-layout',
@@ -211,6 +228,7 @@ const templates: CardTemplate[] = [
     id: 'marble-luxury',
     name: 'Marble Luxury',
     description: 'Elegant marble pattern with sophisticated text',
+    category: 'wedding',
     preview: cardEmeraldMarble,
     style: {
       layout: 'photo-frame',
@@ -224,6 +242,7 @@ const templates: CardTemplate[] = [
     id: 'watercolor-splash',
     name: 'Watercolor Splash',
     description: 'Artistic watercolor background with flowing design',
+    category: 'baby',
     preview: oceanWave,
     style: {
       layout: 'overlay-text',
@@ -237,6 +256,7 @@ const templates: CardTemplate[] = [
     id: 'floral-pink',
     name: 'Floral Pink',
     description: 'Delicate pink florals with romantic feel',
+    category: 'baby',
     preview: cardFloralPink,
     style: {
       layout: 'photo-frame',
@@ -250,6 +270,7 @@ const templates: CardTemplate[] = [
     id: 'blush-botanical',
     name: 'Blush Botanical',
     description: 'Soft blush tones with botanical elements',
+    category: 'baby-shower',
     preview: cardBlushBotanical,
     style: {
       layout: 'overlay-text',
@@ -263,6 +284,7 @@ const templates: CardTemplate[] = [
     id: 'wildflower-ink',
     name: 'Wildflower Ink',
     description: 'Hand-drawn wildflowers with ink details',
+    category: 'general',
     preview: cardWildflowerInk,
     style: {
       layout: 'split-layout',
@@ -274,6 +296,14 @@ const templates: CardTemplate[] = [
   }
 ];
 
+const categoryLabels: Record<TemplateCategory, string> = {
+  wedding: 'Wedding',
+  baby: 'Baby/Birth',
+  'baby-shower': 'Baby Shower',
+  general: 'General',
+  celebration: 'Celebration'
+};
+
 interface CardTemplatesProps {
   selectedTemplate: string | null;
   onTemplateSelect: (template: CardTemplate) => void;
@@ -283,67 +313,87 @@ export const CardTemplates: React.FC<CardTemplatesProps> = ({
   selectedTemplate, 
   onTemplateSelect 
 }) => {
+  const [activeCategory, setActiveCategory] = useState<TemplateCategory | 'all'>('all');
+
+  const filteredTemplates = activeCategory === 'all' 
+    ? templates 
+    : templates.filter(t => t.category === activeCategory);
+
+  const renderTemplateCard = (template: CardTemplate) => (
+    <Card 
+      key={template.id}
+      className={`cursor-pointer transition-all hover:shadow-soft ${
+        selectedTemplate === template.id 
+          ? 'ring-2 ring-primary border-primary' 
+          : 'hover:border-primary/50'
+      }`}
+      onClick={() => onTemplateSelect(template)}
+    >
+      <CardContent className="p-4">
+        <div className="flex items-start gap-3">
+          {/* Template preview image */}
+          <div className="w-16 h-20 flex-shrink-0 rounded overflow-hidden border">
+            <img 
+              src={template.preview}
+              alt={template.name}
+              className="w-full h-full object-cover"
+              onError={(e) => {
+                const img = e.currentTarget as HTMLImageElement;
+                const fallback = img.nextElementSibling as HTMLDivElement;
+                img.style.display = 'none';
+                fallback.style.display = 'flex';
+              }}
+            />
+            <div 
+              className="w-full h-full bg-muted flex items-center justify-center text-2xl" 
+              style={{ display: 'none' }}
+            >
+              🎨
+            </div>
+          </div>
+          <div className="flex-1">
+            <div className="flex items-center justify-between mb-1">
+              <h4 className="font-medium">{template.name}</h4>
+              {selectedTemplate === template.id && (
+                <div className="w-5 h-5 bg-primary rounded-full flex items-center justify-center">
+                  <Check className="w-3 h-3 text-white" />
+                </div>
+              )}
+            </div>
+            <p className="text-sm text-muted-foreground">
+              {template.description}
+            </p>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+
   return (
     <div className="space-y-4">
       <div>
         <h3 className="text-lg font-semibold mb-2">Choose a Card Template</h3>
         <p className="text-sm text-muted-foreground mb-4">
-          Select how you'd like your photo and message to be displayed
+          Select a template based on your occasion
         </p>
       </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {templates.map((template) => (
-          <Card 
-            key={template.id}
-            className={`cursor-pointer transition-all hover:shadow-soft ${
-              selectedTemplate === template.id 
-                ? 'ring-2 ring-primary border-primary' 
-                : 'hover:border-primary/50'
-            }`}
-            onClick={() => onTemplateSelect(template)}
-          >
-            <CardContent className="p-4">
-              <div className="flex items-start gap-3">
-                {/* Template preview image */}
-                <div className="w-16 h-20 flex-shrink-0 rounded overflow-hidden border">
-                  <img 
-                    src={template.preview}
-                    alt={template.name}
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      // Fallback to emoji if image fails to load
-                      const img = e.currentTarget as HTMLImageElement;
-                      const fallback = img.nextElementSibling as HTMLDivElement;
-                      img.style.display = 'none';
-                      fallback.style.display = 'flex';
-                    }}
-                  />
-                  <div 
-                    className="w-full h-full bg-muted flex items-center justify-center text-2xl" 
-                    style={{ display: 'none' }}
-                  >
-                    🎨
-                  </div>
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between mb-1">
-                    <h4 className="font-medium">{template.name}</h4>
-                    {selectedTemplate === template.id && (
-                      <div className="w-5 h-5 bg-primary rounded-full flex items-center justify-center">
-                        <Check className="w-3 h-3 text-white" />
-                      </div>
-                    )}
-                  </div>
-                  <p className="text-sm text-muted-foreground">
-                    {template.description}
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+
+      <Tabs defaultValue="all" className="w-full" onValueChange={(value) => setActiveCategory(value as TemplateCategory | 'all')}>
+        <TabsList className="grid w-full grid-cols-3 lg:grid-cols-6 mb-4">
+          <TabsTrigger value="all">All</TabsTrigger>
+          <TabsTrigger value="wedding">Wedding</TabsTrigger>
+          <TabsTrigger value="baby">Baby/Birth</TabsTrigger>
+          <TabsTrigger value="baby-shower">Baby Shower</TabsTrigger>
+          <TabsTrigger value="general">General</TabsTrigger>
+          <TabsTrigger value="celebration">Celebration</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value={activeCategory} className="mt-0">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {filteredTemplates.map((template) => renderTemplateCard(template))}
+          </div>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };
