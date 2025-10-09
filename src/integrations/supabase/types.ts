@@ -14,7 +14,213 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      card_templates: {
+        Row: {
+          base_theme: string | null
+          category: string
+          colors: Json
+          created_at: string | null
+          fonts: Json
+          id: string
+          layout_json: Json
+          name: string
+          preview_image: string | null
+        }
+        Insert: {
+          base_theme?: string | null
+          category: string
+          colors?: Json
+          created_at?: string | null
+          fonts?: Json
+          id?: string
+          layout_json?: Json
+          name: string
+          preview_image?: string | null
+        }
+        Update: {
+          base_theme?: string | null
+          category?: string
+          colors?: Json
+          created_at?: string | null
+          fonts?: Json
+          id?: string
+          layout_json?: Json
+          name?: string
+          preview_image?: string | null
+        }
+        Relationships: []
+      }
+      charities: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          id: string
+          impact_message: string | null
+          logo_url: string | null
+          name: string
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          impact_message?: string | null
+          logo_url?: string | null
+          name: string
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          impact_message?: string | null
+          logo_url?: string | null
+          name?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string | null
+          email: string | null
+          id: string
+          name: string | null
+          profile_photo: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email?: string | null
+          id: string
+          name?: string | null
+          profile_photo?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          name?: string | null
+          profile_photo?: string | null
+        }
+        Relationships: []
+      }
+      transactions: {
+        Row: {
+          amount: number
+          charity_id: string
+          created_at: string | null
+          id: string
+          status: string
+          user_card_id: string
+        }
+        Insert: {
+          amount: number
+          charity_id: string
+          created_at?: string | null
+          id?: string
+          status?: string
+          user_card_id: string
+        }
+        Update: {
+          amount?: number
+          charity_id?: string
+          created_at?: string | null
+          id?: string
+          status?: string
+          user_card_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "transactions_charity_id_fkey"
+            columns: ["charity_id"]
+            isOneToOne: false
+            referencedRelation: "charities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "transactions_user_card_id_fkey"
+            columns: ["user_card_id"]
+            isOneToOne: false
+            referencedRelation: "user_cards"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_cards: {
+        Row: {
+          charity_id: string | null
+          closing: string | null
+          color_palette: Json | null
+          created_at: string | null
+          donation_amount: number | null
+          envelope_color: string | null
+          font_choice: string | null
+          id: string
+          message_body: string | null
+          message_headline: string | null
+          photo_url: string | null
+          scheduled_at: string | null
+          sent_at: string | null
+          signature_style: string | null
+          template_id: string | null
+          texture: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          charity_id?: string | null
+          closing?: string | null
+          color_palette?: Json | null
+          created_at?: string | null
+          donation_amount?: number | null
+          envelope_color?: string | null
+          font_choice?: string | null
+          id?: string
+          message_body?: string | null
+          message_headline?: string | null
+          photo_url?: string | null
+          scheduled_at?: string | null
+          sent_at?: string | null
+          signature_style?: string | null
+          template_id?: string | null
+          texture?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          charity_id?: string | null
+          closing?: string | null
+          color_palette?: Json | null
+          created_at?: string | null
+          donation_amount?: number | null
+          envelope_color?: string | null
+          font_choice?: string | null
+          id?: string
+          message_body?: string | null
+          message_headline?: string | null
+          photo_url?: string | null
+          scheduled_at?: string | null
+          sent_at?: string | null
+          signature_style?: string | null
+          template_id?: string | null
+          texture?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_cards_charity_id_fkey"
+            columns: ["charity_id"]
+            isOneToOne: false
+            referencedRelation: "charities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_cards_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "card_templates"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
