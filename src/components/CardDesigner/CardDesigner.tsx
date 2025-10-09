@@ -8,6 +8,7 @@ import { CardTemplates, CardTemplate } from './CardTemplates';
 import { BackgroundRemover } from './BackgroundRemover';
 import { MessageCustomizer } from './MessageCustomizer';
 import { CardPreview } from './CardPreview';
+import { InteractiveCardViewer } from './InteractiveCardViewer';
 import { CampaignSaveDialog } from '@/components/CampaignSaveDialog';
 import { OccasionSelector, Occasion } from './OccasionSelector';
 import { DesignChoiceSelector, DesignChoice } from './DesignChoice';
@@ -44,6 +45,7 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
     senderName: initialDesign.senderName || '',
   });
   const [showBackgroundRemover, setShowBackgroundRemover] = useState(false);
+  const [showInteractivePreview, setShowInteractivePreview] = useState(false);
   const stepContentRef = useRef<HTMLDivElement>(null);
 
   // Track design state changes for debugging
@@ -299,6 +301,14 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
                         <span className="text-accent">✓ Written</span>
                       </div>
                     </div>
+
+                    <Button 
+                      onClick={() => setShowInteractivePreview(true)} 
+                      variant="outline" 
+                      className="w-full mt-4"
+                    >
+                      ✨ Preview Interactive Experience
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
@@ -306,7 +316,7 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
           </div>
 
           {/* Right Column - Preview */}
-          {currentStep >= 3 && (
+          {currentStep >= 3 && !showInteractivePreview && (
             <div className="lg:sticky lg:top-4">
               <CardPreview 
                 template={design.template}
@@ -315,6 +325,28 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
                 recipientName={design.recipientName}
                 senderName={design.senderName}
               />
+            </div>
+          )}
+
+          {/* Interactive Preview Modal */}
+          {showInteractivePreview && design.template && (
+            <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
+              <div className="relative w-full max-w-6xl h-[90vh]">
+                <button
+                  onClick={() => setShowInteractivePreview(false)}
+                  className="absolute top-4 right-4 z-10 text-white hover:text-gray-300 text-2xl"
+                >
+                  ✕
+                </button>
+                <InteractiveCardViewer
+                  template={design.template}
+                  photo={design.photo}
+                  message={design.message}
+                  recipientName={design.recipientName}
+                  senderName={design.senderName}
+                  charityName="Your Chosen Charity"
+                />
+              </div>
             </div>
           )}
         </div>
