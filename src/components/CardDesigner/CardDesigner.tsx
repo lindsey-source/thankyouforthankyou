@@ -210,29 +210,33 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
               />
             )}
 
-            {currentStep === 3 && designChoice === 'template' && (
-              <CardTemplates 
-                selectedTemplate={design.template?.id || null}
-                onTemplateSelect={handleTemplateSelect}
-                filterByOccasion={selectedOccasion}
-              />
-            )}
+            {currentStep === 3 && (
+              <>
+                {designChoice === 'template' && (
+                  <CardTemplates 
+                    selectedTemplate={design.template?.id || null}
+                    onTemplateSelect={handleTemplateSelect}
+                    filterByOccasion={selectedOccasion}
+                  />
+                )}
 
-            {currentStep === 3 && designChoice === 'custom' && (
-              <Card className="bg-white/95 backdrop-blur-sm">
-                <CardContent className="p-6">
-                  <div className="text-center space-y-4">
-                    <div className="text-6xl mb-4">🎨</div>
-                    <h3 className="text-lg font-semibold">Custom Design Coming Soon!</h3>
-                    <p className="text-muted-foreground">
-                      Custom design tools are being developed. For now, please choose a template and customize it with your photo and message.
-                    </p>
-                    <Button variant="outline" onClick={() => setDesignChoice('template')}>
-                      Choose a Template Instead
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+                {designChoice === 'custom' && (
+                  <Card className="bg-white/95 backdrop-blur-sm">
+                    <CardContent className="p-6">
+                      <div className="text-center space-y-4">
+                        <div className="text-6xl mb-4">🎨</div>
+                        <h3 className="text-lg font-semibold">Custom Design Coming Soon!</h3>
+                        <p className="text-muted-foreground">
+                          Custom design tools are being developed. For now, please choose a template and customize it with your photo and message.
+                        </p>
+                        <Button variant="outline" onClick={() => setDesignChoice('template')}>
+                          Choose a Template Instead
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
+              </>
             )}
 
             {currentStep === 4 && (
