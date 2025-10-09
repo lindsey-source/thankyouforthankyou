@@ -250,7 +250,7 @@ export const InteractiveCardViewer: React.FC<InteractiveCardViewerProps> = ({
                       className="text-center text-xs opacity-50"
                       style={{ color: colors.text }}
                     >
-                      Sent with gratitude via GiveThanks
+                      Sent with gratitude via Thank You for Thank You
                     </motion.div>
                   </div>
                 </Card>
