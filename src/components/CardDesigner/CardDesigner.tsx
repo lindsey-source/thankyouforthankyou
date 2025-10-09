@@ -298,15 +298,17 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
           </div>
 
           {/* Right Column - Preview */}
-          <div className="lg:sticky lg:top-4">
-            <CardPreview 
-              template={design.template}
-              photo={design.photo}
-              message={design.message}
-              recipientName={design.recipientName}
-              senderName={design.senderName}
-            />
-          </div>
+          {currentStep > 2 && (
+            <div className="lg:sticky lg:top-4">
+              <CardPreview 
+                template={design.template}
+                photo={design.photo}
+                message={design.message}
+                recipientName={design.recipientName}
+                senderName={design.senderName}
+              />
+            </div>
+          )}
         </div>
 
         {/* Navigation */}
