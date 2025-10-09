@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { CardTemplate } from './CardTemplates';
+import { EnvelopeStyle } from './EnvelopeSelector';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Heart } from 'lucide-react';
 
@@ -11,6 +12,7 @@ interface InteractiveCardViewerProps {
   recipientName: string;
   senderName: string;
   charityName?: string;
+  envelopeStyle: EnvelopeStyle;
 }
 
 type Stage = 'envelope' | 'card-front' | 'card-interior';
@@ -21,7 +23,8 @@ export const InteractiveCardViewer: React.FC<InteractiveCardViewerProps> = ({
   message,
   recipientName,
   senderName,
-  charityName
+  charityName,
+  envelopeStyle
 }) => {
   const [stage, setStage] = useState<Stage>('envelope');
   const [hasInteracted, setHasInteracted] = useState(false);
@@ -37,24 +40,12 @@ export const InteractiveCardViewer: React.FC<InteractiveCardViewerProps> = ({
     setHasInteracted(false);
   };
 
-  // Get occasion-specific colors
-  const getOccasionColors = () => {
-    switch (template.category) {
-      case 'wedding':
-        return { primary: '#F5E6D3', accent: '#D4A574', text: '#8B6F47' };
-      case 'baby':
-      case 'baby-shower':
-        return { primary: '#FFF0F5', accent: '#FFB6C1', text: '#8B7355' };
-      case 'celebration':
-        return { primary: '#FFF9E6', accent: '#FFD700', text: '#FF6B6B' };
-      case 'memorial':
-        return { primary: '#F8FBF8', accent: '#9DB5A5', text: '#6B8B7F' };
-      default:
-        return { primary: '#FFF8F0', accent: '#F4A460', text: '#8B7355' };
-    }
+  // Use the selected envelope colors
+  const colors = {
+    primary: envelopeStyle.primaryColor,
+    accent: envelopeStyle.accentColor,
+    text: envelopeStyle.textColor
   };
-
-  const colors = getOccasionColors();
 
   return (
     <div className="relative w-full h-full min-h-[600px] flex items-center justify-center bg-gradient-to-br from-background to-muted/30 p-8">

@@ -12,6 +12,7 @@ import { InteractiveCardViewer } from './InteractiveCardViewer';
 import { CampaignSaveDialog } from '@/components/CampaignSaveDialog';
 import { OccasionSelector, Occasion } from './OccasionSelector';
 import { DesignChoiceSelector, DesignChoice } from './DesignChoice';
+import { EnvelopeSelector, EnvelopeStyle } from './EnvelopeSelector';
 import { toast } from 'sonner';
 
 interface CardDesign {
@@ -20,6 +21,7 @@ interface CardDesign {
   message: string;
   recipientName: string;
   senderName: string;
+  envelope: EnvelopeStyle | null;
 }
 
 interface CardDesignerProps {
@@ -43,6 +45,7 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
     message: initialDesign.message || '',
     recipientName: initialDesign.recipientName || '',
     senderName: initialDesign.senderName || '',
+    envelope: initialDesign.envelope || null,
   });
   const [showBackgroundRemover, setShowBackgroundRemover] = useState(false);
   const [showInteractivePreview, setShowInteractivePreview] = useState(false);
@@ -65,11 +68,12 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
 
   const steps = [
     { id: 1, title: 'Choose Occasion', description: 'Select your event' },
-    { id: 2, title: 'Design Choice', description: 'Template or custom' },
-    { id: 3, title: 'Select Design', description: 'Pick your style' },
-    { id: 4, title: 'Add Photo (Optional)', description: 'Upload image' },
-    { id: 5, title: 'Write Message', description: 'Your thank you' },
-    { id: 6, title: 'Preview & Save', description: 'Review card' },
+    { id: 2, title: 'Choose Envelope', description: 'Pick envelope color' },
+    { id: 3, title: 'Design Choice', description: 'Template or custom' },
+    { id: 4, title: 'Select Design', description: 'Pick your style' },
+    { id: 5, title: 'Add Photo (Optional)', description: 'Upload image' },
+    { id: 6, title: 'Write Message', description: 'Your thank you' },
+    { id: 7, title: 'Preview & Save', description: 'Review card' },
   ];
 
   const handlePhotoUpload = (file: File, preview: string) => {
@@ -105,16 +109,20 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
       toast.error('Please select an occasion');
       return;
     }
-    if (currentStep === 2 && !designChoice) {
+    if (currentStep === 2 && !design.envelope) {
+      toast.error('Please choose an envelope color');
+      return;
+    }
+    if (currentStep === 3 && !designChoice) {
       toast.error('Please choose a design approach');
       return;
     }
-    if (currentStep === 3 && designChoice === 'template' && !design.template) {
+    if (currentStep === 4 && designChoice === 'template' && !design.template) {
       toast.error('Please select a card template');
       return;
     }
-    // Step 4 (photo upload) is optional - no validation needed
-    if (currentStep === 5 && !design.message.trim()) {
+    // Step 5 (photo upload) is optional - no validation needed
+    if (currentStep === 6 && !design.message.trim()) {
       toast.error('Please write a thank you message');
       return;
     }
@@ -149,11 +157,12 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
   const isStepComplete = (stepId: number) => {
     switch (stepId) {
       case 1: return !!selectedOccasion;
-      case 2: return !!designChoice;
-      case 3: return designChoice === 'custom' || !!design.template;
-      case 4: return true; // Photo step is optional
-      case 5: return !!design.message.trim();
-      case 6: return !!design.message.trim() && (designChoice === 'custom' || !!design.template);
+      case 2: return !!design.envelope;
+      case 3: return !!designChoice;
+      case 4: return designChoice === 'custom' || !!design.template;
+      case 5: return true; // Photo step is optional
+      case 6: return !!design.message.trim();
+      case 7: return !!design.message.trim() && (designChoice === 'custom' || !!design.template);
       default: return false;
     }
   };
@@ -210,13 +219,20 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
             )}
 
             {currentStep === 2 && (
+              <EnvelopeSelector 
+                selectedEnvelope={design.envelope?.id || null}
+                onEnvelopeSelect={(envelope) => setDesign(prev => ({ ...prev, envelope }))}
+              />
+            )}
+
+            {currentStep === 3 && (
               <DesignChoiceSelector 
                 selectedChoice={designChoice}
                 onChoiceSelect={setDesignChoice}
               />
             )}
 
-            {currentStep === 3 && (
+            {currentStep === 4 && (
               <>
                 {designChoice === 'template' && (
                   <CardTemplates 
@@ -245,7 +261,7 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
               </>
             )}
 
-            {currentStep === 4 && (
+            {currentStep === 5 && (
               <div className="space-y-6">
                 <PhotoUpload 
                   onPhotoUpload={handlePhotoUpload}
@@ -262,7 +278,7 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
               </div>
             )}
 
-            {currentStep === 5 && (
+            {currentStep === 6 && (
               <MessageCustomizer 
                 message={design.message}
                 onMessageChange={(message) => setDesign(prev => ({ ...prev, message }))}
@@ -273,7 +289,7 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
               />
             )}
 
-            {currentStep === 6 && (
+            {currentStep === 7 && (
               <Card className="bg-white/95 backdrop-blur-sm">
                 <CardContent className="p-6">
                   <div className="text-center space-y-4">
@@ -285,6 +301,10 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
                       <div className="flex justify-between">
                         <span>Occasion:</span>
                         <span className="text-accent">✓ {selectedOccasion}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Envelope:</span>
+                        <span className="text-accent">✓ {design.envelope?.name}</span>
                       </div>
                       <div className="flex justify-between">
                         <span>Design:</span>
@@ -317,7 +337,7 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
           </div>
 
           {/* Right Column - Preview */}
-          {currentStep >= 3 && !showInteractivePreview && (
+          {currentStep >= 4 && !showInteractivePreview && (
             <div className="lg:sticky lg:top-4">
               <CardPreview 
                 template={design.template}
@@ -330,7 +350,7 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
           )}
 
           {/* Interactive Preview Modal */}
-          {showInteractivePreview && design.template && (
+          {showInteractivePreview && design.template && design.envelope && (
             <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
               <div className="relative w-full max-w-6xl h-[90vh]">
                 <button
@@ -346,6 +366,7 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
                   recipientName={design.recipientName}
                   senderName={design.senderName}
                   charityName="Your Chosen Charity"
+                  envelopeStyle={design.envelope}
                 />
               </div>
             </div>
