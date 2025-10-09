@@ -376,7 +376,7 @@ const SendThanks = () => {
                     {cardDesign ? 'Your custom digital card is ready!' : 'Create a beautiful digital card (no paper needed!)'}
                   </p>
                 </div>
-                <Link to="/design-card">
+                <Link to="/card-design">
                   <Button variant="outline" size="sm">
                     <Palette className="h-4 w-4 mr-2" />
                     {cardDesign ? 'Edit Design' : 'Design Card'}
