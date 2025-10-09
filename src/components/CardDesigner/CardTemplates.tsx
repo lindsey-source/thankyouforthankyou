@@ -509,6 +509,25 @@ export const CardTemplates: React.FC<CardTemplatesProps> = ({
     </Card>
   );
 
+  // If an occasion is already selected (coming from step 1), just show filtered templates
+  if (filterByOccasion) {
+    return (
+      <div className="space-y-4">
+        <div>
+          <h3 className="text-xl font-serif font-semibold mb-2">Choose a Card Template</h3>
+          <p className="text-sm text-muted-foreground mb-4">
+            Select a beautiful {categoryLabels[filterByOccasion].toLowerCase()} design
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {filteredTemplates.map((template) => renderTemplateCard(template))}
+        </div>
+      </div>
+    );
+  }
+
+  // Otherwise show tabs for all occasions
   return (
     <div className="space-y-4">
       <div>
