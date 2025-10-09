@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
@@ -313,12 +313,6 @@ export const CardTemplates: React.FC<CardTemplatesProps> = ({
   selectedTemplate, 
   onTemplateSelect 
 }) => {
-  const [activeCategory, setActiveCategory] = useState<TemplateCategory | 'all'>('all');
-
-  const filteredTemplates = activeCategory === 'all' 
-    ? templates 
-    : templates.filter(t => t.category === activeCategory);
-
   const renderTemplateCard = (template: CardTemplate) => (
     <Card 
       key={template.id}
@@ -378,7 +372,7 @@ export const CardTemplates: React.FC<CardTemplatesProps> = ({
         </p>
       </div>
 
-      <Tabs defaultValue="all" className="w-full" onValueChange={(value) => setActiveCategory(value as TemplateCategory | 'all')}>
+      <Tabs defaultValue="all" className="w-full">
         <TabsList className="grid w-full grid-cols-3 lg:grid-cols-6 mb-4">
           <TabsTrigger value="all">All</TabsTrigger>
           <TabsTrigger value="wedding">Wedding</TabsTrigger>
@@ -388,9 +382,39 @@ export const CardTemplates: React.FC<CardTemplatesProps> = ({
           <TabsTrigger value="celebration">Celebration</TabsTrigger>
         </TabsList>
 
-        <TabsContent value={activeCategory} className="mt-0">
+        <TabsContent value="all" className="mt-0">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {filteredTemplates.map((template) => renderTemplateCard(template))}
+            {templates.map((template) => renderTemplateCard(template))}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="wedding" className="mt-0">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {templates.filter(t => t.category === 'wedding').map((template) => renderTemplateCard(template))}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="baby" className="mt-0">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {templates.filter(t => t.category === 'baby').map((template) => renderTemplateCard(template))}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="baby-shower" className="mt-0">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {templates.filter(t => t.category === 'baby-shower').map((template) => renderTemplateCard(template))}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="general" className="mt-0">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {templates.filter(t => t.category === 'general').map((template) => renderTemplateCard(template))}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="celebration" className="mt-0">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {templates.filter(t => t.category === 'celebration').map((template) => renderTemplateCard(template))}
           </div>
         </TabsContent>
       </Tabs>
