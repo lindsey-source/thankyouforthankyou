@@ -9,6 +9,8 @@ import { BackgroundRemover } from './BackgroundRemover';
 import { MessageCustomizer } from './MessageCustomizer';
 import { CardPreview } from './CardPreview';
 import { CampaignSaveDialog } from '@/components/CampaignSaveDialog';
+import { OccasionSelector, Occasion } from './OccasionSelector';
+import { DesignChoiceSelector, DesignChoice } from './DesignChoice';
 import { toast } from 'sonner';
 
 interface CardDesign {
@@ -32,6 +34,8 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
 }) => {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
+  const [selectedOccasion, setSelectedOccasion] = useState<Occasion | null>(null);
+  const [designChoice, setDesignChoice] = useState<DesignChoice | null>(null);
   const [design, setDesign] = useState<CardDesign>({
     photo: initialDesign.photo || null,
     template: initialDesign.template || null,
@@ -58,10 +62,12 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
   }, [currentStep]);
 
   const steps = [
-    { id: 1, title: 'Choose Template', description: 'Select card layout' },
-    { id: 2, title: 'Add Photo (Optional)', description: 'Upload your special moment' },
-    { id: 3, title: 'Customize Message', description: 'Write your thank you' },
-    { id: 4, title: 'Preview & Save', description: 'Review your card' },
+    { id: 1, title: 'Choose Occasion', description: 'Select your event' },
+    { id: 2, title: 'Design Choice', description: 'Template or custom' },
+    { id: 3, title: 'Select Design', description: 'Pick your style' },
+    { id: 4, title: 'Add Photo (Optional)', description: 'Upload image' },
+    { id: 5, title: 'Write Message', description: 'Your thank you' },
+    { id: 6, title: 'Preview & Save', description: 'Review card' },
   ];
 
   const handlePhotoUpload = (file: File, preview: string) => {
@@ -88,16 +94,21 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
 
   const handleNextStep = () => {
     console.log('Next step clicked, current step:', currentStep);
-    console.log('Current design state:', design);
     
-    if (currentStep === 1 && !design.template) {
-      console.log('No template selected, showing error');
+    if (currentStep === 1 && !selectedOccasion) {
+      toast.error('Please select an occasion');
+      return;
+    }
+    if (currentStep === 2 && !designChoice) {
+      toast.error('Please choose a design approach');
+      return;
+    }
+    if (currentStep === 3 && designChoice === 'template' && !design.template) {
       toast.error('Please select a card template');
       return;
     }
-    // Step 2 (photo upload) is optional - no validation needed
-    if (currentStep === 3 && !design.message.trim()) {
-      console.log('No message entered, showing error');
+    // Step 4 (photo upload) is optional - no validation needed
+    if (currentStep === 5 && !design.message.trim()) {
       toast.error('Please write a thank you message');
       return;
     }
@@ -131,10 +142,12 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
 
   const isStepComplete = (stepId: number) => {
     switch (stepId) {
-      case 1: return !!design.template;
-      case 2: return true; // Photo step is optional
-      case 3: return !!design.message.trim();
-      case 4: return !!design.template && !!design.message.trim();
+      case 1: return !!selectedOccasion;
+      case 2: return !!designChoice;
+      case 3: return designChoice === 'custom' || !!design.template;
+      case 4: return true; // Photo step is optional
+      case 5: return !!design.message.trim();
+      case 6: return !!design.message.trim() && (designChoice === 'custom' || !!design.template);
       default: return false;
     }
   };
@@ -151,9 +164,9 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
         {/* Progress Steps */}
         <Card className="mb-8 bg-white/95 backdrop-blur-sm">
           <CardContent className="p-6">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between overflow-x-auto pb-2">
               {steps.map((step, index) => (
-                <div key={step.id} className="flex items-center">
+                <div key={step.id} className="flex items-center flex-shrink-0">
                   <div className="flex items-center">
                     <div 
                       className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-colors ${
@@ -166,13 +179,13 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
                     >
                       {step.id}
                     </div>
-                    <div className="ml-3 text-left hidden md:block">
-                      <p className="text-sm font-medium">{step.title}</p>
-                      <p className="text-xs text-muted-foreground">{step.description}</p>
+                    <div className="ml-3 text-left hidden lg:block">
+                      <p className="text-sm font-medium whitespace-nowrap">{step.title}</p>
+                      <p className="text-xs text-muted-foreground whitespace-nowrap">{step.description}</p>
                     </div>
                   </div>
                   {index < steps.length - 1 && (
-                    <div className="w-full h-0.5 bg-muted mx-4 hidden md:block"></div>
+                    <div className="w-8 lg:w-12 h-0.5 bg-muted mx-2 lg:mx-4"></div>
                   )}
                 </div>
               ))}
@@ -182,15 +195,47 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Left Column - Design Tools */}
-          <div ref={stepContentRef} className="space-y-6">{/* Added ref here */}
+          <div ref={stepContentRef} className="space-y-6">
             {currentStep === 1 && (
-              <CardTemplates 
-                selectedTemplate={design.template?.id || null}
-                onTemplateSelect={handleTemplateSelect}
+              <OccasionSelector 
+                selectedOccasion={selectedOccasion}
+                onOccasionSelect={setSelectedOccasion}
               />
             )}
 
             {currentStep === 2 && (
+              <DesignChoiceSelector 
+                selectedChoice={designChoice}
+                onChoiceSelect={setDesignChoice}
+              />
+            )}
+
+            {currentStep === 3 && designChoice === 'template' && (
+              <CardTemplates 
+                selectedTemplate={design.template?.id || null}
+                onTemplateSelect={handleTemplateSelect}
+                filterByOccasion={selectedOccasion}
+              />
+            )}
+
+            {currentStep === 3 && designChoice === 'custom' && (
+              <Card className="bg-white/95 backdrop-blur-sm">
+                <CardContent className="p-6">
+                  <div className="text-center space-y-4">
+                    <div className="text-6xl mb-4">🎨</div>
+                    <h3 className="text-lg font-semibold">Custom Design Coming Soon!</h3>
+                    <p className="text-muted-foreground">
+                      Custom design tools are being developed. For now, please choose a template and customize it with your photo and message.
+                    </p>
+                    <Button variant="outline" onClick={() => setDesignChoice('template')}>
+                      Choose a Template Instead
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {currentStep === 4 && (
               <div className="space-y-6">
                 <PhotoUpload 
                   onPhotoUpload={handlePhotoUpload}
@@ -207,7 +252,7 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
               </div>
             )}
 
-            {currentStep === 3 && (
+            {currentStep === 5 && (
               <MessageCustomizer 
                 message={design.message}
                 onMessageChange={(message) => setDesign(prev => ({ ...prev, message }))}
@@ -218,8 +263,8 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
               />
             )}
 
-            {currentStep === 4 && (
-              <Card>
+            {currentStep === 6 && (
+              <Card className="bg-white/95 backdrop-blur-sm">
                 <CardContent className="p-6">
                   <div className="text-center space-y-4">
                     <h3 className="text-lg font-semibold">Your Card is Ready!</h3>
@@ -228,14 +273,18 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
                     </p>
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
+                        <span>Occasion:</span>
+                        <span className="text-accent">✓ {selectedOccasion}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Design:</span>
+                        <span className="text-accent">✓ {designChoice === 'template' ? design.template?.name : 'Custom'}</span>
+                      </div>
+                      <div className="flex justify-between">
                         <span>Photo:</span>
                         <span className={design.photo ? "text-accent" : "text-muted-foreground"}>
                           {design.photo ? "✓ Uploaded" : "○ Optional"}
                         </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Template:</span>
-                        <span className="text-accent">✓ {design.template?.name}</span>
                       </div>
                       <div className="flex justify-between">
                         <span>Message:</span>

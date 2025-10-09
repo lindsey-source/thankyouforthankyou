@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
@@ -307,12 +307,22 @@ const categoryLabels: Record<TemplateCategory, string> = {
 interface CardTemplatesProps {
   selectedTemplate: string | null;
   onTemplateSelect: (template: CardTemplate) => void;
+  filterByOccasion?: TemplateCategory | null;
 }
 
 export const CardTemplates: React.FC<CardTemplatesProps> = ({ 
   selectedTemplate, 
-  onTemplateSelect 
+  onTemplateSelect,
+  filterByOccasion 
 }) => {
+  // If filterByOccasion is provided, use it as default, otherwise show all
+  const initialCategory = filterByOccasion || 'all';
+  const [activeCategory, setActiveCategory] = React.useState<TemplateCategory | 'all'>(initialCategory);
+
+  const filteredTemplates = activeCategory === 'all' 
+    ? templates 
+    : templates.filter(t => t.category === activeCategory);
+
   const renderTemplateCard = (template: CardTemplate) => (
     <Card 
       key={template.id}
@@ -372,7 +382,7 @@ export const CardTemplates: React.FC<CardTemplatesProps> = ({
         </p>
       </div>
 
-      <Tabs defaultValue="all" className="w-full">
+      <Tabs defaultValue={initialCategory} className="w-full" onValueChange={(value) => setActiveCategory(value as TemplateCategory | 'all')}>
         <TabsList className="grid w-full grid-cols-3 lg:grid-cols-6 mb-4">
           <TabsTrigger value="all">All</TabsTrigger>
           <TabsTrigger value="wedding">Wedding</TabsTrigger>
