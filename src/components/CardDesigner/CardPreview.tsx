@@ -55,15 +55,22 @@ export const CardPreview: React.FC<CardPreviewProps> = ({
       case 'full-background':
         return (
           <div 
-            className="relative w-full h-full rounded-lg overflow-hidden p-6 flex items-center justify-center" 
-            style={{ 
-              background: backgroundColor,
-              color: textColor
-            }}
+            className="relative w-full h-full rounded-lg overflow-hidden"
           >
-            <div className="text-center bg-black bg-opacity-20 p-4 rounded">
-              <p className="text-sm font-medium mb-2" style={{ color: textColor }}>{messageText}</p>
-              <p className="text-xs" style={{ color: accentColor }}>{signature}</p>
+            {/* Template background */}
+            <img 
+              src={template.preview}
+              alt="Template background"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-black/30"></div>
+            {/* Content */}
+            <div className="relative w-full h-full p-6 flex items-center justify-center">
+              <div className="text-center bg-white/90 backdrop-blur-sm p-6 rounded-lg shadow-lg max-w-xs">
+                <p className="text-sm font-medium mb-3" style={{ color: textColor }}>{messageText}</p>
+                <p className="text-xs font-semibold" style={{ color: accentColor }}>{signature}</p>
+              </div>
             </div>
           </div>
         );
@@ -71,26 +78,38 @@ export const CardPreview: React.FC<CardPreviewProps> = ({
       case 'photo-frame':
         return (
           <div 
-            className="w-full h-full p-4" 
-            style={{ background: backgroundColor }}
+            className="relative w-full h-full rounded-lg overflow-hidden"
           >
-            <div className="w-full h-2/3 mb-4 rounded-lg bg-gray-100 flex items-center justify-center overflow-hidden">
-              {photo ? (
-                <img 
-                  src={photo.preview} 
-                  alt="Your uploaded photo" 
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <div className="text-center text-gray-400">
-                  <div className="text-2xl mb-2">📷</div>
-                  <p className="text-xs">Your photo will appear here</p>
-                </div>
-              )}
-            </div>
-            <div className="text-center space-y-2">
-              <p className="text-sm" style={{ color: textColor }}>{messageText}</p>
-              <p className="text-xs font-medium" style={{ color: accentColor }}>{signature}</p>
+            {/* Template background */}
+            <img 
+              src={template.preview}
+              alt="Template background"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            {/* Overlay for better text readability */}
+            <div className="absolute inset-0 bg-white/80"></div>
+            {/* Content */}
+            <div className="relative w-full h-full p-4 flex flex-col">
+              <div className="w-full h-2/3 mb-4 rounded-lg overflow-hidden shadow-lg">
+                {photo ? (
+                  <img 
+                    src={photo.preview} 
+                    alt="Your uploaded photo" 
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                    <div className="text-center text-gray-400">
+                      <div className="text-2xl mb-2">📷</div>
+                      <p className="text-xs">Your photo will appear here</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div className="text-center space-y-2">
+                <p className="text-sm font-medium" style={{ color: textColor }}>{messageText}</p>
+                <p className="text-xs font-semibold" style={{ color: accentColor }}>{signature}</p>
+              </div>
             </div>
           </div>
         );
@@ -98,29 +117,37 @@ export const CardPreview: React.FC<CardPreviewProps> = ({
       case 'split-layout':
         return (
           <div 
-            className="w-full h-full flex rounded-lg overflow-hidden" 
-            style={{ background: backgroundColor }}
+            className="relative w-full h-full rounded-lg overflow-hidden"
           >
-            <div className="w-1/2 h-full overflow-hidden">
-              {photo ? (
-                <img 
-                  src={photo.preview} 
-                  alt="Your uploaded photo" 
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <div className="w-full h-full bg-gray-100 flex items-center justify-center">
-                  <div className="text-center text-gray-400">
-                    <div className="text-2xl mb-2">📷</div>
-                    <p className="text-xs">Photo</p>
+            {/* Template background */}
+            <img 
+              src={template.preview}
+              alt="Template background"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            {/* Content */}
+            <div className="relative w-full h-full flex">
+              <div className="w-1/2 h-full overflow-hidden">
+                {photo ? (
+                  <img 
+                    src={photo.preview} 
+                    alt="Your uploaded photo" 
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-white/90 backdrop-blur-sm flex items-center justify-center">
+                    <div className="text-center text-gray-400">
+                      <div className="text-2xl mb-2">📷</div>
+                      <p className="text-xs">Photo</p>
+                    </div>
                   </div>
+                )}
+              </div>
+              <div className="w-1/2 h-full flex flex-col justify-center p-4 bg-white/90 backdrop-blur-sm">
+                <div className="space-y-3">
+                  <p className="text-sm font-medium" style={{ color: textColor }}>{messageText}</p>
+                  <p className="text-xs font-bold" style={{ color: accentColor }}>{signature}</p>
                 </div>
-              )}
-            </div>
-            <div className="w-1/2 h-full flex flex-col justify-center p-4">
-              <div className="space-y-3">
-                <p className="text-sm font-medium" style={{ color: textColor }}>{messageText}</p>
-                <p className="text-xs font-bold" style={{ color: accentColor }}>{signature}</p>
               </div>
             </div>
           </div>
