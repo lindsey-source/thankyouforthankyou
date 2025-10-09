@@ -304,10 +304,11 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
 
                     <Button 
                       onClick={() => setShowInteractivePreview(true)} 
-                      variant="outline" 
-                      className="w-full mt-4"
+                      variant="hero" 
+                      size="lg"
+                      className="w-full mt-6 text-lg py-6 shadow-lg hover:shadow-xl transition-all"
                     >
-                      ✨ Preview Interactive Experience
+                      ✨ Preview Interactive Experience ✨
                     </Button>
                   </div>
                 </CardContent>
