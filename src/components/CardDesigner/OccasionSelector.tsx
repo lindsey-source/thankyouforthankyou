@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Check } from 'lucide-react';
 
-export type Occasion = 'wedding' | 'baby' | 'baby-shower' | 'general' | 'celebration';
+export type Occasion = 'wedding' | 'baby' | 'baby-shower' | 'general' | 'celebration' | 'memorial';
 
 interface OccasionSelectorProps {
   selectedOccasion: Occasion | null;
@@ -39,6 +39,12 @@ const occasions: { id: Occasion; label: string; description: string; icon: strin
     label: 'Celebration',
     description: 'Birthday, anniversary, or special events',
     icon: '🎉'
+  },
+  {
+    id: 'memorial',
+    label: 'Memorial/Tribute',
+    description: 'Honor and remember with heartfelt thanks',
+    icon: '🌿'
   }
 ];
 
@@ -56,7 +62,7 @@ export const OccasionSelector: React.FC<OccasionSelectorProps> = ({
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {occasions.map((occasion) => (
             <Card
               key={occasion.id}

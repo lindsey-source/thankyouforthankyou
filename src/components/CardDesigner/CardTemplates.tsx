@@ -5,6 +5,16 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Check } from 'lucide-react';
 
 // Import all card template images
+import cardWeddingElegant from '@/assets/card-wedding-elegant.jpg';
+import cardBabyShowerClouds from '@/assets/card-baby-shower-clouds.jpg';
+import cardBabyArrival from '@/assets/card-baby-arrival.jpg';
+import cardGeneralHeart from '@/assets/card-general-heart.jpg';
+import cardBirthdayModern from '@/assets/card-birthday-modern.jpg';
+import cardGraduationRays from '@/assets/card-graduation-rays.jpg';
+import cardMemorialNature from '@/assets/card-memorial-nature.jpg';
+import cardCharityHands from '@/assets/card-charity-hands.jpg';
+
+// Legacy templates
 import cardNavyLinen from '@/assets/card-navy-linen.jpg';
 import cardSunsetMountains from '@/assets/card-sunset-mountains.jpg';
 import cardGoldModern from '@/assets/card-gold-modern.jpg';
@@ -24,7 +34,7 @@ import cardFloralPink from '@/assets/card-floral-pink.jpg';
 import cardBlushBotanical from '@/assets/card-blush-botanical.jpg';
 import cardWildflowerInk from '@/assets/card-wildflower-ink.jpg';
 
-export type TemplateCategory = 'wedding' | 'baby' | 'baby-shower' | 'general' | 'celebration';
+export type TemplateCategory = 'wedding' | 'baby' | 'baby-shower' | 'general' | 'celebration' | 'memorial';
 
 export interface CardTemplate {
   id: string;
@@ -42,122 +52,53 @@ export interface CardTemplate {
 }
 
 const templates: CardTemplate[] = [
+  // 💍 WEDDING / ENGAGEMENT TEMPLATES
   {
-    id: 'elegant-frame',
-    name: 'Elegant Frame',
-    description: 'Classic border with photo centered',
+    id: 'wedding-rose-elegance',
+    name: 'Rose Garden Elegance',
+    description: 'Soft blush roses with eucalyptus, perfect for classic weddings',
     category: 'wedding',
-    preview: cardNavyLinen,
+    preview: cardWeddingElegant,
     style: {
       layout: 'photo-frame',
-      textPosition: 'bottom',
-      backgroundColor: '#FAFF9F6',
-      textColor: '#444444',
-      accentColor: '#5A9FD4'
-    }
-  },
-  {
-    id: 'full-background',
-    name: 'Full Background',
-    description: 'Photo fills entire card with overlay text',
-    category: 'general',
-    preview: cardSunsetMountains,
-    style: {
-      layout: 'full-background',
       textPosition: 'center',
-      backgroundColor: 'transparent',
-      textColor: '#FFFFFF',
-      accentColor: '#F787DD'
+      backgroundColor: '#FFF9F5',
+      textColor: '#8B6F47',
+      accentColor: '#D4A574'
     }
   },
   {
-    id: 'split-modern',
-    name: 'Modern Split',
-    description: 'Photo on left, message on right',
+    id: 'wedding-gold-modern',
+    name: 'Modern Gold Frame',
+    description: 'Contemporary elegance with gold accents',
     category: 'wedding',
     preview: cardGoldModern,
     style: {
       layout: 'split-layout',
       textPosition: 'side',
-      backgroundColor: '#FAFF9F6',
+      backgroundColor: '#FAFCF6',
       textColor: '#444444',
-      accentColor: '#AA6D9A3'
+      accentColor: '#D4A574'
     }
   },
   {
-    id: 'minimal-overlay',
-    name: 'Minimal Overlay',
-    description: 'Subtle text overlay on photo',
-    category: 'general',
-    preview: cardSageAbstract,
+    id: 'wedding-navy-linen',
+    name: 'Navy Linen Classic',
+    description: 'Timeless navy and cream with elegant typography',
+    category: 'wedding',
+    preview: cardNavyLinen,
     style: {
-      layout: 'overlay-text',
+      layout: 'photo-frame',
       textPosition: 'bottom',
-      backgroundColor: 'rgba(0,0,0,0.3)',
-      textColor: '#FFFFFF',
+      backgroundColor: '#F9F6F0',
+      textColor: '#2B3E50',
       accentColor: '#5A9FD4'
     }
   },
   {
-    id: 'botanical-frame',
-    name: 'Botanical Frame',
-    description: 'Nature-inspired border with elegant typography',
-    category: 'baby-shower',
-    preview: cardBotanicalRustic,
-    style: {
-      layout: 'photo-frame',
-      textPosition: 'bottom',
-      backgroundColor: '#F0F9F0',
-      textColor: '#2D5016',
-      accentColor: '#7FB069'
-    }
-  },
-  {
-    id: 'sunset-gradient',
-    name: 'Sunset Gradient',
-    description: 'Warm gradient background with photo overlay',
-    category: 'celebration',
-    preview: cardCoralWatercolor,
-    style: {
-      layout: 'overlay-text',
-      textPosition: 'top',
-      backgroundColor: 'linear-gradient(135deg, #FF8A80, #FFD54F)',
-      textColor: '#FFFFFF',
-      accentColor: '#FF6F00'
-    }
-  },
-  {
-    id: 'polaroid-vintage',
-    name: 'Vintage Polaroid',
-    description: 'Classic polaroid style with handwritten feel',
-    category: 'baby',
-    preview: cardVintageBotanical,
-    style: {
-      layout: 'photo-frame',
-      textPosition: 'bottom',
-      backgroundColor: '#F5F5DC',
-      textColor: '#4A4A4A',
-      accentColor: '#8B4513'
-    }
-  },
-  {
-    id: 'ocean-wave',
-    name: 'Ocean Wave',
-    description: 'Flowing wave design with coastal vibes',
-    category: 'baby-shower',
-    preview: cardNavyStars,
-    style: {
-      layout: 'split-layout',
-      textPosition: 'side',
-      backgroundColor: '#E3F2FD',
-      textColor: '#0D47A1',
-      accentColor: '#2196F3'
-    }
-  },
-  {
-    id: 'golden-hour',
-    name: 'Golden Hour',
-    description: 'Warm, luxurious gold accents with photo',
+    id: 'wedding-eucalyptus-gold',
+    name: 'Eucalyptus & Gold',
+    description: 'Botanical elegance with warm metallic touches',
     category: 'wedding',
     preview: cardEucalyptusGold,
     style: {
@@ -169,65 +110,9 @@ const templates: CardTemplate[] = [
     }
   },
   {
-    id: 'minimalist-zen',
-    name: 'Minimalist Zen',
-    description: 'Clean, simple design with plenty of white space',
-    category: 'general',
-    preview: cardLineArtFlorals,
-    style: {
-      layout: 'photo-frame',
-      textPosition: 'bottom',
-      backgroundColor: '#FAFAFA',
-      textColor: '#424242',
-      accentColor: '#9E9E9E'
-    }
-  },
-  {
-    id: 'cherry-blossom',
-    name: 'Cherry Blossom',
-    description: 'Soft pink theme with delicate spring vibes',
-    category: 'baby-shower',
-    preview: cardCherryBlossom,
-    style: {
-      layout: 'overlay-text',
-      textPosition: 'bottom',
-      backgroundColor: 'rgba(255, 182, 193, 0.3)',
-      textColor: '#8E24AA',
-      accentColor: '#E91E63'
-    }
-  },
-  {
-    id: 'starry-night',
-    name: 'Starry Night',
-    description: 'Deep blue night sky with starlight accents',
-    category: 'celebration',
-    preview: starryNight,
-    style: {
-      layout: 'full-background',
-      textPosition: 'center',
-      backgroundColor: 'rgba(25, 25, 112, 0.4)',
-      textColor: '#FFFFFF',
-      accentColor: '#FFD700'
-    }
-  },
-  {
-    id: 'rustic-wood',
-    name: 'Rustic Wood',
-    description: 'Warm wooden texture with handcrafted feel',
-    category: 'wedding',
-    preview: pineTrees,
-    style: {
-      layout: 'split-layout',
-      textPosition: 'side',
-      backgroundColor: '#F5E6D3',
-      textColor: '#5D4037',
-      accentColor: '#8D6E63'
-    }
-  },
-  {
-    id: 'marble-luxury',
-    name: 'Marble Luxury',
-    description: 'Elegant marble pattern with sophisticated text',
+    id: 'wedding-marble-luxury',
+    name: 'Marble Sophistication',
+    description: 'Luxe marble pattern for upscale celebrations',
     category: 'wedding',
     preview: cardEmeraldMarble,
     style: {
@@ -238,24 +123,26 @@ const templates: CardTemplate[] = [
       accentColor: '#6C5CE7'
     }
   },
+
+  // 👶 BABY / BIRTH TEMPLATES
   {
-    id: 'watercolor-splash',
-    name: 'Watercolor Splash',
-    description: 'Artistic watercolor background with flowing design',
+    id: 'baby-rainbow-dreams',
+    name: 'Rainbow Dreams',
+    description: 'Gentle watercolor rainbow for new arrivals',
     category: 'baby',
-    preview: oceanWave,
+    preview: cardBabyArrival,
     style: {
       layout: 'overlay-text',
-      textPosition: 'top',
-      backgroundColor: 'rgba(129, 236, 236, 0.3)',
-      textColor: '#0D7377',
-      accentColor: '#14A085'
+      textPosition: 'center',
+      backgroundColor: '#FFF8F0',
+      textColor: '#8B7355',
+      accentColor: '#F4C2C2'
     }
   },
   {
-    id: 'floral-pink',
-    name: 'Floral Pink',
-    description: 'Delicate pink florals with romantic feel',
+    id: 'baby-floral-pink',
+    name: 'Pink Blossom Garden',
+    description: 'Delicate florals celebrating your little one',
     category: 'baby',
     preview: cardFloralPink,
     style: {
@@ -267,9 +154,95 @@ const templates: CardTemplate[] = [
     }
   },
   {
-    id: 'blush-botanical',
-    name: 'Blush Botanical',
-    description: 'Soft blush tones with botanical elements',
+    id: 'baby-vintage-botanical',
+    name: 'Vintage Botanical',
+    description: 'Heirloom-quality botanical illustrations',
+    category: 'baby',
+    preview: cardVintageBotanical,
+    style: {
+      layout: 'photo-frame',
+      textPosition: 'bottom',
+      backgroundColor: '#F5F5DC',
+      textColor: '#4A4A4A',
+      accentColor: '#8B4513'
+    }
+  },
+  {
+    id: 'baby-watercolor-splash',
+    name: 'Ocean Splash',
+    description: 'Playful watercolor for joyful announcements',
+    category: 'baby',
+    preview: oceanWave,
+    style: {
+      layout: 'overlay-text',
+      textPosition: 'top',
+      backgroundColor: 'rgba(129, 236, 236, 0.3)',
+      textColor: '#0D7377',
+      accentColor: '#14A085'
+    }
+  },
+
+  // 🍼 BABY SHOWER TEMPLATES
+  {
+    id: 'baby-shower-clouds',
+    name: 'Clouds & Stars',
+    description: 'Whimsical clouds with gentle animals',
+    category: 'baby-shower',
+    preview: cardBabyShowerClouds,
+    style: {
+      layout: 'photo-frame',
+      textPosition: 'center',
+      backgroundColor: '#F8FCFF',
+      textColor: '#5A7D9A',
+      accentColor: '#A8D8EA'
+    }
+  },
+  {
+    id: 'baby-shower-botanical',
+    name: 'Garden Party',
+    description: 'Nature-inspired design for outdoor showers',
+    category: 'baby-shower',
+    preview: cardBotanicalRustic,
+    style: {
+      layout: 'photo-frame',
+      textPosition: 'bottom',
+      backgroundColor: '#F0F9F0',
+      textColor: '#2D5016',
+      accentColor: '#7FB069'
+    }
+  },
+  {
+    id: 'baby-shower-ocean-wave',
+    name: 'Coastal Dreams',
+    description: 'Flowing waves for beach-themed celebrations',
+    category: 'baby-shower',
+    preview: cardNavyStars,
+    style: {
+      layout: 'split-layout',
+      textPosition: 'side',
+      backgroundColor: '#E3F2FD',
+      textColor: '#0D47A1',
+      accentColor: '#2196F3'
+    }
+  },
+  {
+    id: 'baby-shower-cherry-blossom',
+    name: 'Cherry Blossom Spring',
+    description: 'Delicate spring florals in soft pink',
+    category: 'baby-shower',
+    preview: cardCherryBlossom,
+    style: {
+      layout: 'overlay-text',
+      textPosition: 'bottom',
+      backgroundColor: 'rgba(255, 182, 193, 0.3)',
+      textColor: '#8E24AA',
+      accentColor: '#E91E63'
+    }
+  },
+  {
+    id: 'baby-shower-blush-botanical',
+    name: 'Blush Garden',
+    description: 'Warm blush tones with botanical elegance',
     category: 'baby-shower',
     preview: cardBlushBotanical,
     style: {
@@ -280,10 +253,54 @@ const templates: CardTemplate[] = [
       accentColor: '#CD853F'
     }
   },
+
+  // 💌 GENERAL THANK YOU TEMPLATES  
   {
-    id: 'wildflower-ink',
-    name: 'Wildflower Ink',
-    description: 'Hand-drawn wildflowers with ink details',
+    id: 'general-watercolor-heart',
+    name: 'Watercolor Heart',
+    description: 'Timeless gratitude with flowing watercolor',
+    category: 'general',
+    preview: cardGeneralHeart,
+    style: {
+      layout: 'overlay-text',
+      textPosition: 'center',
+      backgroundColor: '#FFF8F0',
+      textColor: '#8B7355',
+      accentColor: '#F4A460'
+    }
+  },
+  {
+    id: 'general-minimalist-zen',
+    name: 'Minimalist Zen',
+    description: 'Clean simplicity with modern line art',
+    category: 'general',
+    preview: cardLineArtFlorals,
+    style: {
+      layout: 'photo-frame',
+      textPosition: 'bottom',
+      backgroundColor: '#FAFAFA',
+      textColor: '#424242',
+      accentColor: '#9E9E9E'
+    }
+  },
+  {
+    id: 'general-sage-abstract',
+    name: 'Sage Abstract',
+    description: 'Organic shapes in calming sage tones',
+    category: 'general',
+    preview: cardSageAbstract,
+    style: {
+      layout: 'overlay-text',
+      textPosition: 'bottom',
+      backgroundColor: 'rgba(0,0,0,0.3)',
+      textColor: '#FFFFFF',
+      accentColor: '#5A9FD4'
+    }
+  },
+  {
+    id: 'general-wildflower-ink',
+    name: 'Wildflower Sketch',
+    description: 'Hand-drawn botanicals with rustic charm',
     category: 'general',
     preview: cardWildflowerInk,
     style: {
@@ -293,7 +310,125 @@ const templates: CardTemplate[] = [
       textColor: '#2F4F4F',
       accentColor: '#6B8E23'
     }
-  }
+  },
+  {
+    id: 'general-sunset-mountains',
+    name: 'Mountain Sunset',
+    description: 'Natural beauty for heartfelt thanks',
+    category: 'general',
+    preview: cardSunsetMountains,
+    style: {
+      layout: 'full-background',
+      textPosition: 'center',
+      backgroundColor: 'transparent',
+      textColor: '#FFFFFF',
+      accentColor: '#F787DD'
+    }
+  },
+
+  // 🎉 CELEBRATION / BIRTHDAY / GRADUATION TEMPLATES
+  {
+    id: 'celebration-birthday-confetti',
+    name: 'Confetti Celebration',
+    description: 'Vibrant joy with modern confetti design',
+    category: 'celebration',
+    preview: cardBirthdayModern,
+    style: {
+      layout: 'overlay-text',
+      textPosition: 'center',
+      backgroundColor: '#FFFFFF',
+      textColor: '#FF6B6B',
+      accentColor: '#4ECDC4'
+    }
+  },
+  {
+    id: 'celebration-graduation-rays',
+    name: 'Achievement Rays',
+    description: 'Bold rays of light for graduates',
+    category: 'celebration',
+    preview: cardGraduationRays,
+    style: {
+      layout: 'full-background',
+      textPosition: 'center',
+      backgroundColor: '#F8F6F0',
+      textColor: '#1A2B3C',
+      accentColor: '#D4A574'
+    }
+  },
+  {
+    id: 'celebration-sunset-gradient',
+    name: 'Sunset Gradient',
+    description: 'Warm celebration with coral and gold',
+    category: 'celebration',
+    preview: cardCoralWatercolor,
+    style: {
+      layout: 'overlay-text',
+      textPosition: 'top',
+      backgroundColor: 'linear-gradient(135deg, #FF8A80, #FFD54F)',
+      textColor: '#FFFFFF',
+      accentColor: '#FF6F00'
+    }
+  },
+  {
+    id: 'celebration-starry-night',
+    name: 'Starry Night Magic',
+    description: 'Celestial celebration under the stars',
+    category: 'celebration',
+    preview: starryNight,
+    style: {
+      layout: 'full-background',
+      textPosition: 'center',
+      backgroundColor: 'rgba(25, 25, 112, 0.4)',
+      textColor: '#FFFFFF',
+      accentColor: '#FFD700'
+    }
+  },
+  {
+    id: 'celebration-rustic-wood',
+    name: 'Rustic Celebration',
+    description: 'Warm wood textures for milestone moments',
+    category: 'celebration',
+    preview: pineTrees,
+    style: {
+      layout: 'split-layout',
+      textPosition: 'side',
+      backgroundColor: '#F5E6D3',
+      textColor: '#5D4037',
+      accentColor: '#8D6E63'
+    }
+  },
+
+  // 🌿 MEMORIAL / TRIBUTE TEMPLATES
+  {
+    id: 'memorial-feather-nature',
+    name: 'Gentle Feathers',
+    description: 'Peaceful remembrance with natural elements',
+    category: 'memorial',
+    preview: cardMemorialNature,
+    style: {
+      layout: 'overlay-text',
+      textPosition: 'center',
+      backgroundColor: '#F8FBF8',
+      textColor: '#6B8B7F',
+      accentColor: '#9DB5A5'
+    }
+  },
+
+  // 💖 CHARITY / COMMUNITY SUPPORT TEMPLATE
+  {
+    id: 'charity-community-hands',
+    name: 'Community Hearts',
+    description: 'Hopeful gratitude for charitable support',
+    category: 'general',
+    preview: cardCharityHands,
+    style: {
+      layout: 'overlay-text',
+      textPosition: 'center',
+      backgroundColor: '#FFFEF8',
+      textColor: '#5A7D7C',
+      accentColor: '#F4A261'
+    }
+  },
 ];
 
 const categoryLabels: Record<TemplateCategory, string> = {
@@ -301,7 +436,8 @@ const categoryLabels: Record<TemplateCategory, string> = {
   baby: 'Baby/Birth',
   'baby-shower': 'Baby Shower',
   general: 'General',
-  celebration: 'Celebration'
+  celebration: 'Celebration',
+  memorial: 'Memorial/Tribute'
 };
 
 interface CardTemplatesProps {
@@ -326,21 +462,21 @@ export const CardTemplates: React.FC<CardTemplatesProps> = ({
   const renderTemplateCard = (template: CardTemplate) => (
     <Card 
       key={template.id}
-      className={`cursor-pointer transition-all hover:shadow-soft ${
+      className={`cursor-pointer transition-all hover:shadow-warm border-2 ${
         selectedTemplate === template.id 
-          ? 'ring-2 ring-primary border-primary' 
-          : 'hover:border-primary/50'
+          ? 'ring-2 ring-primary border-primary shadow-glow' 
+          : 'hover:border-primary/50 border-transparent'
       }`}
       onClick={() => onTemplateSelect(template)}
     >
       <CardContent className="p-4">
-        <div className="flex items-start gap-3">
+        <div className="space-y-3">
           {/* Template preview image */}
-          <div className="w-16 h-20 flex-shrink-0 rounded overflow-hidden border">
+          <div className="w-full aspect-video rounded-lg overflow-hidden border-2 border-border shadow-soft">
             <img 
               src={template.preview}
               alt={template.name}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover transition-transform hover:scale-105"
               onError={(e) => {
                 const img = e.currentTarget as HTMLImageElement;
                 const fallback = img.nextElementSibling as HTMLDivElement;
@@ -349,22 +485,22 @@ export const CardTemplates: React.FC<CardTemplatesProps> = ({
               }}
             />
             <div 
-              className="w-full h-full bg-muted flex items-center justify-center text-2xl" 
+              className="w-full h-full bg-muted flex items-center justify-center text-4xl" 
               style={{ display: 'none' }}
             >
               🎨
             </div>
           </div>
-          <div className="flex-1">
-            <div className="flex items-center justify-between mb-1">
-              <h4 className="font-medium">{template.name}</h4>
+          <div className="space-y-1">
+            <div className="flex items-center justify-between">
+              <h4 className="font-serif font-semibold text-base">{template.name}</h4>
               {selectedTemplate === template.id && (
-                <div className="w-5 h-5 bg-primary rounded-full flex items-center justify-center">
-                  <Check className="w-3 h-3 text-white" />
+                <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center animate-scale-in">
+                  <Check className="w-4 h-4 text-white" />
                 </div>
               )}
             </div>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-xs text-muted-foreground leading-relaxed">
               {template.description}
             </p>
           </div>
@@ -376,9 +512,9 @@ export const CardTemplates: React.FC<CardTemplatesProps> = ({
   return (
     <div className="space-y-4">
       <div>
-        <h3 className="text-lg font-semibold mb-2">Choose a Card Template</h3>
+        <h3 className="text-xl font-serif font-semibold mb-2">Choose a Card Template</h3>
         <p className="text-sm text-muted-foreground mb-4">
-          Select a template based on your occasion
+          Select a beautiful design that matches your occasion
         </p>
       </div>
 
@@ -393,7 +529,7 @@ export const CardTemplates: React.FC<CardTemplatesProps> = ({
         </TabsList>
 
         <TabsContent value="all" className="mt-0">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {templates.map((template) => renderTemplateCard(template))}
           </div>
         </TabsContent>
@@ -425,6 +561,12 @@ export const CardTemplates: React.FC<CardTemplatesProps> = ({
         <TabsContent value="celebration" className="mt-0">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {templates.filter(t => t.category === 'celebration').map((template) => renderTemplateCard(template))}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="memorial" className="mt-0">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {templates.filter(t => t.category === 'memorial').map((template) => renderTemplateCard(template))}
           </div>
         </TabsContent>
       </Tabs>
