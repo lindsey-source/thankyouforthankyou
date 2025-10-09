@@ -89,7 +89,11 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
 
   const handleTemplateSelect = (template: CardTemplate) => {
     console.log('Template selected:', template);
-    setDesign(prev => ({ ...prev, template }));
+    setDesign(prev => {
+      const newDesign = { ...prev, template };
+      console.log('Updated design state:', newDesign);
+      return newDesign;
+    });
   };
 
   const handleNextStep = () => {
@@ -302,7 +306,7 @@ export const CardDesigner: React.FC<CardDesignerProps> = ({
           </div>
 
           {/* Right Column - Preview */}
-          {currentStep > 2 && (
+          {currentStep >= 3 && (
             <div className="lg:sticky lg:top-4">
               <CardPreview 
                 template={design.template}
