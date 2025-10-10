@@ -18,9 +18,22 @@ const envelopeColors = [
 ];
 
 const textures = [
-  { id: 'smooth', name: 'Smooth' },
-  { id: 'linen', name: 'Linen' },
-  { id: 'watercolor', name: 'Watercolor' }
+  { 
+    id: 'smooth', 
+    name: 'Smooth',
+    style: 'bg-white'
+  },
+  { 
+    id: 'linen', 
+    name: 'Linen',
+    style: 'bg-gradient-to-br from-gray-50 to-gray-100',
+    pattern: 'repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(0,0,0,.03) 2px, rgba(0,0,0,.03) 4px)'
+  },
+  { 
+    id: 'watercolor', 
+    name: 'Watercolor',
+    style: 'bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50'
+  }
 ];
 
 const signatureStyles = [
@@ -194,13 +207,21 @@ export default function CreateCardStep4() {
                   <div
                     key={texture.id}
                     onClick={() => setSelectedTexture(texture.id)}
-                    className={`cursor-pointer p-4 rounded-lg border-2 text-center transition-all ${
+                    className={`cursor-pointer rounded-lg border-2 transition-all overflow-hidden ${
                       selectedTexture === texture.id
-                        ? 'border-primary ring-2 ring-primary bg-primary/5'
+                        ? 'border-primary ring-2 ring-primary'
                         : 'border-gray-200 hover:border-gray-300'
                     }`}
                   >
-                    <p className="font-medium">{texture.name}</p>
+                    <div 
+                      className={`w-full h-24 ${texture.style}`}
+                      style={texture.pattern ? { 
+                        backgroundImage: texture.pattern 
+                      } : undefined}
+                    />
+                    <div className="p-3 text-center bg-white">
+                      <p className="font-medium text-sm">{texture.name}</p>
+                    </div>
                   </div>
                 ))}
               </div>
