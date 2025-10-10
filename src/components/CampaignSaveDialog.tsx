@@ -12,7 +12,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Save, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { saveCampaign } from '@/lib/campaigns';
+// import { saveCampaign } from '@/lib/campaigns';
 import { CreateCampaignData } from '@/types/campaign';
 
 interface CampaignSaveDialogProps {
@@ -40,7 +40,16 @@ export function CampaignSaveDialog({ cardDesign, onSaved, trigger }: CampaignSav
     setIsSaving(true);
     
     try {
-      const { data, error } = await saveCampaign({
+      // TODO: Implement campaign save functionality with user_cards table
+      toast({
+        title: "Feature coming soon",
+        description: "Campaign saving will be available soon!",
+      });
+      
+      setCampaignName('');
+      setIsOpen(false);
+      
+      /* const { data, error } = await saveCampaign({
         name: campaignName.trim(),
         card_design: cardDesign
       });
@@ -60,6 +69,7 @@ export function CampaignSaveDialog({ cardDesign, onSaved, trigger }: CampaignSav
       if (onSaved && data) {
         onSaved(data.id);
       }
+      */
     } catch (error: any) {
       toast({
         title: "Failed to save campaign",

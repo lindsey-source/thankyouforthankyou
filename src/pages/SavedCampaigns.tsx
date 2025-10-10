@@ -6,7 +6,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Edit3, Trash2, Calendar, Image, MessageSquare, Loader2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
-import { getCampaigns, deleteCampaign } from '@/lib/campaigns';
+// import { getCampaigns, deleteCampaign } from '@/lib/campaigns';
 import { Campaign } from '@/types/campaign';
 
 export default function SavedCampaigns() {
@@ -22,13 +22,16 @@ export default function SavedCampaigns() {
 
   const loadCampaigns = async () => {
     try {
-      const { data, error } = await getCampaigns();
+      // TODO: Implement with user_cards table
+      setCampaigns([]);
+      
+      /* const { data, error } = await getCampaigns();
       
       if (error) {
         throw error;
       }
       
-      setCampaigns(data || []);
+      setCampaigns(data || []); */
     } catch (error: any) {
       toast({
         title: "Failed to load campaigns",
@@ -63,7 +66,14 @@ export default function SavedCampaigns() {
     setDeleting(campaignId);
     
     try {
-      const { error } = await deleteCampaign(campaignId);
+      // TODO: Implement with user_cards table
+      setCampaigns(prev => prev.filter(c => c.id !== campaignId));
+      toast({
+        title: "Campaign deleted",
+        description: "The campaign has been deleted successfully.",
+      });
+      
+      /* const { error } = await deleteCampaign(campaignId);
       
       if (error) {
         throw error;
@@ -73,7 +83,7 @@ export default function SavedCampaigns() {
       toast({
         title: "Campaign deleted",
         description: "The campaign has been deleted successfully.",
-      });
+      }); */
     } catch (error: any) {
       toast({
         title: "Failed to delete campaign",

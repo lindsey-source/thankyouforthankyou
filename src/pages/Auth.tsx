@@ -6,14 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from 'sonner';
-import { z } from 'zod';
 import { Heart, Mail, Lock } from 'lucide-react';
-
-const authSchema = z.object({
-  email: z.string().email('Please enter a valid email address').max(255),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
-  name: z.string().min(2, 'Name must be at least 2 characters').max(100).optional()
-});
 
 export default function Auth() {
   const navigate = useNavigate();
@@ -39,14 +32,11 @@ export default function Auth() {
     setLoading(true);
 
     try {
-      // Validate form data
-      const validatedData = authSchema.parse(formData);
-
       if (isLogin) {
         // Login
         const { data, error } = await supabase.auth.signInWithPassword({
-          email: validatedData.email,
-          password: validatedData.password
+          email: formData.email,
+          password: formData.password
         });
 
         if (error) throw error;
@@ -58,12 +48,12 @@ export default function Auth() {
         const redirectUrl = `${window.location.origin}/create-card/step1`;
         
         const { data, error } = await supabase.auth.signUp({
-          email: validatedData.email,
-          password: validatedData.password,
+          email: formData.email,
+          password: formData.password,
           options: {
             emailRedirectTo: redirectUrl,
             data: {
-              name: validatedData.name
+              name: formData.name
             }
           }
         });
@@ -80,13 +70,7 @@ export default function Auth() {
         }
       }
     } catch (error: any) {
-      if (error instanceof z.ZodError) {
-        error.errors.forEach(err => {
-          toast.error(err.message);
-        });
-      } else {
-        toast.error(error.message || 'An error occurred');
-      }
+      toast.error(error.message || 'An error occurred');
     } finally {
       setLoading(false);
     }
