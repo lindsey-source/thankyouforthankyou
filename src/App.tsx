@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { CardWizardProvider } from "@/contexts/CardWizardContext";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
@@ -83,7 +83,7 @@ const App = () => (
               />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/send-thanks" element={<SendThanks />} />
-              <Route path="/card-design" element={<CardDesign />} />
+              <Route path="/card-design" element={<Navigate to="/create-card/step1" replace />} />
               <Route path="/saved-campaigns" element={<SavedCampaigns />} />
               <Route path="/csv-upload" element={<CSVManager />} />
               <Route path="/analytics" element={<Analytics />} />
