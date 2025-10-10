@@ -21,7 +21,7 @@ const textures = [
   { 
     id: 'smooth', 
     name: 'Smooth',
-    style: 'bg-white'
+    style: 'bg-gradient-to-br from-amber-50 to-orange-50'
   },
   { 
     id: 'linen', 
