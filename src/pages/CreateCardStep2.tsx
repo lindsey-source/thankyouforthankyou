@@ -26,9 +26,14 @@ const colorPalettes = [
 ];
 
 const fontPairings = [
-  { id: 'classic', name: 'Classic', heading: 'Playfair Display', body: 'Lato' },
-  { id: 'modern', name: 'Modern', heading: 'Montserrat', body: 'Open Sans' },
-  { id: 'playful', name: 'Playful', heading: 'Pacifico', body: 'Quicksand' }
+  { id: 'classic', name: 'Classic Elegance', heading: 'Playfair Display', body: 'Lato' },
+  { id: 'modern', name: 'Modern Clean', heading: 'Montserrat', body: 'Open Sans' },
+  { id: 'romantic', name: 'Romantic Script', heading: 'Dancing Script', body: 'Nunito' },
+  { id: 'playful', name: 'Playful Joy', heading: 'Pacifico', body: 'Quicksand' },
+  { id: 'sophisticated', name: 'Sophisticated', heading: 'Cormorant Garamond', body: 'Lora' },
+  { id: 'editorial', name: 'Editorial', heading: 'EB Garamond', body: 'Crimson Text' },
+  { id: 'bold', name: 'Bold Impact', heading: 'Bebas Neue', body: 'Roboto' },
+  { id: 'artistic', name: 'Artistic', heading: 'Amatic SC', body: 'Cabin' }
 ];
 
 export default function CreateCardStep2() {
@@ -161,15 +166,34 @@ export default function CreateCardStep2() {
                     <div
                       key={font.id}
                       onClick={() => setSelectedFont(font)}
-                      className={`cursor-pointer p-4 rounded-lg border-2 transition-all ${
+                      className={`cursor-pointer p-6 rounded-lg border-2 transition-all ${
                         selectedFont.id === font.id
-                          ? 'border-primary ring-2 ring-primary'
+                          ? 'border-primary ring-2 ring-primary bg-primary/5'
                           : 'border-gray-200 hover:border-gray-300'
                       }`}
                     >
-                      <p className="font-semibold">{font.name}</p>
-                      <p className="text-sm text-muted-foreground">
-                        {font.heading} + {font.body}
+                      <div className="flex items-center justify-between mb-3">
+                        <p className="font-semibold text-sm">{font.name}</p>
+                        {selectedFont.id === font.id && (
+                          <Check className="w-5 h-5 text-primary" />
+                        )}
+                      </div>
+                      <div className="space-y-2">
+                        <p 
+                          className="text-2xl"
+                          style={{ fontFamily: font.heading }}
+                        >
+                          Thank You
+                        </p>
+                        <p 
+                          className="text-sm text-muted-foreground"
+                          style={{ fontFamily: font.body }}
+                        >
+                          Your kindness means the world to us. We are deeply grateful.
+                        </p>
+                      </div>
+                      <p className="text-xs text-muted-foreground mt-3">
+                        {font.heading} • {font.body}
                       </p>
                     </div>
                   ))}
@@ -184,12 +208,61 @@ export default function CreateCardStep2() {
               <CardContent className="p-6">
                 <h3 className="text-lg font-semibold mb-4">Live Preview</h3>
                 {selectedTemplate && (
-                  <div className="aspect-[3/4] rounded-lg overflow-hidden shadow-lg">
-                    <img
-                      src={selectedTemplate.preview_image}
-                      alt="Preview"
-                      className="w-full h-full object-cover"
-                    />
+                  <div className="space-y-4">
+                    {/* Template Preview */}
+                    <div className="aspect-[3/4] rounded-lg overflow-hidden shadow-lg border-2 border-gray-100">
+                      <img
+                        src={selectedTemplate.preview_image}
+                        alt="Preview"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    
+                    {/* Dynamic Style Preview */}
+                    <div 
+                      className="aspect-[3/4] rounded-lg overflow-hidden shadow-lg p-8 flex flex-col justify-center items-center text-center transition-all"
+                      style={{ 
+                        backgroundColor: selectedPalette.colors[0],
+                        borderColor: selectedPalette.colors[1],
+                        borderWidth: '2px'
+                      }}
+                    >
+                      <div className="space-y-6">
+                        <h2 
+                          className="text-4xl font-bold"
+                          style={{ 
+                            fontFamily: selectedFont.heading,
+                            color: selectedPalette.colors[2]
+                          }}
+                        >
+                          Thank You
+                        </h2>
+                        <p 
+                          className="text-lg leading-relaxed max-w-xs"
+                          style={{ 
+                            fontFamily: selectedFont.body,
+                            color: selectedPalette.colors[2]
+                          }}
+                        >
+                          Your kindness and thoughtfulness have touched our hearts deeply.
+                        </p>
+                        <p 
+                          className="text-sm italic"
+                          style={{ 
+                            fontFamily: selectedFont.body,
+                            color: selectedPalette.colors[2]
+                          }}
+                        >
+                          With gratitude,
+                          <br />
+                          Your Name
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="text-xs text-muted-foreground text-center">
+                      Selected: {selectedTemplate.name} • {selectedPalette.name} • {selectedFont.name}
+                    </div>
                   </div>
                 )}
               </CardContent>
