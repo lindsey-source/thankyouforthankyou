@@ -94,8 +94,8 @@ export default function CreateCardStep2() {
           <p className="text-white/90">Choose a template and customize it</p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Left: Controls */}
+        <div className="max-w-4xl mx-auto">
+          {/* Controls */}
           <div className="space-y-6">
             {/* Templates */}
             <Card className="bg-white/95 backdrop-blur-sm">
@@ -198,73 +198,6 @@ export default function CreateCardStep2() {
                     </div>
                   ))}
                 </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Right: Live Preview */}
-          <div className="lg:sticky lg:top-8 h-fit">
-            <Card className="bg-white/95 backdrop-blur-sm">
-              <CardContent className="p-6">
-                <h3 className="text-lg font-semibold mb-4">Live Preview</h3>
-                {selectedTemplate && (
-                  <div className="space-y-4">
-                    {/* Template Preview */}
-                    <div className="aspect-[3/4] rounded-lg overflow-hidden shadow-lg border-2 border-gray-100">
-                      <img
-                        src={selectedTemplate.preview_image}
-                        alt="Preview"
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    
-                    {/* Dynamic Style Preview */}
-                    <div 
-                      className="aspect-[3/4] rounded-lg overflow-hidden shadow-lg p-8 flex flex-col justify-center items-center text-center transition-all"
-                      style={{ 
-                        backgroundColor: selectedPalette.colors[0],
-                        borderColor: selectedPalette.colors[1],
-                        borderWidth: '2px'
-                      }}
-                    >
-                      <div className="space-y-6">
-                        <h2 
-                          className="text-4xl font-bold"
-                          style={{ 
-                            fontFamily: selectedFont.heading,
-                            color: selectedPalette.colors[2]
-                          }}
-                        >
-                          Thank You
-                        </h2>
-                        <p 
-                          className="text-lg leading-relaxed max-w-xs"
-                          style={{ 
-                            fontFamily: selectedFont.body,
-                            color: selectedPalette.colors[2]
-                          }}
-                        >
-                          Your kindness and thoughtfulness have touched our hearts deeply.
-                        </p>
-                        <p 
-                          className="text-sm italic"
-                          style={{ 
-                            fontFamily: selectedFont.body,
-                            color: selectedPalette.colors[2]
-                          }}
-                        >
-                          With gratitude,
-                          <br />
-                          Your Name
-                        </p>
-                      </div>
-                    </div>
-                    
-                    <div className="text-xs text-muted-foreground text-center">
-                      Selected: {selectedTemplate.name} • {selectedPalette.name} • {selectedFont.name}
-                    </div>
-                  </div>
-                )}
               </CardContent>
             </Card>
           </div>
