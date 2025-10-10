@@ -338,7 +338,17 @@ export default function CreateCardStep5() {
                 ✕
               </button>
               <InteractiveCardViewer
-                template={template}
+                template={{
+                  ...template,
+                  preview: template.preview_image,
+                  style: {
+                    layout: 'full-background',
+                    textPosition: 'bottom',
+                    backgroundColor: template.colors?.primary || '#F5E6D3',
+                    textColor: template.colors?.text || '#8B6F47',
+                    accentColor: template.colors?.accent || '#D4A574'
+                  }
+                }}
                 photo={cardData.photoUrl ? { file: null as any, preview: cardData.photoUrl } : null}
                 message={cardData.messageBody}
                 recipientName={recipientName || 'Friend'}
