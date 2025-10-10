@@ -123,7 +123,7 @@ export const InteractiveCardViewer: React.FC<InteractiveCardViewerProps> = ({
               <div className="relative w-full h-full">
                 {/* Template background */}
                 <img 
-                  src={template.preview}
+                  src={template.preview_image || template.preview}
                   alt="Card front"
                   className="absolute inset-0 w-full h-full object-cover"
                 />
@@ -171,7 +171,7 @@ export const InteractiveCardViewer: React.FC<InteractiveCardViewerProps> = ({
                 <Card className="w-80 h-96 shadow-2xl overflow-hidden">
                   <div className="relative w-full h-full">
                     <img 
-                      src={template.preview}
+                      src={template.preview_image || template.preview}
                       alt="Card design"
                       className="absolute inset-0 w-full h-full object-cover"
                     />

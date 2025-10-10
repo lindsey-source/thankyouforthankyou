@@ -42,6 +42,7 @@ export interface CardTemplate {
   description: string;
   category: TemplateCategory;
   preview: string;
+  preview_image?: string; // Database column
   style: {
     layout: 'full-background' | 'photo-frame' | 'split-layout' | 'overlay-text';
     textPosition: 'bottom' | 'top' | 'center' | 'side';
