@@ -1,4 +1,4 @@
-import { supabase } from './supabase';
+import { supabase } from '@/integrations/supabase/client';
 import { Campaign, CreateCampaignData } from '@/types/campaign';
 
 export async function saveCampaign(campaignData: CreateCampaignData): Promise<{ data: Campaign | null, error: any }> {
