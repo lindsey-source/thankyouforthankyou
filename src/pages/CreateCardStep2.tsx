@@ -25,7 +25,7 @@ const CATEGORY_CONFIG = [
   { key: 'baby', emoji: '👶', title: 'Baby & Family' },
   { key: 'graduation', emoji: '🎓', title: 'Graduation & Achievement' },
   { key: 'birthday', emoji: '🎉', title: 'Birthdays & Celebrations' },
-  { key: 'thankyou', emoji: '💌', title: 'Everyday Gratitude' },
+  { key: 'general', emoji: '💌', title: 'Everyday Gratitude' },
   { key: 'memorial', emoji: '🌿', title: 'Memorial & Tribute' },
   { key: 'charity', emoji: '💖', title: 'Charity & Community' }
 ];
