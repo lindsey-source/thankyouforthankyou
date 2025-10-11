@@ -6,6 +6,8 @@ interface TemplateCardProps {
   id: string;
   name: string;
   image: string;
+  colors: any;
+  fonts: any;
   selected: boolean;
   onSelect: () => void;
 }
@@ -14,6 +16,8 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({
   id,
   name,
   image,
+  colors,
+  fonts,
   selected,
   onSelect
 }) => {
@@ -52,10 +56,50 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({
           </motion.div>
         )}
       </div>
-      <div className="p-3 bg-white">
-        <p className="text-sm font-medium text-center truncate" title={name}>
+      <div className="p-4 bg-white">
+        <p className="text-sm font-medium text-center truncate mb-3" title={name}>
           {name}
         </p>
+        
+        {/* Color Palette */}
+        {colors && (
+          <div className="mb-2">
+            <p className="text-xs text-gray-500 mb-1.5">Colors</p>
+            <div className="flex gap-1.5 justify-center">
+              {colors.primary && (
+                <div
+                  className="w-6 h-6 rounded-full border border-gray-200"
+                  style={{ backgroundColor: colors.primary }}
+                  title="Primary"
+                />
+              )}
+              {colors.secondary && (
+                <div
+                  className="w-6 h-6 rounded-full border border-gray-200"
+                  style={{ backgroundColor: colors.secondary }}
+                  title="Secondary"
+                />
+              )}
+              {colors.accent && (
+                <div
+                  className="w-6 h-6 rounded-full border border-gray-200"
+                  style={{ backgroundColor: colors.accent }}
+                  title="Accent"
+                />
+              )}
+            </div>
+          </div>
+        )}
+        
+        {/* Font Preview */}
+        {fonts && fonts.heading && (
+          <div>
+            <p className="text-xs text-gray-500 mb-1">Font</p>
+            <p className="text-xs text-center" style={{ fontFamily: fonts.heading }}>
+              {fonts.heading}
+            </p>
+          </div>
+        )}
       </div>
     </motion.div>
   );

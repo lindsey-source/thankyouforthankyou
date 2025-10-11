@@ -7,6 +7,8 @@ interface Template {
   id: string;
   name: string;
   preview_image: string;
+  colors: any;
+  fonts: any;
 }
 
 interface CategorySectionProps {
@@ -68,6 +70,8 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
                 id={template.id}
                 name={template.name}
                 image={template.preview_image}
+                colors={template.colors}
+                fonts={template.fonts}
                 selected={selectedTemplateId === template.id}
                 onSelect={() => onSelectTemplate(template.id)}
               />
