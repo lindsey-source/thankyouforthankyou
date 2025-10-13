@@ -29,7 +29,7 @@ export default function CreateCardStep1() {
   return (
     <div className="min-h-screen bg-gradient-hero p-4 md:p-8">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-12">
+        <div className="text-center mb-8">
           <motion.h1 
             className="text-4xl md:text-5xl font-bold text-white mb-4"
             initial={{ opacity: 0, y: -20 }}
@@ -38,13 +38,38 @@ export default function CreateCardStep1() {
             Let's make something beautiful together
           </motion.h1>
           <motion.p 
-            className="text-lg text-white/90"
+            className="text-lg text-white/90 mb-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
           >
             Choose the occasion for your thank you card
           </motion.p>
+
+          {/* Benefits Callout */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="max-w-3xl mx-auto mb-8"
+          >
+            <Card className="bg-white/95 backdrop-blur-sm border-primary/20">
+              <CardContent className="p-6">
+                <div className="flex items-start gap-3">
+                  <Heart className="h-6 w-6 text-primary mt-1 flex-shrink-0" />
+                  <div className="text-left">
+                    <h4 className="font-semibold text-primary mb-2 text-lg">
+                      Your Thank You, Reimagined
+                    </h4>
+                    <p className="text-sm text-foreground/80 leading-relaxed">
+                      Traditional thank you cards cost $3-8 each (card + stamp + time). Instead of that expense, 
+                      send a beautiful digital card and donate that money to charity - turning your gratitude into greater good.
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">

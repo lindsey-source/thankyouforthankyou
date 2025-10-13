@@ -77,7 +77,7 @@ const Dashboard = () => {
             Ready to make someone's day? Let's send some gratitude!
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <Link to="/send-thanks">
+            <Link to="/create-card/step1">
               <Button variant="hero" size="lg" className="gap-2">
                 <Plus className="h-5 w-5" />
                 Send New Thank You Campaign
@@ -193,7 +193,7 @@ const Dashboard = () => {
                 <CardTitle>Quick Actions</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <Link to="/send-thanks">
+                <Link to="/create-card/step1">
                   <Button variant="default" className="w-full justify-start gap-3">
                     <Plus className="h-4 w-4" />
                     New Campaign
