@@ -1,206 +1,257 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCardWizard } from '@/contexts/CardWizardContext';
-import { useAuth } from '@/contexts/AuthContext';
-import { useAutoSave } from '@/hooks/useAutoSave';
+import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { motion } from 'framer-motion';
-import { ArrowLeft, ArrowRight, Lightbulb, Check } from 'lucide-react';
 import { toast } from 'sonner';
+import { getTemplateImage } from '@/lib/templateImageMap';
+import { ProgressBar } from '@/components/CardDesigner/ProgressBar';
+import { BreadcrumbNav } from '@/components/CardDesigner/BreadcrumbNav';
+import { StepContainer } from '@/components/CardDesigner/StepContainer';
+import { Check } from 'lucide-react';
 
-const sampleMessages = {
-  wedding: [
-    { headline: 'With Love & Gratitude', body: 'Thank you for celebrating our special day with us. Your presence made our wedding truly unforgettable.', closing: 'Love always' },
-    { headline: 'Forever Grateful', body: 'Your thoughtful gift and warm wishes mean the world to us as we begin this new chapter together.', closing: 'With appreciation' }
-  ],
-  baby: [
-    { headline: 'Welcome to the World', body: 'Thank you for the beautiful gift and for celebrating the arrival of our little one with us!', closing: 'With love' },
-    { headline: 'Our Hearts Are Full', body: 'Your kindness and generosity have touched our hearts during this special time.', closing: 'Gratefully yours' }
-  ],
-  general: [
-    { headline: 'Thank You So Much', body: 'Your thoughtfulness and generosity have truly brightened my day. I am so grateful to have you in my life.', closing: 'With heartfelt thanks' },
-    { headline: 'Deeply Grateful', body: 'Words cannot express how much your kindness means to me. Thank you for being so wonderful.', closing: 'Warmly' }
-  ]
-};
+const STEPS = [
+  { name: 'Occasion', path: '/create-card/step1' },
+  { name: 'Style', path: '/create-card/step2' },
+  { name: 'Customize', path: '/create-card/step3' },
+  { name: 'Message', path: '/create-card/step4' },
+  { name: 'Touches', path: '/create-card/step5' },
+  { name: 'Preview', path: '/create-card/step6' }
+];
+
+const STEP_NAMES = ['Choose Occasion', 'Pick Your Style', 'Customize Design', 'Write Your Message', 'Add Finishing Touches', 'Preview & Send'];
 
 export default function CreateCardStep3() {
   const navigate = useNavigate();
   const { cardData, updateCardData, setCurrentStep } = useCardWizard();
-  const { user } = useAuth();
-  const [showInspiration, setShowInspiration] = useState(false);
-  const [cardId, setCardId] = useState<string | null>(null);
-  const [formData, setFormData] = useState({
-    messageHeadline: cardData.messageHeadline || '',
-    messageBody: cardData.messageBody || '',
-    closing: cardData.closing || ''
-  });
+  const [template, setTemplate] = useState<any>(null);
+  const [selectedPalette, setSelectedPalette] = useState<any>(null);
+  const [selectedFont, setSelectedFont] = useState<string | null>(null);
 
-  // Auto-save functionality
-  useAutoSave(
-    {
-      template_id: cardData.templateId,
-      message_headline: formData.messageHeadline,
-      message_body: formData.messageBody,
-      closing: formData.closing,
-      color_palette: cardData.colorPalette,
-      font_choice: cardData.fontChoice
-    },
-    user?.id,
-    cardId,
-    setCardId
-  );
+  useEffect(() => {
+    loadTemplate();
+  }, []);
 
-  const getOccasionMessages = () => {
-    const occasion = cardData.occasion || 'general';
-    return sampleMessages[occasion as keyof typeof sampleMessages] || sampleMessages.general;
-  };
+  useEffect(() => {
+    if (template) {
+      setSelectedPalette(cardData.colorPalette || template.colors);
+      setSelectedFont(cardData.fontChoice || Object.keys(template.fonts || {})[0]);
+    }
+  }, [template, cardData]);
 
-  const handleUseInspiration = (sample: any) => {
-    setFormData({
-      messageHeadline: sample.headline,
-      messageBody: sample.body,
-      closing: sample.closing
-    });
-    setShowInspiration(false);
-    toast.success('Message applied!');
+  const loadTemplate = async () => {
+    if (!cardData.templateId) {
+      toast.error('Please select a template first');
+      navigate('/create-card/step2');
+      return;
+    }
+
+    const { data, error } = await supabase
+      .from('card_templates')
+      .select('*')
+      .eq('id', cardData.templateId)
+      .single();
+
+    if (error) {
+      toast.error('Failed to load template');
+      return;
+    }
+
+    setTemplate(data);
   };
 
   const handleNext = () => {
-    if (!formData.messageBody.trim()) {
-      toast.error('Please write your thank you message');
+    if (!selectedPalette || !selectedFont) {
+      toast.error('Please select a color palette and font');
       return;
     }
 
     updateCardData({
-      messageHeadline: formData.messageHeadline,
-      messageBody: formData.messageBody,
-      closing: formData.closing
+      colorPalette: selectedPalette,
+      fontChoice: selectedFont
     });
     setCurrentStep(4);
     navigate('/create-card/step4');
   };
 
-  return (
-    <div className="min-h-screen bg-gradient-hero p-4 md:p-8">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-8">
-          <motion.h1 
-            className="text-3xl md:text-4xl font-bold text-white mb-2"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            Personalize your message
-          </motion.h1>
-          <p className="text-white/90">Express your heartfelt gratitude</p>
-        </div>
+  const colorPalettes = template?.colors ? [
+    { id: 'default', name: 'Original', colors: template.colors },
+    { 
+      id: 'warm', 
+      name: 'Warm Sunset',
+      colors: { 
+        primary: 'hsl(25, 75%, 65%)', 
+        secondary: 'hsl(45, 85%, 75%)', 
+        accent: 'hsl(15, 70%, 60%)',
+        text: 'hsl(25, 40%, 30%)'
+      }
+    },
+    { 
+      id: 'cool', 
+      name: 'Ocean Breeze',
+      colors: { 
+        primary: 'hsl(200, 70%, 65%)', 
+        secondary: 'hsl(180, 60%, 75%)', 
+        accent: 'hsl(210, 65%, 55%)',
+        text: 'hsl(210, 40%, 30%)'
+      }
+    },
+    { 
+      id: 'elegant', 
+      name: 'Elegant Neutrals',
+      colors: { 
+        primary: 'hsl(30, 15%, 85%)', 
+        secondary: 'hsl(40, 20%, 90%)', 
+        accent: 'hsl(35, 25%, 65%)',
+        text: 'hsl(30, 30%, 25%)'
+      }
+    },
+    { 
+      id: 'romantic', 
+      name: 'Romantic Blush',
+      colors: { 
+        primary: 'hsl(350, 65%, 85%)', 
+        secondary: 'hsl(340, 55%, 90%)', 
+        accent: 'hsl(355, 70%, 75%)',
+        text: 'hsl(340, 35%, 35%)'
+      }
+    }
+  ] : [];
 
-        <Card className="bg-white/95 backdrop-blur-sm mb-6">
-          <CardContent className="p-6 space-y-6">
-            {/* Inspiration Toggle */}
-            <div className="flex justify-between items-center">
-              <Label className="text-lg font-semibold">Your Message</Label>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setShowInspiration(!showInspiration)}
-              >
-                <Lightbulb className="w-4 h-4 mr-2" />
-                Need inspiration?
-              </Button>
-            </div>
+  const fontPairings = template?.fonts ? [
+    { id: 'default', name: 'Original', fonts: template.fonts },
+    { 
+      id: 'classic', 
+      name: 'Classic Serif',
+      fonts: { heading: 'Playfair Display', body: 'Lora' }
+    },
+    { 
+      id: 'modern', 
+      name: 'Modern Sans',
+      fonts: { heading: 'Poppins', body: 'Inter' }
+    },
+    { 
+      id: 'elegant', 
+      name: 'Elegant Script',
+      fonts: { heading: 'Dancing Script', body: 'Montserrat' }
+    }
+  ] : [];
 
-            {/* Inspiration Samples */}
-            {showInspiration && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                className="space-y-3"
-              >
-                {getOccasionMessages().map((sample, idx) => (
-                  <div
-                    key={idx}
-                    onClick={() => handleUseInspiration(sample)}
-                    className="p-4 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-primary hover:bg-primary/5 transition-all"
-                  >
-                    <h4 className="font-semibold mb-1">{sample.headline}</h4>
-                    <p className="text-sm text-muted-foreground mb-2">{sample.body}</p>
-                    <p className="text-xs italic text-muted-foreground">{sample.closing}</p>
-                  </div>
-                ))}
-              </motion.div>
-            )}
-
-            {/* Headline */}
-            <div className="space-y-2">
-              <Label htmlFor="headline">Headline (Optional)</Label>
-              <Input
-                id="headline"
-                placeholder="With Heartfelt Thanks"
-                value={formData.messageHeadline}
-                onChange={(e) => setFormData({ ...formData, messageHeadline: e.target.value })}
-              />
-            </div>
-
-            {/* Message Body */}
-            <div className="space-y-2">
-              <Label htmlFor="message">Your Message *</Label>
-              <Textarea
-                id="message"
-                placeholder="Write your heartfelt thank you message here..."
-                value={formData.messageBody}
-                onChange={(e) => setFormData({ ...formData, messageBody: e.target.value })}
-                rows={8}
-                className="resize-none"
-              />
-              <p className="text-xs text-muted-foreground text-right">
-                {formData.messageBody.length} characters
-              </p>
-            </div>
-
-            {/* Closing */}
-            <div className="space-y-2">
-              <Label htmlFor="closing">Closing (Optional)</Label>
-              <Input
-                id="closing"
-                placeholder="With gratitude, [Your Name]"
-                value={formData.closing}
-                onChange={(e) => setFormData({ ...formData, closing: e.target.value })}
-              />
-            </div>
-
-            {/* Auto-save Indicator */}
-            {cardId && (
-              <div className="flex items-center gap-2 text-sm text-green-600">
-                <Check className="w-4 h-4" />
-                Draft saved automatically
-              </div>
-            )}
-          </CardContent>
-        </Card>
-
-        {/* Navigation */}
-        <div className="flex justify-between items-center">
-          <Button
-            variant="outline"
-            onClick={() => navigate('/create-card/step2')}
-            className="bg-white/95"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back
-          </Button>
-          
-          <p className="text-sm text-white/70">Step 3 of 5</p>
-          
-          <Button variant="hero" onClick={handleNext}>
-            Next
-            <ArrowRight className="w-4 h-4 ml-2" />
-          </Button>
+  if (!template) {
+    return (
+      <div className="min-h-screen bg-gradient-hero flex items-center justify-center">
+        <div className="text-white text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
+          <p>Loading template...</p>
         </div>
       </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-hero p-4 md:p-8">
+      <ProgressBar currentStep={3} totalSteps={6} stepNames={STEP_NAMES} />
+      <BreadcrumbNav currentStep={3} steps={STEPS} />
+      
+      <StepContainer
+        title="Customize your design"
+        subtitle="Choose colors and fonts that match your style"
+        onBack={() => navigate('/create-card/step2')}
+        onNext={handleNext}
+      >
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Left: Preview */}
+          <Card className="bg-white/95 backdrop-blur-sm">
+            <CardContent className="p-6">
+              <Label className="text-lg font-semibold mb-4 block">Live Preview</Label>
+              <div 
+                className="aspect-[3/4] rounded-lg overflow-hidden shadow-lg"
+                style={{
+                  backgroundColor: selectedPalette?.primary || template.colors?.primary,
+                  color: selectedPalette?.text || template.colors?.text
+                }}
+              >
+                <img
+                  src={getTemplateImage(template.preview_image)}
+                  alt="Template preview"
+                  className="w-full h-full object-cover"
+                  style={{ filter: 'brightness(0.95)' }}
+                />
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Right: Controls */}
+          <div className="space-y-6">
+            {/* Color Palettes */}
+            <Card className="bg-white/95 backdrop-blur-sm">
+              <CardContent className="p-6">
+                <Label className="text-lg font-semibold mb-4 block">Color Palette</Label>
+                <div className="space-y-3">
+                  {colorPalettes.map((palette) => (
+                    <div
+                      key={palette.id}
+                      onClick={() => setSelectedPalette(palette.colors)}
+                      className={`cursor-pointer p-4 rounded-lg border-2 transition-all ${
+                        selectedPalette === palette.colors
+                          ? 'border-primary ring-2 ring-primary bg-primary/5'
+                          : 'border-gray-200 hover:border-gray-300'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="font-medium">{palette.name}</span>
+                        {selectedPalette === palette.colors && (
+                          <Check className="w-5 h-5 text-primary" />
+                        )}
+                      </div>
+                      <div className="flex gap-2">
+                        {Object.values(palette.colors).slice(0, 4).map((color: any, idx) => (
+                          <div
+                            key={idx}
+                            className="w-12 h-12 rounded-lg shadow-sm"
+                            style={{ backgroundColor: color }}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Font Pairings */}
+            <Card className="bg-white/95 backdrop-blur-sm">
+              <CardContent className="p-6">
+                <Label className="text-lg font-semibold mb-4 block">Font Pairing</Label>
+                <div className="space-y-3">
+                  {fontPairings.map((pairing) => (
+                    <div
+                      key={pairing.id}
+                      onClick={() => setSelectedFont(pairing.id)}
+                      className={`cursor-pointer p-4 rounded-lg border-2 transition-all ${
+                        selectedFont === pairing.id
+                          ? 'border-primary ring-2 ring-primary bg-primary/5'
+                          : 'border-gray-200 hover:border-gray-300'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="font-medium">{pairing.name}</span>
+                        {selectedFont === pairing.id && (
+                          <Check className="w-5 h-5 text-primary" />
+                        )}
+                      </div>
+                      <div className="text-sm text-muted-foreground">
+                        Heading: {pairing.fonts.heading} • Body: {pairing.fonts.body}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </StepContainer>
     </div>
   );
 }

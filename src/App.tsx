@@ -18,6 +18,7 @@ import CreateCardStep2 from "./pages/CreateCardStep2";
 import CreateCardStep3 from "./pages/CreateCardStep3";
 import CreateCardStep4 from "./pages/CreateCardStep4";
 import CreateCardStep5 from "./pages/CreateCardStep5";
+import CreateCardStep6 from "./pages/CreateCardStep6";
 import SavedCampaigns from "./pages/SavedCampaigns";
 import CSVManager from "./pages/CSVManager";
 import Analytics from "./pages/Analytics";
@@ -78,6 +79,14 @@ const App = () => (
                 element={
                   <ProtectedRoute>
                     <CreateCardStep5 />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/create-card/step6" 
+                element={
+                  <ProtectedRoute>
+                    <CreateCardStep6 />
                   </ProtectedRoute>
                 } 
               />

@@ -1,314 +1,269 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCardWizard } from '@/contexts/CardWizardContext';
-import { useAuth } from '@/contexts/AuthContext';
-import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Slider } from '@/components/ui/slider';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Mail, Clock, Link2, Heart, Sparkles } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ArrowLeft, ArrowRight, Upload, X } from 'lucide-react';
 import { toast } from 'sonner';
-import { InteractiveCardViewer } from '@/components/CardDesigner/InteractiveCardViewer';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
+import { ProgressBar } from '@/components/CardDesigner/ProgressBar';
+import { BreadcrumbNav } from '@/components/CardDesigner/BreadcrumbNav';
 
-interface Charity {
-  id: string;
-  name: string;
-  description: string;
-  impact_message: string;
-  logo_url: string;
-}
+const STEPS = [
+  { name: 'Occasion', path: '/create-card/step1' },
+  { name: 'Style', path: '/create-card/step2' },
+  { name: 'Customize', path: '/create-card/step3' },
+  { name: 'Message', path: '/create-card/step4' },
+  { name: 'Touches', path: '/create-card/step5' },
+  { name: 'Preview', path: '/create-card/step6' }
+];
 
-export default function CreateCardStep5() {
+const STEP_NAMES = ['Choose Occasion', 'Pick Your Style', 'Customize Design', 'Write Your Message', 'Add Finishing Touches', 'Preview & Send'];
+
+const envelopeColors = [
+  { id: 'cream', color: '#F5E6D3', name: 'Classic Cream' },
+  { id: 'pink', color: '#FFF0F5', name: 'Blush Pink' },
+  { id: 'blue', color: '#E8EDF4', name: 'Sky Blue' },
+  { id: 'green', color: '#F8FBF8', name: 'Sage Green' }
+];
+
+const textures = [
+  { 
+    id: 'smooth', 
+    name: 'Smooth',
+    style: 'bg-gradient-to-br from-amber-50 to-orange-50'
+  },
+  { 
+    id: 'linen', 
+    name: 'Linen',
+    style: 'bg-gradient-to-br from-gray-50 to-gray-100',
+    pattern: 'repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(0,0,0,.03) 2px, rgba(0,0,0,.03) 4px)'
+  },
+  { 
+    id: 'watercolor', 
+    name: 'Watercolor',
+    style: 'bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50'
+  }
+];
+
+const signatureStyles = [
+  { id: 'none', name: 'No Signature' },
+  { id: 'handwritten', name: 'Handwritten Script' },
+  { id: 'typed', name: 'Typed Name' }
+];
+
+export default function CreateCardStep4() {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { cardData, updateCardData, resetWizard } = useCardWizard();
-  const [charities, setCharities] = useState<Charity[]>([]);
-  const [selectedCharity, setSelectedCharity] = useState<Charity | null>(null);
-  const [donationAmount, setDonationAmount] = useState(10);
-  const [recipientName, setRecipientName] = useState('');
-  const [recipientEmail, setRecipientEmail] = useState('');
-  const [sending, setSending] = useState(false);
-  const [showPreview, setShowPreview] = useState(false);
-  const [template, setTemplate] = useState<any>(null);
+  const { cardData, updateCardData, setCurrentStep } = useCardWizard();
+  const [uploading, setUploading] = useState(false);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const [selectedEnvelope, setSelectedEnvelope] = useState(envelopeColors[0].id);
+  const [selectedTexture, setSelectedTexture] = useState(textures[0].id);
+  const [selectedSignature, setSelectedSignature] = useState(signatureStyles[0].id);
 
-  const printingSavings = 4.25;
+  const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
 
-  useEffect(() => {
-    loadCharities();
-    loadTemplate();
-  }, []);
-
-  const loadCharities = async () => {
-    const { data, error } = await supabase
-      .from('charities')
-      .select('*');
-
-    if (!error && data) {
-      setCharities(data);
-      if (data.length > 0) {
-        setSelectedCharity(data[0]);
-      }
-    }
-  };
-
-  const loadTemplate = async () => {
-    if (!cardData.templateId) return;
-
-    const { data } = await supabase
-      .from('card_templates')
-      .select('*')
-      .eq('id', cardData.templateId)
-      .single();
-
-    if (data) {
-      setTemplate(data);
-    }
-  };
-
-  const handleSendNow = async () => {
-    if (!recipientEmail || !recipientName) {
-      toast.error('Please enter recipient details');
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      toast.error('Please upload an image file');
       return;
     }
 
-    setSending(true);
+    // Validate file size (5MB max)
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error('Image must be less than 5MB');
+      return;
+    }
 
+    setUploading(true);
+    
     try {
-      // Save card with all details
-      const { data: savedCard, error: cardError } = await supabase
-        .from('user_cards')
-        .insert({
-          user_id: user?.id,
-          template_id: cardData.templateId,
-          message_headline: cardData.messageHeadline,
-          message_body: cardData.messageBody,
-          closing: cardData.closing,
-          photo_url: cardData.photoUrl,
-          color_palette: cardData.colorPalette,
-          font_choice: cardData.fontChoice,
-          envelope_color: cardData.envelopeColor,
-          texture: cardData.texture,
-          signature_style: cardData.signatureStyle,
-          charity_id: selectedCharity?.id,
-          donation_amount: donationAmount,
-          sent_at: new Date().toISOString()
-        })
-        .select()
-        .single();
+      // Create preview
+      const preview = URL.createObjectURL(file);
+      setPhotoPreview(preview);
 
-      if (cardError) throw cardError;
+      // Upload to Supabase Storage
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${user?.id}-${Date.now()}.${fileExt}`;
+      const filePath = `card-photos/${fileName}`;
 
-      // Create transaction record
-      if (donationAmount > 0 && selectedCharity) {
-        await supabase
-          .from('transactions')
-          .insert({
-            user_card_id: savedCard.id,
-            amount: donationAmount,
-            charity_id: selectedCharity.id,
-            status: 'completed'
-          });
-      }
+      const { error: uploadError } = await supabase.storage
+        .from('card-photos')
+        .upload(filePath, file);
 
-      // Trigger celebration
-      toast.success('Your gratitude has been sent! You just spread kindness — and made a difference.', {
-        duration: 5000
-      });
-      
-      // Reset wizard and navigate
-      setTimeout(() => {
-        resetWizard();
-        navigate('/dashboard');
-      }, 2000);
+      if (uploadError) throw uploadError;
+
+      // Get public URL
+      const { data: urlData } = supabase.storage
+        .from('card-photos')
+        .getPublicUrl(filePath);
+
+      updateCardData({ photoUrl: urlData.publicUrl });
+      toast.success('Photo uploaded successfully!');
     } catch (error: any) {
-      console.error('Send error:', error);
-      toast.error(error.message || 'Failed to send card');
+      console.error('Upload error:', error);
+      toast.error(error.message || 'Failed to upload photo');
+      setPhotoPreview(null);
     } finally {
-      setSending(false);
+      setUploading(false);
     }
   };
 
-  const handleSchedule = () => {
-    toast.info('Schedule feature coming soon!');
+  const handleRemovePhoto = () => {
+    setPhotoPreview(null);
+    updateCardData({ photoUrl: null });
   };
 
-  const handleCopyLink = () => {
-    const link = `${window.location.origin}/card/${cardData.templateId}`;
-    navigator.clipboard.writeText(link);
-    toast.success('Share link copied to clipboard!');
+  const handleNext = () => {
+    updateCardData({
+      envelopeColor: selectedEnvelope,
+      texture: selectedTexture,
+      signatureStyle: selectedSignature
+    });
+    setCurrentStep(6);
+    navigate('/create-card/step6');
   };
 
   return (
     <div className="min-h-screen bg-gradient-hero p-4 md:p-8">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-4xl mx-auto">
+        <ProgressBar currentStep={5} totalSteps={6} stepNames={STEP_NAMES} />
+        <BreadcrumbNav currentStep={5} steps={STEPS} />
         <div className="text-center mb-8">
           <motion.h1 
             className="text-3xl md:text-4xl font-bold text-white mb-2"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            Preview & Send
+            Add finishing touches
           </motion.h1>
-          <p className="text-white/90">Your beautiful card is ready!</p>
+          <p className="text-white/90">Make your card uniquely yours</p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Left: Preview */}
-          <div>
-            <Card className="bg-white/95 backdrop-blur-sm">
-              <CardContent className="p-6">
-                <h3 className="text-lg font-semibold mb-4">Card Preview</h3>
-                {template && (
-                  <div
-                    onClick={() => setShowPreview(true)}
-                    className="cursor-pointer aspect-[3/4] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
-                  >
-                    <img
-                      src={template.preview_image}
-                      alt="Card preview"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                )}
-                <Button
-                  variant="outline"
-                  className="w-full mt-4"
-                  onClick={() => setShowPreview(true)}
-                >
-                  <Sparkles className="w-4 h-4 mr-2" />
-                  View Interactive Experience
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Right: Send Options & Donation */}
-          <div className="space-y-6">
-            {/* Recipient Details */}
-            <Card className="bg-white/95 backdrop-blur-sm">
-              <CardContent className="p-6 space-y-4">
-                <h3 className="text-lg font-semibold">Recipient Details</h3>
-                <div className="space-y-2">
-                  <Label htmlFor="recipientName">Name</Label>
-                  <Input
-                    id="recipientName"
-                    placeholder="Jane Smith"
-                    value={recipientName}
-                    onChange={(e) => setRecipientName(e.target.value)}
+        <div className="space-y-6">
+          {/* Photo Upload */}
+          <Card className="bg-white/95 backdrop-blur-sm">
+            <CardContent className="p-6">
+              <Label className="text-lg font-semibold mb-4 block">Add a Photo (Optional)</Label>
+              {!photoPreview ? (
+                <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-primary transition-colors">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handlePhotoUpload}
+                    className="hidden"
+                    id="photo-upload"
+                    disabled={uploading}
                   />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="recipientEmail">Email</Label>
-                  <Input
-                    id="recipientEmail"
-                    type="email"
-                    placeholder="jane@example.com"
-                    value={recipientEmail}
-                    onChange={(e) => setRecipientEmail(e.target.value)}
-                  />
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Donation Section */}
-            <Card className="bg-white/95 backdrop-blur-sm">
-              <CardContent className="p-6 space-y-4">
-                <div>
-                  <h3 className="text-lg font-semibold mb-2">Turn Gratitude into Giving</h3>
-                  <div className="flex items-center gap-2 text-sm text-green-600 bg-green-50 p-3 rounded-lg">
-                    <Heart className="w-4 h-4" fill="currentColor" />
-                    <span>
-                      You saved ${printingSavings.toFixed(2)} by going digital
-                    </span>
-                  </div>
-                </div>
-
-                {/* Charity Selection */}
-                <div className="space-y-2">
-                  <Label>Choose a Charity</Label>
-                  <div className="grid grid-cols-1 gap-3">
-                    {charities.map((charity) => (
-                      <div
-                        key={charity.id}
-                        onClick={() => setSelectedCharity(charity)}
-                        className={`cursor-pointer p-3 rounded-lg border-2 transition-all ${
-                          selectedCharity?.id === charity.id
-                            ? 'border-primary ring-2 ring-primary bg-primary/5'
-                            : 'border-gray-200 hover:border-gray-300'
-                        }`}
-                      >
-                        <div className="flex items-start gap-3">
-                          <img
-                            src={charity.logo_url}
-                            alt={charity.name}
-                            className="w-12 h-12 rounded-lg object-cover"
-                          />
-                          <div className="flex-1">
-                            <h4 className="font-semibold">{charity.name}</h4>
-                            <p className="text-xs text-muted-foreground">{charity.description}</p>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Donation Amount */}
-                {selectedCharity && (
-                  <div className="space-y-3">
-                    <Label>Donation Amount: ${donationAmount}</Label>
-                    <Slider
-                      value={[donationAmount]}
-                      onValueChange={(value) => setDonationAmount(value[0])}
-                      min={0}
-                      max={100}
-                      step={5}
-                      className="w-full"
-                    />
-                    <p className="text-sm text-muted-foreground">
-                      {selectedCharity.impact_message}
+                  <label htmlFor="photo-upload" className="cursor-pointer">
+                    <Upload className="w-12 h-12 mx-auto mb-4 text-gray-400" />
+                    <p className="text-sm text-muted-foreground mb-2">
+                      {uploading ? 'Uploading...' : 'Click to upload or drag and drop'}
                     </p>
+                    <p className="text-xs text-muted-foreground">PNG, JPG up to 5MB</p>
+                  </label>
+                </div>
+              ) : (
+                <div className="relative">
+                  <img
+                    src={photoPreview}
+                    alt="Preview"
+                    className="w-full h-64 object-cover rounded-lg"
+                  />
+                  <button
+                    onClick={handleRemovePhoto}
+                    className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Envelope Color */}
+          <Card className="bg-white/95 backdrop-blur-sm">
+            <CardContent className="p-6">
+              <Label className="text-lg font-semibold mb-4 block">Envelope Color</Label>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {envelopeColors.map((env) => (
+                  <div
+                    key={env.id}
+                    onClick={() => setSelectedEnvelope(env.id)}
+                    className={`cursor-pointer p-4 rounded-lg border-2 transition-all ${
+                      selectedEnvelope === env.id
+                        ? 'border-primary ring-2 ring-primary'
+                        : 'border-gray-200 hover:border-gray-300'
+                    }`}
+                  >
+                    <div
+                      className="w-full h-16 rounded-lg mb-2"
+                      style={{ backgroundColor: env.color }}
+                    />
+                    <p className="text-sm font-medium text-center">{env.name}</p>
                   </div>
-                )}
-              </CardContent>
-            </Card>
-
-            {/* Send Actions */}
-            <div className="space-y-3">
-              <Button
-                variant="hero"
-                size="lg"
-                className="w-full"
-                onClick={handleSendNow}
-                disabled={sending}
-              >
-                <Mail className="w-4 h-4 mr-2" />
-                {sending ? 'Sending...' : 'Send Now ✉️'}
-              </Button>
-
-              <div className="grid grid-cols-2 gap-3">
-                <Button
-                  variant="outline"
-                  onClick={handleSchedule}
-                  className="bg-white"
-                >
-                  <Clock className="w-4 h-4 mr-2" />
-                  Schedule
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={handleCopyLink}
-                  className="bg-white"
-                >
-                  <Link2 className="w-4 h-4 mr-2" />
-                  Copy Link
-                </Button>
+                ))}
               </div>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
+
+          {/* Paper Texture */}
+          <Card className="bg-white/95 backdrop-blur-sm">
+            <CardContent className="p-6">
+              <Label className="text-lg font-semibold mb-4 block">Paper Texture</Label>
+              <div className="grid grid-cols-3 gap-4">
+                {textures.map((texture) => (
+                  <div
+                    key={texture.id}
+                    onClick={() => setSelectedTexture(texture.id)}
+                    className={`cursor-pointer rounded-lg border-2 transition-all overflow-hidden ${
+                      selectedTexture === texture.id
+                        ? 'border-primary ring-2 ring-primary'
+                        : 'border-gray-200 hover:border-gray-300'
+                    }`}
+                  >
+                    <div 
+                      className={`w-full h-24 ${texture.style}`}
+                      style={texture.pattern ? { 
+                        backgroundImage: texture.pattern 
+                      } : undefined}
+                    />
+                    <div className="p-3 text-center bg-white">
+                      <p className="font-medium text-sm">{texture.name}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Signature Style */}
+          <Card className="bg-white/95 backdrop-blur-sm">
+            <CardContent className="p-6">
+              <Label className="text-lg font-semibold mb-4 block">Add My Signature</Label>
+              <div className="grid grid-cols-3 gap-4">
+                {signatureStyles.map((style) => (
+                  <div
+                    key={style.id}
+                    onClick={() => setSelectedSignature(style.id)}
+                    className={`cursor-pointer p-4 rounded-lg border-2 text-center transition-all ${
+                      selectedSignature === style.id
+                        ? 'border-primary ring-2 ring-primary bg-primary/5'
+                        : 'border-gray-200 hover:border-gray-300'
+                    }`}
+                  >
+                    <p className="font-medium">{style.name}</p>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Navigation */}
@@ -322,50 +277,13 @@ export default function CreateCardStep5() {
             Back
           </Button>
           
-          <p className="text-sm text-white/70">Step 5 of 5</p>
+          <p className="text-sm text-white/70">Step 5 of 6</p>
           
-          <div className="w-20" /> {/* Spacer for alignment */}
+          <Button variant="hero" onClick={handleNext}>
+            Next
+            <ArrowRight className="w-4 h-4 ml-2" />
+          </Button>
         </div>
-
-        {/* Interactive Preview Modal */}
-        {showPreview && template && (
-          <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
-            <div className="relative w-full max-w-6xl h-[90vh]">
-              <button
-                onClick={() => setShowPreview(false)}
-                className="absolute top-4 right-4 z-10 text-white hover:text-gray-300 text-2xl"
-              >
-                ✕
-              </button>
-              <InteractiveCardViewer
-                template={{
-                  ...template,
-                  preview: template.preview_image,
-                  style: {
-                    layout: 'full-background',
-                    textPosition: 'bottom',
-                    backgroundColor: template.colors?.primary || '#F5E6D3',
-                    textColor: template.colors?.text || '#8B6F47',
-                    accentColor: template.colors?.accent || '#D4A574'
-                  }
-                }}
-                photo={cardData.photoUrl ? { file: null as any, preview: cardData.photoUrl } : null}
-                message={cardData.messageBody}
-                recipientName={recipientName || 'Friend'}
-                senderName={user?.email || 'Anonymous'}
-                charityName={selectedCharity?.name}
-                envelopeStyle={{
-                  id: cardData.envelopeColor || 'cream',
-                  name: 'Selected',
-                  primaryColor: '#F5E6D3',
-                  accentColor: '#D4A574',
-                  textColor: '#8B6F47',
-                  description: 'Your choice'
-                }}
-              />
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

@@ -5,6 +5,19 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import { Heart, Baby, GraduationCap, Cake, Gift, Flower2, HandHeart } from 'lucide-react';
+import { ProgressBar } from '@/components/CardDesigner/ProgressBar';
+import { BreadcrumbNav } from '@/components/CardDesigner/BreadcrumbNav';
+
+const STEPS = [
+  { name: 'Occasion', path: '/create-card/step1' },
+  { name: 'Style', path: '/create-card/step2' },
+  { name: 'Customize', path: '/create-card/step3' },
+  { name: 'Message', path: '/create-card/step4' },
+  { name: 'Touches', path: '/create-card/step5' },
+  { name: 'Preview', path: '/create-card/step6' }
+];
+
+const STEP_NAMES = ['Choose Occasion', 'Pick Your Style', 'Customize Design', 'Write Your Message', 'Add Finishing Touches', 'Preview & Send'];
 
 const occasions = [
   { id: 'wedding', name: 'Wedding', icon: Heart, gradient: 'from-pink-100 to-rose-100' },
@@ -29,6 +42,9 @@ export default function CreateCardStep1() {
   return (
     <div className="min-h-screen bg-gradient-hero p-4 md:p-8">
       <div className="max-w-6xl mx-auto">
+        <ProgressBar currentStep={1} totalSteps={6} stepNames={STEP_NAMES} />
+        <BreadcrumbNav currentStep={1} steps={STEPS} />
+        
         <div className="text-center mb-8">
           <motion.h1 
             className="text-4xl md:text-5xl font-bold text-white mb-4"

@@ -9,6 +9,19 @@ import { toast } from 'sonner';
 import { CategorySection } from '@/components/CardDesigner/CategorySection';
 import { StickyFooterCTA } from '@/components/CardDesigner/StickyFooterCTA';
 import { TemplateGallerySkeleton } from '@/components/CardDesigner/TemplateGallerySkeleton';
+import { ProgressBar } from '@/components/CardDesigner/ProgressBar';
+import { BreadcrumbNav } from '@/components/CardDesigner/BreadcrumbNav';
+
+const STEPS = [
+  { name: 'Occasion', path: '/create-card/step1' },
+  { name: 'Style', path: '/create-card/step2' },
+  { name: 'Customize', path: '/create-card/step3' },
+  { name: 'Message', path: '/create-card/step4' },
+  { name: 'Touches', path: '/create-card/step5' },
+  { name: 'Preview', path: '/create-card/step6' }
+];
+
+const STEP_NAMES = ['Choose Occasion', 'Pick Your Style', 'Customize Design', 'Write Your Message', 'Add Finishing Touches', 'Preview & Send'];
 
 interface Template {
   id: string;
@@ -60,24 +73,16 @@ export default function CreateCardStep2() {
     setIsLoading(false);
   };
 
-  // Filter templates based on selected occasion
+  // Filter templates based on selected occasion - Fixed filtering
   const selectedOccasion = cardData.occasion?.toLowerCase();
-  
-  console.log('Selected occasion:', selectedOccasion);
-  console.log('All templates:', templates);
-  
   const relevantTemplates = selectedOccasion 
     ? templates.filter(t => t.category === selectedOccasion)
     : templates;
-  
-  console.log('Relevant templates after filter:', relevantTemplates);
 
   const groupedTemplates = CATEGORY_CONFIG.map(category => ({
     ...category,
     templates: relevantTemplates.filter(t => t.category === category.key)
   })).filter(category => category.templates.length > 0);
-  
-  console.log('Grouped templates:', groupedTemplates);
 
   const handleNext = () => {
     if (!selectedTemplateId) {
@@ -100,6 +105,9 @@ export default function CreateCardStep2() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-violet-50 via-purple-50 to-pink-50 p-4 md:p-8 pb-32">
       <div className="max-w-6xl mx-auto">
+        <ProgressBar currentStep={2} totalSteps={6} stepNames={STEP_NAMES} />
+        <BreadcrumbNav currentStep={2} steps={STEPS} />
+        
         {/* Header */}
         <motion.div 
           className="text-center mb-12"
