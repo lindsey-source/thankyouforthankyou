@@ -62,14 +62,22 @@ export default function CreateCardStep2() {
 
   // Filter templates based on selected occasion
   const selectedOccasion = cardData.occasion?.toLowerCase();
+  
+  console.log('Selected occasion:', selectedOccasion);
+  console.log('All templates:', templates);
+  
   const relevantTemplates = selectedOccasion 
     ? templates.filter(t => t.category === selectedOccasion)
     : templates;
+  
+  console.log('Relevant templates after filter:', relevantTemplates);
 
   const groupedTemplates = CATEGORY_CONFIG.map(category => ({
     ...category,
     templates: relevantTemplates.filter(t => t.category === category.key)
   })).filter(category => category.templates.length > 0);
+  
+  console.log('Grouped templates:', groupedTemplates);
 
   const handleNext = () => {
     if (!selectedTemplateId) {
