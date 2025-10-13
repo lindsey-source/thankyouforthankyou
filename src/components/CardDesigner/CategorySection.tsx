@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { TemplateCard } from './TemplateCard';
+import { getTemplateImage } from '@/lib/templateImageMap';
 
 interface Template {
   id: string;
@@ -69,7 +70,7 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
               <TemplateCard
                 id={template.id}
                 name={template.name}
-                image={template.preview_image}
+                image={getTemplateImage(template.preview_image)}
                 colors={template.colors}
                 fonts={template.fonts}
                 selected={selectedTemplateId === template.id}
