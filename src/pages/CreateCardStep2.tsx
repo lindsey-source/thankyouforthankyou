@@ -60,9 +60,15 @@ export default function CreateCardStep2() {
     setIsLoading(false);
   };
 
+  // Filter templates based on selected occasion
+  const selectedOccasion = cardData.occasion?.toLowerCase();
+  const relevantTemplates = selectedOccasion 
+    ? templates.filter(t => t.category === selectedOccasion)
+    : templates;
+
   const groupedTemplates = CATEGORY_CONFIG.map(category => ({
     ...category,
-    templates: templates.filter(t => t.category === category.key)
+    templates: relevantTemplates.filter(t => t.category === category.key)
   })).filter(category => category.templates.length > 0);
 
   const handleNext = () => {
@@ -119,7 +125,7 @@ export default function CreateCardStep2() {
           ) : (
             <>
               {groupedTemplates.map((category, index) => (
-                <React.Fragment key={category.key}>
+                <div key={category.key}>
                   <CategorySection
                     emoji={category.emoji}
                     title={category.title}
@@ -131,7 +137,7 @@ export default function CreateCardStep2() {
                   {index < groupedTemplates.length - 1 && (
                     <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent my-12" />
                   )}
-                </React.Fragment>
+                </div>
               ))}
 
               {groupedTemplates.length === 0 && (
