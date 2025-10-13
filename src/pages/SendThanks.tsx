@@ -45,13 +45,10 @@ interface Recipient {
 
 const SendThanks = () => {
   const [formData, setFormData] = useState({
-    recipientName: "",
-    recipientEmail: "",
     message: "",
     donationAmount: "",
     charity: ""
   });
-  const [recipients, setRecipients] = useState<Recipient[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [cardDesign, setCardDesign] = useState(null);
   const [batchData, setBatchData] = useState<GuestGiftData[]>([]);
@@ -95,19 +92,6 @@ const SendThanks = () => {
       return;
     }
     
-    // Check if we have recipients or individual form data
-    const hasRecipients = recipients.length > 0;
-    const hasIndividualData = formData.recipientName.trim() && formData.recipientEmail.trim();
-    
-    if (!hasRecipients && !hasIndividualData) {
-      toast({
-        title: "Missing Recipients",
-        description: "Please add at least one recipient or fill in the recipient fields.",
-        variant: "destructive",
-      });
-      return;
-    }
-    
     if (!formData.message.trim()) {
       toast({
         title: "Missing Message",
@@ -117,29 +101,12 @@ const SendThanks = () => {
       return;
     }
 
-    setIsLoading(true);
-    
-    try {
-      // Simulate sending thank you
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      const totalRecipients = hasRecipients ? recipients.length : 1;
-      const recipientNames = hasRecipients 
-        ? recipients.map(r => r.name).join(", ")
-        : formData.recipientName;
-      
-      setLastSentCount(totalRecipients);
-      setShowSuccessDialog(true);
-      
-    } catch (error) {
-      toast({
-        title: "Something went wrong",
-        description: "Please try again later.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
+    // Redirect to card wizard for single card creation
+    toast({
+      title: "Continue to Card Designer",
+      description: "Complete your card design and add recipient details.",
+    });
+    navigate('/create-card/step1', { state: { message: formData.message } });
   };
 
   const handleBatchSubmit = async () => {
@@ -225,59 +192,15 @@ const SendThanks = () => {
     setValidationResults(null);
   };
 
-  const addRecipient = () => {
-    if (!formData.recipientName.trim() || !formData.recipientEmail.trim()) {
-      toast({
-        title: "Missing Information",
-        description: "Please fill in both name and email before adding a recipient.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    // Check for duplicate emails
-    if (recipients.some(r => r.email.toLowerCase() === formData.recipientEmail.toLowerCase())) {
-      toast({
-        title: "Duplicate Email",
-        description: "This email address has already been added.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    setRecipients([...recipients, {
-      name: formData.recipientName.trim(),
-      email: formData.recipientEmail.trim()
-    }]);
-
-    // Clear recipient fields
-    setFormData(prev => ({
-      ...prev,
-      recipientName: "",
-      recipientEmail: ""
-    }));
-
-    toast({
-      title: "Recipient Added",
-      description: `${formData.recipientName} has been added to the recipient list.`,
-    });
-  };
-
-  const removeRecipient = (index: number) => {
-    setRecipients(recipients.filter((_, i) => i !== index));
-  };
 
   const handleSendAnother = () => {
     setShowSuccessDialog(false);
     // Reset form for sending another
     setFormData({
-      recipientName: "",
-      recipientEmail: "",
       message: "",
       donationAmount: "",
       charity: ""
     });
-    setRecipients([]);
     setBatchData([]);
     setIsBatchMode(false);
     setValidationResults(null);
@@ -406,85 +329,6 @@ const SendThanks = () => {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
-              {!isBatchMode && (
-                <div className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="recipientName">
-                        Recipient Name {recipients.length === 0 ? "*" : ""}
-                      </Label>
-                      <Input
-                        id="recipientName"
-                        name="recipientName"
-                        type="text"
-                        placeholder="Who are you thanking?"
-                        value={formData.recipientName}
-                        onChange={handleInputChange}
-                        required={recipients.length === 0}
-                        className="h-11"
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="recipientEmail">
-                        Recipient Email {recipients.length === 0 ? "*" : ""}
-                      </Label>
-                      <div className="flex gap-2">
-                        <Input
-                          id="recipientEmail"
-                          name="recipientEmail"
-                          type="email"
-                          placeholder="their@email.com"
-                          value={formData.recipientEmail}
-                          onChange={handleInputChange}
-                          required={recipients.length === 0}
-                          className="h-11 flex-1"
-                        />
-                        <Button
-                          type="button"
-                          variant="outline"
-                          onClick={addRecipient}
-                          className="h-11 px-3"
-                          disabled={!formData.recipientName.trim() || !formData.recipientEmail.trim()}
-                        >
-                          <Plus className="h-4 w-4" />
-                        </Button>
-                      </div>
-                      <p className="text-xs text-muted-foreground">
-                        Add multiple recipients or leave as single recipient
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Recipients List */}
-                  {recipients.length > 0 && (
-                    <div className="space-y-2">
-                      <Label>Recipients ({recipients.length})</Label>
-                      <div className="bg-muted/50 rounded-lg p-3 max-h-40 overflow-y-auto">
-                        <div className="space-y-2">
-                          {recipients.map((recipient, index) => (
-                            <div key={index} className="flex items-center justify-between bg-background rounded px-3 py-2">
-                              <div className="flex-1">
-                                <p className="font-medium text-sm">{recipient.name}</p>
-                                <p className="text-xs text-muted-foreground">{recipient.email}</p>
-                              </div>
-                              <Button
-                                type="button"
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => removeRecipient(index)}
-                                className="h-8 w-8 p-0 text-muted-foreground hover:text-destructive"
-                              >
-                                <X className="h-4 w-4" />
-                              </Button>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )}
 
 
               {/* Batch Preview Section */}
@@ -736,16 +580,14 @@ const SendThanks = () => {
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    {isBatchMode ? 'Sending Digital Cards & Donations...' : 'Sending Digital Card & Donation...'}
+                    {isBatchMode ? 'Sending Digital Cards & Donations...' : 'Processing...'}
                   </>
                 ) : (
                   <>
                     {isBatchMode ? <Users className="mr-2 h-4 w-4" /> : <Send className="mr-2 h-4 w-4" />}
                     {isBatchMode 
                       ? `Send ${batchData.length} Digital Cards & Donations`
-                      : recipients.length > 0 
-                        ? `Send ${recipients.length + (formData.recipientName.trim() && formData.recipientEmail.trim() ? 1 : 0)} Digital Cards & Donations`
-                        : 'Send Digital Thank You & Donation'
+                      : 'Continue to Card Designer'
                     }
                   </>
                 )}
