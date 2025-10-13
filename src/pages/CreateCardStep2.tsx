@@ -75,24 +75,14 @@ export default function CreateCardStep2() {
 
   // Filter templates based on selected occasion
   const selectedOccasion = cardData.occasion?.toLowerCase();
-  
-  // Debug logging
-  console.log('DEBUG - cardData.occasion:', cardData.occasion);
-  console.log('DEBUG - selectedOccasion:', selectedOccasion);
-  console.log('DEBUG - Total templates:', templates.length);
-  
   const relevantTemplates = selectedOccasion 
     ? templates.filter(t => t.category === selectedOccasion)
     : templates;
-  
-  console.log('DEBUG - Relevant templates after filter:', relevantTemplates.length, relevantTemplates.map(t => ({ name: t.name, category: t.category })));
 
   const groupedTemplates = CATEGORY_CONFIG.map(category => ({
     ...category,
     templates: relevantTemplates.filter(t => t.category === category.key)
   })).filter(category => category.templates.length > 0);
-  
-  console.log('DEBUG - Grouped templates:', groupedTemplates.map(g => ({ category: g.key, count: g.templates.length })));
 
   const handleNext = () => {
     if (!selectedTemplateId) {
@@ -130,14 +120,6 @@ export default function CreateCardStep2() {
           <p className="text-lg text-gray-600">
             Choose a template and customize it.
           </p>
-          {/* Debug info */}
-          <div className="mt-4 p-4 bg-yellow-100 border border-yellow-300 rounded text-left text-sm">
-            <p><strong>Debug Info:</strong></p>
-            <p>Selected Occasion: <code>{cardData.occasion || 'null'}</code></p>
-            <p>Total Templates: <code>{templates.length}</code></p>
-            <p>Filtered Templates: <code>{relevantTemplates.length}</code></p>
-            <p>Categories Shown: <code>{groupedTemplates.map(g => g.key).join(', ')}</code></p>
-          </div>
         </motion.div>
 
         {/* Back Button */}
