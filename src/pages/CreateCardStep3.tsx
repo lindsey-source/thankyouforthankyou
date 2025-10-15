@@ -124,9 +124,9 @@ export default function CreateCardStep3() {
   const fontPairings = template?.fonts ? [
     { id: 'default', name: 'Original', fonts: template.fonts },
     { 
-      id: 'classic', 
-      name: 'Classic Serif',
-      fonts: { heading: 'Playfair Display', body: 'Lora' }
+      id: 'serif', 
+      name: 'Elegant Serif',
+      fonts: { heading: 'Cormorant Garamond', body: 'Crimson Text' }
     },
     { 
       id: 'modern', 
@@ -134,8 +134,8 @@ export default function CreateCardStep3() {
       fonts: { heading: 'Poppins', body: 'Inter' }
     },
     { 
-      id: 'elegant', 
-      name: 'Elegant Script',
+      id: 'script', 
+      name: 'Romantic Script',
       fonts: { heading: 'Dancing Script', body: 'Montserrat' }
     }
   ] : [];
