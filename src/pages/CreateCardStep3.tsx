@@ -255,7 +255,7 @@ export default function CreateCardStep3() {
                         className="text-2xl"
                         style={{ fontFamily: pairing.fonts.heading }}
                       >
-                        Congratulations
+                        Thank You
                       </p>
                     </div>
                     <div>
