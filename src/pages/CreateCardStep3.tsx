@@ -26,7 +26,7 @@ export default function CreateCardStep3() {
   const navigate = useNavigate();
   const { cardData, updateCardData, setCurrentStep } = useCardWizard();
   const [template, setTemplate] = useState<any>(null);
-  const [selectedPalette, setSelectedPalette] = useState<any>(null);
+  const [selectedPaletteId, setSelectedPaletteId] = useState<string>('default');
   const [selectedFont, setSelectedFont] = useState<string | null>(null);
 
   useEffect(() => {
@@ -35,8 +35,8 @@ export default function CreateCardStep3() {
 
   useEffect(() => {
     if (template) {
-      setSelectedPalette(cardData.colorPalette || template.colors);
-      setSelectedFont(cardData.fontChoice || Object.keys(template.fonts || {})[0]);
+      setSelectedPaletteId('default');
+      setSelectedFont(cardData.fontChoice || 'default');
     }
   }, [template, cardData]);
 
@@ -62,10 +62,12 @@ export default function CreateCardStep3() {
   };
 
   const handleNext = () => {
-    if (!selectedPalette || !selectedFont) {
+    if (!selectedPaletteId || !selectedFont) {
       toast.error('Please select a color palette and font');
       return;
     }
+
+    const selectedPalette = colorPalettes.find(p => p.id === selectedPaletteId)?.colors;
 
     updateCardData({
       colorPalette: selectedPalette,
@@ -160,16 +162,16 @@ export default function CreateCardStep3() {
         onBack={() => navigate('/create-card/step2')}
         onNext={handleNext}
       >
-        {/* Live Preview - Full Width */}
-        <Card className="bg-white/95 backdrop-blur-sm mb-8">
-          <CardContent className="p-6">
-            <Label className="text-lg font-semibold mb-4 block">Live Preview</Label>
-            <div className="max-w-md mx-auto">
+        {/* Live Preview - Compact */}
+        <Card className="bg-white/95 backdrop-blur-sm mb-6">
+          <CardContent className="p-4">
+            <Label className="text-base font-semibold mb-3 block">Live Preview</Label>
+            <div className="max-w-xs mx-auto">
               <div 
                 className="aspect-[3/4] rounded-lg overflow-hidden shadow-lg"
                 style={{
-                  backgroundColor: selectedPalette?.primary || template.colors?.primary,
-                  color: selectedPalette?.text || template.colors?.text
+                  backgroundColor: colorPalettes.find(p => p.id === selectedPaletteId)?.colors.primary || template.colors?.primary,
+                  color: colorPalettes.find(p => p.id === selectedPaletteId)?.colors.text || template.colors?.text
                 }}
               >
                 <img
@@ -184,34 +186,34 @@ export default function CreateCardStep3() {
         </Card>
 
         {/* Color Palettes Section */}
-        <Card className="bg-white/95 backdrop-blur-sm mb-8">
-          <CardContent className="p-8">
-            <div className="mb-6">
-              <Label className="text-2xl font-bold mb-2 block">Choose Your Colors</Label>
-              <p className="text-muted-foreground">Select a color palette that matches your style</p>
+        <Card className="bg-white/95 backdrop-blur-sm mb-6">
+          <CardContent className="p-6">
+            <div className="mb-4">
+              <Label className="text-xl font-bold mb-1 block">Choose Your Colors</Label>
+              <p className="text-sm text-muted-foreground">Select a color palette that matches your style</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {colorPalettes.map((palette) => (
                 <div
                   key={palette.id}
-                  onClick={() => setSelectedPalette(palette.colors)}
-                  className={`cursor-pointer p-5 rounded-xl border-2 transition-all hover:shadow-md ${
-                    selectedPalette === palette.colors
+                  onClick={() => setSelectedPaletteId(palette.id)}
+                  className={`cursor-pointer p-4 rounded-xl border-2 transition-all hover:shadow-md ${
+                    selectedPaletteId === palette.id
                       ? 'border-primary ring-2 ring-primary bg-primary/5 shadow-md'
                       : 'border-gray-200 hover:border-gray-300'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-3">
-                    <span className="font-semibold text-lg">{palette.name}</span>
-                    {selectedPalette === palette.colors && (
-                      <Check className="w-6 h-6 text-primary" />
+                    <span className="font-semibold">{palette.name}</span>
+                    {selectedPaletteId === palette.id && (
+                      <Check className="w-5 h-5 text-primary" />
                     )}
                   </div>
                   <div className="flex gap-2">
                     {Object.values(palette.colors).slice(0, 4).map((color: any, idx) => (
                       <div
                         key={idx}
-                        className="flex-1 h-16 rounded-lg shadow-sm"
+                        className="flex-1 h-12 rounded-lg shadow-sm"
                         style={{ backgroundColor: color }}
                       />
                     ))}
@@ -224,26 +226,26 @@ export default function CreateCardStep3() {
 
         {/* Font Pairings Section */}
         <Card className="bg-white/95 backdrop-blur-sm">
-          <CardContent className="p-8">
-            <div className="mb-6">
-              <Label className="text-2xl font-bold mb-2 block">Choose Your Fonts</Label>
-              <p className="text-muted-foreground">Pick typography that expresses your message</p>
+          <CardContent className="p-6">
+            <div className="mb-4">
+              <Label className="text-xl font-bold mb-1 block">Choose Your Fonts</Label>
+              <p className="text-sm text-muted-foreground">Pick typography that expresses your message</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {fontPairings.map((pairing) => (
                 <div
                   key={pairing.id}
                   onClick={() => setSelectedFont(pairing.id)}
-                  className={`cursor-pointer p-6 rounded-xl border-2 transition-all hover:shadow-md ${
+                  className={`cursor-pointer p-4 rounded-xl border-2 transition-all hover:shadow-md ${
                     selectedFont === pairing.id
                       ? 'border-primary ring-2 ring-primary bg-primary/5 shadow-md'
                       : 'border-gray-200 hover:border-gray-300'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-3">
-                    <span className="font-semibold text-lg">{pairing.name}</span>
+                    <span className="font-semibold">{pairing.name}</span>
                     {selectedFont === pairing.id && (
-                      <Check className="w-6 h-6 text-primary" />
+                      <Check className="w-5 h-5 text-primary" />
                     )}
                   </div>
                   <div className="space-y-2">
