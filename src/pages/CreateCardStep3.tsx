@@ -248,12 +248,24 @@ export default function CreateCardStep3() {
                       <Check className="w-5 h-5 text-primary" />
                     )}
                   </div>
-                  <div className="space-y-2">
-                    <div className="text-sm text-muted-foreground">
-                      <span className="font-semibold">Heading:</span> {pairing.fonts.heading}
+                  <div className="space-y-3">
+                    <div>
+                      <p className="text-xs text-muted-foreground mb-1">Heading</p>
+                      <p 
+                        className="text-2xl"
+                        style={{ fontFamily: pairing.fonts.heading }}
+                      >
+                        Congratulations
+                      </p>
                     </div>
-                    <div className="text-sm text-muted-foreground">
-                      <span className="font-semibold">Body:</span> {pairing.fonts.body}
+                    <div>
+                      <p className="text-xs text-muted-foreground mb-1">Body</p>
+                      <p 
+                        className="text-sm"
+                        style={{ fontFamily: pairing.fonts.body }}
+                      >
+                        Your message will look beautiful in this font.
+                      </p>
                     </div>
                   </div>
                 </div>
