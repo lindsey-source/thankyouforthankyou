@@ -264,7 +264,7 @@ export default function CreateCardStep3() {
                         className="text-sm"
                         style={{ fontFamily: pairing.fonts.body }}
                       >
-                        Your message will look beautiful in this font.
+                        Thank you for your thoughtful gift.
                       </p>
                     </div>
                   </div>
