@@ -79,7 +79,6 @@ export default function CreateCardStep3() {
       closing: sample.closing
     });
     setShowInspiration(false);
-    toast.success('Message applied!');
   };
 
   const handleNext = () => {
