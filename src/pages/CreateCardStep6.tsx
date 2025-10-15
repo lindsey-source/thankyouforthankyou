@@ -11,6 +11,7 @@ import { Slider } from '@/components/ui/slider';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Mail, Clock, Link2, Heart, Sparkles } from 'lucide-react';
 import { toast } from 'sonner';
+import { getTemplateImage } from '@/lib/templateImageMap';
 import { InteractiveCardViewer } from '@/components/CardDesigner/InteractiveCardViewer';
 import { ProgressBar } from '@/components/CardDesigner/ProgressBar';
 import { BreadcrumbNav } from '@/components/CardDesigner/BreadcrumbNav';
@@ -182,7 +183,7 @@ export default function CreateCardStep6() {
                     className="cursor-pointer aspect-[3/4] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
                   >
                     <img
-                      src={template.preview_image}
+                      src={getTemplateImage(template.preview_image)}
                       alt="Card preview"
                       className="w-full h-full object-cover"
                     />
@@ -355,7 +356,7 @@ export default function CreateCardStep6() {
               <InteractiveCardViewer
                 template={{
                   ...template,
-                  preview: template.preview_image,
+                  preview: getTemplateImage(template.preview_image),
                   style: {
                     layout: 'full-background',
                     textPosition: 'bottom',
