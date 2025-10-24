@@ -69,16 +69,29 @@ export default function CreateCardStep6() {
   };
 
   const loadTemplate = async () => {
-    if (!cardData.templateId) return;
+    if (!cardData.templateId) {
+      console.log('No template ID found in cardData');
+      return;
+    }
 
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from('card_templates')
       .select('*')
       .eq('id', cardData.templateId)
-      .single();
+      .maybeSingle();
+
+    if (error) {
+      console.error('Error loading template:', error);
+      toast.error('Failed to load card template');
+      return;
+    }
 
     if (data) {
+      console.log('Template loaded:', data);
       setTemplate(data);
+    } else {
+      console.log('No template found for ID:', cardData.templateId);
+      toast.error('Card template not found');
     }
   };
 

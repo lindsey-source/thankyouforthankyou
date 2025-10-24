@@ -23,7 +23,7 @@ export const BreadcrumbNav: React.FC<BreadcrumbNavProps> = ({
         const isClickable = stepNumber < currentStep;
 
         return (
-          <React.Fragment key={stepNumber}>
+          <React.Fragment key={`step-${stepNumber}`}>
             <motion.button
               onClick={() => isClickable && navigate(step.path)}
               disabled={!isClickable && !isActive}
