@@ -47,6 +47,8 @@ export default function CreateCardStep6() {
   const [sending, setSending] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const [template, setTemplate] = useState<any>(null);
+  const [imageLoading, setImageLoading] = useState(true);
+  const [imageError, setImageError] = useState(false);
 
   const printingSavings = 4.25;
 
@@ -190,22 +192,49 @@ export default function CreateCardStep6() {
             <Card className="bg-white/95 backdrop-blur-sm">
               <CardContent className="p-6">
                 <h3 className="text-lg font-semibold mb-4">Card Preview</h3>
-                {template && (
-                  <div
-                    onClick={() => setShowPreview(true)}
-                    className="cursor-pointer aspect-[3/4] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
-                  >
-                    <img
-                      src={getTemplateImage(template.preview_image)}
-                      alt="Card preview"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                )}
+                <div
+                  onClick={() => template && setShowPreview(true)}
+                  className={`aspect-[3/4] rounded-lg overflow-hidden shadow-lg transition-shadow ${
+                    template ? 'cursor-pointer hover:shadow-xl' : ''
+                  }`}
+                >
+                  {!template ? (
+                    <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+                      <p className="text-muted-foreground">Loading preview...</p>
+                    </div>
+                  ) : imageError ? (
+                    <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center p-8 text-center">
+                      <div>
+                        <p className="text-muted-foreground mb-2">Preview unavailable</p>
+                        <p className="text-xs text-muted-foreground">{template.name}</p>
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      {imageLoading && (
+                        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+                          <p className="text-muted-foreground">Loading...</p>
+                        </div>
+                      )}
+                      <img
+                        src={getTemplateImage(template.preview_image)}
+                        alt="Card preview"
+                        className="w-full h-full object-cover"
+                        onLoad={() => setImageLoading(false)}
+                        onError={() => {
+                          console.error('Failed to load image:', template.preview_image);
+                          setImageError(true);
+                          setImageLoading(false);
+                        }}
+                      />
+                    </>
+                  )}
+                </div>
                 <Button
                   variant="outline"
                   className="w-full mt-4"
                   onClick={() => setShowPreview(true)}
+                  disabled={!template}
                 >
                   <Sparkles className="w-4 h-4 mr-2" />
                   View Interactive Experience
