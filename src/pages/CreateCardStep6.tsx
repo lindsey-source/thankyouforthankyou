@@ -15,6 +15,7 @@ import { getTemplateImage } from '@/lib/templateImageMap';
 import { InteractiveCardViewer } from '@/components/CardDesigner/InteractiveCardViewer';
 import { ProgressBar } from '@/components/CardDesigner/ProgressBar';
 import { BreadcrumbNav } from '@/components/CardDesigner/BreadcrumbNav';
+import { CardPreview } from '@/components/CardDesigner/CardPreview';
 
 const STEPS = [
   { name: 'Occasion', path: '/create-card/step1' },
@@ -192,44 +193,34 @@ export default function CreateCardStep6() {
             <Card className="bg-white/95 backdrop-blur-sm">
               <CardContent className="p-6">
                 <h3 className="text-lg font-semibold mb-4">Card Preview</h3>
-                <div
-                  onClick={() => template && setShowPreview(true)}
-                  className={`relative aspect-[3/4] rounded-lg overflow-hidden shadow-lg transition-shadow ${
-                    template ? 'cursor-pointer hover:shadow-xl' : ''
-                  }`}
-                >
-                  {!template ? (
-                    <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                      <p className="text-muted-foreground">Loading preview...</p>
-                    </div>
-                  ) : imageError ? (
-                    <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center p-8 text-center">
-                      <div>
-                        <p className="text-muted-foreground mb-2">Preview unavailable</p>
-                        <p className="text-xs text-muted-foreground">{template.name}</p>
-                      </div>
-                    </div>
-                  ) : (
-                    <>
-                      {imageLoading && (
-                        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center z-10">
-                          <p className="text-muted-foreground">Loading...</p>
-                        </div>
-                      )}
-                      <img
-                        src={getTemplateImage(template.preview_image)}
-                        alt="Card preview"
-                        className="w-full h-full object-cover"
-                        onLoad={() => setImageLoading(false)}
-                        onError={() => {
-                          console.error('Failed to load image:', template.preview_image);
-                          setImageError(true);
-                          setImageLoading(false);
-                        }}
-                      />
-                    </>
-                  )}
-                </div>
+                {!template ? (
+                  <div className="aspect-[3/4] rounded-lg overflow-hidden shadow-lg bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+                    <p className="text-muted-foreground">Loading preview...</p>
+                  </div>
+                ) : (
+                  <div
+                    onClick={() => setShowPreview(true)}
+                    className="cursor-pointer hover:shadow-xl transition-shadow"
+                  >
+                    <CardPreview
+                      template={{
+                        ...template,
+                        preview: getTemplateImage(template.preview_image),
+                        style: {
+                          layout: 'full-background',
+                          textPosition: 'bottom',
+                          backgroundColor: template.colors?.primary || '#F5E6D3',
+                          textColor: template.colors?.text || '#8B6F47',
+                          accentColor: template.colors?.accent || '#D4A574'
+                        }
+                      }}
+                      photo={cardData.photoUrl ? { file: null as any, preview: cardData.photoUrl } : null}
+                      message={cardData.messageBody}
+                      recipientName={recipientName || 'Friend'}
+                      senderName={user?.email || 'You'}
+                    />
+                  </div>
+                )}
                 <Button
                   variant="outline"
                   className="w-full mt-4"
