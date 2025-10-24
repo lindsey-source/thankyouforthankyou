@@ -194,7 +194,7 @@ export default function CreateCardStep6() {
                 <h3 className="text-lg font-semibold mb-4">Card Preview</h3>
                 <div
                   onClick={() => template && setShowPreview(true)}
-                  className={`aspect-[3/4] rounded-lg overflow-hidden shadow-lg transition-shadow ${
+                  className={`relative aspect-[3/4] rounded-lg overflow-hidden shadow-lg transition-shadow ${
                     template ? 'cursor-pointer hover:shadow-xl' : ''
                   }`}
                 >
@@ -212,7 +212,7 @@ export default function CreateCardStep6() {
                   ) : (
                     <>
                       {imageLoading && (
-                        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+                        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center z-10">
                           <p className="text-muted-foreground">Loading...</p>
                         </div>
                       )}
