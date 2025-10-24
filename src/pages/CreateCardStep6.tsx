@@ -45,6 +45,7 @@ export default function CreateCardStep6() {
   const [donationAmount, setDonationAmount] = useState(10);
   const [recipientName, setRecipientName] = useState('');
   const [recipientEmail, setRecipientEmail] = useState('');
+  const [senderName, setSenderName] = useState('');
   const [sending, setSending] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const [template, setTemplate] = useState<any>(null);
@@ -217,7 +218,7 @@ export default function CreateCardStep6() {
                       photo={cardData.photoUrl ? { file: null as any, preview: cardData.photoUrl } : null}
                       message={cardData.messageBody}
                       recipientName={recipientName || 'Friend'}
-                      senderName={user?.email || 'You'}
+                      senderName={senderName || 'You'}
                     />
                   </div>
                 )}
@@ -239,9 +240,9 @@ export default function CreateCardStep6() {
             {/* Recipient Details */}
             <Card className="bg-white/95 backdrop-blur-sm">
               <CardContent className="p-6 space-y-4">
-                <h3 className="text-lg font-semibold">Recipient Details</h3>
+                <h3 className="text-lg font-semibold">Card Details</h3>
                 <div className="space-y-2">
-                  <Label htmlFor="recipientName">Name</Label>
+                  <Label htmlFor="recipientName">Recipient Name</Label>
                   <Input
                     id="recipientName"
                     placeholder="Jane Smith"
@@ -250,13 +251,22 @@ export default function CreateCardStep6() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="recipientEmail">Email</Label>
+                  <Label htmlFor="recipientEmail">Recipient Email</Label>
                   <Input
                     id="recipientEmail"
                     type="email"
                     placeholder="jane@example.com"
                     value={recipientEmail}
                     onChange={(e) => setRecipientEmail(e.target.value)}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="senderName">Your Name (Signature)</Label>
+                  <Input
+                    id="senderName"
+                    placeholder="John Doe"
+                    value={senderName}
+                    onChange={(e) => setSenderName(e.target.value)}
                   />
                 </div>
               </CardContent>
@@ -401,7 +411,7 @@ export default function CreateCardStep6() {
                 photo={cardData.photoUrl ? { file: null as any, preview: cardData.photoUrl } : null}
                 message={cardData.messageBody}
                 recipientName={recipientName || 'Friend'}
-                senderName={user?.email || 'Anonymous'}
+                senderName={senderName || 'You'}
                 charityName={selectedCharity?.name}
                 envelopeStyle={{
                   id: cardData.envelopeColor || 'cream',
