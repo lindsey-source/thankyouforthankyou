@@ -160,12 +160,13 @@ export const InteractiveCardViewer: React.FC<InteractiveCardViewerProps> = ({
             className="relative"
           >
             {/* Opened card */}
-            <div className="flex gap-2 perspective-1000">
+            <div className="flex gap-2" style={{ perspective: '1000px' }}>
               {/* Left side - Card front (opened) */}
               <motion.div
                 initial={{ rotateY: 0 }}
                 animate={{ rotateY: -15 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
+                style={{ transformStyle: 'preserve-3d' }}
                 className="origin-right"
               >
                 <Card className="w-80 h-96 shadow-2xl overflow-hidden">
@@ -193,6 +194,7 @@ export const InteractiveCardViewer: React.FC<InteractiveCardViewerProps> = ({
                 initial={{ rotateY: 0 }}
                 animate={{ rotateY: 15 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
+                style={{ transformStyle: 'preserve-3d' }}
                 className="origin-left"
               >
                 <Card className="w-80 h-96 shadow-2xl overflow-hidden" style={{ backgroundColor: colors.primary }}>
