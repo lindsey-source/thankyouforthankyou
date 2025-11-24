@@ -29,6 +29,11 @@ import weddingModernMinimal from '@/assets/card-wedding-modern-minimal.jpg';
 import weddingPhotoOverlay from '@/assets/card-wedding-photo-overlay.jpg';
 import weddingRusticCharm from '@/assets/card-wedding-rustic-charm.jpg';
 import weddingWatercolorRomance from '@/assets/card-wedding-watercolor-romance.jpg';
+import weddingFirstStone from '@/assets/card-wedding-first-stone.jpg';
+import weddingOliveBranch from '@/assets/card-wedding-olive-branch.jpg';
+import weddingGoldDust from '@/assets/card-wedding-gold-dust.jpg';
+import weddingWatercolorBloom from '@/assets/card-wedding-watercolor-bloom.jpg';
+import weddingConnectedLines from '@/assets/card-wedding-connected-lines.jpg';
 import wildflowerInk from '@/assets/card-wildflower-ink.jpg';
 import withThanksArtistic from '@/assets/card-with-thanks-artistic.jpg';
 import youreTheBestArtistic from '@/assets/card-youre-the-best-artistic.jpg';
@@ -154,6 +159,26 @@ export const templateImageMap: Record<string, string> = {
   '/src/assets/card-wedding-watercolor-romance.jpg': weddingWatercolorRomance,
   'card-wedding-watercolor-romance.jpg': weddingWatercolorRomance,
   '/card-wedding-watercolor-romance.jpg': weddingWatercolorRomance,
+  
+  '/src/assets/card-wedding-first-stone.jpg': weddingFirstStone,
+  'card-wedding-first-stone.jpg': weddingFirstStone,
+  '/card-wedding-first-stone.jpg': weddingFirstStone,
+  
+  '/src/assets/card-wedding-olive-branch.jpg': weddingOliveBranch,
+  'card-wedding-olive-branch.jpg': weddingOliveBranch,
+  '/card-wedding-olive-branch.jpg': weddingOliveBranch,
+  
+  '/src/assets/card-wedding-gold-dust.jpg': weddingGoldDust,
+  'card-wedding-gold-dust.jpg': weddingGoldDust,
+  '/card-wedding-gold-dust.jpg': weddingGoldDust,
+  
+  '/src/assets/card-wedding-watercolor-bloom.jpg': weddingWatercolorBloom,
+  'card-wedding-watercolor-bloom.jpg': weddingWatercolorBloom,
+  '/card-wedding-watercolor-bloom.jpg': weddingWatercolorBloom,
+  
+  '/src/assets/card-wedding-connected-lines.jpg': weddingConnectedLines,
+  'card-wedding-connected-lines.jpg': weddingConnectedLines,
+  '/card-wedding-connected-lines.jpg': weddingConnectedLines,
   
   '/src/assets/card-wildflower-ink.jpg': wildflowerInk,
   'card-wildflower-ink.jpg': wildflowerInk,
