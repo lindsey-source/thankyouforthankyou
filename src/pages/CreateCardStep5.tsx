@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Upload, X } from 'lucide-react';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@clerk/clerk-react';
 import { ProgressBar } from '@/components/CardDesigner/ProgressBar';
 import { BreadcrumbNav } from '@/components/CardDesigner/BreadcrumbNav';
 
@@ -57,7 +57,7 @@ const signatureStyles = [
 
 export default function CreateCardStep4() {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { userId } = useAuth();
   const { cardData, updateCardData, setCurrentStep } = useCardWizard();
   const [uploading, setUploading] = useState(false);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
@@ -69,13 +69,11 @@ export default function CreateCardStep4() {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Validate file type
     if (!file.type.startsWith('image/')) {
       toast.error('Please upload an image file');
       return;
     }
 
-    // Validate file size (5MB max)
     if (file.size > 5 * 1024 * 1024) {
       toast.error('Image must be less than 5MB');
       return;
@@ -84,13 +82,11 @@ export default function CreateCardStep4() {
     setUploading(true);
     
     try {
-      // Create preview
       const preview = URL.createObjectURL(file);
       setPhotoPreview(preview);
 
-      // Upload to Supabase Storage
       const fileExt = file.name.split('.').pop();
-      const fileName = `${user?.id}-${Date.now()}.${fileExt}`;
+      const fileName = `${userId}-${Date.now()}.${fileExt}`;
       const filePath = `card-photos/${fileName}`;
 
       const { error: uploadError } = await supabase.storage
@@ -99,7 +95,6 @@ export default function CreateCardStep4() {
 
       if (uploadError) throw uploadError;
 
-      // Get public URL
       const { data: urlData } = supabase.storage
         .from('card-photos')
         .getPublicUrl(filePath);

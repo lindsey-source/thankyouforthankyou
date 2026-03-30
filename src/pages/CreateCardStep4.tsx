@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCardWizard } from '@/contexts/CardWizardContext';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@clerk/clerk-react';
 import { useAutoSave } from '@/hooks/useAutoSave';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -43,7 +43,7 @@ const sampleMessages = {
 export default function CreateCardStep3() {
   const navigate = useNavigate();
   const { cardData, updateCardData, setCurrentStep } = useCardWizard();
-  const { user } = useAuth();
+  const { userId } = useAuth();
   const [showInspiration, setShowInspiration] = useState(false);
   const [cardId, setCardId] = useState<string | null>(null);
   const [formData, setFormData] = useState({
@@ -62,7 +62,7 @@ export default function CreateCardStep3() {
       color_palette: cardData.colorPalette,
       font_choice: cardData.fontChoice
     },
-    user?.id,
+    userId ?? undefined,
     cardId,
     setCardId
   );

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCardWizard } from '@/contexts/CardWizardContext';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@clerk/clerk-react';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -38,7 +38,7 @@ interface Charity {
 
 export default function CreateCardStep6() {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { userId } = useAuth();
   const { cardData, updateCardData, resetWizard } = useCardWizard();
   const [charities, setCharities] = useState<Charity[]>([]);
   const [selectedCharity, setSelectedCharity] = useState<Charity | null>(null);
@@ -108,11 +108,10 @@ export default function CreateCardStep6() {
     setSending(true);
 
     try {
-      // Save card with all details
       const { data: savedCard, error: cardError } = await supabase
         .from('user_cards')
         .insert({
-          user_id: user?.id,
+          user_id: userId!,
           template_id: cardData.templateId,
           message_headline: cardData.messageHeadline,
           message_body: cardData.messageBody,
@@ -132,7 +131,6 @@ export default function CreateCardStep6() {
 
       if (cardError) throw cardError;
 
-      // Create transaction record
       if (donationAmount > 0 && selectedCharity) {
         await supabase
           .from('transactions')
@@ -144,12 +142,10 @@ export default function CreateCardStep6() {
           });
       }
 
-      // Trigger celebration
       toast.success('Your gratitude has been sent! You just spread kindness — and made a difference.', {
         duration: 5000
       });
       
-      // Reset wizard and navigate
       setTimeout(() => {
         resetWizard();
         navigate('/dashboard');
@@ -237,7 +233,6 @@ export default function CreateCardStep6() {
 
           {/* Right: Send Options & Donation */}
           <div className="space-y-6">
-            {/* Recipient Details */}
             <Card className="bg-white/95 backdrop-blur-sm">
               <CardContent className="p-6 space-y-4">
                 <h3 className="text-lg font-semibold">Card Details</h3>
@@ -272,7 +267,6 @@ export default function CreateCardStep6() {
               </CardContent>
             </Card>
 
-            {/* Donation Section */}
             <Card className="bg-white/95 backdrop-blur-sm">
               <CardContent className="p-6 space-y-4">
                 <div>
@@ -285,7 +279,6 @@ export default function CreateCardStep6() {
                   </div>
                 </div>
 
-                {/* Charity Selection */}
                 <div className="space-y-2">
                   <Label>Choose a Charity</Label>
                   <div className="grid grid-cols-1 gap-3">
@@ -315,7 +308,6 @@ export default function CreateCardStep6() {
                   </div>
                 </div>
 
-                {/* Donation Amount */}
                 {selectedCharity && (
                   <div className="space-y-3">
                     <Label>Donation Amount: ${donationAmount}</Label>
@@ -335,7 +327,6 @@ export default function CreateCardStep6() {
               </CardContent>
             </Card>
 
-            {/* Send Actions */}
             <div className="space-y-3">
               <Button
                 variant="hero"
@@ -383,7 +374,7 @@ export default function CreateCardStep6() {
           
           <p className="text-sm text-white/70">Step 6 of 6</p>
           
-          <div className="w-20" /> {/* Spacer for alignment */}
+          <div className="w-20" />
         </div>
 
         {/* Interactive Preview Modal */}
