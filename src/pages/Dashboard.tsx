@@ -3,10 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Heart, Users, DollarSign, TrendingUp, Plus, BarChart3, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useAuth } from "@/contexts/AuthContext";
+import { UserButton } from "@clerk/clerk-react";
 
 const Dashboard = () => {
-  const { signOut } = useAuth();
   // Mock data - in real app this would come from API
   const stats = {
     thankYousSent: 45,
@@ -61,7 +60,7 @@ const Dashboard = () => {
               <Link to="/help">
                 <Button variant="ghost">Help</Button>
               </Link>
-              <Button variant="outline" onClick={signOut}>Sign Out</Button>
+              <UserButton afterSignOutUrl="/" />
             </div>
           </div>
         </div>
@@ -71,7 +70,7 @@ const Dashboard = () => {
         {/* Welcome Section */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-foreground mb-2">
-            Welcome back, Sarah! 👋
+            Welcome back! 👋
           </h1>
           <p className="text-muted-foreground text-lg mb-6">
             Ready to make someone's day? Let's send some gratitude!
@@ -187,7 +186,6 @@ const Dashboard = () => {
 
           {/* Quick Actions & Tips */}
           <div className="space-y-6">
-            {/* Quick Actions */}
             <Card className="bg-white">
               <CardHeader>
                 <CardTitle>Quick Actions</CardTitle>
@@ -214,7 +212,6 @@ const Dashboard = () => {
               </CardContent>
             </Card>
 
-            {/* Inspiration Quote */}
             <Card className="bg-gradient-primary text-white">
               <CardContent className="p-6">
                 <blockquote className="text-center">
@@ -226,7 +223,6 @@ const Dashboard = () => {
               </CardContent>
             </Card>
 
-            {/* Impact Summary */}
             <Card className="bg-white">
               <CardHeader>
                 <CardTitle className="text-lg">Your Impact This Month</CardTitle>
