@@ -8,7 +8,7 @@ export const useAutoSave = (
   cardId: string | null,
   onCardIdCreated?: (id: string) => void
 ) => {
-  const timeoutRef = useRef<NodeJS.Timeout>();
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
   const lastSavedRef = useRef<string>('');
 
   useEffect(() => {
