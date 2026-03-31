@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Heart, Users, Gift, TrendingUp, ArrowRight, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
-import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
+import { SignedIn, SignedOut, UserButton, SignInButton, SignUpButton } from "@clerk/clerk-react";
 import heroImage from "@/assets/hero-image.jpg";
 import cardBlushBotanical from "@/assets/card-blush-botanical.jpg";
 import cardSageAbstract from "@/assets/card-sage-abstract.jpg";
@@ -24,14 +24,14 @@ const LandingPage = () => {
             </div>
             <div className="flex items-center gap-4">
               <SignedOut>
-                <Link to="/login">
+                <SignInButton mode="redirect">
                   <Button variant="ghost">Sign In</Button>
-                </Link>
-                <Link to="/signup">
+                </SignInButton>
+                <SignUpButton mode="redirect">
                   <Button variant="hero" size="lg">
                     Get Started Free
                   </Button>
-                </Link>
+                </SignUpButton>
               </SignedOut>
               <SignedIn>
                 <Link to="/dashboard">
