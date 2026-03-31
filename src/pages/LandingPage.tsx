@@ -3,13 +3,15 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Heart, Users, Gift, TrendingUp, ArrowRight, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
-import { SignedIn, SignedOut, UserButton, SignInButton, SignUpButton } from "@clerk/clerk-react";
+import { SignedIn, SignedOut, UserButton, SignInButton, SignUpButton, useAuth } from "@clerk/clerk-react";
 import heroImage from "@/assets/hero-image.jpg";
 import cardBlushBotanical from "@/assets/card-blush-botanical.jpg";
 import cardSageAbstract from "@/assets/card-sage-abstract.jpg";
 import cardWildflowerInk from "@/assets/card-wildflower-ink.jpg";
 
 const LandingPage = () => {
+  const { isLoaded, isSignedIn } = useAuth();
+
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation */}
@@ -23,24 +25,27 @@ const LandingPage = () => {
               </span>
             </div>
             <div className="flex items-center gap-4">
-              <SignedOut>
-                <SignInButton mode="redirect">
-                  <Button variant="ghost">Sign In</Button>
-                </SignInButton>
-                <SignUpButton mode="redirect">
-                  <Button variant="hero" size="lg">
-                    Get Started Free
-                  </Button>
-                </SignUpButton>
-              </SignedOut>
-              <SignedIn>
-                <Link to="/dashboard">
-                  <Button variant="hero" size="lg">
-                    Dashboard
-                  </Button>
-                </Link>
-                <UserButton afterSignOutUrl="/" />
-              </SignedIn>
+              {isLoaded && isSignedIn ? (
+                <>
+                  <Link to="/dashboard">
+                    <Button variant="hero" size="lg">
+                      Dashboard
+                    </Button>
+                  </Link>
+                  <UserButton afterSignOutUrl="/" />
+                </>
+              ) : (
+                <>
+                  <Link to="/login">
+                    <Button variant="ghost">Sign In</Button>
+                  </Link>
+                  <Link to="/signup">
+                    <Button variant="hero" size="lg">
+                      Get Started Free
+                    </Button>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>
