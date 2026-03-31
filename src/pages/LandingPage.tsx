@@ -24,14 +24,14 @@ const LandingPage = () => {
             </div>
             <div className="flex items-center gap-4">
               <SignedOut>
-                <Link to="/login">
+                <SignInButton mode="redirect">
                   <Button variant="ghost">Sign In</Button>
-                </Link>
-                <Link to="/signup">
+                </SignInButton>
+                <SignUpButton mode="redirect">
                   <Button variant="hero" size="lg">
                     Get Started Free
                   </Button>
-                </Link>
+                </SignUpButton>
               </SignedOut>
               <SignedIn>
                 <Link to="/dashboard">
