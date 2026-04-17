@@ -355,56 +355,278 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Beautiful Gallery Section */}
+      {/* Card Design Gallery */}
       <section className="py-20 bg-muted/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-foreground mb-4">Card Design Gallery</h2>
-            <p className="text-xl text-muted-foreground">Beautiful thank you cards that make an impact</p>
+            <h2
+              className="text-4xl mb-4"
+              style={{
+                fontFamily: "'Playfair Display', Georgia, serif",
+                fontWeight: 500,
+                color: "#2d2420",
+              }}
+            >
+              Card Design Gallery
+            </h2>
+            <p className="text-xl text-muted-foreground">
+              Beautiful thank you cards for every meaningful moment
+            </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card className="overflow-hidden hover:shadow-soft transition-all duration-300 group">
-              <div className="relative">
-                <img 
-                  src={cardSageAbstract} 
-                  alt="Modern sage abstract brushstroke card" 
-                  className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-                <div className="absolute bottom-4 left-4 text-white">
-                  <h3 className="text-xl font-semibold">Modern Abstract</h3>
-                  <p className="text-white/90">Artist-designed brushstrokes</p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            {/* Card 1 — Wedding (Pink Rose Branch) */}
+            <div
+              className="rounded-2xl overflow-hidden bg-white transition-all duration-300 hover:-translate-y-1"
+              style={{
+                border: "1px solid #ede8e3",
+                boxShadow: "0 10px 40px -12px rgba(193,123,138,0.15)",
+              }}
+            >
+              <div
+                className="relative flex items-center justify-center"
+                style={{
+                  height: "180px",
+                  background:
+                    "linear-gradient(180deg, #fdf6f3 0%, #f9d9d2 100%)",
+                }}
+              >
+                <svg
+                  viewBox="0 0 200 120"
+                  className="absolute inset-0 w-full h-full opacity-90"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M30 100 C 60 80, 90 70, 170 30" stroke="#a87a6a" strokeWidth="0.9" />
+                  <path d="M70 78 C 64 72, 64 66, 70 64 C 74 68, 74 74, 70 78 Z" fill="#a8b89a" opacity="0.8" />
+                  <path d="M105 60 C 99 54, 99 48, 105 46 C 109 50, 109 56, 105 60 Z" fill="#a8b89a" opacity="0.8" />
+                  <path d="M140 44 C 134 38, 134 32, 140 30 C 144 34, 144 40, 140 44 Z" fill="#a8b89a" opacity="0.8" />
+                  <g transform="translate(60 70)">
+                    <circle cx="0" cy="0" r="6" fill="#c17b8a" opacity="0.85" />
+                    <circle cx="0" cy="0" r="3.5" fill="#b06070" opacity="0.9" />
+                    <circle cx="0" cy="0" r="1.5" fill="#8b4a5a" />
+                  </g>
+                  <g transform="translate(100 50)">
+                    <circle cx="0" cy="0" r="7" fill="#c17b8a" opacity="0.85" />
+                    <circle cx="0" cy="0" r="4" fill="#b06070" opacity="0.9" />
+                    <circle cx="0" cy="0" r="1.5" fill="#8b4a5a" />
+                  </g>
+                  <g transform="translate(150 32)">
+                    <circle cx="0" cy="0" r="6" fill="#c17b8a" opacity="0.85" />
+                    <circle cx="0" cy="0" r="3.5" fill="#b06070" opacity="0.9" />
+                    <circle cx="0" cy="0" r="1.5" fill="#8b4a5a" />
+                  </g>
+                </svg>
+                <span
+                  className="relative z-10"
+                  style={{
+                    fontFamily: "'Dancing Script', cursive",
+                    fontSize: "44px",
+                    color: "#b06070",
+                    letterSpacing: "0.04em",
+                  }}
+                >
+                  Thank You
+                </span>
+              </div>
+              <div className="p-6">
+                <span
+                  className="inline-block px-3 py-1 rounded-full text-xs"
+                  style={{ backgroundColor: "#f5ede9", color: "#8b4a5a" }}
+                >
+                  Perfect for Weddings
+                </span>
+                <p
+                  className="mt-4 text-sm leading-relaxed"
+                  style={{ color: "#2d2420", opacity: 0.7 }}
+                >
+                  Romantic florals and soft blush tones for the most meaningful day.
+                </p>
+              </div>
+            </div>
+
+            {/* Card 2 — Corporate (Cream + Gold) */}
+            <div
+              className="rounded-2xl overflow-hidden bg-white transition-all duration-300 hover:-translate-y-1"
+              style={{
+                border: "1px solid #ede8e3",
+                boxShadow: "0 10px 40px -12px rgba(201,169,110,0.15)",
+              }}
+            >
+              <div
+                className="relative flex items-center justify-center"
+                style={{ height: "180px", backgroundColor: "#faf6ef" }}
+              >
+                {/* Corner accents */}
+                <div style={{ position: "absolute", top: "16px", left: "16px", width: "20px", height: "20px", borderTop: "1px solid #c9a96e", borderLeft: "1px solid #c9a96e" }} />
+                <div style={{ position: "absolute", top: "16px", right: "16px", width: "20px", height: "20px", borderTop: "1px solid #c9a96e", borderRight: "1px solid #c9a96e" }} />
+                <div style={{ position: "absolute", bottom: "16px", left: "16px", width: "20px", height: "20px", borderBottom: "1px solid #c9a96e", borderLeft: "1px solid #c9a96e" }} />
+                <div style={{ position: "absolute", bottom: "16px", right: "16px", width: "20px", height: "20px", borderBottom: "1px solid #c9a96e", borderRight: "1px solid #c9a96e" }} />
+                <div className="flex flex-col items-center">
+                  <div style={{ width: "80px", height: "1px", backgroundColor: "#c9a96e", marginBottom: "14px" }} />
+                  <span
+                    style={{
+                      fontFamily: "'Inter', sans-serif",
+                      fontSize: "22px",
+                      letterSpacing: "0.32em",
+                      color: "#2d2420",
+                      fontWeight: 400,
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    Thank You
+                  </span>
+                  <div style={{ width: "80px", height: "1px", backgroundColor: "#c9a96e", marginTop: "14px" }} />
                 </div>
               </div>
-            </Card>
-            <Card className="overflow-hidden hover:shadow-soft transition-all duration-300 group">
-              <div className="relative">
-                <img 
-                  src={cardWildflowerInk} 
-                  alt="Whimsical wildflower ink illustration card" 
-                  className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-                <div className="absolute bottom-4 left-4 text-white">
-                  <h3 className="text-xl font-semibold">Wildflower Ink</h3>
-                  <p className="text-white/90">Hand-drawn organic details</p>
-                </div>
+              <div className="p-6">
+                <span
+                  className="inline-block px-3 py-1 rounded-full text-xs"
+                  style={{ backgroundColor: "#f5efe2", color: "#8a7340" }}
+                >
+                  Corporate & Professional
+                </span>
+                <p
+                  className="mt-4 text-sm leading-relaxed"
+                  style={{ color: "#2d2420", opacity: 0.7 }}
+                >
+                  Refined and minimal — for clients, colleagues, and professional thanks.
+                </p>
               </div>
-            </Card>
-            <Card className="overflow-hidden hover:shadow-soft transition-all duration-300 group">
-              <div className="relative">
-                <img 
-                  src={cardBlushBotanical} 
-                  alt="Minimalist blush botanical card" 
-                  className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-                <div className="absolute bottom-4 left-4 text-white">
-                  <h3 className="text-xl font-semibold">Blush Botanical</h3>
-                  <p className="text-white/90">Soft watercolor elegance</p>
-                </div>
+            </div>
+
+            {/* Card 3 — Baby Showers (Sage + Wildflowers) */}
+            <div
+              className="rounded-2xl overflow-hidden bg-white transition-all duration-300 hover:-translate-y-1"
+              style={{
+                border: "1px solid #ede8e3",
+                boxShadow: "0 10px 40px -12px rgba(143,170,139,0.18)",
+              }}
+            >
+              <div
+                className="relative flex items-center justify-center"
+                style={{
+                  height: "180px",
+                  background:
+                    "linear-gradient(180deg, #eef2e8 0%, #c5d4bc 100%)",
+                }}
+              >
+                <svg
+                  viewBox="0 0 200 120"
+                  className="absolute inset-0 w-full h-full opacity-80"
+                  fill="none"
+                  strokeLinecap="round"
+                  aria-hidden="true"
+                >
+                  <path d="M28 110 C 30 90, 32 70, 30 48" stroke="#5e7a5a" strokeWidth="0.8" />
+                  <path d="M30 70 C 24 66, 22 60, 26 56 C 30 60, 32 66, 30 70 Z" fill="#5e7a5a" opacity="0.7" />
+                  <path d="M30 56 C 36 52, 38 46, 34 42 C 30 46, 30 52, 30 56 Z" fill="#5e7a5a" opacity="0.7" />
+                  <circle cx="30" cy="44" r="2" fill="#c17b8a" opacity="0.7" />
+                  <circle cx="33" cy="40" r="1.6" fill="#c17b8a" opacity="0.7" />
+                  <circle cx="27" cy="40" r="1.6" fill="#c17b8a" opacity="0.7" />
+
+                  <path d="M172 110 C 170 90, 168 70, 170 48" stroke="#5e7a5a" strokeWidth="0.8" />
+                  <path d="M170 70 C 176 66, 178 60, 174 56 C 170 60, 168 66, 170 70 Z" fill="#5e7a5a" opacity="0.7" />
+                  <path d="M170 56 C 164 52, 162 46, 166 42 C 170 46, 170 52, 170 56 Z" fill="#5e7a5a" opacity="0.7" />
+                  <circle cx="170" cy="44" r="2" fill="#fbeaa0" opacity="0.85" />
+                  <circle cx="173" cy="40" r="1.6" fill="#fbeaa0" opacity="0.85" />
+                  <circle cx="167" cy="40" r="1.6" fill="#fbeaa0" opacity="0.85" />
+                </svg>
+                <span
+                  className="relative z-10"
+                  style={{
+                    fontFamily: "'Dancing Script', cursive",
+                    fontSize: "44px",
+                    color: "#3d5a3a",
+                    letterSpacing: "0.04em",
+                  }}
+                >
+                  Thank You
+                </span>
               </div>
-            </Card>
+              <div className="p-6">
+                <span
+                  className="inline-block px-3 py-1 rounded-full text-xs"
+                  style={{ backgroundColor: "#eef2e8", color: "#3d5a3a" }}
+                >
+                  Baby Showers & Birthdays
+                </span>
+                <p
+                  className="mt-4 text-sm leading-relaxed"
+                  style={{ color: "#2d2420", opacity: 0.7 }}
+                >
+                  Fresh, joyful, and full of life — the perfect note for new beginnings.
+                </p>
+              </div>
+            </div>
+
+            {/* Card 4 — Galas (Navy + Gold) */}
+            <div
+              className="rounded-2xl overflow-hidden bg-white transition-all duration-300 hover:-translate-y-1"
+              style={{
+                border: "1px solid #ede8e3",
+                boxShadow: "0 10px 40px -12px rgba(30,42,58,0.25)",
+              }}
+            >
+              <div
+                className="relative flex items-center justify-center"
+                style={{ height: "180px", backgroundColor: "#1e2a3a" }}
+              >
+                <div
+                  className="absolute"
+                  style={{
+                    width: "56px",
+                    height: "56px",
+                    borderRadius: "9999px",
+                    border: "1px solid rgba(255,255,255,0.5)",
+                    top: "22px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: "'Playfair Display', Georgia, serif",
+                      color: "#ffffff",
+                      fontSize: "22px",
+                      letterSpacing: "0.05em",
+                    }}
+                  >
+                    TY
+                  </span>
+                </div>
+                <span
+                  style={{
+                    fontFamily: "'Playfair Display', Georgia, serif",
+                    fontSize: "34px",
+                    color: "#c9a96e",
+                    fontStyle: "italic",
+                    fontWeight: 500,
+                    marginTop: "70px",
+                    letterSpacing: "0.02em",
+                  }}
+                >
+                  Thank You
+                </span>
+              </div>
+              <div className="p-6">
+                <span
+                  className="inline-block px-3 py-1 rounded-full text-xs"
+                  style={{ backgroundColor: "#1e2a3a", color: "#c9a96e" }}
+                >
+                  Bar/Bat Mitzvahs & Galas
+                </span>
+                <p
+                  className="mt-4 text-sm leading-relaxed"
+                  style={{ color: "#2d2420", opacity: 0.7 }}
+                >
+                  Black-tie elegance with golden accents for milestone celebrations.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
