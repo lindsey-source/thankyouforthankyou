@@ -1,30 +1,116 @@
-import { SignUp as ClerkSignUp } from "@clerk/clerk-react";
-import { Heart, ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate, Navigate } from "react-router-dom";
+import { Heart, ArrowLeft, Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
+import { toast } from "sonner";
 
 const SignUp = () => {
+  const navigate = useNavigate();
+  const { isSignedIn, isLoaded } = useAuth();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+
+  if (isLoaded && isSignedIn) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitting(true);
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: `${window.location.origin}/dashboard`,
+        data: { name },
+      },
+    });
+    setSubmitting(false);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    toast.success("Account created! Welcome aboard.");
+    navigate("/dashboard", { replace: true });
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-hero flex items-center justify-center p-4">
+    <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <Link to="/" className="inline-flex items-center gap-2 text-white hover:text-white/80 transition-colors mb-6">
+          <Link to="/" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-6">
             <ArrowLeft className="h-4 w-4" />
             Back to Home
           </Link>
           <div className="flex items-center justify-center gap-2 mb-4">
-            <Heart className="h-8 w-8 text-white" />
-            <span className="text-3xl font-bold text-white">Thank You for Thank You</span>
+            <Heart className="h-8 w-8 text-primary" />
+            <span className="text-2xl font-bold text-primary">Thank You for Thank You</span>
           </div>
         </div>
-        <ClerkSignUp 
-          routing="path" 
-          path="/sign-up" 
-          signInUrl="/sign-in"
-          afterSignUpUrl="/dashboard"
-          redirectUrl="/dashboard"
-          forceRedirectUrl="/dashboard"
-          fallbackRedirectUrl="/dashboard"
-        />
+        <Card>
+          <CardHeader>
+            <CardTitle>Create your account</CardTitle>
+            <CardDescription>Start sending thank-yous that make a difference</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="name">Name</Label>
+                <Input
+                  id="name"
+                  type="text"
+                  autoComplete="name"
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Jane Doe"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@example.com"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  autoComplete="new-password"
+                  required
+                  minLength={6}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="At least 6 characters"
+                />
+              </div>
+              <Button type="submit" variant="hero" size="lg" className="w-full" disabled={submitting}>
+                {submitting && <Loader2 className="h-4 w-4 animate-spin" />}
+                Create Account
+              </Button>
+            </form>
+            <p className="text-sm text-muted-foreground text-center mt-6">
+              Already have an account?{" "}
+              <Link to="/login" className="text-primary font-medium hover:underline">
+                Sign in
+              </Link>
+            </p>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
