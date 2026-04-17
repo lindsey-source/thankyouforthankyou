@@ -103,16 +103,16 @@ const LandingPage = () => {
                 <div
                   className="relative flex flex-col items-center justify-center"
                   style={{
-                    height: "160px",
+                    height: "180px",
                     background:
-                      "radial-gradient(ellipse at center, #e8c4b8 0%, #d4a898 100%)",
+                      "linear-gradient(135deg, #f9ece8 0%, #f0d8d0 50%, #e8c4b8 100%)",
                   }}
                 >
                   <span
                     style={{
                       fontFamily: "'Dancing Script', cursive",
-                      fontSize: "32px",
-                      color: "#b06070",
+                      fontSize: "48px",
+                      color: "#8b4a5a",
                       letterSpacing: "0.05em",
                       lineHeight: 1.1,
                     }}
@@ -121,13 +121,25 @@ const LandingPage = () => {
                   </span>
                   <div
                     style={{
-                      width: "60px",
-                      height: "1px",
-                      backgroundColor: "#c17b8a",
-                      marginTop: "12px",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "8px",
+                      marginTop: "14px",
+                      opacity: 0.6,
                     }}
                     aria-hidden="true"
-                  />
+                  >
+                    <div style={{ width: "30px", height: "1px", backgroundColor: "#c17b8a" }} />
+                    <div
+                      style={{
+                        width: "4px",
+                        height: "4px",
+                        backgroundColor: "#c17b8a",
+                        transform: "rotate(45deg)",
+                      }}
+                    />
+                    <div style={{ width: "30px", height: "1px", backgroundColor: "#c17b8a" }} />
+                  </div>
                 </div>
 
                 {/* Card body */}
