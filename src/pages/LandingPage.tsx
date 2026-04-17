@@ -367,10 +367,10 @@ const LandingPage = () => {
                 color: "#2d2420",
               }}
             >
-              Card Design Gallery
+              Beautiful Cards, Meaningful Impact
             </h2>
             <p className="text-xl text-muted-foreground">
-              Beautiful thank you cards for every meaningful moment
+              Every design crafted to feel personal. Every send creates a donation.
             </p>
           </div>
 
