@@ -377,7 +377,7 @@ const LandingPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             {/* Card 1 — Wedding (Pink Rose Branch) */}
             <div
-              className="rounded-2xl overflow-hidden bg-white transition-all duration-300 hover:-translate-y-1"
+              className="group rounded-2xl overflow-hidden bg-white transition-all duration-300 hover:-translate-y-1"
               style={{
                 border: "1px solid #ede8e3",
                 boxShadow: "0 10px 40px -12px rgba(193,123,138,0.15)",
@@ -432,24 +432,47 @@ const LandingPage = () => {
                 </span>
               </div>
               <div className="p-6">
-                <span
-                  className="inline-block px-3 py-1 rounded-full text-xs"
-                  style={{ backgroundColor: "#f5ede9", color: "#8b4a5a" }}
-                >
-                  Perfect for Weddings
-                </span>
+                <div className="flex items-center justify-between mb-3">
+                  <span
+                    className="inline-block px-3 py-1 rounded-full text-xs"
+                    style={{ backgroundColor: "#f5ede9", color: "#8b4a5a" }}
+                  >
+                    Perfect for Weddings
+                  </span>
+                  <span
+                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs"
+                    style={{ backgroundColor: "#eef2e8", color: "#3d5a3a" }}
+                  >
+                    💚 $5 donated to WWF
+                  </span>
+                </div>
                 <p
-                  className="mt-4 text-sm leading-relaxed"
+                  style={{
+                    fontFamily: "'Playfair Display', Georgia, serif",
+                    color: "#2d2420",
+                    fontSize: "16px",
+                  }}
+                >
+                  Dear Sarah,
+                </p>
+                <p
+                  className="mt-1 text-sm leading-relaxed line-clamp-1"
                   style={{ color: "#2d2420", opacity: 0.7 }}
                 >
-                  Romantic florals and soft blush tones for the most meaningful day.
+                  Thank you for celebrating our special day with us…
                 </p>
+                <button
+                  className="mt-4 w-full py-2 rounded-md text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  style={{ backgroundColor: "#c17b8a", color: "#fdf6f3" }}
+                >
+                  Preview Card
+                </button>
               </div>
             </div>
 
             {/* Card 2 — Corporate (Cream + Gold) */}
             <div
-              className="rounded-2xl overflow-hidden bg-white transition-all duration-300 hover:-translate-y-1"
+              className="group rounded-2xl overflow-hidden bg-white transition-all duration-300 hover:-translate-y-1"
               style={{
                 border: "1px solid #ede8e3",
                 boxShadow: "0 10px 40px -12px rgba(201,169,110,0.15)",
@@ -482,24 +505,47 @@ const LandingPage = () => {
                 </div>
               </div>
               <div className="p-6">
-                <span
-                  className="inline-block px-3 py-1 rounded-full text-xs"
-                  style={{ backgroundColor: "#f5efe2", color: "#8a7340" }}
-                >
-                  Corporate & Professional
-                </span>
+                <div className="flex items-center justify-between mb-3">
+                  <span
+                    className="inline-block px-3 py-1 rounded-full text-xs"
+                    style={{ backgroundColor: "#f5efe2", color: "#8a7340" }}
+                  >
+                    Corporate & Professional
+                  </span>
+                  <span
+                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs"
+                    style={{ backgroundColor: "#eef2e8", color: "#3d5a3a" }}
+                  >
+                    💚 $10 donated to Feeding America
+                  </span>
+                </div>
                 <p
-                  className="mt-4 text-sm leading-relaxed"
+                  style={{
+                    fontFamily: "'Playfair Display', Georgia, serif",
+                    color: "#2d2420",
+                    fontSize: "16px",
+                  }}
+                >
+                  Dear Michael,
+                </p>
+                <p
+                  className="mt-1 text-sm leading-relaxed line-clamp-1"
                   style={{ color: "#2d2420", opacity: 0.7 }}
                 >
-                  Refined and minimal — for clients, colleagues, and professional thanks.
+                  Thank you for your continued partnership this year…
                 </p>
+                <button
+                  className="mt-4 w-full py-2 rounded-md text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  style={{ backgroundColor: "#2d2420", color: "#c9a96e" }}
+                >
+                  Preview Card
+                </button>
               </div>
             </div>
 
             {/* Card 3 — Baby Showers (Sage + Wildflowers) */}
             <div
-              className="rounded-2xl overflow-hidden bg-white transition-all duration-300 hover:-translate-y-1"
+              className="group rounded-2xl overflow-hidden bg-white transition-all duration-300 hover:-translate-y-1"
               style={{
                 border: "1px solid #ede8e3",
                 boxShadow: "0 10px 40px -12px rgba(143,170,139,0.18)",
@@ -547,24 +593,47 @@ const LandingPage = () => {
                 </span>
               </div>
               <div className="p-6">
-                <span
-                  className="inline-block px-3 py-1 rounded-full text-xs"
-                  style={{ backgroundColor: "#eef2e8", color: "#3d5a3a" }}
-                >
-                  Baby Showers & Birthdays
-                </span>
+                <div className="flex items-center justify-between mb-3">
+                  <span
+                    className="inline-block px-3 py-1 rounded-full text-xs"
+                    style={{ backgroundColor: "#eef2e8", color: "#3d5a3a" }}
+                  >
+                    Baby Showers & Birthdays
+                  </span>
+                  <span
+                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs"
+                    style={{ backgroundColor: "#eef2e8", color: "#3d5a3a" }}
+                  >
+                    💚 $3 donated to UNICEF
+                  </span>
+                </div>
                 <p
-                  className="mt-4 text-sm leading-relaxed"
+                  style={{
+                    fontFamily: "'Playfair Display', Georgia, serif",
+                    color: "#2d2420",
+                    fontSize: "16px",
+                  }}
+                >
+                  Dear Emma,
+                </p>
+                <p
+                  className="mt-1 text-sm leading-relaxed line-clamp-1"
                   style={{ color: "#2d2420", opacity: 0.7 }}
                 >
-                  Fresh, joyful, and full of life — the perfect note for new beginnings.
+                  Thank you for the sweetest gift for our little one…
                 </p>
+                <button
+                  className="mt-4 w-full py-2 rounded-md text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  style={{ backgroundColor: "#3d5a3a", color: "#fdf6f3" }}
+                >
+                  Preview Card
+                </button>
               </div>
             </div>
 
             {/* Card 4 — Galas (Navy + Gold) */}
             <div
-              className="rounded-2xl overflow-hidden bg-white transition-all duration-300 hover:-translate-y-1"
+              className="group rounded-2xl overflow-hidden bg-white transition-all duration-300 hover:-translate-y-1"
               style={{
                 border: "1px solid #ede8e3",
                 boxShadow: "0 10px 40px -12px rgba(30,42,58,0.25)",
@@ -613,18 +682,41 @@ const LandingPage = () => {
                 </span>
               </div>
               <div className="p-6">
-                <span
-                  className="inline-block px-3 py-1 rounded-full text-xs"
-                  style={{ backgroundColor: "#1e2a3a", color: "#c9a96e" }}
-                >
-                  Bar/Bat Mitzvahs & Galas
-                </span>
+                <div className="flex items-center justify-between mb-3">
+                  <span
+                    className="inline-block px-3 py-1 rounded-full text-xs"
+                    style={{ backgroundColor: "#1e2a3a", color: "#c9a96e" }}
+                  >
+                    Bar/Bat Mitzvahs & Galas
+                  </span>
+                  <span
+                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs"
+                    style={{ backgroundColor: "#eef2e8", color: "#3d5a3a" }}
+                  >
+                    💚 $25 donated to Hadassah
+                  </span>
+                </div>
                 <p
-                  className="mt-4 text-sm leading-relaxed"
+                  style={{
+                    fontFamily: "'Playfair Display', Georgia, serif",
+                    color: "#2d2420",
+                    fontSize: "16px",
+                  }}
+                >
+                  Dear David,
+                </p>
+                <p
+                  className="mt-1 text-sm leading-relaxed line-clamp-1"
                   style={{ color: "#2d2420", opacity: 0.7 }}
                 >
-                  Black-tie elegance with golden accents for milestone celebrations.
+                  Thank you for sharing in this milestone celebration…
                 </p>
+                <button
+                  className="mt-4 w-full py-2 rounded-md text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  style={{ backgroundColor: "#c9a96e", color: "#1e2a3a" }}
+                >
+                  Preview Card
+                </button>
               </div>
             </div>
           </div>
