@@ -36,8 +36,10 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<LandingPage />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/sign-up" element={<SignUp />} />
+            <Route path="/signup" element={<Navigate to="/sign-up" replace />} />
+            <Route path="/sign-in" element={<Login />} />
+            <Route path="/login" element={<Navigate to="/sign-in" replace />} />
             <Route 
               path="/create-card/step1" 
               element={
