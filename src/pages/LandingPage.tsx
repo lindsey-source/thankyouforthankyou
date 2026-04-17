@@ -698,7 +698,7 @@ const LandingPage = () => {
                     className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs"
                     style={{ backgroundColor: "#eef2e8", color: "#3d5a3a" }}
                   >
-                    💚 $25 donated to Hadassah
+                    💚 $5 donated to Jewish Federation
                   </span>
                 </div>
                 <p
@@ -714,7 +714,7 @@ const LandingPage = () => {
                   className="mt-1 text-sm leading-relaxed line-clamp-1"
                   style={{ color: "#2d2420", opacity: 0.7 }}
                 >
-                  Thank you for sharing in this milestone celebration…
+                  Your presence at Noah's Bar Mitzvah meant everything…
                 </p>
                 <button
                   className="mt-4 w-full py-2 rounded-md text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"
