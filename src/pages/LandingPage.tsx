@@ -99,37 +99,35 @@ const LandingPage = () => {
                 role="img"
                 aria-label="Example thank-you e-card preview"
               >
-                {/* Top blush gradient */}
+                {/* Top blush watercolor header */}
                 <div
-                  className="relative h-[42%] flex items-center justify-center"
+                  className="relative flex flex-col items-center justify-center"
                   style={{
+                    height: "160px",
                     background:
-                      "linear-gradient(180deg, #e8c4b8 0%, #fdf6f3 100%)",
+                      "radial-gradient(ellipse at center, #e8c4b8 0%, #d4a898 100%)",
                   }}
                 >
-                  <div
-                    className="flex items-center justify-center rounded-full"
+                  <span
                     style={{
-                      width: "70px",
-                      height: "70px",
-                      border: "1px solid #c9a96e",
-                      boxShadow: "inset 0 0 0 1px rgba(201,169,110,0.15)",
+                      fontFamily: "'Dancing Script', cursive",
+                      fontSize: "32px",
+                      color: "#b06070",
+                      letterSpacing: "0.05em",
+                      lineHeight: 1.1,
+                    }}
+                  >
+                    Thank You
+                  </span>
+                  <div
+                    style={{
+                      width: "60px",
+                      height: "1px",
+                      backgroundColor: "#c17b8a",
+                      marginTop: "12px",
                     }}
                     aria-hidden="true"
-                  >
-                    <span
-                      style={{
-                        fontFamily: "'Playfair Display', Georgia, serif",
-                        color: "#c9a96e",
-                        fontSize: "38px",
-                        lineHeight: 1,
-                        fontWeight: 500,
-                        letterSpacing: "0.02em",
-                      }}
-                    >
-                      S
-                    </span>
-                  </div>
+                  />
                 </div>
 
                 {/* Card body */}
