@@ -420,15 +420,16 @@ const LandingPage = () => {
                   </g>
                 </svg>
                 <span
-                  className="relative z-10"
+                  className="relative z-10 text-center px-4"
                   style={{
                     fontFamily: "'Dancing Script', cursive",
-                    fontSize: "44px",
+                    fontSize: "38px",
                     color: "#b06070",
-                    letterSpacing: "0.04em",
+                    letterSpacing: "0.03em",
+                    lineHeight: 1.1,
                   }}
                 >
-                  Thank You
+                  With Love & Gratitude
                 </span>
               </div>
               <div className="p-6">
@@ -443,7 +444,7 @@ const LandingPage = () => {
                     className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs"
                     style={{ backgroundColor: "#eef2e8", color: "#3d5a3a" }}
                   >
-                    💚 $5 donated to WWF
+                    💚 $4 donated to Rainforest Alliance
                   </span>
                 </div>
                 <p
@@ -453,13 +454,13 @@ const LandingPage = () => {
                     fontSize: "16px",
                   }}
                 >
-                  Dear Sarah,
+                  Dear Emma & James,
                 </p>
                 <p
                   className="mt-1 text-sm leading-relaxed line-clamp-1"
                   style={{ color: "#2d2420", opacity: 0.7 }}
                 >
-                  Thank you for celebrating our special day with us…
+                  Your wedding was the most beautiful day…
                 </p>
                 <button
                   className="mt-4 w-full py-2 rounded-md text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"
@@ -492,14 +493,15 @@ const LandingPage = () => {
                   <span
                     style={{
                       fontFamily: "'Inter', sans-serif",
-                      fontSize: "22px",
-                      letterSpacing: "0.32em",
+                      fontSize: "15px",
+                      letterSpacing: "0.28em",
                       color: "#2d2420",
                       fontWeight: 400,
                       textTransform: "uppercase",
+                      whiteSpace: "nowrap",
                     }}
                   >
-                    Thank You
+                    A Note of Appreciation
                   </span>
                   <div style={{ width: "80px", height: "1px", backgroundColor: "#c9a96e", marginTop: "14px" }} />
                 </div>
@@ -516,7 +518,7 @@ const LandingPage = () => {
                     className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs"
                     style={{ backgroundColor: "#eef2e8", color: "#3d5a3a" }}
                   >
-                    💚 $10 donated to Feeding America
+                    💚 $3 donated to local food bank
                   </span>
                 </div>
                 <p
@@ -526,13 +528,13 @@ const LandingPage = () => {
                     fontSize: "16px",
                   }}
                 >
-                  Dear Michael,
+                  Dear Team,
                 </p>
                 <p
                   className="mt-1 text-sm leading-relaxed line-clamp-1"
                   style={{ color: "#2d2420", opacity: 0.7 }}
                 >
-                  Thank you for your continued partnership this year…
+                  Your hard work on Q3 made all the difference…
                 </p>
                 <button
                   className="mt-4 w-full py-2 rounded-md text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"
@@ -581,15 +583,16 @@ const LandingPage = () => {
                   <circle cx="167" cy="40" r="1.6" fill="#fbeaa0" opacity="0.85" />
                 </svg>
                 <span
-                  className="relative z-10"
+                  className="relative z-10 text-center px-4"
                   style={{
                     fontFamily: "'Dancing Script', cursive",
-                    fontSize: "44px",
+                    fontSize: "40px",
                     color: "#3d5a3a",
-                    letterSpacing: "0.04em",
+                    letterSpacing: "0.03em",
+                    lineHeight: 1.1,
                   }}
                 >
-                  Thank You
+                  Welcome, Little One
                 </span>
               </div>
               <div className="p-6">
@@ -614,13 +617,13 @@ const LandingPage = () => {
                     fontSize: "16px",
                   }}
                 >
-                  Dear Emma,
+                  Dear Sarah,
                 </p>
                 <p
                   className="mt-1 text-sm leading-relaxed line-clamp-1"
                   style={{ color: "#2d2420", opacity: 0.7 }}
                 >
-                  Thank you for the sweetest gift for our little one…
+                  We're so thrilled to celebrate baby Lily…
                 </p>
                 <button
                   className="mt-4 w-full py-2 rounded-md text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"
@@ -668,17 +671,19 @@ const LandingPage = () => {
                   </span>
                 </div>
                 <span
+                  className="text-center px-4"
                   style={{
                     fontFamily: "'Playfair Display', Georgia, serif",
-                    fontSize: "34px",
+                    fontSize: "28px",
                     color: "#c9a96e",
                     fontStyle: "italic",
                     fontWeight: 500,
                     marginTop: "70px",
                     letterSpacing: "0.02em",
+                    lineHeight: 1.15,
                   }}
                 >
-                  Thank You
+                  L'Chaim & Thank You
                 </span>
               </div>
               <div className="p-6">
@@ -693,7 +698,7 @@ const LandingPage = () => {
                     className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs"
                     style={{ backgroundColor: "#eef2e8", color: "#3d5a3a" }}
                   >
-                    💚 $25 donated to Hadassah
+                    💚 $5 donated to Jewish Federation
                   </span>
                 </div>
                 <p
@@ -709,7 +714,7 @@ const LandingPage = () => {
                   className="mt-1 text-sm leading-relaxed line-clamp-1"
                   style={{ color: "#2d2420", opacity: 0.7 }}
                 >
-                  Thank you for sharing in this milestone celebration…
+                  Your presence at Noah's Bar Mitzvah meant everything…
                 </p>
                 <button
                   className="mt-4 w-full py-2 rounded-md text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"
