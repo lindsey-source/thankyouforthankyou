@@ -48,179 +48,292 @@ const LandingPage = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="py-10 lg:py-12" style={{ backgroundColor: "#faf7f2" }}>
+      <section className="py-16 lg:py-20" style={{ backgroundColor: "#faf7f2" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-12 gap-8 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left: Headline + CTAs */}
-            <div className="text-center lg:text-left lg:col-span-4" style={{ color: "#2d2420" }}>
+            <div className="text-center lg:text-left" style={{ color: "#2d2420" }}>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/15 text-secondary text-sm font-medium mb-6">
                 <Sparkles className="h-3.5 w-3.5" />
                 Gratitude that gives back
               </div>
-              <h1 className="text-4xl xl:text-5xl font-bold mb-6 leading-[1.05] tracking-tight" style={{ color: "#2d2420" }}>
+              <h1 className="text-5xl xl:text-6xl font-bold mb-6 leading-[1.05] tracking-tight" style={{ color: "#2d2420" }}>
                 Thank Differently.
                 <br />
                 <span className="text-primary">Give Meaningfully.</span>
               </h1>
-              <p className="text-base lg:text-lg mb-8 leading-relaxed" style={{ color: "#2d2420", opacity: 0.75 }}>
+              <p className="text-lg lg:text-xl mb-8 leading-relaxed max-w-xl lg:max-w-none mx-auto" style={{ color: "#2d2420", opacity: 0.75 }}>
                 Send personalized thank-you e-cards at scale. The money you'd have spent
                 on paper, printing, and postage becomes a charitable donation instead.
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Link to="/signup">
-                  <Button variant="hero" size="lg">
+                  <Button variant="hero" size="xl">
                     Create Your Card Now
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
-                <Button variant="outline" size="lg">
+                <Button variant="outline" size="xl">
                   See How It Works
                 </Button>
               </div>
             </div>
 
-            {/* Middle: Photo */}
-            <div className="lg:col-span-4 order-first lg:order-none">
-              <div className="relative rounded-3xl overflow-hidden shadow-warm aspect-[3/4] bg-muted">
-                <img
-                  src="https://images.unsplash.com/photo-1543269664-76bc3997d9ea?w=600&q=80"
-                  alt="Friends celebrating together"
-                  loading="eager"
-                  className="w-full h-full object-cover"
-                />
-                <div
-                  className="absolute inset-0 pointer-events-none"
-                  style={{
-                    background:
-                      "linear-gradient(180deg, rgba(45,36,32,0) 60%, rgba(45,36,32,0.15) 100%)",
-                  }}
-                />
-              </div>
-            </div>
+            {/* Right: Custom SVG illustration */}
+            <div className="relative flex items-center justify-center">
+              <svg
+                viewBox="0 0 560 420"
+                xmlns="http://www.w3.org/2000/svg"
+                role="img"
+                aria-label="An e-card with a heart turning into a charitable donation"
+                className="w-full h-auto max-w-[560px]"
+              >
+                {/* Soft background blob */}
+                <ellipse cx="280" cy="220" rx="240" ry="170" fill="#fdf6f3" />
+                <ellipse cx="430" cy="150" rx="90" ry="60" fill="#8faa8b" opacity="0.12" />
+                <ellipse cx="130" cy="290" rx="80" ry="55" fill="#c17b8a" opacity="0.10" />
 
-            {/* Right: 4-step workflow */}
-            <div className="relative lg:col-span-4">
-              <ol className="space-y-2">
-                {[
-                  {
-                    icon: Upload,
-                    title: "Upload Your Guest List",
-                    description: "Drop in a CSV with names and emails. We'll handle the rest.",
-                  },
-                  {
-                    icon: PenLine,
-                    title: "Write Your Message",
-                    description: "Compose a heartfelt thank-you and pick a card design you love.",
-                  },
-                  {
-                    icon: Send,
-                    title: "We Send the Cards",
-                    description: "Personalized e-cards delivered to every guest in your list.",
-                  },
-                  {
-                    icon: Heart,
-                    title: "Costs Become Donations",
-                    description: "What you saved on paper and postage goes directly to charity.",
-                  },
-                ].map((step, index, arr) => {
-                  const Icon = step.icon;
-                  return (
-                    <li key={index} className="relative">
-                      <div
-                        className="flex items-start gap-3 p-3 rounded-xl border transition-all duration-300 hover:shadow-warm"
-                        style={{
-                          backgroundColor: "#ffffff",
-                          borderColor: "rgba(45, 36, 32, 0.08)",
-                        }}
-                      >
-                        {/* Numbered icon badge */}
-                        <div className="relative shrink-0">
-                          <div
-                            className="h-10 w-10 rounded-lg flex items-center justify-center text-primary"
-                            style={{ backgroundColor: "rgba(193, 123, 138, 0.12)" }}
-                          >
-                            <Icon className="h-5 w-5" strokeWidth={1.75} />
-                          </div>
-                          <div className="absolute -top-1.5 -left-1.5 h-5 w-5 rounded-full bg-primary text-primary-foreground text-[10px] font-bold flex items-center justify-center shadow-sm">
-                            {index + 1}
-                          </div>
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h3
-                            className="text-sm font-semibold leading-tight mb-0.5"
-                            style={{ color: "#2d2420" }}
-                          >
-                            {step.title}
-                          </h3>
-                          <p
-                            className="text-xs leading-snug"
-                            style={{ color: "#2d2420", opacity: 0.65 }}
-                          >
-                            {step.description}
-                          </p>
-                        </div>
-                      </div>
-                      {/* Connector line between steps */}
-                      {index < arr.length - 1 && (
-                        <div className="flex justify-start pl-5" aria-hidden="true">
-                          <div className="h-2 w-px bg-secondary/40" />
-                        </div>
-                      )}
-                    </li>
-                  );
-                })}
-              </ol>
+                {/* LEFT: Envelope */}
+                <g transform="translate(40 170)">
+                  {/* envelope body */}
+                  <rect
+                    x="0"
+                    y="0"
+                    width="180"
+                    height="130"
+                    rx="10"
+                    fill="#ffffff"
+                    stroke="#2d2420"
+                    strokeWidth="2.5"
+                  />
+                  {/* inner crease */}
+                  <path
+                    d="M 0 10 L 90 80 L 180 10"
+                    fill="none"
+                    stroke="#2d2420"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  {/* open flap (folded back) */}
+                  <path
+                    d="M 0 0 L 90 -55 L 180 0 Z"
+                    fill="#fdf6f3"
+                    stroke="#2d2420"
+                    strokeWidth="2.5"
+                    strokeLinejoin="round"
+                  />
+                  {/* card peeking out */}
+                  <rect
+                    x="22"
+                    y="-30"
+                    width="136"
+                    height="86"
+                    rx="6"
+                    fill="#fdf6f3"
+                    stroke="#2d2420"
+                    strokeWidth="2.5"
+                  />
+                  <line x1="40" y1="-12" x2="140" y2="-12" stroke="#c17b8a" strokeWidth="3" strokeLinecap="round" />
+                  <line x1="40" y1="2" x2="120" y2="2" stroke="#2d2420" strokeWidth="2" strokeLinecap="round" opacity="0.55" />
+                  <line x1="40" y1="14" x2="130" y2="14" stroke="#2d2420" strokeWidth="2" strokeLinecap="round" opacity="0.55" />
+                  <line x1="40" y1="26" x2="100" y2="26" stroke="#2d2420" strokeWidth="2" strokeLinecap="round" opacity="0.55" />
+
+                  {/* Heart rising out of envelope */}
+                  <g transform="translate(70 -110)">
+                    <path
+                      d="M20 36 C 4 22, 4 4, 20 4 C 28 4, 32 10, 36 16 C 40 10, 44 4, 52 4 C 68 4, 68 22, 52 36 L 36 52 Z"
+                      fill="#c17b8a"
+                      stroke="#2d2420"
+                      strokeWidth="2.5"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M28 14 C 26 18, 28 22, 32 22"
+                      fill="none"
+                      stroke="#fdf6f3"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      opacity="0.85"
+                    />
+                  </g>
+                  {/* trail dots from envelope to heart */}
+                  <circle cx="90" cy="-50" r="3" fill="#c17b8a" opacity="0.5" />
+                  <circle cx="90" cy="-65" r="2.5" fill="#c17b8a" opacity="0.7" />
+                  <circle cx="90" cy="-78" r="2" fill="#c17b8a" opacity="0.85" />
+                </g>
+
+                {/* MIDDLE: Hand-drawn arrow */}
+                <g transform="translate(240 200)">
+                  <path
+                    d="M 0 30 C 30 0, 60 60, 90 30"
+                    fill="none"
+                    stroke="#2d2420"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeDasharray="0"
+                  />
+                  <path
+                    d="M 78 22 L 92 30 L 80 40"
+                    fill="none"
+                    stroke="#2d2420"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </g>
+
+                {/* RIGHT: Hands holding a heart */}
+                <g transform="translate(360 160)">
+                  {/* Left hand */}
+                  <path
+                    d="M 10 110 C 10 70, 30 60, 50 70 L 70 100 L 50 130 C 30 130, 10 130, 10 110 Z"
+                    fill="#8faa8b"
+                    stroke="#2d2420"
+                    strokeWidth="2.5"
+                    strokeLinejoin="round"
+                  />
+                  {/* finger lines left */}
+                  <path d="M 28 78 L 36 92" stroke="#2d2420" strokeWidth="2" strokeLinecap="round" opacity="0.55" />
+                  <path d="M 38 72 L 46 86" stroke="#2d2420" strokeWidth="2" strokeLinecap="round" opacity="0.55" />
+                  {/* Right hand */}
+                  <path
+                    d="M 150 110 C 150 70, 130 60, 110 70 L 90 100 L 110 130 C 130 130, 150 130, 150 110 Z"
+                    fill="#8faa8b"
+                    stroke="#2d2420"
+                    strokeWidth="2.5"
+                    strokeLinejoin="round"
+                  />
+                  <path d="M 132 78 L 124 92" stroke="#2d2420" strokeWidth="2" strokeLinecap="round" opacity="0.55" />
+                  <path d="M 122 72 L 114 86" stroke="#2d2420" strokeWidth="2" strokeLinecap="round" opacity="0.55" />
+                  {/* Wrist base */}
+                  <rect x="0" y="125" width="160" height="20" rx="8" fill="#8faa8b" stroke="#2d2420" strokeWidth="2.5" />
+                  {/* Heart held above */}
+                  <g transform="translate(50 10)">
+                    <path
+                      d="M30 56 C 4 36, 4 8, 30 8 C 42 8, 50 18, 60 28 C 70 18, 78 8, 90 8 C 116 8, 116 36, 90 56 L 60 84 Z"
+                      fill="#c17b8a"
+                      stroke="#2d2420"
+                      strokeWidth="2.5"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M 40 22 C 36 28, 38 36, 44 38"
+                      fill="none"
+                      stroke="#fdf6f3"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      opacity="0.85"
+                    />
+                  </g>
+                </g>
+
+                {/* Sparkles */}
+                <g stroke="#2d2420" strokeWidth="2" strokeLinecap="round" fill="none">
+                  <g transform="translate(100 80)">
+                    <line x1="0" y1="-8" x2="0" y2="8" />
+                    <line x1="-8" y1="0" x2="8" y2="0" />
+                  </g>
+                  <g transform="translate(290 90)" opacity="0.8">
+                    <line x1="0" y1="-6" x2="0" y2="6" />
+                    <line x1="-6" y1="0" x2="6" y2="0" />
+                  </g>
+                  <g transform="translate(490 100)">
+                    <line x1="0" y1="-7" x2="0" y2="7" />
+                    <line x1="-7" y1="0" x2="7" y2="0" />
+                  </g>
+                  <g transform="translate(220 340)" opacity="0.7">
+                    <line x1="0" y1="-5" x2="0" y2="5" />
+                    <line x1="-5" y1="0" x2="5" y2="0" />
+                  </g>
+                  <g transform="translate(470 320)">
+                    <line x1="0" y1="-6" x2="0" y2="6" />
+                    <line x1="-6" y1="0" x2="6" y2="0" />
+                  </g>
+                </g>
+                <circle cx="60" cy="140" r="3" fill="#c17b8a" />
+                <circle cx="510" cy="240" r="3" fill="#8faa8b" />
+                <circle cx="180" cy="350" r="3" fill="#8faa8b" opacity="0.7" />
+              </svg>
             </div>
           </div>
         </div>
       </section>
 
-      {/* How It Works */}
-      <section className="py-20 bg-muted/30">
+      {/* How It Works — 4-step workflow */}
+      <section className="py-20" style={{ backgroundColor: "#f5ede9" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-foreground mb-4">How It Works</h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Express your gratitude and make a difference in just four simple steps
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-3" style={{ color: "#2d2420" }}>How It Works</h2>
+            <p className="text-lg max-w-2xl mx-auto" style={{ color: "#2d2420", opacity: 0.7 }}>
+              From your guest list to a real-world donation in four simple steps.
             </p>
           </div>
-          
-          <div className="grid md:grid-cols-4 gap-8">
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-4 relative">
             {[
               {
-                icon: <Users className="h-8 w-8" />,
-                title: "Download & Fill Template",
-                description: "Download our CSV template and fill in your guest names, emails, gifts, and custom thank-you messages"
+                icon: Upload,
+                title: "Upload Your Guest List",
+                description: "Drop in a CSV with names and emails. We'll handle the rest.",
               },
               {
-                icon: <Heart className="h-8 w-8" />,
-                title: "Write a Heartfelt Message", 
-                description: "Compose one message for all or customize each one. Pick a beautiful e-card design"
+                icon: PenLine,
+                title: "Write Your Message",
+                description: "Compose a heartfelt thank-you and pick a card design you love.",
               },
-               {
-                 icon: <Gift className="h-8 w-8" />,
-                 title: "Redirect Card Costs",
-                 description: "Instead of paying for paper, printing, envelopes, and stamps, that same money becomes charitable donations"
-               },
               {
-                icon: <TrendingUp className="h-8 w-8" />,
-                title: "Send & Make Impact",
-                description: "Hit send and each person gets your e-card. Together you've supported great causes!"
-              }
-            ].map((step, index) => (
-              <Card key={index} className="relative bg-gradient-card border-primary/10 hover:shadow-warm transition-all duration-300">
-                <CardContent className="p-8 text-center">
-                  <div className="bg-accent w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 text-accent-foreground">
-                    {step.icon}
+                icon: Send,
+                title: "We Send the Cards",
+                description: "Personalized e-cards delivered to every guest in your list.",
+              },
+              {
+                icon: Heart,
+                title: "Costs Become Donations",
+                description: "What you saved on paper and postage goes directly to charity.",
+              },
+            ].map((step, index, arr) => {
+              const Icon = step.icon;
+              return (
+                <div key={index} className="relative">
+                  <div
+                    className="h-full rounded-2xl p-6 border transition-all duration-300 hover:shadow-warm hover:-translate-y-1"
+                    style={{
+                      backgroundColor: "#ffffff",
+                      borderColor: "rgba(45, 36, 32, 0.08)",
+                    }}
+                  >
+                    <div className="relative w-14 h-14 mb-5">
+                      <div
+                        className="h-14 w-14 rounded-2xl flex items-center justify-center text-primary"
+                        style={{ backgroundColor: "rgba(193, 123, 138, 0.14)" }}
+                      >
+                        <Icon className="h-6 w-6" strokeWidth={1.75} />
+                      </div>
+                      <div className="absolute -top-2 -right-2 h-7 w-7 rounded-full bg-primary text-primary-foreground text-xs font-bold flex items-center justify-center shadow-sm">
+                        {index + 1}
+                      </div>
+                    </div>
+                    <h3 className="text-lg font-semibold mb-2" style={{ color: "#2d2420" }}>
+                      {step.title}
+                    </h3>
+                    <p className="text-sm leading-relaxed" style={{ color: "#2d2420", opacity: 0.7 }}>
+                      {step.description}
+                    </p>
                   </div>
-                  <h3 className="text-xl font-semibold mb-4">{step.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed">{step.description}</p>
-                  <div className="absolute top-4 right-4 bg-primary text-primary-foreground w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">
-                    {index + 1}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                  {/* Connector arrow between steps (desktop only) */}
+                  {index < arr.length - 1 && (
+                    <div
+                      className="hidden lg:flex absolute top-1/2 -right-2 -translate-y-1/2 z-10 h-7 w-7 rounded-full items-center justify-center"
+                      style={{ backgroundColor: "#f5ede9", color: "#8faa8b" }}
+                      aria-hidden="true"
+                    >
+                      <ArrowRight className="h-4 w-4" strokeWidth={2.25} />
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
