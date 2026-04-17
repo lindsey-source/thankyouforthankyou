@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCardWizard } from '@/contexts/CardWizardContext';
 import { motion } from 'framer-motion';
@@ -16,274 +16,1122 @@ const STEP_NAMES = [
   'Preview & Send',
 ];
 
-type DesignId = 'wedding-rose' | 'corporate-gold' | 'baby-sage' | 'gala-navy';
+type OccasionId =
+  | 'wedding'
+  | 'baby'
+  | 'graduation'
+  | 'birthday'
+  | 'mitzvah'
+  | 'corporate'
+  | 'general'
+  | 'memorial'
+  | 'charity';
+
+/* ---------- Design schema ---------- */
+type HeaderStyle =
+  | 'botanical'        // soft floral curves + leaves
+  | 'monogram'         // centered monogram with thin frame
+  | 'starburst'        // radial lines
+  | 'confetti'         // scattered dots
+  | 'starOfDavid'      // mitzvah star
+  | 'ornamentFrame'    // corner ornaments / classic frame
+  | 'wave'             // soft horizon wave
+  | 'dotsField';       // refined dot grid
+
+type FontFamily = 'serifScript' | 'serifItalic' | 'sansCaps' | 'serifClassic';
 
 interface Design {
-  id: DesignId;
+  id: string;
+  occasion: OccasionId;
   name: string;
   tag: string;
+  // Color tokens
+  bg: string;            // card body bg
+  headerBg: string;      // gradient/solid behind header art
+  ink: string;           // primary ink for headline
+  inkSoft: string;       // body text
+  accent: string;        // accent for art + buttons
+  accentSoft: string;    // tint
   tagBg: string;
   tagColor: string;
-  donation: string;
-  shadow: string;
+  donationBg: string;
+  donationColor: string;
+  // Style choices
+  headerStyle: HeaderStyle;
+  headlineText: string;
+  font: FontFamily;
   greeting: string;
   body: string;
-  buttonBg: string;
-  buttonColor: string;
-  // Header style as JSX
+  donation: string;
+  fontChoice: 'inter' | 'playfair' | 'dancing';
 }
 
-const DESIGNS: Design[] = [
-  {
-    id: 'wedding-rose',
-    name: 'Rose Branch',
-    tag: 'Perfect for Weddings',
-    tagBg: '#f5ede9',
-    tagColor: '#8b4a5a',
-    donation: '$4 to Rainforest Alliance',
-    shadow: '0 10px 40px -12px rgba(193,123,138,0.18)',
-    greeting: 'Dear Emma & James,',
-    body: 'Your wedding was the most beautiful day…',
-    buttonBg: '#c17b8a',
-    buttonColor: '#fdf6f3',
-  },
-  {
-    id: 'corporate-gold',
-    name: 'Gilded Note',
-    tag: 'Corporate & Professional',
-    tagBg: '#f5efe2',
-    tagColor: '#8a7340',
-    donation: '$3 to local food bank',
-    shadow: '0 10px 40px -12px rgba(201,169,110,0.18)',
-    greeting: 'Dear Team,',
-    body: 'Your hard work on Q3 made all the difference…',
-    buttonBg: '#2d2420',
-    buttonColor: '#c9a96e',
-  },
-  {
-    id: 'baby-sage',
-    name: 'Wildflower Sage',
-    tag: 'Baby Showers & Birthdays',
-    tagBg: '#eef2e8',
-    tagColor: '#3d5a3a',
-    donation: '$3 to UNICEF',
-    shadow: '0 10px 40px -12px rgba(143,170,139,0.20)',
-    greeting: 'Dear Sarah,',
-    body: "We're so thrilled to celebrate baby Lily…",
-    buttonBg: '#3d5a3a',
-    buttonColor: '#fdf6f3',
-  },
-  {
-    id: 'gala-navy',
-    name: 'Midnight Gala',
-    tag: 'Bar/Bat Mitzvahs & Galas',
-    tagBg: '#1e2a3a',
-    tagColor: '#c9a96e',
-    donation: '$5 to Jewish Federation',
-    shadow: '0 10px 40px -12px rgba(30,42,58,0.30)',
-    greeting: 'Dear David,',
-    body: "Your presence at Noah's Bar Mitzvah meant everything…",
-    buttonBg: '#1e2a3a',
-    buttonColor: '#c9a96e',
-  },
-];
+/* ---------- Per-occasion design sets (3-4 each) ---------- */
+const DESIGN_SETS: Record<OccasionId, Design[]> = {
+  wedding: [
+    {
+      id: 'wedding-rose-garden',
+      occasion: 'wedding',
+      name: 'Rose Garden',
+      tag: 'Blush & Rose',
+      bg: '#ffffff',
+      headerBg: 'linear-gradient(180deg, #fdf6f3 0%, #f7d2d8 100%)',
+      ink: '#7a3744',
+      inkSoft: '#5d4045',
+      accent: '#c17b8a',
+      accentSoft: '#f5ede9',
+      tagBg: '#f5ede9',
+      tagColor: '#8b4a5a',
+      donationBg: '#eef2e8',
+      donationColor: '#3d5a3a',
+      headerStyle: 'botanical',
+      headlineText: 'With Love & Gratitude',
+      font: 'serifScript',
+      greeting: 'Dear Emma & James,',
+      body: 'Your wedding was the most beautiful day…',
+      donation: '$4 to Rainforest Alliance',
+      fontChoice: 'playfair',
+    },
+    {
+      id: 'wedding-ivory-elegance',
+      occasion: 'wedding',
+      name: 'Ivory Elegance',
+      tag: 'Cream & Gold',
+      bg: '#fffdf8',
+      headerBg: '#faf6ef',
+      ink: '#2d2420',
+      inkSoft: '#6b5e4a',
+      accent: '#c9a96e',
+      accentSoft: '#f5efe2',
+      tagBg: '#f5efe2',
+      tagColor: '#8a7340',
+      donationBg: '#eef2e8',
+      donationColor: '#3d5a3a',
+      headerStyle: 'ornamentFrame',
+      headlineText: 'A Note of Gratitude',
+      font: 'sansCaps',
+      greeting: 'Dear Mr. & Mrs. Carter,',
+      body: 'Thank you for celebrating with us…',
+      donation: '$4 to UNICEF',
+      fontChoice: 'inter',
+    },
+    {
+      id: 'wedding-garden-party',
+      occasion: 'wedding',
+      name: 'Garden Party',
+      tag: 'Sage Green',
+      bg: '#ffffff',
+      headerBg: 'linear-gradient(180deg, #eef2e8 0%, #c5d4bc 100%)',
+      ink: '#3d5a3a',
+      inkSoft: '#4f6649',
+      accent: '#5e7a5a',
+      accentSoft: '#eef2e8',
+      tagBg: '#eef2e8',
+      tagColor: '#3d5a3a',
+      donationBg: '#f5ede9',
+      donationColor: '#8b4a5a',
+      headerStyle: 'botanical',
+      headlineText: 'Forever Thankful',
+      font: 'serifScript',
+      greeting: 'Dear Sophie & Liam,',
+      body: 'Sharing our day with you was a joy…',
+      donation: '$4 to The Nature Conservancy',
+      fontChoice: 'playfair',
+    },
+    {
+      id: 'wedding-timeless',
+      occasion: 'wedding',
+      name: 'Timeless',
+      tag: 'Black & White',
+      bg: '#ffffff',
+      headerBg: '#f7f5f2',
+      ink: '#1a1a1a',
+      inkSoft: '#4a4a4a',
+      accent: '#1a1a1a',
+      accentSoft: '#ececea',
+      tagBg: '#ececea',
+      tagColor: '#1a1a1a',
+      donationBg: '#eef2e8',
+      donationColor: '#3d5a3a',
+      headerStyle: 'monogram',
+      headlineText: 'Thank You',
+      font: 'serifClassic',
+      greeting: 'Dear friends,',
+      body: 'Your presence made our day complete…',
+      donation: '$4 to Doctors Without Borders',
+      fontChoice: 'playfair',
+    },
+  ],
+  baby: [
+    {
+      id: 'baby-wildflower-sage',
+      occasion: 'baby',
+      name: 'Wildflower Sage',
+      tag: 'Sage Greens',
+      bg: '#ffffff',
+      headerBg: 'linear-gradient(180deg, #eef2e8 0%, #c5d4bc 100%)',
+      ink: '#3d5a3a',
+      inkSoft: '#4f6649',
+      accent: '#5e7a5a',
+      accentSoft: '#eef2e8',
+      tagBg: '#eef2e8',
+      tagColor: '#3d5a3a',
+      donationBg: '#f5ede9',
+      donationColor: '#8b4a5a',
+      headerStyle: 'botanical',
+      headlineText: 'Welcome, Little One',
+      font: 'serifScript',
+      greeting: 'Dear Sarah,',
+      body: "We're so thrilled to welcome baby Lily…",
+      donation: '$3 to UNICEF',
+      fontChoice: 'playfair',
+    },
+    {
+      id: 'baby-soft-blush',
+      occasion: 'baby',
+      name: 'Soft Blush',
+      tag: 'Baby Pinks',
+      bg: '#ffffff',
+      headerBg: 'linear-gradient(180deg, #fdf6f3 0%, #fcdfe5 100%)',
+      ink: '#a55a6a',
+      inkSoft: '#7a4a55',
+      accent: '#c17b8a',
+      accentSoft: '#f5ede9',
+      tagBg: '#f5ede9',
+      tagColor: '#8b4a5a',
+      donationBg: '#eef2e8',
+      donationColor: '#3d5a3a',
+      headerStyle: 'confetti',
+      headlineText: 'A Tiny Miracle',
+      font: 'serifScript',
+      greeting: 'Dear Aunt Mary,',
+      body: 'Thank you for the love & sweet gifts…',
+      donation: '$3 to March of Dimes',
+      fontChoice: 'playfair',
+    },
+    {
+      id: 'baby-sky-blue',
+      occasion: 'baby',
+      name: 'Sky Blue',
+      tag: 'Baby Blues',
+      bg: '#ffffff',
+      headerBg: 'linear-gradient(180deg, #eef4fb 0%, #c2d8ee 100%)',
+      ink: '#2c4a6e',
+      inkSoft: '#3d5a7e',
+      accent: '#5a85b8',
+      accentSoft: '#eef4fb',
+      tagBg: '#eef4fb',
+      tagColor: '#2c4a6e',
+      donationBg: '#eef2e8',
+      donationColor: '#3d5a3a',
+      headerStyle: 'wave',
+      headlineText: 'Hello, Sweet Boy',
+      font: 'serifScript',
+      greeting: 'Dear Grandma,',
+      body: 'Baby Noah loves the gift you sent…',
+      donation: '$3 to Save the Children',
+      fontChoice: 'playfair',
+    },
+    {
+      id: 'baby-sunshine',
+      occasion: 'baby',
+      name: 'Sunshine',
+      tag: 'Soft Yellows',
+      bg: '#ffffff',
+      headerBg: 'linear-gradient(180deg, #fff8e1 0%, #fde9a3 100%)',
+      ink: '#8a6a1e',
+      inkSoft: '#6b5418',
+      accent: '#d4a843',
+      accentSoft: '#fff8e1',
+      tagBg: '#fff8e1',
+      tagColor: '#8a6a1e',
+      donationBg: '#eef2e8',
+      donationColor: '#3d5a3a',
+      headerStyle: 'starburst',
+      headlineText: 'Our Little Sunshine',
+      font: 'serifScript',
+      greeting: 'Dear Friends,',
+      body: 'Thank you for warming our home…',
+      donation: '$3 to UNICEF',
+      fontChoice: 'playfair',
+    },
+  ],
+  graduation: [
+    {
+      id: 'grad-golden-cap',
+      occasion: 'graduation',
+      name: 'Golden Cap',
+      tag: 'Gold & Navy',
+      bg: '#ffffff',
+      headerBg: 'linear-gradient(180deg, #1e2a3a 0%, #16213a 100%)',
+      ink: '#1e2a3a',
+      inkSoft: '#3d4a5a',
+      accent: '#c9a96e',
+      accentSoft: '#f5efe2',
+      tagBg: '#f5efe2',
+      tagColor: '#8a7340',
+      donationBg: '#eef2e8',
+      donationColor: '#3d5a3a',
+      headerStyle: 'starburst',
+      headlineText: 'With Gratitude',
+      font: 'serifItalic',
+      greeting: 'Dear Professor Kim,',
+      body: 'Thank you for guiding me through…',
+      donation: '$4 to Scholarship America',
+      fontChoice: 'playfair',
+    },
+    {
+      id: 'grad-classic-scholar',
+      occasion: 'graduation',
+      name: 'Classic Scholar',
+      tag: 'Navy & White',
+      bg: '#ffffff',
+      headerBg: '#f4f6fa',
+      ink: '#1e2a3a',
+      inkSoft: '#3d4a5a',
+      accent: '#1e2a3a',
+      accentSoft: '#e3e8f0',
+      tagBg: '#e3e8f0',
+      tagColor: '#1e2a3a',
+      donationBg: '#eef2e8',
+      donationColor: '#3d5a3a',
+      headerStyle: 'monogram',
+      headlineText: 'Thank You',
+      font: 'serifClassic',
+      greeting: 'Dear Mom & Dad,',
+      body: 'Thank you for your endless support…',
+      donation: '$4 to DonorsChoose',
+      fontChoice: 'playfair',
+    },
+    {
+      id: 'grad-celebration',
+      occasion: 'graduation',
+      name: 'Celebration',
+      tag: 'Purple & Gold',
+      bg: '#ffffff',
+      headerBg: 'linear-gradient(180deg, #f3eef9 0%, #d8c4ed 100%)',
+      ink: '#4b2e7a',
+      inkSoft: '#5a3d8a',
+      accent: '#7a4dad',
+      accentSoft: '#f3eef9',
+      tagBg: '#f3eef9',
+      tagColor: '#4b2e7a',
+      donationBg: '#f5efe2',
+      donationColor: '#8a7340',
+      headerStyle: 'confetti',
+      headlineText: 'I Did It — Thank You!',
+      font: 'serifScript',
+      greeting: 'Dear Friends,',
+      body: 'I couldn\'t have done it without you…',
+      donation: '$4 to Khan Academy',
+      fontChoice: 'playfair',
+    },
+    {
+      id: 'grad-modern',
+      occasion: 'graduation',
+      name: 'Modern Graduate',
+      tag: 'Black & Gold',
+      bg: '#ffffff',
+      headerBg: '#1a1a1a',
+      ink: '#1a1a1a',
+      inkSoft: '#3a3a3a',
+      accent: '#c9a96e',
+      accentSoft: '#f5efe2',
+      tagBg: '#f5efe2',
+      tagColor: '#8a7340',
+      donationBg: '#eef2e8',
+      donationColor: '#3d5a3a',
+      headerStyle: 'ornamentFrame',
+      headlineText: 'Class Of',
+      font: 'sansCaps',
+      greeting: 'Dear Mentor,',
+      body: 'Your wisdom shaped my path…',
+      donation: '$4 to Teach For America',
+      fontChoice: 'inter',
+    },
+  ],
+  birthday: [
+    {
+      id: 'bday-confetti-joy',
+      occasion: 'birthday',
+      name: 'Confetti Joy',
+      tag: 'Bright & Multicolor',
+      bg: '#ffffff',
+      headerBg: 'linear-gradient(180deg, #fff7f0 0%, #fde2cc 100%)',
+      ink: '#c17b8a',
+      inkSoft: '#7a3744',
+      accent: '#c17b8a',
+      accentSoft: '#f5ede9',
+      tagBg: '#f5ede9',
+      tagColor: '#8b4a5a',
+      donationBg: '#eef2e8',
+      donationColor: '#3d5a3a',
+      headerStyle: 'confetti',
+      headlineText: 'Hooray — Thank You!',
+      font: 'serifScript',
+      greeting: 'Dear Friends,',
+      body: 'Thank you for making my day so fun…',
+      donation: '$3 to Make-A-Wish',
+      fontChoice: 'playfair',
+    },
+    {
+      id: 'bday-golden',
+      occasion: 'birthday',
+      name: 'Golden Birthday',
+      tag: 'Gold & Cream',
+      bg: '#fffdf8',
+      headerBg: '#faf6ef',
+      ink: '#8a6a1e',
+      inkSoft: '#6b5418',
+      accent: '#c9a96e',
+      accentSoft: '#f5efe2',
+      tagBg: '#f5efe2',
+      tagColor: '#8a7340',
+      donationBg: '#eef2e8',
+      donationColor: '#3d5a3a',
+      headerStyle: 'ornamentFrame',
+      headlineText: 'A Golden Year',
+      font: 'serifItalic',
+      greeting: 'Dear Aunt Linda,',
+      body: 'Your gift made me feel so loved…',
+      donation: '$3 to UNICEF',
+      fontChoice: 'playfair',
+    },
+    {
+      id: 'bday-floral',
+      occasion: 'birthday',
+      name: 'Floral Celebration',
+      tag: 'Roses & Blooms',
+      bg: '#ffffff',
+      headerBg: 'linear-gradient(180deg, #fdf6f3 0%, #f7d2d8 100%)',
+      ink: '#7a3744',
+      inkSoft: '#5d4045',
+      accent: '#c17b8a',
+      accentSoft: '#f5ede9',
+      tagBg: '#f5ede9',
+      tagColor: '#8b4a5a',
+      donationBg: '#eef2e8',
+      donationColor: '#3d5a3a',
+      headerStyle: 'botanical',
+      headlineText: 'Thank You, Truly',
+      font: 'serifScript',
+      greeting: 'Dear Best Friend,',
+      body: 'You always know how to celebrate me…',
+      donation: '$3 to Rainforest Alliance',
+      fontChoice: 'playfair',
+    },
+    {
+      id: 'bday-bold-fun',
+      occasion: 'birthday',
+      name: 'Bold & Fun',
+      tag: 'Vibrant',
+      bg: '#ffffff',
+      headerBg: 'linear-gradient(180deg, #fde8ef 0%, #f7c2d4 50%, #fbe4a3 100%)',
+      ink: '#1a1a1a',
+      inkSoft: '#3a3a3a',
+      accent: '#e85a8c',
+      accentSoft: '#fde8ef',
+      tagBg: '#fde8ef',
+      tagColor: '#a02a5a',
+      donationBg: '#eef2e8',
+      donationColor: '#3d5a3a',
+      headerStyle: 'starburst',
+      headlineText: 'BIG Thanks!',
+      font: 'sansCaps',
+      greeting: 'Dear Crew,',
+      body: 'You made my birthday legendary…',
+      donation: '$3 to Boys & Girls Clubs',
+      fontChoice: 'inter',
+    },
+  ],
+  mitzvah: [
+    {
+      id: 'mitzvah-midnight-gala',
+      occasion: 'mitzvah',
+      name: 'Midnight Gala',
+      tag: 'Navy & Gold',
+      bg: '#ffffff',
+      headerBg: '#1e2a3a',
+      ink: '#1e2a3a',
+      inkSoft: '#3d4a5a',
+      accent: '#c9a96e',
+      accentSoft: '#f5efe2',
+      tagBg: '#1e2a3a',
+      tagColor: '#c9a96e',
+      donationBg: '#eef2e8',
+      donationColor: '#3d5a3a',
+      headerStyle: 'ornamentFrame',
+      headlineText: "L'Chaim & Thank You",
+      font: 'serifItalic',
+      greeting: 'Dear David,',
+      body: "Your presence at Noah's Bar Mitzvah meant everything…",
+      donation: '$5 to Jewish Federation',
+      fontChoice: 'playfair',
+    },
+    {
+      id: 'mitzvah-star-of-david',
+      occasion: 'mitzvah',
+      name: 'Star of David',
+      tag: 'Blue & Silver',
+      bg: '#ffffff',
+      headerBg: 'linear-gradient(180deg, #eef4fb 0%, #c2d8ee 100%)',
+      ink: '#1e3a5a',
+      inkSoft: '#3d5a7e',
+      accent: '#5a85b8',
+      accentSoft: '#eef4fb',
+      tagBg: '#eef4fb',
+      tagColor: '#1e3a5a',
+      donationBg: '#f5efe2',
+      donationColor: '#8a7340',
+      headerStyle: 'starOfDavid',
+      headlineText: 'Todah Rabah',
+      font: 'serifClassic',
+      greeting: 'Dear Friends,',
+      body: 'Thank you for celebrating this milestone…',
+      donation: '$5 to PJ Library',
+      fontChoice: 'playfair',
+    },
+    {
+      id: 'mitzvah-garden-blessing',
+      occasion: 'mitzvah',
+      name: 'Garden Blessing',
+      tag: 'Sage & White',
+      bg: '#ffffff',
+      headerBg: 'linear-gradient(180deg, #eef2e8 0%, #c5d4bc 100%)',
+      ink: '#3d5a3a',
+      inkSoft: '#4f6649',
+      accent: '#5e7a5a',
+      accentSoft: '#eef2e8',
+      tagBg: '#eef2e8',
+      tagColor: '#3d5a3a',
+      donationBg: '#f5efe2',
+      donationColor: '#8a7340',
+      headerStyle: 'botanical',
+      headlineText: 'With Heartfelt Thanks',
+      font: 'serifScript',
+      greeting: 'Dear Family,',
+      body: 'Your blessings mean the world to us…',
+      donation: '$5 to Hazon (Jewish Environmental)',
+      fontChoice: 'playfair',
+    },
+    {
+      id: 'mitzvah-regal-gold',
+      occasion: 'mitzvah',
+      name: 'Regal Gold',
+      tag: 'Purple & Gold',
+      bg: '#ffffff',
+      headerBg: 'linear-gradient(180deg, #f3eef9 0%, #c8a8e6 100%)',
+      ink: '#4b2e7a',
+      inkSoft: '#5a3d8a',
+      accent: '#c9a96e',
+      accentSoft: '#f5efe2',
+      tagBg: '#f3eef9',
+      tagColor: '#4b2e7a',
+      donationBg: '#f5efe2',
+      donationColor: '#8a7340',
+      headerStyle: 'starOfDavid',
+      headlineText: 'Mazel Tov & Thank You',
+      font: 'serifItalic',
+      greeting: 'Dear Loved Ones,',
+      body: 'A simcha shared is a simcha doubled…',
+      donation: '$5 to Jewish Family Services',
+      fontChoice: 'playfair',
+    },
+  ],
+  corporate: [
+    {
+      id: 'corp-gilded-note',
+      occasion: 'corporate',
+      name: 'Gilded Note',
+      tag: 'Gold & Charcoal',
+      bg: '#fffdf8',
+      headerBg: '#faf6ef',
+      ink: '#2d2420',
+      inkSoft: '#5a4f44',
+      accent: '#c9a96e',
+      accentSoft: '#f5efe2',
+      tagBg: '#f5efe2',
+      tagColor: '#8a7340',
+      donationBg: '#eef2e8',
+      donationColor: '#3d5a3a',
+      headerStyle: 'ornamentFrame',
+      headlineText: 'A Note of Appreciation',
+      font: 'sansCaps',
+      greeting: 'Dear Team,',
+      body: 'Your hard work on Q3 made all the difference…',
+      donation: '$3 to local food bank',
+      fontChoice: 'inter',
+    },
+    {
+      id: 'corp-clean-modern',
+      occasion: 'corporate',
+      name: 'Clean Modern',
+      tag: 'Slate & White',
+      bg: '#ffffff',
+      headerBg: '#f4f6f8',
+      ink: '#2d3a48',
+      inkSoft: '#5a6878',
+      accent: '#5a6878',
+      accentSoft: '#e8ecf0',
+      tagBg: '#e8ecf0',
+      tagColor: '#2d3a48',
+      donationBg: '#eef2e8',
+      donationColor: '#3d5a3a',
+      headerStyle: 'monogram',
+      headlineText: 'Thank You',
+      font: 'sansCaps',
+      greeting: 'Dear Partner,',
+      body: 'We value our continued collaboration…',
+      donation: '$3 to United Way',
+      fontChoice: 'inter',
+    },
+    {
+      id: 'corp-forest-pro',
+      occasion: 'corporate',
+      name: 'Forest Professional',
+      tag: 'Dark Green',
+      bg: '#ffffff',
+      headerBg: 'linear-gradient(180deg, #1f3a2e 0%, #142a20 100%)',
+      ink: '#1f3a2e',
+      inkSoft: '#3d5546',
+      accent: '#1f3a2e',
+      accentSoft: '#e3ece6',
+      tagBg: '#e3ece6',
+      tagColor: '#1f3a2e',
+      donationBg: '#f5efe2',
+      donationColor: '#8a7340',
+      headerStyle: 'ornamentFrame',
+      headlineText: 'With Sincere Thanks',
+      font: 'serifClassic',
+      greeting: 'Dear Client,',
+      body: 'Thank you for trusting our team…',
+      donation: '$3 to The Nature Conservancy',
+      fontChoice: 'playfair',
+    },
+    {
+      id: 'corp-navy-exec',
+      occasion: 'corporate',
+      name: 'Navy Executive',
+      tag: 'Navy & Silver',
+      bg: '#ffffff',
+      headerBg: '#1e2a3a',
+      ink: '#1e2a3a',
+      inkSoft: '#3d4a5a',
+      accent: '#1e2a3a',
+      accentSoft: '#e3e8f0',
+      tagBg: '#e3e8f0',
+      tagColor: '#1e2a3a',
+      donationBg: '#eef2e8',
+      donationColor: '#3d5a3a',
+      headerStyle: 'monogram',
+      headlineText: 'In Appreciation',
+      font: 'sansCaps',
+      greeting: 'Dear Colleague,',
+      body: 'Your contribution did not go unnoticed…',
+      donation: '$3 to American Red Cross',
+      fontChoice: 'inter',
+    },
+  ],
+  general: [
+    {
+      id: 'gen-classic-rose',
+      occasion: 'general',
+      name: 'Classic Rose',
+      tag: 'Soft Pink',
+      bg: '#ffffff',
+      headerBg: 'linear-gradient(180deg, #fdf6f3 0%, #f7d2d8 100%)',
+      ink: '#7a3744',
+      inkSoft: '#5d4045',
+      accent: '#c17b8a',
+      accentSoft: '#f5ede9',
+      tagBg: '#f5ede9',
+      tagColor: '#8b4a5a',
+      donationBg: '#eef2e8',
+      donationColor: '#3d5a3a',
+      headerStyle: 'botanical',
+      headlineText: 'Thank You',
+      font: 'serifScript',
+      greeting: 'Dear Friend,',
+      body: 'Your kindness means more than words…',
+      donation: '$3 to local charity',
+      fontChoice: 'playfair',
+    },
+    {
+      id: 'gen-elegant-cream',
+      occasion: 'general',
+      name: 'Elegant Cream',
+      tag: 'Cream & Gold',
+      bg: '#fffdf8',
+      headerBg: '#faf6ef',
+      ink: '#2d2420',
+      inkSoft: '#5a4f44',
+      accent: '#c9a96e',
+      accentSoft: '#f5efe2',
+      tagBg: '#f5efe2',
+      tagColor: '#8a7340',
+      donationBg: '#eef2e8',
+      donationColor: '#3d5a3a',
+      headerStyle: 'ornamentFrame',
+      headlineText: 'A Note of Thanks',
+      font: 'serifItalic',
+      greeting: 'Dear Friend,',
+      body: 'I am so grateful for your generosity…',
+      donation: '$3 to UNICEF',
+      fontChoice: 'playfair',
+    },
+    {
+      id: 'gen-modern-minimal',
+      occasion: 'general',
+      name: 'Modern Minimal',
+      tag: 'White & Black',
+      bg: '#ffffff',
+      headerBg: '#f7f5f2',
+      ink: '#1a1a1a',
+      inkSoft: '#4a4a4a',
+      accent: '#1a1a1a',
+      accentSoft: '#ececea',
+      tagBg: '#ececea',
+      tagColor: '#1a1a1a',
+      donationBg: '#eef2e8',
+      donationColor: '#3d5a3a',
+      headerStyle: 'monogram',
+      headlineText: 'Thanks',
+      font: 'sansCaps',
+      greeting: 'Hi,',
+      body: 'Just a quick note to say thank you…',
+      donation: '$3 to Doctors Without Borders',
+      fontChoice: 'inter',
+    },
+    {
+      id: 'gen-nature-thanks',
+      occasion: 'general',
+      name: 'Nature Thanks',
+      tag: 'Sage Green',
+      bg: '#ffffff',
+      headerBg: 'linear-gradient(180deg, #eef2e8 0%, #c5d4bc 100%)',
+      ink: '#3d5a3a',
+      inkSoft: '#4f6649',
+      accent: '#5e7a5a',
+      accentSoft: '#eef2e8',
+      tagBg: '#eef2e8',
+      tagColor: '#3d5a3a',
+      donationBg: '#f5efe2',
+      donationColor: '#8a7340',
+      headerStyle: 'botanical',
+      headlineText: 'With Gratitude',
+      font: 'serifScript',
+      greeting: 'Dear Friend,',
+      body: 'Your kindness has not gone unnoticed…',
+      donation: '$3 to The Nature Conservancy',
+      fontChoice: 'playfair',
+    },
+  ],
+  memorial: [
+    {
+      id: 'mem-peaceful-white',
+      occasion: 'memorial',
+      name: 'Peaceful White',
+      tag: 'White & Silver',
+      bg: '#ffffff',
+      headerBg: '#f7f5f2',
+      ink: '#3a3a3a',
+      inkSoft: '#5a5a5a',
+      accent: '#8a8a8a',
+      accentSoft: '#ececea',
+      tagBg: '#ececea',
+      tagColor: '#3a3a3a',
+      donationBg: '#eef2e8',
+      donationColor: '#3d5a3a',
+      headerStyle: 'monogram',
+      headlineText: 'In Loving Memory',
+      font: 'serifClassic',
+      greeting: 'Dear Friend,',
+      body: 'Your kindness during this time meant so much…',
+      donation: '$4 to Hospice Foundation',
+      fontChoice: 'playfair',
+    },
+    {
+      id: 'mem-soft-memorial',
+      occasion: 'memorial',
+      name: 'Soft Memorial',
+      tag: 'Lavender & Grey',
+      bg: '#ffffff',
+      headerBg: 'linear-gradient(180deg, #f0eef8 0%, #d5cfe6 100%)',
+      ink: '#4a3d6e',
+      inkSoft: '#5a4d7e',
+      accent: '#7a6da5',
+      accentSoft: '#f0eef8',
+      tagBg: '#f0eef8',
+      tagColor: '#4a3d6e',
+      donationBg: '#eef2e8',
+      donationColor: '#3d5a3a',
+      headerStyle: 'botanical',
+      headlineText: 'With Heartfelt Thanks',
+      font: 'serifItalic',
+      greeting: 'Dear Friend,',
+      body: 'Your sympathy has been a comfort…',
+      donation: '$4 to American Cancer Society',
+      fontChoice: 'playfair',
+    },
+    {
+      id: 'mem-golden-memory',
+      occasion: 'memorial',
+      name: 'Golden Memory',
+      tag: 'Gold & Ivory',
+      bg: '#fffdf8',
+      headerBg: '#faf6ef',
+      ink: '#2d2420',
+      inkSoft: '#5a4f44',
+      accent: '#c9a96e',
+      accentSoft: '#f5efe2',
+      tagBg: '#f5efe2',
+      tagColor: '#8a7340',
+      donationBg: '#eef2e8',
+      donationColor: '#3d5a3a',
+      headerStyle: 'ornamentFrame',
+      headlineText: 'In Cherished Memory',
+      font: 'serifItalic',
+      greeting: 'Dear Friend,',
+      body: 'Thank you for honoring their memory…',
+      donation: '$4 to Alzheimer\'s Association',
+      fontChoice: 'playfair',
+    },
+    {
+      id: 'mem-natures-rest',
+      occasion: 'memorial',
+      name: "Nature's Rest",
+      tag: 'Sage & White',
+      bg: '#ffffff',
+      headerBg: 'linear-gradient(180deg, #eef2e8 0%, #c5d4bc 100%)',
+      ink: '#3d5a3a',
+      inkSoft: '#4f6649',
+      accent: '#5e7a5a',
+      accentSoft: '#eef2e8',
+      tagBg: '#eef2e8',
+      tagColor: '#3d5a3a',
+      donationBg: '#f5efe2',
+      donationColor: '#8a7340',
+      headerStyle: 'botanical',
+      headlineText: 'With Quiet Gratitude',
+      font: 'serifScript',
+      greeting: 'Dear Friend,',
+      body: 'Your kind words brought us peace…',
+      donation: '$4 to The Nature Conservancy',
+      fontChoice: 'playfair',
+    },
+  ],
+  charity: [
+    {
+      id: 'charity-classic-rose',
+      occasion: 'charity',
+      name: 'Classic Rose',
+      tag: 'Soft Pink',
+      bg: '#ffffff',
+      headerBg: 'linear-gradient(180deg, #fdf6f3 0%, #f7d2d8 100%)',
+      ink: '#7a3744',
+      inkSoft: '#5d4045',
+      accent: '#c17b8a',
+      accentSoft: '#f5ede9',
+      tagBg: '#f5ede9',
+      tagColor: '#8b4a5a',
+      donationBg: '#eef2e8',
+      donationColor: '#3d5a3a',
+      headerStyle: 'botanical',
+      headlineText: 'Thank You for Giving',
+      font: 'serifScript',
+      greeting: 'Dear Donor,',
+      body: 'Your generosity changes lives every day…',
+      donation: '$3 to chosen cause',
+      fontChoice: 'playfair',
+    },
+    {
+      id: 'charity-elegant-cream',
+      occasion: 'charity',
+      name: 'Elegant Cream',
+      tag: 'Cream & Gold',
+      bg: '#fffdf8',
+      headerBg: '#faf6ef',
+      ink: '#2d2420',
+      inkSoft: '#5a4f44',
+      accent: '#c9a96e',
+      accentSoft: '#f5efe2',
+      tagBg: '#f5efe2',
+      tagColor: '#8a7340',
+      donationBg: '#eef2e8',
+      donationColor: '#3d5a3a',
+      headerStyle: 'ornamentFrame',
+      headlineText: 'With Deep Gratitude',
+      font: 'serifItalic',
+      greeting: 'Dear Supporter,',
+      body: 'Your gift is making a real difference…',
+      donation: '$3 to chosen cause',
+      fontChoice: 'playfair',
+    },
+    {
+      id: 'charity-modern-minimal',
+      occasion: 'charity',
+      name: 'Modern Minimal',
+      tag: 'White & Black',
+      bg: '#ffffff',
+      headerBg: '#f7f5f2',
+      ink: '#1a1a1a',
+      inkSoft: '#4a4a4a',
+      accent: '#1a1a1a',
+      accentSoft: '#ececea',
+      tagBg: '#ececea',
+      tagColor: '#1a1a1a',
+      donationBg: '#eef2e8',
+      donationColor: '#3d5a3a',
+      headerStyle: 'monogram',
+      headlineText: 'Thank You',
+      font: 'sansCaps',
+      greeting: 'Hi,',
+      body: 'A heartfelt thank you for your support…',
+      donation: '$3 to chosen cause',
+      fontChoice: 'inter',
+    },
+    {
+      id: 'charity-nature-thanks',
+      occasion: 'charity',
+      name: 'Nature Thanks',
+      tag: 'Sage Green',
+      bg: '#ffffff',
+      headerBg: 'linear-gradient(180deg, #eef2e8 0%, #c5d4bc 100%)',
+      ink: '#3d5a3a',
+      inkSoft: '#4f6649',
+      accent: '#5e7a5a',
+      accentSoft: '#eef2e8',
+      tagBg: '#eef2e8',
+      tagColor: '#3d5a3a',
+      donationBg: '#f5efe2',
+      donationColor: '#8a7340',
+      headerStyle: 'botanical',
+      headlineText: 'With Gratitude',
+      font: 'serifScript',
+      greeting: 'Dear Friend,',
+      body: 'Together we make the world brighter…',
+      donation: '$3 to chosen cause',
+      fontChoice: 'playfair',
+    },
+  ],
+};
 
-// ----- Header components for each design -----
+/* ---------- Header art renderers (color-driven) ---------- */
+const HeaderArt: React.FC<{ design: Design }> = ({ design }) => {
+  const { headerStyle, accent, ink, headerBg, headlineText, font } = design;
 
-const WeddingRoseHeader = () => (
-  <div
-    className="relative flex items-center justify-center"
-    style={{
-      height: '220px',
-      background: 'linear-gradient(180deg, #fdf6f3 0%, #f9d9d2 100%)',
-    }}
-  >
-    <svg
-      viewBox="0 0 200 120"
-      className="absolute inset-0 w-full h-full opacity-90"
-      fill="none"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M30 100 C 60 80, 90 70, 170 30" stroke="#a87a6a" strokeWidth="0.9" />
-      <path d="M70 78 C 64 72, 64 66, 70 64 C 74 68, 74 74, 70 78 Z" fill="#a8b89a" opacity="0.8" />
-      <path d="M105 60 C 99 54, 99 48, 105 46 C 109 50, 109 56, 105 60 Z" fill="#a8b89a" opacity="0.8" />
-      <path d="M140 44 C 134 38, 134 32, 140 30 C 144 34, 144 40, 140 44 Z" fill="#a8b89a" opacity="0.8" />
-      <g transform="translate(60 70)">
-        <circle cx="0" cy="0" r="6" fill="#c17b8a" opacity="0.85" />
-        <circle cx="0" cy="0" r="3.5" fill="#b06070" opacity="0.9" />
-        <circle cx="0" cy="0" r="1.5" fill="#8b4a5a" />
-      </g>
-      <g transform="translate(100 50)">
-        <circle cx="0" cy="0" r="7" fill="#c17b8a" opacity="0.85" />
-        <circle cx="0" cy="0" r="4" fill="#b06070" opacity="0.9" />
-        <circle cx="0" cy="0" r="1.5" fill="#8b4a5a" />
-      </g>
-      <g transform="translate(150 32)">
-        <circle cx="0" cy="0" r="6" fill="#c17b8a" opacity="0.85" />
-        <circle cx="0" cy="0" r="3.5" fill="#b06070" opacity="0.9" />
-        <circle cx="0" cy="0" r="1.5" fill="#8b4a5a" />
-      </g>
-    </svg>
-    <span
-      className="relative z-10 text-center px-4"
-      style={{
-        fontFamily: "'Dancing Script', cursive",
-        fontSize: '44px',
-        color: '#b06070',
-        letterSpacing: '0.03em',
-        lineHeight: 1.1,
-      }}
-    >
-      With Love & Gratitude
-    </span>
-  </div>
-);
+  // Determine if header bg is dark to invert headline color
+  const isDarkBg = headerBg.includes('#1') || headerBg.includes('#2') || headerBg.includes('1a1a1a');
+  const headlineColor = isDarkBg ? (accent.startsWith('#c') || accent.startsWith('#d') ? accent : '#ffffff') : ink;
 
-const CorporateGoldHeader = () => (
-  <div
-    className="relative flex items-center justify-center"
-    style={{ height: '220px', backgroundColor: '#faf6ef' }}
-  >
-    <div style={{ position: 'absolute', top: '20px', left: '20px', width: '24px', height: '24px', borderTop: '1px solid #c9a96e', borderLeft: '1px solid #c9a96e' }} />
-    <div style={{ position: 'absolute', top: '20px', right: '20px', width: '24px', height: '24px', borderTop: '1px solid #c9a96e', borderRight: '1px solid #c9a96e' }} />
-    <div style={{ position: 'absolute', bottom: '20px', left: '20px', width: '24px', height: '24px', borderBottom: '1px solid #c9a96e', borderLeft: '1px solid #c9a96e' }} />
-    <div style={{ position: 'absolute', bottom: '20px', right: '20px', width: '24px', height: '24px', borderBottom: '1px solid #c9a96e', borderRight: '1px solid #c9a96e' }} />
-    <div className="flex flex-col items-center">
-      <div style={{ width: '90px', height: '1px', backgroundColor: '#c9a96e', marginBottom: '16px' }} />
-      <span
-        style={{
-          fontFamily: "'Inter', sans-serif",
-          fontSize: '15px',
-          letterSpacing: '0.28em',
-          color: '#2d2420',
-          fontWeight: 400,
-          textTransform: 'uppercase',
-          whiteSpace: 'nowrap',
-        }}
-      >
-        A Note of Appreciation
-      </span>
-      <div style={{ width: '90px', height: '1px', backgroundColor: '#c9a96e', marginTop: '16px' }} />
-    </div>
-  </div>
-);
+  const fontStyle: React.CSSProperties =
+    font === 'serifScript'
+      ? { fontFamily: "'Dancing Script', cursive", fontSize: '40px', letterSpacing: '0.02em' }
+      : font === 'serifItalic'
+      ? { fontFamily: "'Playfair Display', Georgia, serif", fontStyle: 'italic', fontSize: '28px', fontWeight: 500, letterSpacing: '0.02em' }
+      : font === 'sansCaps'
+      ? { fontFamily: "'Inter', sans-serif", fontSize: '14px', letterSpacing: '0.28em', textTransform: 'uppercase', fontWeight: 400 }
+      : { fontFamily: "'Playfair Display', Georgia, serif", fontSize: '30px', fontWeight: 500, letterSpacing: '0.01em' };
 
-const BabySageHeader = () => (
-  <div
-    className="relative flex items-center justify-center"
-    style={{
-      height: '220px',
-      background: 'linear-gradient(180deg, #eef2e8 0%, #c5d4bc 100%)',
-    }}
-  >
-    <svg
-      viewBox="0 0 200 120"
-      className="absolute inset-0 w-full h-full opacity-80"
-      fill="none"
-      strokeLinecap="round"
-      aria-hidden="true"
-    >
-      <path d="M28 110 C 30 90, 32 70, 30 48" stroke="#5e7a5a" strokeWidth="0.8" />
-      <path d="M30 70 C 24 66, 22 60, 26 56 C 30 60, 32 66, 30 70 Z" fill="#5e7a5a" opacity="0.7" />
-      <path d="M30 56 C 36 52, 38 46, 34 42 C 30 46, 30 52, 30 56 Z" fill="#5e7a5a" opacity="0.7" />
-      <circle cx="30" cy="44" r="2" fill="#c17b8a" opacity="0.7" />
-      <circle cx="33" cy="40" r="1.6" fill="#c17b8a" opacity="0.7" />
-      <circle cx="27" cy="40" r="1.6" fill="#c17b8a" opacity="0.7" />
-      <path d="M172 110 C 170 90, 168 70, 170 48" stroke="#5e7a5a" strokeWidth="0.8" />
-      <path d="M170 70 C 176 66, 178 60, 174 56 C 170 60, 168 66, 170 70 Z" fill="#5e7a5a" opacity="0.7" />
-      <path d="M170 56 C 164 52, 162 46, 166 42 C 170 46, 170 52, 170 56 Z" fill="#5e7a5a" opacity="0.7" />
-      <circle cx="170" cy="44" r="2" fill="#fbeaa0" opacity="0.85" />
-      <circle cx="173" cy="40" r="1.6" fill="#fbeaa0" opacity="0.85" />
-      <circle cx="167" cy="40" r="1.6" fill="#fbeaa0" opacity="0.85" />
-    </svg>
-    <span
-      className="relative z-10 text-center px-4"
-      style={{
-        fontFamily: "'Dancing Script', cursive",
-        fontSize: '44px',
-        color: '#3d5a3a',
-        letterSpacing: '0.03em',
-        lineHeight: 1.1,
-      }}
-    >
-      Welcome, Little One
-    </span>
-  </div>
-);
-
-const GalaNavyHeader = () => (
-  <div
-    className="relative flex items-center justify-center"
-    style={{ height: '220px', backgroundColor: '#1e2a3a' }}
-  >
+  return (
     <div
-      className="absolute"
-      style={{
-        width: '60px',
-        height: '60px',
-        borderRadius: '9999px',
-        border: '1px solid rgba(255,255,255,0.5)',
-        top: '28px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
+      className="relative flex items-center justify-center overflow-hidden"
+      style={{ height: '220px', background: headerBg }}
     >
-      <span
-        style={{
-          fontFamily: "'Playfair Display', Georgia, serif",
-          color: '#ffffff',
-          fontSize: '24px',
-          letterSpacing: '0.05em',
-        }}
-      >
-        TY
-      </span>
-    </div>
-    <span
-      className="text-center px-4"
-      style={{
-        fontFamily: "'Playfair Display', Georgia, serif",
-        fontSize: '32px',
-        color: '#c9a96e',
-        fontStyle: 'italic',
-        fontWeight: 500,
-        marginTop: '80px',
-        letterSpacing: '0.02em',
-        lineHeight: 1.15,
-      }}
-    >
-      L'Chaim & Thank You
-    </span>
-  </div>
-);
+      {/* Background art per style */}
+      {headerStyle === 'botanical' && (
+        <svg viewBox="0 0 200 120" className="absolute inset-0 w-full h-full opacity-90" fill="none" strokeLinecap="round">
+          <path d="M30 100 C 60 80, 90 70, 170 30" stroke={accent} strokeOpacity="0.5" strokeWidth="0.9" />
+          <path d="M70 78 C 64 72, 64 66, 70 64 C 74 68, 74 74, 70 78 Z" fill={accent} opacity="0.55" />
+          <path d="M105 60 C 99 54, 99 48, 105 46 C 109 50, 109 56, 105 60 Z" fill={accent} opacity="0.55" />
+          <path d="M140 44 C 134 38, 134 32, 140 30 C 144 34, 144 40, 140 44 Z" fill={accent} opacity="0.55" />
+          {[60, 100, 150].map((cx, i) => (
+            <g key={i} transform={`translate(${cx} ${[70, 50, 32][i]})`}>
+              <circle cx="0" cy="0" r="6" fill={accent} opacity="0.85" />
+              <circle cx="0" cy="0" r="3" fill={ink} opacity="0.5" />
+            </g>
+          ))}
+        </svg>
+      )}
 
-const HEADER_MAP: Record<DesignId, React.FC> = {
-  'wedding-rose': WeddingRoseHeader,
-  'corporate-gold': CorporateGoldHeader,
-  'baby-sage': BabySageHeader,
-  'gala-navy': GalaNavyHeader,
+      {headerStyle === 'monogram' && (
+        <>
+          <div
+            className="absolute"
+            style={{
+              width: '64px',
+              height: '64px',
+              borderRadius: '9999px',
+              border: `1px solid ${isDarkBg ? 'rgba(255,255,255,0.5)' : accent}`,
+              top: '32px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <span
+              style={{
+                fontFamily: "'Playfair Display', Georgia, serif",
+                color: isDarkBg ? '#ffffff' : ink,
+                fontSize: '22px',
+                letterSpacing: '0.05em',
+              }}
+            >
+              TY
+            </span>
+          </div>
+          <span className="text-center px-4 absolute" style={{ ...fontStyle, color: headlineColor, top: '128px' }}>
+            {headlineText}
+          </span>
+        </>
+      )}
+
+      {headerStyle === 'starburst' && (
+        <svg viewBox="0 0 200 120" className="absolute inset-0 w-full h-full opacity-80" fill="none" strokeLinecap="round">
+          <g stroke={accent} strokeOpacity="0.55" strokeWidth="0.7">
+            {Array.from({ length: 16 }).map((_, i) => {
+              const angle = (i / 16) * Math.PI * 2;
+              const x1 = 100 + Math.cos(angle) * 18;
+              const y1 = 60 + Math.sin(angle) * 18;
+              const x2 = 100 + Math.cos(angle) * 50;
+              const y2 = 60 + Math.sin(angle) * 50;
+              return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} />;
+            })}
+          </g>
+          <circle cx="100" cy="60" r="14" fill={accent} fillOpacity="0.6" />
+        </svg>
+      )}
+
+      {headerStyle === 'confetti' && (
+        <svg viewBox="0 0 200 120" className="absolute inset-0 w-full h-full" fill="none">
+          {[
+            [25, 30], [60, 22], [150, 18], [170, 50], [40, 60], [90, 40],
+            [140, 78], [30, 90], [170, 95], [80, 100], [120, 18], [55, 105],
+          ].map(([cx, cy], i) => (
+            <circle key={i} cx={cx} cy={cy} r={i % 3 === 0 ? 3.2 : 2.2} fill={i % 2 === 0 ? accent : ink} fillOpacity="0.55" />
+          ))}
+        </svg>
+      )}
+
+      {headerStyle === 'starOfDavid' && (
+        <svg viewBox="0 0 200 120" className="absolute inset-0 w-full h-full" fill="none">
+          <g transform="translate(100 60)" stroke={accent} strokeOpacity="0.85" strokeWidth="1.2" strokeLinejoin="round" fill="none">
+            <polygon points="0,-26 22.5,13 -22.5,13" />
+            <polygon points="0,26 22.5,-13 -22.5,-13" />
+          </g>
+          <circle cx="100" cy="60" r="40" fill="none" stroke={accent} strokeOpacity="0.25" />
+        </svg>
+      )}
+
+      {headerStyle === 'ornamentFrame' && (
+        <>
+          {[
+            { top: 18, left: 18, borders: 'tl' },
+            { top: 18, right: 18, borders: 'tr' },
+            { bottom: 18, left: 18, borders: 'bl' },
+            { bottom: 18, right: 18, borders: 'br' },
+          ].map((c, i) => (
+            <div
+              key={i}
+              style={{
+                position: 'absolute',
+                top: (c as any).top,
+                bottom: (c as any).bottom,
+                left: (c as any).left,
+                right: (c as any).right,
+                width: '22px',
+                height: '22px',
+                borderTop: c.borders.includes('t') ? `1px solid ${accent}` : undefined,
+                borderBottom: c.borders.includes('b') ? `1px solid ${accent}` : undefined,
+                borderLeft: c.borders.includes('l') ? `1px solid ${accent}` : undefined,
+                borderRight: c.borders.includes('r') ? `1px solid ${accent}` : undefined,
+              }}
+            />
+          ))}
+          <div className="flex flex-col items-center">
+            <div style={{ width: '70px', height: '1px', backgroundColor: accent, marginBottom: '14px' }} />
+            <span className="text-center px-4" style={{ ...fontStyle, color: headlineColor, whiteSpace: 'nowrap' }}>
+              {headlineText}
+            </span>
+            <div style={{ width: '70px', height: '1px', backgroundColor: accent, marginTop: '14px' }} />
+          </div>
+        </>
+      )}
+
+      {headerStyle === 'wave' && (
+        <svg viewBox="0 0 200 120" className="absolute inset-0 w-full h-full" fill="none">
+          <path d="M0 80 Q 50 60 100 78 T 200 70" stroke={accent} strokeOpacity="0.55" strokeWidth="1.2" fill="none" />
+          <path d="M0 95 Q 50 78 100 92 T 200 86" stroke={accent} strokeOpacity="0.35" strokeWidth="1" fill="none" />
+        </svg>
+      )}
+
+      {headerStyle === 'dotsField' && (
+        <svg viewBox="0 0 200 120" className="absolute inset-0 w-full h-full" fill="none">
+          <defs>
+            <pattern id={`dots-${design.id}`} x="0" y="0" width="14" height="14" patternUnits="userSpaceOnUse">
+              <circle cx="2" cy="2" r="0.9" fill={accent} fillOpacity="0.35" />
+            </pattern>
+          </defs>
+          <rect width="200" height="120" fill={`url(#dots-${design.id})`} />
+        </svg>
+      )}
+
+      {/* Headline text (skip for monogram + ornamentFrame which place their own) */}
+      {headerStyle !== 'monogram' && headerStyle !== 'ornamentFrame' && (
+        <span
+          className="relative z-10 text-center px-4"
+          style={{ ...fontStyle, color: headlineColor, lineHeight: 1.1 }}
+        >
+          {headlineText}
+        </span>
+      )}
+    </div>
+  );
+};
+
+/* ---------- Page ---------- */
+const occasionLabels: Record<OccasionId, string> = {
+  wedding: 'Wedding',
+  baby: 'Baby',
+  graduation: 'Graduation',
+  birthday: 'Birthday',
+  mitzvah: 'Bar / Bat Mitzvah',
+  corporate: 'Corporate',
+  general: 'General Thank You',
+  memorial: 'Memorial',
+  charity: 'Charity',
 };
 
 export default function CreateCardStep2() {
   const navigate = useNavigate();
-  const { updateCardData, setCurrentStep } = useCardWizard();
-  const [selectedId, setSelectedId] = useState<DesignId | null>(null);
+  const { cardData, updateCardData, setCurrentStep } = useCardWizard();
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+
+  const occasion = (cardData.occasion as OccasionId | null) || null;
+
+  const designs = useMemo(() => {
+    if (!occasion) return DESIGN_SETS.general;
+    return DESIGN_SETS[occasion] || DESIGN_SETS.general;
+  }, [occasion]);
 
   const handleContinue = () => {
     if (!selectedId) {
       toast.error('Please choose a design');
       return;
     }
-    const design = DESIGNS.find((d) => d.id === selectedId);
+    const design = designs.find((d) => d.id === selectedId);
     if (!design) return;
 
     updateCardData({
-      templateId: null,
-      colorPalette: { theme: design.id },
-      fontChoice: design.id === 'corporate-gold' ? 'inter' : 'playfair',
+      templateId: design.id,
+      colorPalette: {
+        theme: design.id,
+        bg: design.bg,
+        ink: design.ink,
+        accent: design.accent,
+        accentSoft: design.accentSoft,
+      },
+      fontChoice: design.fontChoice,
     });
     setCurrentStep(3);
     navigate('/create-card/step3');
@@ -295,14 +1143,14 @@ export default function CreateCardStep2() {
 
       <div className="max-w-6xl mx-auto px-4 md:px-8 pt-8 pb-32">
         {/* Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-10">
           <motion.h1
-            className="text-4xl md:text-5xl mb-4"
+            className="text-4xl md:text-5xl mb-3"
             style={{ fontFamily: "'Playfair Display', serif", color: '#2a2622' }}
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            Your Card Design
+            Designs for your {occasion ? occasionLabels[occasion] : 'Occasion'}
           </motion.h1>
           <motion.p
             className="text-base md:text-lg max-w-xl mx-auto"
@@ -311,7 +1159,7 @@ export default function CreateCardStep2() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.15 }}
           >
-            Choose a design you love. You'll customize the details next.
+            Hand-picked styles to match the moment. You'll customize the details next.
           </motion.p>
         </div>
 
@@ -325,10 +1173,9 @@ export default function CreateCardStep2() {
           Back to occasions
         </button>
 
-        {/* Premium card mockup grid — 2 columns */}
+        {/* Design grid — 2 columns */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
-          {DESIGNS.map((design, index) => {
-            const Header = HEADER_MAP[design.id];
+          {designs.map((design, index) => {
             const isSelected = selectedId === design.id;
             return (
               <motion.button
@@ -339,15 +1186,15 @@ export default function CreateCardStep2() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.07, duration: 0.4 }}
                 whileHover={{ y: -4 }}
-                className="group relative text-left rounded-2xl overflow-hidden bg-white transition-all duration-300"
+                className="group relative text-left rounded-2xl overflow-hidden transition-all duration-300"
                 style={{
+                  backgroundColor: design.bg,
                   border: isSelected ? '2px solid #c17b8a' : '1px solid #ede8e3',
                   boxShadow: isSelected
                     ? '0 16px 44px rgba(193, 123, 138, 0.22)'
-                    : design.shadow,
+                    : '0 10px 40px -12px rgba(45, 36, 32, 0.12)',
                 }}
               >
-                {/* Selected check */}
                 {isSelected && (
                   <div
                     className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full flex items-center justify-center shadow-md"
@@ -357,21 +1204,19 @@ export default function CreateCardStep2() {
                   </div>
                 )}
 
-                {/* Designed header */}
-                <Header />
+                <HeaderArt design={design} />
 
-                {/* Body */}
                 <div className="p-6">
                   <div className="flex items-center justify-between gap-2 mb-4 flex-wrap">
                     <span
-                      className="inline-block px-3 py-1 rounded-full text-xs"
+                      className="inline-block px-3 py-1 rounded-full text-xs font-medium"
                       style={{ backgroundColor: design.tagBg, color: design.tagColor }}
                     >
-                      {design.tag}
+                      {design.name}
                     </span>
                     <span
                       className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs"
-                      style={{ backgroundColor: '#eef2e8', color: '#3d5a3a' }}
+                      style={{ backgroundColor: design.donationBg, color: design.donationColor }}
                     >
                       💚 {design.donation}
                     </span>
@@ -379,18 +1224,21 @@ export default function CreateCardStep2() {
                   <p
                     style={{
                       fontFamily: "'Playfair Display', Georgia, serif",
-                      color: '#2d2420',
+                      color: design.ink,
                       fontSize: '16px',
                     }}
                   >
                     {design.greeting}
                   </p>
-                  <p className="mt-1 text-sm leading-relaxed line-clamp-1" style={{ color: '#2d2420', opacity: 0.7 }}>
+                  <p
+                    className="mt-1 text-sm leading-relaxed line-clamp-1"
+                    style={{ color: design.inkSoft, opacity: 0.85 }}
+                  >
                     {design.body}
                   </p>
                   <div
                     className="mt-4 w-full py-2 rounded-md text-sm text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    style={{ backgroundColor: design.buttonBg, color: design.buttonColor }}
+                    style={{ backgroundColor: design.accent, color: '#ffffff' }}
                   >
                     Preview Card
                   </div>
