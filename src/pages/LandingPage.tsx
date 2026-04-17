@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Heart, ArrowRight, CheckCircle, Upload, PenLine, Send, Sparkles, Users, Gift, TrendingUp } from "lucide-react";
+import { Heart, ArrowRight, CheckCircle, Upload, PenLine, Send, Sparkles, Users, Gift, TrendingUp, Palette, Leaf, BarChart2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import cardBlushBotanical from "@/assets/card-blush-botanical.jpg";
@@ -276,44 +276,71 @@ const LandingPage = () => {
               {
                 title: "Perfect for Life's Moments",
                 description: "Ideal for weddings, baby showers, birthdays, bar/bat mitzvahs, and any celebration worth remembering.",
-                icon: "✨"
+                Icon: Heart,
               },
               {
-                title: "Artist-Designed Cards", 
+                title: "Artist-Designed Cards",
                 description: "Choose from elegant designs created by talented artists, many partnered with the charities you support.",
-                icon: "🎨"
+                Icon: Palette,
               },
               {
                 title: "Redirect Savings to Good",
                 description: "Skip paper, printing, envelopes, and postage. Redirect those savings into meaningful charitable donations.",
-                icon: "💝"
+                Icon: Leaf,
               },
               {
                 title: "Recipient Choice",
                 description: "Let recipients choose their favorite charity from your curated list, making the gift even more personal.",
-                icon: "🎯"
+                Icon: Users,
               },
               {
                 title: "Time & Impact Tracking",
                 description: "See your gratitude's reach with delivery confirmations, charity selections, and cumulative impact reports.",
-                icon: "📊"
+                Icon: BarChart2,
               },
               {
                 title: "Premium Experience",
                 description: "No ads, no spam, just beautiful digital-with-soul experiences that recipients will treasure.",
-                icon: "🌟"
-              }
-            ].map((feature, index) => (
-              <Card key={index} className="bg-card hover:shadow-soft transition-all duration-300 group">
-                <CardContent className="p-8">
-                  <div className="text-4xl mb-4">{feature.icon}</div>
-                  <h3 className="text-xl font-semibold mb-4 group-hover:text-primary transition-colors">
-                    {feature.title}
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
-                </CardContent>
-              </Card>
-            ))}
+                Icon: Sparkles,
+              },
+            ].map((feature, index) => {
+              const FeatureIcon = feature.Icon;
+              return (
+                <Card
+                  key={index}
+                  className="bg-card transition-all duration-300 group"
+                  style={{ border: "1px solid #ede8e3" }}
+                  onMouseEnter={(e) => (e.currentTarget.style.borderColor = "#c17b8a")}
+                  onMouseLeave={(e) => (e.currentTarget.style.borderColor = "#ede8e3")}
+                >
+                  <CardContent className="p-8">
+                    <div
+                      className="mb-5 inline-flex items-center justify-center rounded-md transition-colors duration-300"
+                      style={{
+                        width: "44px",
+                        height: "44px",
+                        backgroundColor: "#f5ede9",
+                      }}
+                      onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#e8c4b8")}
+                      onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#f5ede9")}
+                    >
+                      <FeatureIcon size={20} color="#c17b8a" strokeWidth={1.75} />
+                    </div>
+                    <h3
+                      className="text-xl mb-3"
+                      style={{
+                        fontFamily: "'Playfair Display', Georgia, serif",
+                        fontWeight: 500,
+                        color: "#2d2420",
+                      }}
+                    >
+                      {feature.title}
+                    </h3>
+                    <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </div>
       </section>
