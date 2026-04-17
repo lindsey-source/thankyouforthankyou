@@ -86,7 +86,7 @@ const App = () => (
                 </ProtectedRoute>
               } 
             />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="/send-thanks" element={<SendThanks />} />
             <Route path="/card-design" element={<Navigate to="/create-card/step1" replace />} />
             <Route path="/saved-campaigns" element={<SavedCampaigns />} />
