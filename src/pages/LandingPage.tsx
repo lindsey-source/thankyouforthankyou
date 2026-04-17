@@ -48,32 +48,32 @@ const LandingPage = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="py-16 lg:py-20" style={{ backgroundColor: "#faf7f2" }}>
+      <section className="py-10 lg:py-14" style={{ backgroundColor: "#faf7f2" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-10 items-center">
             {/* Left: Headline + CTAs */}
             <div className="text-center lg:text-left" style={{ color: "#2d2420" }}>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/15 text-secondary text-sm font-medium mb-6">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/15 text-secondary text-sm font-medium mb-4">
                 <Sparkles className="h-3.5 w-3.5" />
                 Gratitude that gives back
               </div>
-              <h1 className="text-5xl xl:text-6xl font-bold mb-6 leading-[1.05] tracking-tight" style={{ color: "#2d2420" }}>
+              <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 leading-[1.05] tracking-tight" style={{ color: "#2d2420" }}>
                 Thank Differently.
                 <br />
                 <span className="text-primary">Give Meaningfully.</span>
               </h1>
-              <p className="text-lg lg:text-xl mb-8 leading-relaxed max-w-xl lg:max-w-none mx-auto" style={{ color: "#2d2420", opacity: 0.75 }}>
+              <p className="text-base lg:text-lg mb-6 leading-relaxed max-w-xl lg:max-w-none mx-auto" style={{ color: "#2d2420", opacity: 0.75 }}>
                 Send personalized thank-you e-cards at scale. The money you'd have spent
                 on paper, printing, and postage becomes a charitable donation instead.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+              <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
                 <Link to="/signup">
-                  <Button variant="hero" size="xl">
+                  <Button variant="hero" size="lg">
                     Create Your Card Now
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
-                <Button variant="outline" size="xl">
+                <Button variant="outline" size="lg">
                   See How It Works
                 </Button>
               </div>
@@ -82,99 +82,125 @@ const LandingPage = () => {
             {/* Right: Custom SVG illustration */}
             <div className="relative flex items-center justify-center">
               <svg
-                viewBox="0 0 560 420"
+                viewBox="0 0 600 360"
                 xmlns="http://www.w3.org/2000/svg"
                 role="img"
-                aria-label="An e-card with a heart turning into a charitable donation"
-                className="w-full h-auto max-w-[560px]"
+                aria-label="A thank-you card transforming into a charitable donation"
+                className="w-full h-auto"
+                style={{ maxHeight: "380px" }}
               >
-                {/* Soft background blob */}
-                <ellipse cx="280" cy="220" rx="240" ry="170" fill="#fdf6f3" />
-                <ellipse cx="430" cy="150" rx="90" ry="60" fill="#8faa8b" opacity="0.12" />
-                <ellipse cx="130" cy="290" rx="80" ry="55" fill="#c17b8a" opacity="0.10" />
+                <defs>
+                  <linearGradient id="cardShine" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#ffffff" />
+                    <stop offset="100%" stopColor="#fdf6f3" />
+                  </linearGradient>
+                  <linearGradient id="charityFill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#a8bfa3" />
+                    <stop offset="100%" stopColor="#8faa8b" />
+                  </linearGradient>
+                  <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="6" stdDeviation="8" floodColor="#2d2420" floodOpacity="0.10" />
+                  </filter>
+                </defs>
 
-                {/* LEFT: Envelope */}
-                <g transform="translate(40 170)">
-                  {/* envelope body */}
+                {/* Soft background blobs */}
+                <ellipse cx="300" cy="195" rx="280" ry="150" fill="#fdf6f3" />
+                <circle cx="475" cy="120" r="55" fill="#8faa8b" opacity="0.13" />
+                <circle cx="120" cy="260" r="48" fill="#c17b8a" opacity="0.12" />
+
+                {/* ============ LEFT: Envelope with card ============ */}
+                <g transform="translate(60 110)" filter="url(#softShadow)">
+                  {/* Card behind */}
+                  <rect
+                    x="14"
+                    y="-18"
+                    width="132"
+                    height="98"
+                    rx="8"
+                    fill="url(#cardShine)"
+                    stroke="#2d2420"
+                    strokeWidth="2"
+                  />
+                  {/* card content lines */}
+                  <line x1="32" y1="2" x2="128" y2="2" stroke="#c17b8a" strokeWidth="3" strokeLinecap="round" />
+                  <line x1="32" y1="18" x2="112" y2="18" stroke="#2d2420" strokeWidth="1.8" strokeLinecap="round" opacity="0.45" />
+                  <line x1="32" y1="30" x2="120" y2="30" stroke="#2d2420" strokeWidth="1.8" strokeLinecap="round" opacity="0.45" />
+                  <line x1="32" y1="42" x2="96" y2="42" stroke="#2d2420" strokeWidth="1.8" strokeLinecap="round" opacity="0.45" />
+                  {/* tiny heart on card */}
+                  <path
+                    d="M112 56 c -5 -5 -5 -12 1 -12 c 3 0 4 2 5 4 c 1 -2 2 -4 5 -4 c 6 0 6 7 1 12 l -6 6 z"
+                    fill="#c17b8a"
+                  />
+
+                  {/* Envelope body in front */}
                   <rect
                     x="0"
-                    y="0"
-                    width="180"
-                    height="130"
-                    rx="10"
+                    y="56"
+                    width="160"
+                    height="86"
+                    rx="8"
                     fill="#ffffff"
                     stroke="#2d2420"
-                    strokeWidth="2.5"
+                    strokeWidth="2"
                   />
-                  {/* inner crease */}
+                  {/* envelope flap creases */}
                   <path
-                    d="M 0 10 L 90 80 L 180 10"
+                    d="M 0 60 L 80 110 L 160 60"
                     fill="none"
                     stroke="#2d2420"
-                    strokeWidth="2.5"
+                    strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
-                  {/* open flap (folded back) */}
                   <path
-                    d="M 0 0 L 90 -55 L 180 0 Z"
-                    fill="#fdf6f3"
+                    d="M 0 142 L 60 100"
+                    fill="none"
                     stroke="#2d2420"
-                    strokeWidth="2.5"
-                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    opacity="0.5"
                   />
-                  {/* card peeking out */}
-                  <rect
-                    x="22"
-                    y="-30"
-                    width="136"
-                    height="86"
-                    rx="6"
-                    fill="#fdf6f3"
+                  <path
+                    d="M 160 142 L 100 100"
+                    fill="none"
                     stroke="#2d2420"
-                    strokeWidth="2.5"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    opacity="0.5"
                   />
-                  <line x1="40" y1="-12" x2="140" y2="-12" stroke="#c17b8a" strokeWidth="3" strokeLinecap="round" />
-                  <line x1="40" y1="2" x2="120" y2="2" stroke="#2d2420" strokeWidth="2" strokeLinecap="round" opacity="0.55" />
-                  <line x1="40" y1="14" x2="130" y2="14" stroke="#2d2420" strokeWidth="2" strokeLinecap="round" opacity="0.55" />
-                  <line x1="40" y1="26" x2="100" y2="26" stroke="#2d2420" strokeWidth="2" strokeLinecap="round" opacity="0.55" />
+                </g>
 
-                  {/* Heart rising out of envelope */}
-                  <g transform="translate(70 -110)">
+                {/* ============ MIDDLE: Curved arrow with floating heart ============ */}
+                <g>
+                  {/* Floating heart above arrow */}
+                  <g transform="translate(285 90)">
                     <path
-                      d="M20 36 C 4 22, 4 4, 20 4 C 28 4, 32 10, 36 16 C 40 10, 44 4, 52 4 C 68 4, 68 22, 52 36 L 36 52 Z"
+                      d="M15 30 C 0 18, 2 4, 14 4 C 20 4, 24 8, 27 13 C 30 8, 34 4, 40 4 C 52 4, 54 18, 39 30 L 27 44 Z"
                       fill="#c17b8a"
                       stroke="#2d2420"
-                      strokeWidth="2.5"
+                      strokeWidth="2"
                       strokeLinejoin="round"
                     />
                     <path
-                      d="M28 14 C 26 18, 28 22, 32 22"
+                      d="M 20 14 C 18 17, 19 21, 22 22"
                       fill="none"
                       stroke="#fdf6f3"
-                      strokeWidth="2.5"
+                      strokeWidth="2"
                       strokeLinecap="round"
                       opacity="0.85"
                     />
                   </g>
-                  {/* trail dots from envelope to heart */}
-                  <circle cx="90" cy="-50" r="3" fill="#c17b8a" opacity="0.5" />
-                  <circle cx="90" cy="-65" r="2.5" fill="#c17b8a" opacity="0.7" />
-                  <circle cx="90" cy="-78" r="2" fill="#c17b8a" opacity="0.85" />
-                </g>
-
-                {/* MIDDLE: Hand-drawn arrow */}
-                <g transform="translate(240 200)">
+                  {/* Curved dashed arrow */}
                   <path
-                    d="M 0 30 C 30 0, 60 60, 90 30"
+                    d="M 250 200 Q 305 145 365 200"
                     fill="none"
                     stroke="#2d2420"
                     strokeWidth="2.5"
                     strokeLinecap="round"
-                    strokeDasharray="0"
+                    strokeDasharray="2 8"
                   />
                   <path
-                    d="M 78 22 L 92 30 L 80 40"
+                    d="M 355 188 L 368 202 L 354 212"
                     fill="none"
                     stroke="#2d2420"
                     strokeWidth="2.5"
@@ -183,77 +209,98 @@ const LandingPage = () => {
                   />
                 </g>
 
-                {/* RIGHT: Hands holding a heart */}
-                <g transform="translate(360 160)">
-                  {/* Left hand */}
+                {/* ============ RIGHT: Charity circle ($ → ♥) ============ */}
+                <g transform="translate(400 110)" filter="url(#softShadow)">
+                  {/* Outer ring */}
+                  <circle cx="80" cy="80" r="78" fill="url(#charityFill)" stroke="#2d2420" strokeWidth="2" />
+                  {/* Inner cream disc */}
+                  <circle cx="80" cy="80" r="62" fill="#fdf6f3" stroke="#2d2420" strokeWidth="1.5" opacity="0.95" />
+
+                  {/* Dollar sign (left, fading) */}
+                  <g transform="translate(36 50)" opacity="0.45">
+                    <text
+                      x="0"
+                      y="40"
+                      fontFamily="Georgia, serif"
+                      fontSize="46"
+                      fontWeight="700"
+                      fill="#2d2420"
+                    >
+                      $
+                    </text>
+                  </g>
+
+                  {/* Tiny arrow $ -> heart */}
                   <path
-                    d="M 10 110 C 10 70, 30 60, 50 70 L 70 100 L 50 130 C 30 130, 10 130, 10 110 Z"
-                    fill="#8faa8b"
+                    d="M 64 80 L 84 80"
+                    fill="none"
                     stroke="#2d2420"
-                    strokeWidth="2.5"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                  <path
+                    d="M 80 76 L 86 80 L 80 84"
+                    fill="none"
+                    stroke="#2d2420"
+                    strokeWidth="2"
+                    strokeLinecap="round"
                     strokeLinejoin="round"
                   />
-                  {/* finger lines left */}
-                  <path d="M 28 78 L 36 92" stroke="#2d2420" strokeWidth="2" strokeLinecap="round" opacity="0.55" />
-                  <path d="M 38 72 L 46 86" stroke="#2d2420" strokeWidth="2" strokeLinecap="round" opacity="0.55" />
-                  {/* Right hand */}
-                  <path
-                    d="M 150 110 C 150 70, 130 60, 110 70 L 90 100 L 110 130 C 130 130, 150 130, 150 110 Z"
-                    fill="#8faa8b"
-                    stroke="#2d2420"
-                    strokeWidth="2.5"
-                    strokeLinejoin="round"
-                  />
-                  <path d="M 132 78 L 124 92" stroke="#2d2420" strokeWidth="2" strokeLinecap="round" opacity="0.55" />
-                  <path d="M 122 72 L 114 86" stroke="#2d2420" strokeWidth="2" strokeLinecap="round" opacity="0.55" />
-                  {/* Wrist base */}
-                  <rect x="0" y="125" width="160" height="20" rx="8" fill="#8faa8b" stroke="#2d2420" strokeWidth="2.5" />
-                  {/* Heart held above */}
-                  <g transform="translate(50 10)">
+
+                  {/* Heart (right, prominent) */}
+                  <g transform="translate(92 56)">
                     <path
-                      d="M30 56 C 4 36, 4 8, 30 8 C 42 8, 50 18, 60 28 C 70 18, 78 8, 90 8 C 116 8, 116 36, 90 56 L 60 84 Z"
+                      d="M18 38 C 0 22, 2 4, 18 4 C 26 4, 30 10, 34 16 C 38 10, 42 4, 50 4 C 66 4, 68 22, 50 38 L 34 54 Z"
                       fill="#c17b8a"
                       stroke="#2d2420"
-                      strokeWidth="2.5"
+                      strokeWidth="2"
                       strokeLinejoin="round"
                     />
                     <path
-                      d="M 40 22 C 36 28, 38 36, 44 38"
+                      d="M 24 16 C 22 20, 24 24, 28 25"
                       fill="none"
                       stroke="#fdf6f3"
-                      strokeWidth="2.5"
+                      strokeWidth="2"
                       strokeLinecap="round"
                       opacity="0.85"
                     />
+                  </g>
+
+                  {/* Outer ring tick marks for "polish" */}
+                  <g stroke="#2d2420" strokeWidth="1.5" strokeLinecap="round" opacity="0.55">
+                    <line x1="80" y1="6" x2="80" y2="12" />
+                    <line x1="80" y1="148" x2="80" y2="154" />
+                    <line x1="6" y1="80" x2="12" y2="80" />
+                    <line x1="148" y1="80" x2="154" y2="80" />
                   </g>
                 </g>
 
                 {/* Sparkles */}
                 <g stroke="#2d2420" strokeWidth="2" strokeLinecap="round" fill="none">
-                  <g transform="translate(100 80)">
-                    <line x1="0" y1="-8" x2="0" y2="8" />
-                    <line x1="-8" y1="0" x2="8" y2="0" />
-                  </g>
-                  <g transform="translate(290 90)" opacity="0.8">
-                    <line x1="0" y1="-6" x2="0" y2="6" />
-                    <line x1="-6" y1="0" x2="6" y2="0" />
-                  </g>
-                  <g transform="translate(490 100)">
+                  <g transform="translate(40 70)">
                     <line x1="0" y1="-7" x2="0" y2="7" />
                     <line x1="-7" y1="0" x2="7" y2="0" />
                   </g>
-                  <g transform="translate(220 340)" opacity="0.7">
+                  <g transform="translate(220 70)" opacity="0.8">
                     <line x1="0" y1="-5" x2="0" y2="5" />
                     <line x1="-5" y1="0" x2="5" y2="0" />
                   </g>
-                  <g transform="translate(470 320)">
+                  <g transform="translate(560 90)">
+                    <line x1="0" y1="-6" x2="0" y2="6" />
+                    <line x1="-6" y1="0" x2="6" y2="0" />
+                  </g>
+                  <g transform="translate(180 300)" opacity="0.75">
+                    <line x1="0" y1="-5" x2="0" y2="5" />
+                    <line x1="-5" y1="0" x2="5" y2="0" />
+                  </g>
+                  <g transform="translate(540 290)">
                     <line x1="0" y1="-6" x2="0" y2="6" />
                     <line x1="-6" y1="0" x2="6" y2="0" />
                   </g>
                 </g>
-                <circle cx="60" cy="140" r="3" fill="#c17b8a" />
-                <circle cx="510" cy="240" r="3" fill="#8faa8b" />
-                <circle cx="180" cy="350" r="3" fill="#8faa8b" opacity="0.7" />
+                <circle cx="100" cy="305" r="3" fill="#c17b8a" opacity="0.8" />
+                <circle cx="350" cy="295" r="3" fill="#8faa8b" />
+                <circle cx="260" cy="60" r="2.5" fill="#c17b8a" opacity="0.7" />
               </svg>
             </div>
           </div>
