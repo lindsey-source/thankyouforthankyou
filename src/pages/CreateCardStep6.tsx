@@ -3,30 +3,19 @@ import { useNavigate } from 'react-router-dom';
 import { useCardWizard } from '@/contexts/CardWizardContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Slider } from '@/components/ui/slider';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Mail, Clock, Link2, Heart, Sparkles } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Heart, Mail, Sparkles, Check } from 'lucide-react';
 import { toast } from 'sonner';
-import { getTemplateImage } from '@/lib/templateImageMap';
-import { InteractiveCardViewer } from '@/components/CardDesigner/InteractiveCardViewer';
 import { ProgressBar } from '@/components/CardDesigner/ProgressBar';
-import { BreadcrumbNav } from '@/components/CardDesigner/BreadcrumbNav';
-import { CardPreview } from '@/components/CardDesigner/CardPreview';
 
-const STEPS = [
-  { name: 'Occasion', path: '/create-card/step1' },
-  { name: 'Style', path: '/create-card/step2' },
-  { name: 'Customize', path: '/create-card/step3' },
-  { name: 'Message', path: '/create-card/step4' },
-  { name: 'Touches', path: '/create-card/step5' },
-  { name: 'Preview', path: '/create-card/step6' }
+const STEP_NAMES = [
+  'Choose Occasion',
+  'Pick Your Style',
+  'Customize Design',
+  'Write Your Message',
+  'Add Finishing Touches',
+  'Preview & Send',
 ];
-
-const STEP_NAMES = ['Choose Occasion', 'Pick Your Style', 'Customize Design', 'Write Your Message', 'Add Finishing Touches', 'Preview & Send'];
 
 interface Charity {
   id: string;
@@ -36,77 +25,41 @@ interface Charity {
   logo_url: string;
 }
 
-export default function CreateCardStep6() {
+const PRINTING_SAVINGS = 4.25;
+const PRESET_AMOUNTS = [5, 10, 25, 50];
+
+export default function CreateCardStep5Impact() {
   const navigate = useNavigate();
   const { userId } = useAuth();
   const { cardData, updateCardData, resetWizard } = useCardWizard();
+
   const [charities, setCharities] = useState<Charity[]>([]);
   const [selectedCharity, setSelectedCharity] = useState<Charity | null>(null);
-  const [donationAmount, setDonationAmount] = useState(10);
-  const [recipientName, setRecipientName] = useState('');
-  const [recipientEmail, setRecipientEmail] = useState('');
-  const [senderName, setSenderName] = useState('');
+  const [donationAmount, setDonationAmount] = useState<number>(cardData.donationAmount || 10);
+  const [recipientName, setRecipientName] = useState(cardData.recipientName || '');
+  const [recipientEmail, setRecipientEmail] = useState(cardData.recipientEmail || '');
   const [sending, setSending] = useState(false);
-  const [showPreview, setShowPreview] = useState(false);
-  const [template, setTemplate] = useState<any>(null);
-  const [imageLoading, setImageLoading] = useState(true);
-  const [imageError, setImageError] = useState(false);
-
-  const printingSavings = 4.25;
 
   useEffect(() => {
     loadCharities();
-    loadTemplate();
   }, []);
 
   const loadCharities = async () => {
-    const { data, error } = await supabase
-      .from('charities')
-      .select('*');
-
+    const { data, error } = await supabase.from('charities').select('*');
     if (!error && data) {
       setCharities(data);
-      if (data.length > 0) {
-        setSelectedCharity(data[0]);
-      }
+      if (data.length > 0 && !selectedCharity) setSelectedCharity(data[0]);
     }
   };
 
-  const loadTemplate = async () => {
-    if (!cardData.templateId) {
-      console.log('No template ID found in cardData');
+  const totalImpact = donationAmount + PRINTING_SAVINGS;
+
+  const handleSend = async () => {
+    if (!recipientName.trim() || !recipientEmail.trim()) {
+      toast.error('Please enter recipient name and email');
       return;
     }
-
-    const { data, error } = await supabase
-      .from('card_templates')
-      .select('*')
-      .eq('id', cardData.templateId)
-      .maybeSingle();
-
-    if (error) {
-      console.error('Error loading template:', error);
-      toast.error('Failed to load card template');
-      return;
-    }
-
-    if (data) {
-      console.log('Template loaded:', data);
-      setTemplate(data);
-    } else {
-      console.log('No template found for ID:', cardData.templateId);
-      toast.error('Card template not found');
-    }
-  };
-
-  const handleSendNow = async () => {
-    if (!recipientEmail || !recipientName) {
-      toast.error('Please enter recipient details');
-      return;
-    }
-
     setSending(true);
-
     try {
       const { data: savedCard, error: cardError } = await supabase
         .from('user_cards')
@@ -124,7 +77,7 @@ export default function CreateCardStep6() {
           signature_style: cardData.signatureStyle,
           charity_id: selectedCharity?.id,
           donation_amount: donationAmount,
-          sent_at: new Date().toISOString()
+          sent_at: new Date().toISOString(),
         })
         .select()
         .single();
@@ -132,291 +85,373 @@ export default function CreateCardStep6() {
       if (cardError) throw cardError;
 
       if (donationAmount > 0 && selectedCharity) {
-        await supabase
-          .from('transactions')
-          .insert({
-            user_card_id: savedCard.id,
-            amount: donationAmount,
-            charity_id: selectedCharity.id,
-            status: 'completed'
-          });
+        await supabase.from('transactions').insert({
+          user_card_id: savedCard.id,
+          amount: donationAmount,
+          charity_id: selectedCharity.id,
+          status: 'completed',
+        });
       }
 
-      toast.success('Your gratitude has been sent! You just spread kindness — and made a difference.', {
-        duration: 5000
-      });
-      
+      toast.success('Your gratitude has been sent — and made a difference.', { duration: 5000 });
       setTimeout(() => {
         resetWizard();
         navigate('/dashboard');
-      }, 2000);
+      }, 1500);
     } catch (error: any) {
-      console.error('Send error:', error);
       toast.error(error.message || 'Failed to send card');
     } finally {
       setSending(false);
     }
   };
 
-  const handleSchedule = () => {
-    toast.info('Schedule feature coming soon!');
-  };
-
-  const handleCopyLink = () => {
-    const link = `${window.location.origin}/card/${cardData.templateId}`;
-    navigator.clipboard.writeText(link);
-    toast.success('Share link copied to clipboard!');
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-hero p-4 md:p-8">
-      <div className="max-w-6xl mx-auto">
-        <ProgressBar currentStep={6} totalSteps={6} stepNames={STEP_NAMES} />
-        <BreadcrumbNav currentStep={6} steps={STEPS} />
-        <div className="text-center mb-8">
-          <motion.h1 
-            className="text-3xl md:text-4xl font-bold text-white mb-2"
-            initial={{ opacity: 0, y: -20 }}
+    <div className="min-h-screen" style={{ backgroundColor: '#faf7f2' }}>
+      <ProgressBar currentStep={6} totalSteps={6} stepNames={STEP_NAMES} />
+
+      <div className="max-w-7xl mx-auto px-4 md:px-8 pt-24 pb-32">
+        {/* Header */}
+        <div className="text-center mb-10">
+          <motion.h1
+            className="text-4xl md:text-5xl mb-4"
+            style={{ fontFamily: "'Playfair Display', serif", color: '#2a2622' }}
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            Preview & Send
+            Your Impact
           </motion.h1>
-          <p className="text-white/90">Your beautiful card is ready!</p>
+          <motion.p
+            className="text-base md:text-lg max-w-xl mx-auto"
+            style={{ color: '#6b6259' }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.15 }}
+          >
+            Send your card and turn your gratitude into something even greater.
+          </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Left: Preview */}
-          <div>
-            <Card className="bg-white/95 backdrop-blur-sm">
-              <CardContent className="p-6">
-                <h3 className="text-lg font-semibold mb-4">Card Preview</h3>
-                {!template ? (
-                  <div className="aspect-[3/4] rounded-lg overflow-hidden shadow-lg bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                    <p className="text-muted-foreground">Loading preview...</p>
-                  </div>
-                ) : (
-                  <div
-                    onClick={() => setShowPreview(true)}
-                    className="cursor-pointer hover:shadow-xl transition-shadow"
-                  >
-                    <CardPreview
-                      template={{
-                        ...template,
-                        preview: getTemplateImage(template.preview_image),
-                        style: {
-                          layout: 'full-background',
-                          textPosition: 'bottom',
-                          backgroundColor: template.colors?.primary || '#F5E6D3',
-                          textColor: template.colors?.text || '#8B6F47',
-                          accentColor: template.colors?.accent || '#D4A574'
-                        }
-                      }}
-                      photo={cardData.photoUrl ? { file: null as any, preview: cardData.photoUrl } : null}
-                      message={cardData.messageBody}
-                      recipientName={recipientName || 'Friend'}
-                      senderName={senderName || 'You'}
-                    />
-                  </div>
-                )}
-                <Button
-                  variant="outline"
-                  className="w-full mt-4"
-                  onClick={() => setShowPreview(true)}
-                  disabled={!template}
+        {/* Back link */}
+        <button
+          onClick={() => navigate('/create-card/step5')}
+          className="inline-flex items-center gap-2 text-sm mb-8 transition-opacity hover:opacity-70"
+          style={{ color: '#8a8079' }}
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back
+        </button>
+
+        {/* Two-column layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-10 lg:gap-14 items-start">
+          {/* LEFT — Form */}
+          <div className="space-y-10">
+            {/* Recipient */}
+            <section className="space-y-5">
+              <div>
+                <p
+                  className="text-xs uppercase tracking-[0.2em] mb-1"
+                  style={{ color: '#8a9a82' }}
                 >
-                  <Sparkles className="w-4 h-4 mr-2" />
-                  View Interactive Experience
-                </Button>
-              </CardContent>
-            </Card>
+                  01 — Send to
+                </p>
+                <h2
+                  className="text-2xl"
+                  style={{ fontFamily: "'Playfair Display', serif", color: '#2a2622' }}
+                >
+                  Who is this for?
+                </h2>
+              </div>
+
+              <div className="space-y-4">
+                <input
+                  type="text"
+                  placeholder="Recipient's name"
+                  value={recipientName}
+                  onChange={(e) => setRecipientName(e.target.value)}
+                  className="w-full bg-transparent border-0 border-b text-lg py-3 focus:outline-none transition-all"
+                  style={{ color: '#2a2622', borderColor: '#ede8e3' }}
+                  onFocus={(e) => (e.currentTarget.style.borderColor = '#c17b8a')}
+                  onBlur={(e) => (e.currentTarget.style.borderColor = '#ede8e3')}
+                />
+                <input
+                  type="email"
+                  placeholder="Recipient's email"
+                  value={recipientEmail}
+                  onChange={(e) => setRecipientEmail(e.target.value)}
+                  className="w-full bg-transparent border-0 border-b text-lg py-3 focus:outline-none transition-all"
+                  style={{ color: '#2a2622', borderColor: '#ede8e3' }}
+                  onFocus={(e) => (e.currentTarget.style.borderColor = '#c17b8a')}
+                  onBlur={(e) => (e.currentTarget.style.borderColor = '#ede8e3')}
+                />
+              </div>
+            </section>
+
+            {/* Charity */}
+            <section className="space-y-5">
+              <div>
+                <p
+                  className="text-xs uppercase tracking-[0.2em] mb-1"
+                  style={{ color: '#8a9a82' }}
+                >
+                  02 — Choose a cause
+                </p>
+                <h2
+                  className="text-2xl"
+                  style={{ fontFamily: "'Playfair Display', serif", color: '#2a2622' }}
+                >
+                  Where should the kindness go?
+                </h2>
+              </div>
+
+              <div className="grid grid-cols-1 gap-3">
+                {charities.map((charity) => {
+                  const isSelected = selectedCharity?.id === charity.id;
+                  return (
+                    <button
+                      key={charity.id}
+                      type="button"
+                      onClick={() => setSelectedCharity(charity)}
+                      className="text-left p-4 rounded-xl flex items-start gap-4 transition-all"
+                      style={{
+                        backgroundColor: '#ffffff',
+                        border: isSelected ? '2px solid #c17b8a' : '1px solid #ede8e3',
+                        boxShadow: isSelected
+                          ? '0 8px 22px rgba(193, 123, 138, 0.15)'
+                          : '0 2px 8px rgba(42, 38, 34, 0.04)',
+                      }}
+                    >
+                      {charity.logo_url && (
+                        <img
+                          src={charity.logo_url}
+                          alt={charity.name}
+                          className="w-12 h-12 rounded-lg object-cover flex-shrink-0"
+                        />
+                      )}
+                      <div className="flex-1 min-w-0">
+                        <h4
+                          className="text-base mb-0.5"
+                          style={{ fontFamily: "'Playfair Display', serif", color: '#2a2622' }}
+                        >
+                          {charity.name}
+                        </h4>
+                        <p className="text-xs" style={{ color: '#6b6259' }}>
+                          {charity.description}
+                        </p>
+                      </div>
+                      {isSelected && (
+                        <div
+                          className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0"
+                          style={{ backgroundColor: '#c17b8a' }}
+                        >
+                          <Check className="w-4 h-4 text-white" strokeWidth={2.5} />
+                        </div>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            </section>
+
+            {/* Donation */}
+            <section className="space-y-5">
+              <div>
+                <p
+                  className="text-xs uppercase tracking-[0.2em] mb-1"
+                  style={{ color: '#8a9a82' }}
+                >
+                  03 — Donation
+                </p>
+                <h2
+                  className="text-2xl"
+                  style={{ fontFamily: "'Playfair Display', serif", color: '#2a2622' }}
+                >
+                  Add a gift
+                </h2>
+              </div>
+
+              <div className="grid grid-cols-4 gap-3">
+                {PRESET_AMOUNTS.map((amount) => {
+                  const isActive = donationAmount === amount;
+                  return (
+                    <button
+                      key={amount}
+                      type="button"
+                      onClick={() => setDonationAmount(amount)}
+                      className="py-4 rounded-xl text-lg transition-all"
+                      style={{
+                        fontFamily: "'Playfair Display', serif",
+                        backgroundColor: isActive ? '#c17b8a' : '#ffffff',
+                        color: isActive ? '#ffffff' : '#2a2622',
+                        border: isActive ? '2px solid #c17b8a' : '1px solid #ede8e3',
+                      }}
+                    >
+                      ${amount}
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="flex items-center gap-3 pt-2">
+                <span className="text-sm" style={{ color: '#8a8079' }}>
+                  Or custom:
+                </span>
+                <div className="flex items-center gap-1">
+                  <span style={{ color: '#2a2622' }}>$</span>
+                  <input
+                    type="number"
+                    min={0}
+                    value={donationAmount}
+                    onChange={(e) => setDonationAmount(Math.max(0, Number(e.target.value) || 0))}
+                    className="w-20 bg-transparent border-0 border-b text-lg py-1 focus:outline-none"
+                    style={{ color: '#2a2622', borderColor: '#ede8e3' }}
+                  />
+                </div>
+              </div>
+
+              {selectedCharity?.impact_message && (
+                <p className="text-sm italic pt-2" style={{ color: '#6b6259' }}>
+                  “{selectedCharity.impact_message}”
+                </p>
+              )}
+            </section>
           </div>
 
-          {/* Right: Send Options & Donation */}
-          <div className="space-y-6">
-            <Card className="bg-white/95 backdrop-blur-sm">
-              <CardContent className="p-6 space-y-4">
-                <h3 className="text-lg font-semibold">Card Details</h3>
-                <div className="space-y-2">
-                  <Label htmlFor="recipientName">Recipient Name</Label>
-                  <Input
-                    id="recipientName"
-                    placeholder="Jane Smith"
-                    value={recipientName}
-                    onChange={(e) => setRecipientName(e.target.value)}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="recipientEmail">Recipient Email</Label>
-                  <Input
-                    id="recipientEmail"
-                    type="email"
-                    placeholder="jane@example.com"
-                    value={recipientEmail}
-                    onChange={(e) => setRecipientEmail(e.target.value)}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="senderName">Your Name (Signature)</Label>
-                  <Input
-                    id="senderName"
-                    placeholder="John Doe"
-                    value={senderName}
-                    onChange={(e) => setSenderName(e.target.value)}
-                  />
-                </div>
-              </CardContent>
-            </Card>
+          {/* RIGHT — Live Impact Summary */}
+          <div className="lg:sticky lg:top-28">
+            <p
+              className="text-xs uppercase tracking-[0.2em] mb-4 text-center"
+              style={{ color: '#8a9a82' }}
+            >
+              Your Impact
+            </p>
 
-            <Card className="bg-white/95 backdrop-blur-sm">
-              <CardContent className="p-6 space-y-4">
-                <div>
-                  <h3 className="text-lg font-semibold mb-2">Turn Gratitude into Giving</h3>
-                  <div className="flex items-center gap-2 text-sm text-green-600 bg-green-50 p-3 rounded-lg">
-                    <Heart className="w-4 h-4" fill="currentColor" />
-                    <span>
-                      You saved ${printingSavings.toFixed(2)} by going digital
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="rounded-2xl overflow-hidden p-8"
+              style={{
+                backgroundColor: '#ffffff',
+                border: '1px solid #ede8e3',
+                boxShadow: '0 20px 50px rgba(42, 38, 34, 0.10)',
+              }}
+            >
+              {/* Hero number */}
+              <div className="text-center pb-6 border-b" style={{ borderColor: '#ede8e3' }}>
+                <p className="text-xs uppercase tracking-[0.18em] mb-2" style={{ color: '#8a9a82' }}>
+                  Total impact
+                </p>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={totalImpact}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    className="text-5xl"
+                    style={{ fontFamily: "'Playfair Display', serif", color: '#c17b8a' }}
+                  >
+                    ${totalImpact.toFixed(2)}
+                  </motion.div>
+                </AnimatePresence>
+                <p className="text-sm mt-2" style={{ color: '#6b6259' }}>
+                  of gratitude into good
+                </p>
+              </div>
+
+              {/* Breakdown */}
+              <div className="space-y-4 py-6 border-b" style={{ borderColor: '#ede8e3' }}>
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="w-4 h-4" style={{ color: '#8a9a82' }} />
+                    <span className="text-sm" style={{ color: '#3d3833' }}>
+                      Saved by going digital
                     </span>
                   </div>
+                  <span
+                    className="text-base"
+                    style={{ fontFamily: "'Playfair Display', serif", color: '#2a2622' }}
+                  >
+                    ${PRINTING_SAVINGS.toFixed(2)}
+                  </span>
                 </div>
 
-                <div className="space-y-2">
-                  <Label>Choose a Charity</Label>
-                  <div className="grid grid-cols-1 gap-3">
-                    {charities.map((charity) => (
-                      <div
-                        key={charity.id}
-                        onClick={() => setSelectedCharity(charity)}
-                        className={`cursor-pointer p-3 rounded-lg border-2 transition-all ${
-                          selectedCharity?.id === charity.id
-                            ? 'border-primary ring-2 ring-primary bg-primary/5'
-                            : 'border-gray-200 hover:border-gray-300'
-                        }`}
-                      >
-                        <div className="flex items-start gap-3">
-                          <img
-                            src={charity.logo_url}
-                            alt={charity.name}
-                            className="w-12 h-12 rounded-lg object-cover"
-                          />
-                          <div className="flex-1">
-                            <h4 className="font-semibold">{charity.name}</h4>
-                            <p className="text-xs text-muted-foreground">{charity.description}</p>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center gap-2">
+                    <Heart className="w-4 h-4" style={{ color: '#c17b8a' }} fill="#c17b8a" />
+                    <span className="text-sm" style={{ color: '#3d3833' }}>
+                      Your donation
+                    </span>
                   </div>
+                  <AnimatePresence mode="wait">
+                    <motion.span
+                      key={donationAmount}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className="text-base"
+                      style={{ fontFamily: "'Playfair Display', serif", color: '#2a2622' }}
+                    >
+                      ${donationAmount.toFixed(2)}
+                    </motion.span>
+                  </AnimatePresence>
                 </div>
-
-                {selectedCharity && (
-                  <div className="space-y-3">
-                    <Label>Donation Amount: ${donationAmount}</Label>
-                    <Slider
-                      value={[donationAmount]}
-                      onValueChange={(value) => setDonationAmount(value[0])}
-                      min={0}
-                      max={100}
-                      step={5}
-                      className="w-full"
-                    />
-                    <p className="text-sm text-muted-foreground">
-                      {selectedCharity.impact_message}
-                    </p>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-
-            <div className="space-y-3">
-              <Button
-                variant="hero"
-                size="lg"
-                className="w-full"
-                onClick={handleSendNow}
-                disabled={sending}
-              >
-                <Mail className="w-4 h-4 mr-2" />
-                {sending ? 'Sending...' : 'Send Now ✉️'}
-              </Button>
-
-              <div className="grid grid-cols-2 gap-3">
-                <Button
-                  variant="outline"
-                  onClick={handleSchedule}
-                  className="bg-white"
-                >
-                  <Clock className="w-4 h-4 mr-2" />
-                  Schedule
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={handleCopyLink}
-                  className="bg-white"
-                >
-                  <Link2 className="w-4 h-4 mr-2" />
-                  Copy Link
-                </Button>
               </div>
-            </div>
+
+              {/* Recipient + charity summary */}
+              <div className="pt-6 space-y-3 text-sm">
+                <div>
+                  <p className="text-xs uppercase tracking-[0.15em]" style={{ color: '#8a9a82' }}>
+                    To
+                  </p>
+                  <p style={{ color: '#2a2622' }}>
+                    {recipientName || <span style={{ color: '#bcb4ab' }}>Add a recipient</span>}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-xs uppercase tracking-[0.15em]" style={{ color: '#8a9a82' }}>
+                    Supporting
+                  </p>
+                  <p style={{ color: '#2a2622' }}>
+                    {selectedCharity?.name || (
+                      <span style={{ color: '#bcb4ab' }}>Choose a cause</span>
+                    )}
+                  </p>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
-
-        {/* Navigation */}
-        <div className="mt-8 flex justify-between items-center">
-          <Button
-            variant="outline"
-            onClick={() => navigate('/create-card/step5')}
-            className="bg-white/95"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back
-          </Button>
-          
-          <p className="text-sm text-white/70">Step 6 of 6</p>
-          
-          <div className="w-20" />
-        </div>
-
-        {/* Interactive Preview Modal */}
-        {showPreview && template && (
-          <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
-            <div className="relative w-full max-w-6xl h-[90vh]">
-              <button
-                onClick={() => setShowPreview(false)}
-                className="absolute top-4 right-4 z-10 text-white hover:text-gray-300 text-2xl"
-              >
-                ✕
-              </button>
-              <InteractiveCardViewer
-                template={{
-                  ...template,
-                  preview: getTemplateImage(template.preview_image),
-                  style: {
-                    layout: 'full-background',
-                    textPosition: 'bottom',
-                    backgroundColor: template.colors?.primary || '#F5E6D3',
-                    textColor: template.colors?.text || '#8B6F47',
-                    accentColor: template.colors?.accent || '#D4A574'
-                  }
-                }}
-                photo={cardData.photoUrl ? { file: null as any, preview: cardData.photoUrl } : null}
-                message={cardData.messageBody}
-                recipientName={recipientName || 'Friend'}
-                senderName={senderName || 'You'}
-                charityName={selectedCharity?.name}
-                envelopeStyle={{
-                  id: cardData.envelopeColor || 'cream',
-                  name: 'Selected',
-                  primaryColor: '#F5E6D3',
-                  accentColor: '#D4A574',
-                  textColor: '#8B6F47',
-                  description: 'Your choice'
-                }}
-              />
-            </div>
-          </div>
-        )}
       </div>
+
+      {/* Sticky footer */}
+      <motion.div
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        className="fixed bottom-0 left-0 right-0 z-40 border-t backdrop-blur-md"
+        style={{
+          backgroundColor: 'rgba(250, 247, 242, 0.92)',
+          borderColor: '#ede8e3',
+        }}
+      >
+        <div className="max-w-7xl mx-auto px-4 md:px-8 py-4 flex items-center justify-between">
+          <p className="text-sm" style={{ color: '#6b6259' }}>
+            {recipientName && recipientEmail
+              ? 'Beautifully done — ready to send.'
+              : 'Add recipient details to send.'}
+          </p>
+          <button
+            onClick={handleSend}
+            disabled={sending || !recipientName.trim() || !recipientEmail.trim()}
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-white text-sm font-medium transition-all hover:scale-[1.02] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100"
+            style={{
+              backgroundColor: '#c17b8a',
+              boxShadow: '0 6px 18px rgba(193, 123, 138, 0.35)',
+            }}
+          >
+            <Mail className="w-4 h-4" />
+            {sending ? 'Sending…' : 'Send with love'}
+            <ArrowRight className="w-4 h-4" />
+          </button>
+        </div>
+      </motion.div>
     </div>
   );
 }
