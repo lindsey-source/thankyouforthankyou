@@ -6,56 +6,56 @@
 
 @layer base {
   :root {
-    /* Thank You for Thank You Brand Colors */
-    
-    /* Background: Warm cream base */
-    --background: 48 100% 98%;
-    --foreground: 0 0% 27%; /* Text: #444444 */
+    /* Thank You for Thank You Brand Colors - Rose & Sage Palette */
 
-    --card: 48 100% 98%;
-    --card-foreground: 0 0% 27%;
+    /* Background: Warm blush cream #fdf6f3 */
+    --background: 12 71% 97%;
+    --foreground: 20 18% 15%; /* Text: #2d2420 */
 
-    --popover: 48 100% 98%;
-    --popover-foreground: 0 0% 27%;
+    --card: 12 71% 97%;
+    --card-foreground: 20 18% 15%;
 
-    /* Primary: Trust Blue #5A9FD4 */
-    --primary: 208 54% 59%;
+    --popover: 12 71% 97%;
+    --popover-foreground: 20 18% 15%;
+
+    /* Primary: Dusty Rose #c17b8a */
+    --primary: 347 35% 62%;
     --primary-foreground: 0 0% 100%;
 
-    /* Secondary: Sage Green #AA6D9A3 */
-    --secondary: 145 28% 68%;
-    --secondary-foreground: 0 0% 27%;
+    /* Secondary: Sage Green #8faa8b */
+    --secondary: 115 14% 60%;
+    --secondary-foreground: 0 0% 100%;
 
-    /* Muted: Subtle background variations */
-    --muted: 48 50% 95%;
-    --muted-foreground: 0 0% 45%;
+    /* Muted: Soft blush surface #f5ede9 */
+    --muted: 20 38% 94%;
+    --muted-foreground: 15 10% 38%; /* #6b5a56 */
 
-    /* Accent: Coral Pink #F787DD */
-    --accent: 311 86% 76%;
-    --accent-foreground: 0 0% 27%;
+    /* Accent: Soft peach #e8c4b8 */
+    --accent: 15 53% 82%;
+    --accent-foreground: 20 18% 15%;
 
     /* Highlight/CTA: Warm Yellow */
     --highlight: 48 95% 70%;
-    --highlight-foreground: 0 0% 27%;
+    --highlight-foreground: 20 18% 15%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 48 30% 88%;
-    --input: 48 30% 88%;
-    --ring: 208 54% 59%;
+    --border: 20 25% 88%;
+    --input: 20 25% 88%;
+    --ring: 347 35% 62%;
 
     --radius: 0.75rem;
 
-    /* Custom Brand Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(208 54% 59%), hsl(311 86% 76%));
-    --gradient-hero: linear-gradient(135deg, hsl(208 54% 59%) 0%, hsl(311 86% 76%) 50%, hsl(145 28% 68%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(48 100% 98%) 0%, hsl(48 50% 95%) 100%);
-    
+    /* Custom Brand Gradients - now solid rose/sage tones (no purple/blue) */
+    --gradient-primary: linear-gradient(135deg, hsl(347 35% 62%), hsl(347 35% 62%));
+    --gradient-hero: linear-gradient(135deg, hsl(12 71% 97%) 0%, hsl(12 71% 97%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(12 71% 97%) 0%, hsl(20 38% 94%) 100%);
+
     /* Shadows with brand colors */
-    --shadow-warm: 0 10px 30px -5px hsl(208 54% 59% / 0.15);
-    --shadow-soft: 0 4px 20px -2px hsl(0 0% 27% / 0.08);
-    --shadow-glow: 0 0 40px hsl(311 86% 76% / 0.2);
+    --shadow-warm: 0 10px 30px -5px hsl(347 35% 62% / 0.18);
+    --shadow-soft: 0 4px 20px -2px hsl(20 18% 15% / 0.08);
+    --shadow-glow: 0 0 40px hsl(347 35% 62% / 0.25);
 
     /* Animations */
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
