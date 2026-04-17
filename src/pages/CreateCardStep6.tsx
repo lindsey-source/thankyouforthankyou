@@ -13,6 +13,7 @@ const STEP_NAMES = [
   'Pick Your Style',
   'Customize Design',
   'Write Your Message',
+  'Choose Your Cause',
   'Add Finishing Touches',
   'Preview & Send',
 ];
@@ -107,7 +108,7 @@ export default function CreateCardStep5Impact() {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#faf7f2' }}>
-      <ProgressBar currentStep={6} totalSteps={6} stepNames={STEP_NAMES} />
+      <ProgressBar currentStep={7} totalSteps={7} stepNames={STEP_NAMES} />
 
       <div className="max-w-7xl mx-auto px-4 md:px-8 pt-24 pb-32">
         {/* Header */}

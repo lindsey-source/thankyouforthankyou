@@ -20,7 +20,7 @@ const STEPS = [
   { name: 'Preview', path: '/create-card/step6' }
 ];
 
-const STEP_NAMES = ['Choose Occasion', 'Pick Your Style', 'Customize Design', 'Write Your Message', 'Add Finishing Touches', 'Preview & Send'];
+const STEP_NAMES = ['Choose Occasion', 'Pick Your Style', 'Customize Design', 'Write Your Message', 'Choose Your Cause', 'Add Finishing Touches', 'Preview & Send'];
 
 export default function CreateCardStep3() {
   const navigate = useNavigate();
@@ -153,7 +153,7 @@ export default function CreateCardStep3() {
 
   return (
     <div className="min-h-screen bg-gradient-hero p-4 md:p-8">
-      <ProgressBar currentStep={3} totalSteps={6} stepNames={STEP_NAMES} />
+      <ProgressBar currentStep={3} totalSteps={7} stepNames={STEP_NAMES} />
       <BreadcrumbNav currentStep={3} steps={STEPS} />
       
       <StepContainer
