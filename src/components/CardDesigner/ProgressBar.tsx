@@ -7,31 +7,35 @@ interface ProgressBarProps {
   stepNames: string[];
 }
 
-export const ProgressBar: React.FC<ProgressBarProps> = ({ 
-  currentStep, 
-  totalSteps, 
-  stepNames 
+export const ProgressBar: React.FC<ProgressBarProps> = ({
+  currentStep,
+  totalSteps,
+  stepNames,
 }) => {
   const progress = (currentStep / totalSteps) * 100;
+  const stepName = stepNames[currentStep - 1] ?? '';
 
   return (
-    <div className="w-full max-w-4xl mx-auto mb-8">
-      <div className="text-center mb-4">
-        <h3 className="text-lg font-semibold text-white mb-1">
-          {stepNames[currentStep - 1]}
-        </h3>
-        <p className="text-sm text-white/70">
-          Step {currentStep} of {totalSteps}
-        </p>
-      </div>
-      
-      <div className="h-2 bg-white/20 backdrop-blur-sm rounded-full overflow-hidden">
+    <div className="fixed top-0 left-0 right-0 z-50 pointer-events-none">
+      {/* Thin rose progress line */}
+      <div className="h-[2px] w-full bg-transparent">
         <motion.div
-          className="h-full bg-gradient-to-r from-violet-400 via-purple-400 to-pink-400"
+          className="h-full"
+          style={{ backgroundColor: '#c17b8a' }}
           initial={{ width: 0 }}
           animate={{ width: `${progress}%` }}
           transition={{ duration: 0.5, ease: 'easeInOut' }}
         />
+      </div>
+
+      {/* Sage step label */}
+      <div className="flex justify-center pt-3 pb-2">
+        <span
+          className="text-[11px] tracking-[0.2em] uppercase font-medium"
+          style={{ color: '#8a9a82' }}
+        >
+          {stepName} · Step {currentStep} of {totalSteps}
+        </span>
       </div>
     </div>
   );
