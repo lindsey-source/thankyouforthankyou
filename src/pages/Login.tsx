@@ -18,8 +18,8 @@ const Login = () => {
         </div>
         <SignIn 
           routing="path" 
-          path="/login" 
-          signUpUrl="/signup"
+          path="/sign-in" 
+          signUpUrl="/sign-up"
           afterSignInUrl="/dashboard"
           forceRedirectUrl="/dashboard"
           fallbackRedirectUrl="/dashboard"
