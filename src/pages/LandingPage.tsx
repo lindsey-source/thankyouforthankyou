@@ -4,20 +4,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Heart, Users, Gift, TrendingUp, ArrowRight, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
 import heroImage from "@/assets/hero-image.jpg";
 import cardBlushBotanical from "@/assets/card-blush-botanical.jpg";
 import cardSageAbstract from "@/assets/card-sage-abstract.jpg";
 import cardWildflowerInk from "@/assets/card-wildflower-ink.jpg";
 
 const LandingPage = () => {
-  const navigate = useNavigate();
-  const { isLoaded, isSignedIn, signOut } = useAuth();
-
-  const handleSignOut = async () => {
-    await signOut();
-    navigate("/", { replace: true });
-  };
+  const { isLoaded, isSignedIn } = useAuth();
 
   return (
     <div className="min-h-screen bg-background">
@@ -33,16 +26,11 @@ const LandingPage = () => {
             </div>
             <div className="flex items-center gap-4">
               {isLoaded && isSignedIn ? (
-                <>
-                  <Link to="/dashboard">
-                    <Button variant="hero" size="lg">
-                      Dashboard
-                    </Button>
-                  </Link>
-                  <Button variant="ghost" onClick={handleSignOut}>
-                    Sign Out
+                <Link to="/dashboard">
+                  <Button variant="hero" size="lg">
+                    Dashboard
                   </Button>
-                </>
+                </Link>
               ) : (
                 <>
                   <Link to="/login">

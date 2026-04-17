@@ -6,8 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 
 const Dashboard = () => {
+  const { signOut, user } = useAuth();
   const navigate = useNavigate();
-  const { user, signOut } = useAuth();
 
   const handleSignOut = async () => {
     await signOut();
@@ -62,16 +62,16 @@ const Dashboard = () => {
               </span>
             </div>
             <div className="flex items-center gap-4">
-              {user?.email && (
-                <span className="text-sm text-muted-foreground hidden sm:inline">{user.email}</span>
-              )}
               <Link to="/settings">
                 <Button variant="ghost">Settings</Button>
               </Link>
               <Link to="/help">
                 <Button variant="ghost">Help</Button>
               </Link>
-              <Button variant="outline" onClick={handleSignOut} className="gap-2">
+              {user?.email && (
+                <span className="text-sm text-muted-foreground hidden md:inline">{user.email}</span>
+              )}
+              <Button variant="ghost" size="sm" onClick={handleSignOut} className="gap-2">
                 <LogOut className="h-4 w-4" />
                 Sign Out
               </Button>
