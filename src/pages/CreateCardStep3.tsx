@@ -41,9 +41,20 @@ export default function CreateCardStep3() {
   }, [template, cardData]);
 
   const loadTemplate = async () => {
+    // Step 2 uses synthetic designs (not DB rows) — fall back to an in-memory template
     if (!cardData.templateId) {
-      toast.error('Please select a template first');
-      navigate('/create-card/step2');
+      setTemplate({
+        id: 'synthetic',
+        name: (cardData.colorPalette as any)?.theme || 'Custom',
+        colors: {
+          primary: 'hsl(343, 35%, 62%)',
+          secondary: 'hsl(35, 45%, 92%)',
+          accent: 'hsl(40, 38%, 60%)',
+          text: 'hsl(25, 20%, 14%)',
+        },
+        fonts: { heading: 'Playfair Display', body: 'Inter' },
+        preview_image: null,
+      });
       return;
     }
 
