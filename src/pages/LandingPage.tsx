@@ -91,7 +91,7 @@ const LandingPage = () => {
                 </div>
               </div>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Link to="/sign-up">
+                <Link to="/signup">
                   <Button variant="hero" size="xl">
                     Create Your Card Now
                     <ArrowRight className="ml-2 h-5 w-5" />
@@ -327,7 +327,7 @@ const LandingPage = () => {
             Your first 3 cards are on us.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/sign-up">
+            <Link to="/signup">
               <Button variant="hero" size="xl" className="bg-white !text-[#2d4a35] hover:bg-white/90">
                 Get Started Free
                 <ArrowRight className="ml-2 h-5 w-5" />
