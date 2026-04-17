@@ -259,34 +259,42 @@ export default function CreateCardStep3() {
               <Label className="text-xl font-bold mb-1 block">Choose Your Colors</Label>
               <p className="text-sm text-muted-foreground">Select a color palette that matches your style</p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {colorPalettes.map((palette) => (
-                <div
-                  key={palette.id}
-                  onClick={() => setSelectedPaletteId(palette.id)}
-                  className={`cursor-pointer p-4 rounded-xl border-2 transition-all hover:shadow-md ${
-                    selectedPaletteId === palette.id
-                      ? 'border-primary ring-2 ring-primary bg-primary/5 shadow-md'
-                      : 'border-gray-200 hover:border-gray-300'
-                  }`}
-                >
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="font-semibold">{palette.name}</span>
-                    {selectedPaletteId === palette.id && (
-                      <Check className="w-5 h-5 text-primary" />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+              {colorPalettes.map((palette) => {
+                const isSelected = selectedPaletteId === palette.id;
+                return (
+                  <div
+                    key={palette.id}
+                    onClick={() => setSelectedPaletteId(palette.id)}
+                    role="button"
+                    tabIndex={0}
+                    aria-pressed={isSelected}
+                    className={`relative cursor-pointer p-4 rounded-xl border-2 transition-all hover:shadow-md ${
+                      isSelected
+                        ? 'border-[#c17b8a] ring-2 ring-[#c17b8a]/40 bg-[#c17b8a]/5 shadow-md'
+                        : 'border-gray-200 hover:border-gray-300'
+                    }`}
+                  >
+                    {isSelected && (
+                      <div className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-[#c17b8a] flex items-center justify-center shadow-md ring-2 ring-white">
+                        <Check className="w-4 h-4 text-white" strokeWidth={3} />
+                      </div>
                     )}
+                    <div className="mb-3">
+                      <span className="font-semibold text-sm sm:text-base">{palette.name}</span>
+                    </div>
+                    <div className="flex gap-2">
+                      {Object.values(palette.colors).slice(0, 4).map((color: any, idx) => (
+                        <div
+                          key={idx}
+                          className="flex-1 h-10 sm:h-12 rounded-lg shadow-sm"
+                          style={{ backgroundColor: color }}
+                        />
+                      ))}
+                    </div>
                   </div>
-                  <div className="flex gap-2">
-                    {Object.values(palette.colors).slice(0, 4).map((color: any, idx) => (
-                      <div
-                        key={idx}
-                        className="flex-1 h-12 rounded-lg shadow-sm"
-                        style={{ backgroundColor: color }}
-                      />
-                    ))}
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </CardContent>
         </Card>
@@ -298,45 +306,53 @@ export default function CreateCardStep3() {
               <Label className="text-xl font-bold mb-1 block">Choose Your Fonts</Label>
               <p className="text-sm text-muted-foreground">Pick typography that expresses your message</p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {fontPairings.map((pairing) => (
-                <div
-                  key={pairing.id}
-                  onClick={() => setSelectedFont(pairing.id)}
-                  className={`cursor-pointer p-4 rounded-xl border-2 transition-all hover:shadow-md ${
-                    selectedFont === pairing.id
-                      ? 'border-primary ring-2 ring-primary bg-primary/5 shadow-md'
-                      : 'border-gray-200 hover:border-gray-300'
-                  }`}
-                >
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="font-semibold">{pairing.name}</span>
-                    {selectedFont === pairing.id && (
-                      <Check className="w-5 h-5 text-primary" />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              {fontPairings.map((pairing) => {
+                const isSelected = selectedFont === pairing.id;
+                return (
+                  <div
+                    key={pairing.id}
+                    onClick={() => setSelectedFont(pairing.id)}
+                    role="button"
+                    tabIndex={0}
+                    aria-pressed={isSelected}
+                    className={`relative cursor-pointer p-4 rounded-xl border-2 transition-all hover:shadow-md ${
+                      isSelected
+                        ? 'border-[#c17b8a] ring-2 ring-[#c17b8a]/40 bg-[#c17b8a]/5 shadow-md'
+                        : 'border-gray-200 hover:border-gray-300'
+                    }`}
+                  >
+                    {isSelected && (
+                      <div className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-[#c17b8a] flex items-center justify-center shadow-md ring-2 ring-white">
+                        <Check className="w-4 h-4 text-white" strokeWidth={3} />
+                      </div>
                     )}
-                  </div>
-                  <div className="space-y-3">
-                    <div>
-                      <p className="text-xs text-muted-foreground mb-1">Heading</p>
-                      <p 
-                        className="text-2xl"
-                        style={{ fontFamily: pairing.fonts.heading }}
-                      >
-                        Thank You
-                      </p>
+                    <div className="mb-3">
+                      <span className="font-semibold text-sm sm:text-base">{pairing.name}</span>
                     </div>
-                    <div>
-                      <p className="text-xs text-muted-foreground mb-1">Body</p>
-                      <p 
-                        className="text-sm"
-                        style={{ fontFamily: pairing.fonts.body }}
-                      >
-                        Thank you for your thoughtful gift.
-                      </p>
+                    <div className="space-y-3">
+                      <div>
+                        <p className="text-xs text-muted-foreground mb-1">Heading</p>
+                        <p
+                          className="text-xl sm:text-2xl truncate"
+                          style={{ fontFamily: pairing.fonts.heading }}
+                        >
+                          Thank You
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-muted-foreground mb-1">Body</p>
+                        <p
+                          className="text-sm"
+                          style={{ fontFamily: pairing.fonts.body }}
+                        >
+                          Thank you for your thoughtful gift.
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </CardContent>
         </Card>
