@@ -52,6 +52,7 @@ const App = () => (
               <Route path="/create-card/step6" element={<ProtectedRoute><CreateCardStep6 /></ProtectedRoute>} />
               <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
               <Route path="/send-thanks" element={<SendThanks />} />
+              <Route path="/create" element={<Navigate to="/create-card/step1" replace />} />
               <Route path="/card-design" element={<Navigate to="/create-card/step1" replace />} />
               <Route path="/saved-campaigns" element={<SavedCampaigns />} />
               <Route path="/csv-upload" element={<CSVManager />} />
