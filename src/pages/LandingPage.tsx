@@ -16,9 +16,9 @@ const LandingPage = () => {
       {/* Navigation */}
       <nav className="bg-background/80 backdrop-blur-sm border-b border-border sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+          <div className="flex justify-between items-center h-20">
             <div className="flex items-center">
-              <img src="/logo.png" alt="Thank You for Thank You" style={{ height: '48px', mixBlendMode: 'multiply' }} className="w-auto" />
+              <img src="/logo.png" alt="Thank You for Thank You" style={{ height: '72px', mixBlendMode: 'multiply' }} className="w-auto" />
             </div>
             <div className="flex items-center gap-4">
               {isLoaded && isSignedIn ? (
