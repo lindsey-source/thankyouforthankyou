@@ -16,7 +16,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
   const stepName = stepNames[currentStep - 1] ?? '';
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 pointer-events-none">
+    <div className="relative w-full">
       {/* Thin rose progress line */}
       <div className="h-[2px] w-full bg-transparent">
         <motion.div
