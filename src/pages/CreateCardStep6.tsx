@@ -55,6 +55,28 @@ export default function CreateCardStep5Impact() {
 
   const totalImpact = donationAmount + PRINTING_SAVINGS;
 
+  // Live preview values from wizard context (with brand defaults)
+  const palette = (cardData.colorPalette as any) || {};
+  const previewPrimary = palette.primary || '#f0d8d0';
+  const previewSecondary = palette.secondary || '#f9ece8';
+  const previewAccent = palette.accent || '#8b4a5a';
+  const previewText = palette.text || '#2d2420';
+
+  const fontMap: Record<string, { heading: string; body: string }> = {
+    default: { heading: "'Playfair Display', Georgia, serif", body: "'Inter', sans-serif" },
+    serif: { heading: "'Cormorant Garamond', Georgia, serif", body: "'Crimson Text', serif" },
+    modern: { heading: "'Poppins', sans-serif", body: "'Inter', sans-serif" },
+    script: { heading: "'Dancing Script', cursive", body: "'Montserrat', sans-serif" },
+  };
+  const fonts = fontMap[cardData.fontChoice || 'default'] || fontMap.default;
+
+  const headline = cardData.messageHeadline?.trim() || 'Thank You';
+  const bodyText =
+    cardData.messageBody?.trim() ||
+    'Thank you so much for being part of our special day. Your presence meant the world to us.';
+  const closing = cardData.closing?.trim() || 'With love';
+  const charityName = selectedCharity?.name || cardData.charityName || 'your chosen cause';
+
   const handleSend = async () => {
     if (!recipientName.trim() || !recipientEmail.trim()) {
       toast.error('Please enter recipient name and email');
@@ -132,6 +154,175 @@ export default function CreateCardStep5Impact() {
           </motion.p>
         </div>
 
+        {/* === Final card preview === */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mb-12"
+        >
+          <p
+            className="text-xs uppercase tracking-[0.2em] text-center mb-4"
+            style={{ color: '#8a9a82' }}
+          >
+            Your finished card
+          </p>
+
+          <div className="relative flex items-center justify-center min-h-[460px] md:min-h-[520px]">
+            {/* Back peeking card */}
+            <div
+              className="absolute w-[300px] sm:w-[340px] aspect-[3/4] rounded-2xl border"
+              style={{
+                transform: 'rotate(3deg) translate(32px, 18px)',
+                backgroundColor: '#f5ede9',
+                borderColor: 'rgba(45, 36, 32, 0.06)',
+                boxShadow: '0 10px 30px rgba(45, 36, 32, 0.06)',
+              }}
+              aria-hidden="true"
+            />
+
+            {/* Front card — uses live wizard data */}
+            <motion.div
+              whileHover={{ rotate: -1, scale: 1.01 }}
+              transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+              className="relative w-[300px] sm:w-[340px] aspect-[3/4] rounded-2xl bg-white border overflow-hidden"
+              style={{
+                transform: 'rotate(-3deg)',
+                borderColor: 'rgba(45, 36, 32, 0.08)',
+                boxShadow: '0 24px 60px rgba(45, 36, 32, 0.18)',
+              }}
+              role="img"
+              aria-label="Your finished thank-you card"
+            >
+              {/* Header band */}
+              <div
+                className="relative flex flex-col items-center justify-center"
+                style={{
+                  height: '42%',
+                  background: `linear-gradient(135deg, ${previewSecondary} 0%, ${previewPrimary} 100%)`,
+                }}
+              >
+                {cardData.photoUrl ? (
+                  <img
+                    src={cardData.photoUrl}
+                    alt=""
+                    className="absolute inset-0 w-full h-full object-cover opacity-80"
+                  />
+                ) : null}
+                <span
+                  className="relative z-10 text-center px-4"
+                  style={{
+                    fontFamily: fonts.heading,
+                    fontSize: '44px',
+                    color: previewAccent,
+                    letterSpacing: '0.04em',
+                    lineHeight: 1.05,
+                  }}
+                >
+                  {headline}
+                </span>
+                <div
+                  className="relative z-10 flex items-center gap-2 mt-3 opacity-70"
+                  aria-hidden="true"
+                >
+                  <div style={{ width: '30px', height: '1px', backgroundColor: previewAccent }} />
+                  <div
+                    style={{
+                      width: '4px',
+                      height: '4px',
+                      backgroundColor: previewAccent,
+                      transform: 'rotate(45deg)',
+                    }}
+                  />
+                  <div style={{ width: '30px', height: '1px', backgroundColor: previewAccent }} />
+                </div>
+              </div>
+
+              {/* Body */}
+              <div className="p-5 flex flex-col" style={{ height: '58%' }}>
+                <p
+                  className="text-lg mb-2"
+                  style={{ fontFamily: fonts.heading, color: previewText }}
+                >
+                  Dear {recipientName?.trim() || 'friend'},
+                </p>
+                <p
+                  className="text-sm leading-relaxed flex-1 line-clamp-4"
+                  style={{ fontFamily: fonts.body, color: previewText, opacity: 0.75 }}
+                >
+                  {bodyText}
+                </p>
+                <p
+                  className="text-sm mt-2"
+                  style={{ fontFamily: fonts.body, color: previewText, opacity: 0.85 }}
+                >
+                  {closing},
+                </p>
+
+                {/* Donation badge */}
+                <div className="mt-3">
+                  <div
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold"
+                    style={{
+                      backgroundColor: 'rgba(143, 170, 139, 0.18)',
+                      color: '#5a7257',
+                    }}
+                  >
+                    <Heart className="w-3 h-3" fill="#5a7257" />
+                    ${donationAmount.toFixed(2)} donated to {charityName}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Decorative dots */}
+            <div
+              className="absolute -top-2 left-1/4 h-3 w-3 rounded-full opacity-70"
+              style={{ backgroundColor: '#c17b8a' }}
+              aria-hidden="true"
+            />
+            <div
+              className="absolute -bottom-1 right-1/4 h-3 w-3 rounded-full opacity-70"
+              style={{ backgroundColor: '#8faa8b' }}
+              aria-hidden="true"
+            />
+          </div>
+
+          {/* Summary line */}
+          <motion.p
+            key={`${donationAmount}-${charityName}`}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center text-base md:text-lg mt-8 max-w-xl mx-auto"
+            style={{ fontFamily: "'Playfair Display', serif", color: '#2a2622' }}
+          >
+            Your card will donate{' '}
+            <span style={{ color: '#c17b8a', fontWeight: 600 }}>
+              ${donationAmount.toFixed(2)}
+            </span>{' '}
+            to{' '}
+            <span style={{ color: '#5a7257', fontWeight: 600 }}>{charityName}</span>.
+          </motion.p>
+
+          {/* Send Cards CTA */}
+          <div className="flex justify-center mt-6">
+            <button
+              onClick={handleSend}
+              disabled={sending || !recipientName.trim() || !recipientEmail.trim()}
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-white text-base font-medium transition-all hover:scale-[1.02] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100"
+              style={{
+                backgroundColor: '#c17b8a',
+                boxShadow: '0 10px 28px rgba(193, 123, 138, 0.4)',
+                fontFamily: "'Playfair Display', serif",
+              }}
+            >
+              <Mail className="w-4 h-4" />
+              {sending ? 'Sending…' : 'Send Cards'}
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        </motion.div>
+
         {/* Back link */}
         <button
           onClick={() => navigate('/create-card/step5')}
@@ -139,7 +330,7 @@ export default function CreateCardStep5Impact() {
           style={{ color: '#8a8079' }}
         >
           <ArrowLeft className="w-4 h-4" />
-          Back
+          Back to finishing touches
         </button>
 
         {/* Two-column layout */}
