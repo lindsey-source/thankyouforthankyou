@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { CardWizardProvider } from "@/contexts/CardWizardContext";
+import { AuthProvider } from "@/contexts/AuthContext";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import LandingPage from "./pages/LandingPage";
 import SignUp from "./pages/SignUp";
@@ -29,17 +30,18 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <CardWizardProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/sign-up" element={<SignUp />} />
-            <Route path="/signup" element={<Navigate to="/sign-up" replace />} />
-            <Route path="/sign-in" element={<Login />} />
-            <Route path="/login" element={<Navigate to="/sign-in" replace />} />
+    <BrowserRouter>
+      <AuthProvider>
+        <CardWizardProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/sign-up" element={<Navigate to="/signup" replace />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/sign-in" element={<Navigate to="/login" replace />} />
             <Route 
               path="/create-card/step1" 
               element={
@@ -99,10 +101,11 @@ const App = () => (
             <Route path="/campaign/:id" element={<CampaignDetail />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </CardWizardProvider>
+            </Routes>
+          </TooltipProvider>
+        </CardWizardProvider>
+      </AuthProvider>
+    </BrowserRouter>
   </QueryClientProvider>
 );
 
