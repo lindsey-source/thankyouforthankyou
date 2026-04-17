@@ -281,7 +281,7 @@ export default function CreateCardStep2() {
     if (!design) return;
 
     updateCardData({
-      templateId: design.id,
+      templateId: null,
       colorPalette: { theme: design.id },
       fontChoice: design.id === 'corporate-gold' ? 'inter' : 'playfair',
     });
