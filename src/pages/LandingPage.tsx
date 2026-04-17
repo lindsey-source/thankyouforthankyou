@@ -420,15 +420,16 @@ const LandingPage = () => {
                   </g>
                 </svg>
                 <span
-                  className="relative z-10"
+                  className="relative z-10 text-center px-4"
                   style={{
                     fontFamily: "'Dancing Script', cursive",
-                    fontSize: "44px",
+                    fontSize: "38px",
                     color: "#b06070",
-                    letterSpacing: "0.04em",
+                    letterSpacing: "0.03em",
+                    lineHeight: 1.1,
                   }}
                 >
-                  Thank You
+                  With Love & Gratitude
                 </span>
               </div>
               <div className="p-6">
@@ -443,7 +444,7 @@ const LandingPage = () => {
                     className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs"
                     style={{ backgroundColor: "#eef2e8", color: "#3d5a3a" }}
                   >
-                    💚 $5 donated to WWF
+                    💚 $4 donated to Rainforest Alliance
                   </span>
                 </div>
                 <p
@@ -453,13 +454,13 @@ const LandingPage = () => {
                     fontSize: "16px",
                   }}
                 >
-                  Dear Sarah,
+                  Dear Emma & James,
                 </p>
                 <p
                   className="mt-1 text-sm leading-relaxed line-clamp-1"
                   style={{ color: "#2d2420", opacity: 0.7 }}
                 >
-                  Thank you for celebrating our special day with us…
+                  Your wedding was the most beautiful day…
                 </p>
                 <button
                   className="mt-4 w-full py-2 rounded-md text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"
