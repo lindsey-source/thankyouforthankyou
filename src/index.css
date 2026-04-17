@@ -4,19 +4,35 @@
 
 /* Thank You for Thank You Design System - Gratitude meets Giving */
 
+/* === Official Brand Palette ===
+ * cream  #faf7f2 → 36 35% 96%
+ * rose   #c17b8a → 347 35% 62%
+ * sage   #8faa8b → 115 14% 60%
+ * dark   #2d2420 → 20 18% 15%
+ */
+
 @layer base {
   :root {
     /* Thank You for Thank You Brand Colors - Rose & Sage Palette */
 
-    /* Background: Warm blush cream #fdf6f3 */
-    --background: 12 71% 97%;
+    /* Background: Brand cream #faf7f2 */
+    --background: 36 35% 96%;
     --foreground: 20 18% 15%; /* Text: #2d2420 */
 
-    --card: 12 71% 97%;
+    --card: 36 35% 96%;
     --card-foreground: 20 18% 15%;
 
-    --popover: 12 71% 97%;
+    --popover: 36 35% 96%;
     --popover-foreground: 20 18% 15%;
+
+    /* Named brand tokens */
+    --brand-cream: 36 35% 96%;     /* #faf7f2 */
+    --brand-rose: 347 35% 62%;     /* #c17b8a */
+    --brand-sage: 115 14% 60%;     /* #8faa8b */
+    --brand-dark: 20 18% 15%;      /* #2d2420 */
+    --brand-cream-deep: 30 28% 92%;
+    --brand-rose-soft: 347 45% 92%;
+    --brand-sage-soft: 115 20% 92%;
 
     /* Primary: Dusty Rose #c17b8a */
     --primary: 347 35% 62%;
@@ -47,10 +63,10 @@
 
     --radius: 0.75rem;
 
-    /* Custom Brand Gradients - now solid rose/sage tones (no purple/blue) */
-    --gradient-primary: linear-gradient(135deg, hsl(347 35% 62%), hsl(347 35% 62%));
-    --gradient-hero: linear-gradient(135deg, hsl(12 71% 97%) 0%, hsl(12 71% 97%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(12 71% 97%) 0%, hsl(20 38% 94%) 100%);
+    /* Custom Brand Gradients - rose & sage on cream */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--brand-rose)), hsl(var(--brand-rose)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--brand-cream)) 0%, hsl(var(--brand-cream)) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(var(--brand-cream)) 0%, hsl(var(--brand-cream-deep)) 100%);
 
     /* Shadows with brand colors */
     --shadow-warm: 0 10px 30px -5px hsl(347 35% 62% / 0.18);
