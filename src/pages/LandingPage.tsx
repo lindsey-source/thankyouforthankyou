@@ -1,10 +1,9 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Heart, Users, Gift, TrendingUp, ArrowRight, CheckCircle } from "lucide-react";
+import { Heart, ArrowRight, CheckCircle, Upload, PenLine, Send, Sparkles, Users, Gift, TrendingUp } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
-import heroImage from "@/assets/hero-image.jpg";
 import cardBlushBotanical from "@/assets/card-blush-botanical.jpg";
 import cardSageAbstract from "@/assets/card-sage-abstract.jpg";
 import cardWildflowerInk from "@/assets/card-wildflower-ink.jpg";
@@ -49,35 +48,24 @@ const LandingPage = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-20 bg-background">
+      <section className="py-20" style={{ backgroundColor: "#faf7f2" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="text-center lg:text-left">
-              <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight text-foreground">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Left: Headline + CTAs */}
+            <div className="text-center lg:text-left" style={{ color: "#2d2420" }}>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/15 text-secondary text-sm font-medium mb-6">
+                <Sparkles className="h-3.5 w-3.5" />
+                Gratitude that gives back
+              </div>
+              <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-[1.05] tracking-tight" style={{ color: "#2d2420" }}>
                 Thank Differently.
                 <br />
                 <span className="text-primary">Give Meaningfully.</span>
               </h1>
-              <p className="text-xl mb-8 leading-relaxed text-muted-foreground">
-                Send personalized thank-you e-cards at scale while turning traditional card costs into charitable impact. 
-                Instead of spending on paper, printing, envelopes, and postage, that same money goes directly to charity. 
-                Perfect for weddings, celebrations, and any moment worth remembering.
+              <p className="text-lg lg:text-xl mb-8 leading-relaxed" style={{ color: "#2d2420", opacity: 0.75 }}>
+                Send personalized thank-you e-cards at scale. The money you'd have spent
+                on paper, printing, and postage becomes a charitable donation instead.
               </p>
-              <div className="rounded-lg p-4 mb-8 border border-primary/20 bg-primary/5">
-                <div className="text-center text-foreground">
-                  <div className="text-sm font-medium mb-2">Traditional Card Costs → Charitable Impact</div>
-                  <div className="grid grid-cols-2 gap-4 text-sm">
-                    <div>
-                      <span className="line-through opacity-70">Paper & Printing</span>
-                      <span className="block font-medium text-secondary">→ Charity Donation</span>
-                    </div>
-                    <div>
-                      <span className="line-through opacity-70">Stamps & Postage</span>
-                      <span className="block font-medium text-secondary">→ Charity Donation</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Link to="/signup">
                   <Button variant="hero" size="xl">
@@ -90,12 +78,83 @@ const LandingPage = () => {
                 </Button>
               </div>
             </div>
+
+            {/* Right: 4-step workflow */}
             <div className="relative">
-              <img 
-                src={heroImage} 
-                alt="Beautiful thank you card design showcase" 
-                className="w-full h-80 object-cover rounded-2xl shadow-glow hover-scale"
-              />
+              <ol className="space-y-4">
+                {[
+                  {
+                    icon: Upload,
+                    title: "Upload Your Guest List",
+                    description: "Drop in a CSV with names and emails. We'll handle the rest.",
+                  },
+                  {
+                    icon: PenLine,
+                    title: "Write Your Message",
+                    description: "Compose a heartfelt thank-you and pick a card design you love.",
+                  },
+                  {
+                    icon: Send,
+                    title: "We Send the Cards",
+                    description: "Personalized e-cards delivered to every guest in your list.",
+                  },
+                  {
+                    icon: Heart,
+                    title: "Costs Become Donations",
+                    description: "What you saved on paper and postage goes directly to charity.",
+                  },
+                ].map((step, index, arr) => {
+                  const Icon = step.icon;
+                  return (
+                    <li key={index} className="relative">
+                      <div
+                        className="flex items-start gap-4 p-5 rounded-2xl border transition-all duration-300 hover:shadow-warm hover:-translate-y-0.5"
+                        style={{
+                          backgroundColor: "#ffffff",
+                          borderColor: "rgba(45, 36, 32, 0.08)",
+                        }}
+                      >
+                        {/* Numbered icon badge */}
+                        <div className="relative shrink-0">
+                          <div
+                            className="h-14 w-14 rounded-xl flex items-center justify-center text-primary"
+                            style={{ backgroundColor: "rgba(193, 123, 138, 0.12)" }}
+                          >
+                            <Icon className="h-6 w-6" strokeWidth={1.75} />
+                          </div>
+                          <div className="absolute -top-2 -left-2 h-6 w-6 rounded-full bg-primary text-primary-foreground text-xs font-bold flex items-center justify-center shadow-sm">
+                            {index + 1}
+                          </div>
+                        </div>
+                        <div className="flex-1 min-w-0 pt-0.5">
+                          <h3
+                            className="text-base font-semibold mb-1"
+                            style={{ color: "#2d2420" }}
+                          >
+                            {step.title}
+                          </h3>
+                          <p
+                            className="text-sm leading-relaxed"
+                            style={{ color: "#2d2420", opacity: 0.65 }}
+                          >
+                            {step.description}
+                          </p>
+                        </div>
+                      </div>
+                      {/* Connector arrow between steps */}
+                      {index < arr.length - 1 && (
+                        <div className="flex justify-start pl-7 py-1" aria-hidden="true">
+                          <div className="flex flex-col items-center text-secondary/60">
+                            <div className="h-3 w-px bg-current" />
+                            <ArrowRight className="h-3.5 w-3.5 rotate-90 -my-0.5" strokeWidth={2} />
+                            <div className="h-3 w-px bg-current" />
+                          </div>
+                        </div>
+                      )}
+                    </li>
+                  );
+                })}
+              </ol>
             </div>
           </div>
         </div>
