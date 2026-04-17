@@ -17,11 +17,8 @@ const LandingPage = () => {
       <nav className="bg-background/80 backdrop-blur-sm border-b border-border sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-2">
-              <Heart className="h-8 w-8 text-primary" />
-              <span className="text-2xl font-bold text-primary">
-                Thank You for Thank You
-              </span>
+            <div className="flex items-center">
+              <img src="/logo.png" alt="Thank You for Thank You" style={{ height: '48px' }} className="w-auto" />
             </div>
             <div className="flex items-center gap-4">
               {isLoaded && isSignedIn ? (
