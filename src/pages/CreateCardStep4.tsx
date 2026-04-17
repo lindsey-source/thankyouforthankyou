@@ -96,7 +96,7 @@ export default function CreateCardStep3Message() {
     <div className="min-h-screen" style={{ backgroundColor: '#faf7f2' }}>
       <ProgressBar currentStep={4} totalSteps={7} stepNames={STEP_NAMES} />
 
-      <div className="max-w-7xl mx-auto px-4 md:px-8 pt-24 pb-32">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 pt-8 pb-32">
         {/* Header */}
         <div className="text-center mb-10">
           <motion.h1

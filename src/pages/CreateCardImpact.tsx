@@ -114,7 +114,7 @@ export default function CreateCardImpact() {
     <div className="min-h-screen bg-brand-cream">
       <ProgressBar currentStep={5} totalSteps={7} stepNames={STEP_NAMES} />
 
-      <div className="max-w-6xl mx-auto px-4 md:px-8 pt-24 pb-40">
+      <div className="max-w-6xl mx-auto px-4 md:px-8 pt-8 pb-40">
         {/* Header */}
         <div className="text-center mb-10">
           <motion.h1
