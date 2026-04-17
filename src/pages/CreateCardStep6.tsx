@@ -39,6 +39,7 @@ export default function CreateCardStep5Impact() {
   const [donationAmount, setDonationAmount] = useState<number>(cardData.donationAmount || 10);
   const [recipientName, setRecipientName] = useState(cardData.recipientName || '');
   const [recipientEmail, setRecipientEmail] = useState(cardData.recipientEmail || '');
+  const [senderName, setSenderName] = useState(cardData.senderName || '');
   const [sending, setSending] = useState(false);
 
   useEffect(() => {
@@ -253,10 +254,22 @@ export default function CreateCardStep5Impact() {
                   {bodyText}
                 </p>
                 <p
+                  className="text-sm leading-relaxed flex-1 line-clamp-3"
+                  style={{ fontFamily: fonts.body, color: previewText, opacity: 0.75 }}
+                >
+                  {bodyText}
+                </p>
+                <p
                   className="text-sm mt-2"
                   style={{ fontFamily: fonts.body, color: previewText, opacity: 0.85 }}
                 >
                   {closing},
+                </p>
+                <p
+                  className="text-sm"
+                  style={{ fontFamily: fonts.heading, color: previewText, opacity: 0.95 }}
+                >
+                  {senderName.trim() || <span style={{ opacity: 0.4 }}>Your name</span>}
                 </p>
 
                 {/* Donation badge */}
@@ -375,6 +388,20 @@ export default function CreateCardStep5Impact() {
                   onFocus={(e) => (e.currentTarget.style.borderColor = '#c17b8a')}
                   onBlur={(e) => (e.currentTarget.style.borderColor = '#ede8e3')}
                 />
+                <input
+                  type="text"
+                  placeholder='From (e.g. "The Smith Family")'
+                  value={senderName}
+                  onChange={(e) => setSenderName(e.target.value)}
+                  maxLength={80}
+                  className="w-full bg-transparent border-0 border-b text-lg py-3 focus:outline-none transition-all"
+                  style={{ color: '#2a2622', borderColor: '#ede8e3' }}
+                  onFocus={(e) => (e.currentTarget.style.borderColor = '#c17b8a')}
+                  onBlur={(e) => (e.currentTarget.style.borderColor = '#ede8e3')}
+                />
+                <p className="text-xs" style={{ color: '#8a8079' }}>
+                  This is how your name will appear on the card signature.
+                </p>
               </div>
             </section>
 

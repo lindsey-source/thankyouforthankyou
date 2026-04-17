@@ -27,6 +27,7 @@ export interface WizardCardData {
   donationAmount: number;
   recipientName: string;
   recipientEmail: string;
+  senderName: string;
 }
 
 interface CardWizardContextType {
@@ -54,7 +55,8 @@ const initialCardData: WizardCardData = {
   guestCount: 50,
   donationAmount: 0,
   recipientName: '',
-  recipientEmail: ''
+  recipientEmail: '',
+  senderName: ''
 };
 
 const CardWizardContext = createContext<CardWizardContextType | undefined>(undefined);
