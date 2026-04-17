@@ -65,7 +65,16 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				brand: {
+					cream: 'hsl(var(--brand-cream))',
+					'cream-deep': 'hsl(var(--brand-cream-deep))',
+					rose: 'hsl(var(--brand-rose))',
+					'rose-soft': 'hsl(var(--brand-rose-soft))',
+					sage: 'hsl(var(--brand-sage))',
+					'sage-soft': 'hsl(var(--brand-sage-soft))',
+					dark: 'hsl(var(--brand-dark))',
+				},
 			},
 			backgroundImage: {
 				'gradient-primary': 'var(--gradient-primary)',

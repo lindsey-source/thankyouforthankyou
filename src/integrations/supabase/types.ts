@@ -52,6 +52,7 @@ export type Database = {
       }
       charities: {
         Row: {
+          category: string | null
           created_at: string | null
           description: string | null
           id: string
@@ -60,6 +61,7 @@ export type Database = {
           name: string
         }
         Insert: {
+          category?: string | null
           created_at?: string | null
           description?: string | null
           id?: string
@@ -68,6 +70,7 @@ export type Database = {
           name: string
         }
         Update: {
+          category?: string | null
           created_at?: string | null
           description?: string | null
           id?: string

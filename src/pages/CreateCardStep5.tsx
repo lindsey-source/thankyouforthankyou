@@ -17,11 +17,12 @@ const STEPS = [
   { name: 'Style', path: '/create-card/step2' },
   { name: 'Customize', path: '/create-card/step3' },
   { name: 'Message', path: '/create-card/step4' },
+  { name: 'Impact', path: '/create-card/impact' },
   { name: 'Touches', path: '/create-card/step5' },
   { name: 'Preview', path: '/create-card/step6' }
 ];
 
-const STEP_NAMES = ['Choose Occasion', 'Pick Your Style', 'Customize Design', 'Write Your Message', 'Add Finishing Touches', 'Preview & Send'];
+const STEP_NAMES = ['Choose Occasion', 'Pick Your Style', 'Customize Design', 'Write Your Message', 'Choose Your Cause', 'Add Finishing Touches', 'Preview & Send'];
 
 const envelopeColors = [
   { id: 'cream', color: '#F5E6D3', name: 'Classic Cream' },
@@ -128,8 +129,8 @@ export default function CreateCardStep4() {
   return (
     <div className="min-h-screen bg-gradient-hero p-4 md:p-8">
       <div className="max-w-4xl mx-auto">
-        <ProgressBar currentStep={5} totalSteps={6} stepNames={STEP_NAMES} />
-        <BreadcrumbNav currentStep={5} steps={STEPS} />
+        <ProgressBar currentStep={6} totalSteps={7} stepNames={STEP_NAMES} />
+        <BreadcrumbNav currentStep={6} steps={STEPS} />
         <div className="text-center mb-8">
           <motion.h1 
             className="text-3xl md:text-4xl font-bold text-white mb-2"
@@ -265,14 +266,14 @@ export default function CreateCardStep4() {
         <div className="mt-8 flex justify-between items-center">
           <Button
             variant="outline"
-            onClick={() => navigate('/create-card/step4')}
+            onClick={() => navigate('/create-card/impact')}
             className="bg-white/95"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back
           </Button>
           
-          <p className="text-sm text-white/70">Step 5 of 6</p>
+          <p className="text-sm text-white/70">Step 6 of 7</p>
           
           <Button variant="hero" onClick={handleNext}>
             Next

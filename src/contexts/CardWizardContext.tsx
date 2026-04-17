@@ -20,8 +20,10 @@ export interface WizardCardData {
   texture: string | null;
   signatureStyle: string | null;
   
-  // Step 5
+  // Step 5 - Impact / charity
   charityId: string | null;
+  charityName: string | null;
+  guestCount: number;
   donationAmount: number;
   recipientName: string;
   recipientEmail: string;
@@ -48,6 +50,8 @@ const initialCardData: WizardCardData = {
   texture: null,
   signatureStyle: null,
   charityId: null,
+  charityName: null,
+  guestCount: 50,
   donationAmount: 0,
   recipientName: '',
   recipientEmail: ''
