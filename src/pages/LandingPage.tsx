@@ -3,14 +3,21 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Heart, Users, Gift, TrendingUp, ArrowRight, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
-import { SignedIn, SignedOut, UserButton, SignInButton, SignUpButton, useAuth } from "@clerk/clerk-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 import heroImage from "@/assets/hero-image.jpg";
 import cardBlushBotanical from "@/assets/card-blush-botanical.jpg";
 import cardSageAbstract from "@/assets/card-sage-abstract.jpg";
 import cardWildflowerInk from "@/assets/card-wildflower-ink.jpg";
 
 const LandingPage = () => {
-  const { isLoaded, isSignedIn } = useAuth();
+  const navigate = useNavigate();
+  const { isLoaded, isSignedIn, signOut } = useAuth();
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate("/", { replace: true });
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -32,14 +39,16 @@ const LandingPage = () => {
                       Dashboard
                     </Button>
                   </Link>
-                  <UserButton afterSignOutUrl="/" />
+                  <Button variant="ghost" onClick={handleSignOut}>
+                    Sign Out
+                  </Button>
                 </>
               ) : (
                 <>
-                  <Link to="/sign-in">
+                  <Link to="/login">
                     <Button variant="ghost">Sign In</Button>
                   </Link>
-                  <Link to="/sign-up">
+                  <Link to="/signup">
                     <Button variant="hero" size="lg">
                       Get Started Free
                     </Button>
