@@ -583,15 +583,16 @@ const LandingPage = () => {
                   <circle cx="167" cy="40" r="1.6" fill="#fbeaa0" opacity="0.85" />
                 </svg>
                 <span
-                  className="relative z-10"
+                  className="relative z-10 text-center px-4"
                   style={{
                     fontFamily: "'Dancing Script', cursive",
-                    fontSize: "44px",
+                    fontSize: "40px",
                     color: "#3d5a3a",
-                    letterSpacing: "0.04em",
+                    letterSpacing: "0.03em",
+                    lineHeight: 1.1,
                   }}
                 >
-                  Thank You
+                  Welcome, Little One
                 </span>
               </div>
               <div className="p-6">
@@ -616,13 +617,13 @@ const LandingPage = () => {
                     fontSize: "16px",
                   }}
                 >
-                  Dear Emma,
+                  Dear Sarah,
                 </p>
                 <p
                   className="mt-1 text-sm leading-relaxed line-clamp-1"
                   style={{ color: "#2d2420", opacity: 0.7 }}
                 >
-                  Thank you for the sweetest gift for our little one…
+                  We're so thrilled to celebrate baby Lily…
                 </p>
                 <button
                   className="mt-4 w-full py-2 rounded-md text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"
@@ -670,17 +671,19 @@ const LandingPage = () => {
                   </span>
                 </div>
                 <span
+                  className="text-center px-4"
                   style={{
                     fontFamily: "'Playfair Display', Georgia, serif",
-                    fontSize: "34px",
+                    fontSize: "28px",
                     color: "#c9a96e",
                     fontStyle: "italic",
                     fontWeight: 500,
                     marginTop: "70px",
                     letterSpacing: "0.02em",
+                    lineHeight: 1.15,
                   }}
                 >
-                  Thank You
+                  L'Chaim & Thank You
                 </span>
               </div>
               <div className="p-6">
