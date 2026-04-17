@@ -493,14 +493,15 @@ const LandingPage = () => {
                   <span
                     style={{
                       fontFamily: "'Inter', sans-serif",
-                      fontSize: "22px",
-                      letterSpacing: "0.32em",
+                      fontSize: "15px",
+                      letterSpacing: "0.28em",
                       color: "#2d2420",
                       fontWeight: 400,
                       textTransform: "uppercase",
+                      whiteSpace: "nowrap",
                     }}
                   >
-                    Thank You
+                    A Note of Appreciation
                   </span>
                   <div style={{ width: "80px", height: "1px", backgroundColor: "#c9a96e", marginTop: "14px" }} />
                 </div>
@@ -517,7 +518,7 @@ const LandingPage = () => {
                     className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs"
                     style={{ backgroundColor: "#eef2e8", color: "#3d5a3a" }}
                   >
-                    💚 $10 donated to Feeding America
+                    💚 $3 donated to local food bank
                   </span>
                 </div>
                 <p
@@ -527,13 +528,13 @@ const LandingPage = () => {
                     fontSize: "16px",
                   }}
                 >
-                  Dear Michael,
+                  Dear Team,
                 </p>
                 <p
                   className="mt-1 text-sm leading-relaxed line-clamp-1"
                   style={{ color: "#2d2420", opacity: 0.7 }}
                 >
-                  Thank you for your continued partnership this year…
+                  Your hard work on Q3 made all the difference…
                 </p>
                 <button
                   className="mt-4 w-full py-2 rounded-md text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"
