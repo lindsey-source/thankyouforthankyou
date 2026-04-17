@@ -55,6 +55,28 @@ export default function CreateCardStep5Impact() {
 
   const totalImpact = donationAmount + PRINTING_SAVINGS;
 
+  // Live preview values from wizard context (with brand defaults)
+  const palette = (cardData.colorPalette as any) || {};
+  const previewPrimary = palette.primary || '#f0d8d0';
+  const previewSecondary = palette.secondary || '#f9ece8';
+  const previewAccent = palette.accent || '#8b4a5a';
+  const previewText = palette.text || '#2d2420';
+
+  const fontMap: Record<string, { heading: string; body: string }> = {
+    default: { heading: "'Playfair Display', Georgia, serif", body: "'Inter', sans-serif" },
+    serif: { heading: "'Cormorant Garamond', Georgia, serif", body: "'Crimson Text', serif" },
+    modern: { heading: "'Poppins', sans-serif", body: "'Inter', sans-serif" },
+    script: { heading: "'Dancing Script', cursive", body: "'Montserrat', sans-serif" },
+  };
+  const fonts = fontMap[cardData.fontChoice || 'default'] || fontMap.default;
+
+  const headline = cardData.messageHeadline?.trim() || 'Thank You';
+  const bodyText =
+    cardData.messageBody?.trim() ||
+    'Thank you so much for being part of our special day. Your presence meant the world to us.';
+  const closing = cardData.closing?.trim() || 'With love';
+  const charityName = selectedCharity?.name || cardData.charityName || 'your chosen cause';
+
   const handleSend = async () => {
     if (!recipientName.trim() || !recipientEmail.trim()) {
       toast.error('Please enter recipient name and email');
