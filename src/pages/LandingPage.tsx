@@ -110,14 +110,58 @@ const LandingPage = () => {
                       "linear-gradient(180deg, #e8c4b8 0%, #fdf6f3 100%)",
                   }}
                 >
-                  <div className="h-14 w-14 rounded-full bg-white/70 backdrop-blur-sm flex items-center justify-center shadow-sm">
-                    <Heart
-                      className="h-7 w-7"
-                      style={{ color: "#c17b8a" }}
-                      fill="#c17b8a"
-                      strokeWidth={1.5}
-                    />
-                  </div>
+                  <svg
+                    viewBox="0 0 160 100"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-32 h-20"
+                    aria-hidden="true"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    {/* Center tall stem */}
+                    <path d="M80 92 C 80 70, 78 50, 80 28" stroke="#8faa8b" strokeWidth="1.2" />
+                    {/* Center leaves */}
+                    <path d="M80 70 C 72 66, 70 60, 74 56 C 78 60, 80 66, 80 70 Z" fill="#8faa8b" opacity="0.85" />
+                    <path d="M80 58 C 86 54, 90 50, 88 44 C 84 46, 80 52, 80 58 Z" fill="#8faa8b" opacity="0.85" />
+                    {/* Center flower (top) */}
+                    <g transform="translate(80 24)">
+                      <circle cx="0" cy="-6" r="3" fill="#c17b8a" />
+                      <circle cx="5" cy="-2" r="3" fill="#c17b8a" />
+                      <circle cx="3" cy="4" r="3" fill="#c17b8a" />
+                      <circle cx="-3" cy="4" r="3" fill="#c17b8a" />
+                      <circle cx="-5" cy="-2" r="3" fill="#c17b8a" />
+                      <circle cx="0" cy="0" r="1.6" fill="#fdf6f3" />
+                    </g>
+
+                    {/* Left stem */}
+                    <path d="M80 92 C 60 80, 46 70, 38 54" stroke="#8faa8b" strokeWidth="1.2" />
+                    <path d="M52 74 C 46 70, 44 64, 48 60 C 52 64, 53 70, 52 74 Z" fill="#8faa8b" opacity="0.8" />
+                    {/* Left bud */}
+                    <g transform="translate(38 50)">
+                      <circle cx="-2" cy="-2" r="2.2" fill="#c17b8a" opacity="0.9" />
+                      <circle cx="2" cy="-1" r="2.2" fill="#c17b8a" opacity="0.9" />
+                      <circle cx="0" cy="3" r="2.2" fill="#c17b8a" opacity="0.9" />
+                      <circle cx="0" cy="0" r="1.1" fill="#fdf6f3" />
+                    </g>
+
+                    {/* Right stem */}
+                    <path d="M80 92 C 100 80, 114 70, 122 54" stroke="#8faa8b" strokeWidth="1.2" />
+                    <path d="M108 74 C 114 70, 116 64, 112 60 C 108 64, 107 70, 108 74 Z" fill="#8faa8b" opacity="0.8" />
+                    {/* Right bud */}
+                    <g transform="translate(122 50)">
+                      <circle cx="-2" cy="-2" r="2.2" fill="#c17b8a" opacity="0.9" />
+                      <circle cx="2" cy="-1" r="2.2" fill="#c17b8a" opacity="0.9" />
+                      <circle cx="0" cy="3" r="2.2" fill="#c17b8a" opacity="0.9" />
+                      <circle cx="0" cy="0" r="1.1" fill="#fdf6f3" />
+                    </g>
+
+                    {/* Tiny scattered dots */}
+                    <circle cx="62" cy="38" r="1" fill="#c17b8a" opacity="0.6" />
+                    <circle cx="98" cy="40" r="1" fill="#c17b8a" opacity="0.6" />
+                    <circle cx="70" cy="18" r="0.9" fill="#8faa8b" opacity="0.7" />
+                    <circle cx="92" cy="16" r="0.9" fill="#8faa8b" opacity="0.7" />
+                  </svg>
                 </div>
 
                 {/* Card body */}
