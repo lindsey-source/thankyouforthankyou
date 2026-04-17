@@ -9,6 +9,7 @@ import { ProtectedRoute } from "@/components/ProtectedRoute";
 import LandingPage from "./pages/LandingPage";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
+import ResetPassword from "./pages/ResetPassword";
 import Dashboard from "./pages/Dashboard";
 import SendThanks from "./pages/SendThanks";
 import CardDesign from "./pages/CardDesign";
@@ -40,6 +41,7 @@ const App = () => (
               <Route path="/" element={<LandingPage />} />
               <Route path="/signup" element={<SignUp />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/sign-up" element={<Navigate to="/signup" replace />} />
               <Route path="/sign-in" element={<Navigate to="/login" replace />} />
               <Route path="/create-card/step1" element={<ProtectedRoute><CreateCardStep1 /></ProtectedRoute>} />
