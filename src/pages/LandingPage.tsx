@@ -50,37 +50,56 @@ const LandingPage = () => {
       {/* Hero Section */}
       <section className="py-20" style={{ backgroundColor: "#faf7f2" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-12 gap-10 items-center">
             {/* Left: Headline + CTAs */}
-            <div className="text-center lg:text-left" style={{ color: "#2d2420" }}>
+            <div className="text-center lg:text-left lg:col-span-4" style={{ color: "#2d2420" }}>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/15 text-secondary text-sm font-medium mb-6">
                 <Sparkles className="h-3.5 w-3.5" />
                 Gratitude that gives back
               </div>
-              <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-[1.05] tracking-tight" style={{ color: "#2d2420" }}>
+              <h1 className="text-4xl xl:text-5xl font-bold mb-6 leading-[1.05] tracking-tight" style={{ color: "#2d2420" }}>
                 Thank Differently.
                 <br />
                 <span className="text-primary">Give Meaningfully.</span>
               </h1>
-              <p className="text-lg lg:text-xl mb-8 leading-relaxed" style={{ color: "#2d2420", opacity: 0.75 }}>
+              <p className="text-base lg:text-lg mb-8 leading-relaxed" style={{ color: "#2d2420", opacity: 0.75 }}>
                 Send personalized thank-you e-cards at scale. The money you'd have spent
                 on paper, printing, and postage becomes a charitable donation instead.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+              <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
                 <Link to="/signup">
-                  <Button variant="hero" size="xl">
+                  <Button variant="hero" size="lg">
                     Create Your Card Now
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
-                <Button variant="outline" size="xl">
+                <Button variant="outline" size="lg">
                   See How It Works
                 </Button>
               </div>
             </div>
 
+            {/* Middle: Photo */}
+            <div className="lg:col-span-4 order-first lg:order-none">
+              <div className="relative rounded-3xl overflow-hidden shadow-warm aspect-[4/5] bg-muted">
+                <img
+                  src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600"
+                  alt="Friends celebrating together with handwritten thank-you notes"
+                  loading="lazy"
+                  className="w-full h-full object-cover"
+                />
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    background:
+                      "linear-gradient(180deg, rgba(45,36,32,0) 60%, rgba(45,36,32,0.15) 100%)",
+                  }}
+                />
+              </div>
+            </div>
+
             {/* Right: 4-step workflow */}
-            <div className="relative">
+            <div className="relative lg:col-span-4">
               <ol className="space-y-4">
                 {[
                   {
