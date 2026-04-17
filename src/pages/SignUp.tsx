@@ -21,6 +21,7 @@ const SignUp = () => {
           path="/sign-up" 
           signInUrl="/sign-in"
           afterSignUpUrl="/dashboard"
+          redirectUrl="/dashboard"
           forceRedirectUrl="/dashboard"
           fallbackRedirectUrl="/dashboard"
         />
