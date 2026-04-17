@@ -1,11 +1,19 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Heart, Users, DollarSign, TrendingUp, Plus, BarChart3, FileText } from "lucide-react";
-import { Link } from "react-router-dom";
-import { UserButton } from "@clerk/clerk-react";
+import { Heart, Users, DollarSign, TrendingUp, Plus, BarChart3, FileText, LogOut } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Dashboard = () => {
+  const { signOut, user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate("/", { replace: true });
+  };
+
   // Mock data - in real app this would come from API
   const stats = {
     thankYousSent: 45,
@@ -60,7 +68,13 @@ const Dashboard = () => {
               <Link to="/help">
                 <Button variant="ghost">Help</Button>
               </Link>
-              <UserButton afterSignOutUrl="/" />
+              {user?.email && (
+                <span className="text-sm text-muted-foreground hidden md:inline">{user.email}</span>
+              )}
+              <Button variant="ghost" size="sm" onClick={handleSignOut} className="gap-2">
+                <LogOut className="h-4 w-4" />
+                Sign Out
+              </Button>
             </div>
           </div>
         </div>
