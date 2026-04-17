@@ -19,6 +19,9 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ClerkProvider
       publishableKey={PUBLISHABLE_KEY}
+      clerkJSVersion="5.35.0"
+      signInUrl="/sign-in"
+      signUpUrl="/sign-up"
       afterSignInUrl={AFTER_SIGN_IN_URL}
       afterSignUpUrl={AFTER_SIGN_UP_URL}
       allowedRedirectOrigins={['https://thankyouforthankyou.lovable.app']}
