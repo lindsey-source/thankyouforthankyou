@@ -81,7 +81,7 @@ const LandingPage = () => {
 
             {/* Middle: Photo */}
             <div className="lg:col-span-4 order-first lg:order-none">
-              <div className="relative rounded-3xl overflow-hidden shadow-warm aspect-[4/5] bg-muted">
+              <div className="relative rounded-3xl overflow-hidden shadow-warm aspect-[3/4] bg-muted">
                 <img
                   src="https://images.unsplash.com/photo-1543269664-76bc3997d9ea?w=600&q=80"
                   alt="Friends celebrating together"
