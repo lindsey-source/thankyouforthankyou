@@ -48,39 +48,39 @@ const LandingPage = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="py-10 lg:py-14" style={{ backgroundColor: "#faf7f2" }}>
+      <section className="py-8 md:py-10" style={{ backgroundColor: "#faf7f2" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-10 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-8 md:gap-12">
             {/* Left: Headline + CTAs */}
-            <div className="text-center lg:text-left" style={{ color: "#2d2420" }}>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/15 text-secondary text-sm font-medium mb-4">
+            <div className="text-center md:text-left" style={{ color: "#2d2420" }}>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/15 text-secondary text-xs font-medium mb-3">
                 <Sparkles className="h-3.5 w-3.5" />
                 Gratitude that gives back
               </div>
-              <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 leading-[1.05] tracking-tight" style={{ color: "#2d2420" }}>
+              <h1 className="text-3xl sm:text-4xl xl:text-5xl font-bold mb-3 leading-[1.05] tracking-tight" style={{ color: "#2d2420" }}>
                 Thank Differently.
                 <br />
                 <span className="text-primary">Give Meaningfully.</span>
               </h1>
-              <p className="text-base lg:text-lg mb-6 leading-relaxed max-w-xl lg:max-w-none mx-auto" style={{ color: "#2d2420", opacity: 0.75 }}>
+              <p className="text-sm md:text-base mb-5 leading-relaxed max-w-xl md:max-w-none mx-auto" style={{ color: "#2d2420", opacity: 0.75 }}>
                 Send personalized thank-you e-cards at scale. The money you'd have spent
                 on paper, printing, and postage becomes a charitable donation instead.
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
+              <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
                 <Link to="/signup">
-                  <Button variant="hero" size="lg">
+                  <Button variant="hero" size="default">
                     Create Your Card Now
-                    <ArrowRight className="ml-2 h-5 w-5" />
+                    <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
-                <Button variant="outline" size="lg">
+                <Button variant="outline" size="default">
                   See How It Works
                 </Button>
               </div>
             </div>
 
             {/* Right: Product mockup card */}
-            <div className="relative flex items-center justify-center min-h-[380px] lg:min-h-[420px]">
+            <div className="relative flex items-center justify-center min-h-[340px] md:min-h-[380px]">
               {/* Back card (peeking, rotated +3deg) */}
               <div
                 className="absolute w-[280px] sm:w-[300px] aspect-[3/4] rounded-2xl shadow-soft border"
