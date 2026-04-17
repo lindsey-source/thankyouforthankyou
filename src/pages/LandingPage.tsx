@@ -100,7 +100,7 @@ const LandingPage = () => {
 
             {/* Right: 4-step workflow */}
             <div className="relative lg:col-span-4">
-              <ol className="space-y-4">
+              <ol className="space-y-2">
                 {[
                   {
                     icon: Upload,
@@ -127,7 +127,7 @@ const LandingPage = () => {
                   return (
                     <li key={index} className="relative">
                       <div
-                        className="flex items-start gap-4 p-5 rounded-2xl border transition-all duration-300 hover:shadow-warm hover:-translate-y-0.5"
+                        className="flex items-start gap-3 p-3 rounded-xl border transition-all duration-300 hover:shadow-warm"
                         style={{
                           backgroundColor: "#ffffff",
                           borderColor: "rgba(45, 36, 32, 0.08)",
@@ -136,38 +136,34 @@ const LandingPage = () => {
                         {/* Numbered icon badge */}
                         <div className="relative shrink-0">
                           <div
-                            className="h-14 w-14 rounded-xl flex items-center justify-center text-primary"
+                            className="h-10 w-10 rounded-lg flex items-center justify-center text-primary"
                             style={{ backgroundColor: "rgba(193, 123, 138, 0.12)" }}
                           >
-                            <Icon className="h-6 w-6" strokeWidth={1.75} />
+                            <Icon className="h-5 w-5" strokeWidth={1.75} />
                           </div>
-                          <div className="absolute -top-2 -left-2 h-6 w-6 rounded-full bg-primary text-primary-foreground text-xs font-bold flex items-center justify-center shadow-sm">
+                          <div className="absolute -top-1.5 -left-1.5 h-5 w-5 rounded-full bg-primary text-primary-foreground text-[10px] font-bold flex items-center justify-center shadow-sm">
                             {index + 1}
                           </div>
                         </div>
-                        <div className="flex-1 min-w-0 pt-0.5">
+                        <div className="flex-1 min-w-0">
                           <h3
-                            className="text-base font-semibold mb-1"
+                            className="text-sm font-semibold leading-tight mb-0.5"
                             style={{ color: "#2d2420" }}
                           >
                             {step.title}
                           </h3>
                           <p
-                            className="text-sm leading-relaxed"
+                            className="text-xs leading-snug"
                             style={{ color: "#2d2420", opacity: 0.65 }}
                           >
                             {step.description}
                           </p>
                         </div>
                       </div>
-                      {/* Connector arrow between steps */}
+                      {/* Connector line between steps */}
                       {index < arr.length - 1 && (
-                        <div className="flex justify-start pl-7 py-1" aria-hidden="true">
-                          <div className="flex flex-col items-center text-secondary/60">
-                            <div className="h-3 w-px bg-current" />
-                            <ArrowRight className="h-3.5 w-3.5 rotate-90 -my-0.5" strokeWidth={2} />
-                            <div className="h-3 w-px bg-current" />
-                          </div>
+                        <div className="flex justify-start pl-5" aria-hidden="true">
+                          <div className="h-2 w-px bg-secondary/40" />
                         </div>
                       )}
                     </li>
