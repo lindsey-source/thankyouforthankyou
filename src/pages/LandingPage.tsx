@@ -15,12 +15,12 @@ const LandingPage = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation */}
-      <nav className="bg-white/80 backdrop-blur-sm border-b border-border sticky top-0 z-50">
+      <nav className="bg-white/80 backdrop-blur-sm border-b sticky top-0 z-50" style={{ borderBottomColor: '#eeebe6', borderBottomWidth: '1px' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center gap-2">
-              <Heart className="h-8 w-8 text-primary" />
-              <span className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+              <Heart className="h-8 w-8" style={{ color: '#c17b5c' }} />
+              <span className="text-2xl font-bold" style={{ color: '#c17b5c' }}>
                 Thank You for Thank You
               </span>
             </div>
@@ -52,43 +52,43 @@ const LandingPage = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-hero py-20">
+      <section className="relative overflow-hidden py-20" style={{ backgroundColor: '#faf7f2' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-left">
-              <h1 className="text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+              <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight" style={{ color: '#2d2d2d' }}>
                 Thank Differently.
                 <br />
-                <span className="text-blue-200">Give Meaningfully.</span>
+                <span style={{ color: '#c17b5c' }}>Give Meaningfully.</span>
               </h1>
-              <p className="text-xl text-white/90 mb-8 leading-relaxed">
+              <p className="text-xl mb-8 leading-relaxed" style={{ color: '#666666' }}>
                 Send personalized thank-you e-cards at scale while turning traditional card costs into charitable impact. 
                 Instead of spending on paper, printing, envelopes, and postage, that same money goes directly to charity. 
                 Perfect for weddings, celebrations, and any moment worth remembering.
               </p>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 mb-8 border border-white/20">
-                <div className="text-white/90 text-center">
+              <div className="rounded-lg p-4 mb-8 border" style={{ backgroundColor: 'rgba(193, 123, 92, 0.08)', borderColor: 'rgba(193, 123, 92, 0.2)' }}>
+                <div className="text-center" style={{ color: '#2d2d2d' }}>
                   <div className="text-sm font-medium mb-2">Traditional Card Costs → Charitable Impact</div>
                   <div className="grid grid-cols-2 gap-4 text-sm">
                     <div>
                       <span className="line-through opacity-70">Paper & Printing</span>
-                      <span className="block text-green-200 font-medium">→ Charity Donation</span>
+                      <span className="block font-medium" style={{ color: '#5a8a5a' }}>→ Charity Donation</span>
                     </div>
                     <div>
                       <span className="line-through opacity-70">Stamps & Postage</span>
-                      <span className="block text-green-200 font-medium">→ Charity Donation</span>
+                      <span className="block font-medium" style={{ color: '#5a8a5a' }}>→ Charity Donation</span>
                     </div>
                   </div>
                 </div>
               </div>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Link to="/signup">
-                  <Button variant="hero" size="xl" className="bg-white text-primary hover:bg-white/90">
+                  <Button variant="hero" size="xl" style={{ backgroundColor: '#c17b5c', color: 'white' }} className="hover:opacity-90">
                     Create Your Card Now
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
-                <Button variant="outline" size="xl" className="border-white text-white hover:bg-white/10">
+                <Button variant="outline" size="xl" style={{ borderColor: '#2d2d2d', color: '#2d2d2d', borderWidth: '1px' }} className="bg-transparent hover:bg-black/5">
                   See How It Works
                 </Button>
               </div>
@@ -274,7 +274,9 @@ const LandingPage = () => {
           <div className="grid md:grid-cols-3 gap-8">
             <Card className="bg-muted/20 border-none">
               <CardContent className="p-8">
-                <div className="text-4xl mb-4">💍</div>
+                <div className="w-14 h-14 rounded-full flex items-center justify-center text-white font-semibold text-lg mb-4" style={{ backgroundColor: '#8faa8b' }}>
+                  SM
+                </div>
                 <p className="text-muted-foreground mb-6 italic">
                   "After our wedding, I had 200+ thank-you notes to send. This platform saved me weeks of work and donated $1,000 to our favorite charity. Our guests loved the personal touch!"
                 </p>
@@ -283,7 +285,9 @@ const LandingPage = () => {
             </Card>
             <Card className="bg-muted/20 border-none">
               <CardContent className="p-8">
-                <div className="text-4xl mb-4">🍼</div>
+                <div className="w-14 h-14 rounded-full flex items-center justify-center text-white font-semibold text-lg mb-4" style={{ backgroundColor: '#8faa8b' }}>
+                  JL
+                </div>
                 <p className="text-muted-foreground mb-6 italic">
                   "Perfect for baby shower thank-yous! Instead of buying cards and stamps, I redirected that money to children's charities. The e-cards were beautiful and eco-friendly."
                 </p>
@@ -292,7 +296,9 @@ const LandingPage = () => {
             </Card>
             <Card className="bg-muted/20 border-none">
               <CardContent className="p-8">
-                <div className="text-4xl mb-4">🎉</div>
+                <div className="w-14 h-14 rounded-full flex items-center justify-center text-white font-semibold text-lg mb-4" style={{ backgroundColor: '#8faa8b' }}>
+                  DP
+                </div>
                 <p className="text-muted-foreground mb-6 italic">
                   "Used this for my son's bar mitzvah. Guests could choose which charity to support - it sparked amazing conversations about giving back. Truly meaningful."
                 </p>
@@ -304,7 +310,7 @@ const LandingPage = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-primary text-white">
+      <section className="py-20 text-white" style={{ backgroundColor: '#1e2a3a' }}>
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl font-bold mb-6">Start Your Gratitude Campaign</h2>
           <p className="text-xl mb-8 text-white/90">
