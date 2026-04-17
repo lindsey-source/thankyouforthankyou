@@ -173,26 +173,82 @@ export default function CreateCardStep3() {
         onBack={() => navigate('/create-card/step2')}
         onNext={handleNext}
       >
-        {/* Live Preview - Compact */}
+        {/* Live Preview - Real card */}
         <Card className="bg-white/95 backdrop-blur-sm mb-6">
-          <CardContent className="p-4">
-            <Label className="text-base font-semibold mb-3 block">Live Preview</Label>
-            <div className="max-w-xs mx-auto">
-              <div 
-                className="aspect-[3/4] rounded-lg overflow-hidden shadow-lg"
-                style={{
-                  backgroundColor: colorPalettes.find(p => p.id === selectedPaletteId)?.colors.primary || template.colors?.primary,
-                  color: colorPalettes.find(p => p.id === selectedPaletteId)?.colors.text || template.colors?.text
-                }}
-              >
-                <img
-                  src={getTemplateImage(template.preview_image)}
-                  alt="Template preview"
-                  className="w-full h-full object-cover"
-                  style={{ filter: 'brightness(0.95)' }}
-                />
-              </div>
-            </div>
+          <CardContent className="p-6">
+            <Label className="text-base font-semibold mb-4 block text-center">Live Preview</Label>
+            {(() => {
+              const activePalette = colorPalettes.find(p => p.id === selectedPaletteId)?.colors || template.colors;
+              const activeFonts = fontPairings.find(f => f.id === selectedFont)?.fonts || template.fonts;
+              return (
+                <div className="max-w-[300px] mx-auto">
+                  <div
+                    className="relative w-full aspect-[3/4] rounded-2xl bg-white border overflow-hidden shadow-warm"
+                    style={{ borderColor: 'rgba(45, 36, 32, 0.08)' }}
+                    role="img"
+                    aria-label="Live card preview"
+                  >
+                    {/* Header band using selected primary/secondary */}
+                    <div
+                      className="relative flex flex-col items-center justify-center"
+                      style={{
+                        height: '42%',
+                        background: `linear-gradient(135deg, ${activePalette.secondary} 0%, ${activePalette.primary} 100%)`,
+                      }}
+                    >
+                      <span
+                        style={{
+                          fontFamily: activeFonts.heading,
+                          fontSize: '44px',
+                          color: activePalette.accent,
+                          letterSpacing: '0.04em',
+                          lineHeight: 1.1,
+                        }}
+                      >
+                        Thank You
+                      </span>
+                      <div
+                        className="flex items-center gap-2 mt-3 opacity-70"
+                        aria-hidden="true"
+                      >
+                        <div style={{ width: '28px', height: '1px', backgroundColor: activePalette.accent }} />
+                        <div
+                          style={{
+                            width: '4px',
+                            height: '4px',
+                            backgroundColor: activePalette.accent,
+                            transform: 'rotate(45deg)',
+                          }}
+                        />
+                        <div style={{ width: '28px', height: '1px', backgroundColor: activePalette.accent }} />
+                      </div>
+                    </div>
+
+                    {/* Body */}
+                    <div className="p-5 flex flex-col" style={{ height: '58%' }}>
+                      <p
+                        className="text-xl mb-2"
+                        style={{ fontFamily: activeFonts.heading, color: activePalette.text }}
+                      >
+                        Dear Sarah,
+                      </p>
+                      <p
+                        className="text-sm leading-relaxed flex-1"
+                        style={{ fontFamily: activeFonts.body, color: activePalette.text, opacity: 0.75 }}
+                      >
+                        Thank you so much for being part of our special day. Your presence meant the world to us.
+                      </p>
+                      <p
+                        className="text-sm mt-3"
+                        style={{ fontFamily: activeFonts.body, color: activePalette.text, opacity: 0.85 }}
+                      >
+                        With love,
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
           </CardContent>
         </Card>
 
