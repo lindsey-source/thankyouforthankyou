@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Heart, ArrowLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
@@ -28,59 +26,91 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-hero flex items-center justify-center p-4">
+    <div
+      className="min-h-screen flex items-center justify-center p-4"
+      style={{ backgroundColor: "#faf7f2" }}
+    >
       <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <Link to="/" className="inline-flex items-center gap-2 text-white hover:text-white/80 transition-colors mb-6">
+        <div className="text-center mb-6">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 text-sm hover:opacity-70 transition-opacity"
+            style={{ color: "#8b4a5a" }}
+          >
             <ArrowLeft className="h-4 w-4" />
             Back to Home
           </Link>
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <Heart className="h-8 w-8 text-white" />
-            <span className="text-3xl font-bold text-white">Thank You for Thank You</span>
-          </div>
         </div>
-        <Card>
-          <CardContent className="p-6">
-            <h1 className="text-2xl font-bold mb-6 text-center">Sign In</h1>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
-                <Input id="password" type="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
-              </div>
-              <div className="text-right">
-                <button
-                  type="button"
-                  onClick={async () => {
-                    if (!email) {
-                      toast.error("Enter your email above first");
-                      return;
-                    }
-                    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-                      redirectTo: `${window.location.origin}/reset-password`,
-                    });
-                    if (error) toast.error(error.message);
-                    else toast.success("Password reset email sent. Check your inbox.");
-                  }}
-                  className="text-sm text-primary hover:underline"
-                >
-                  Forgot password?
-                </button>
-              </div>
-              <Button type="submit" variant="hero" className="w-full" disabled={loading}>
-                {loading ? "Signing in..." : "Sign In"}
-              </Button>
-            </form>
-            <p className="text-sm text-center mt-4 text-muted-foreground">
-              Don't have an account?{" "}
-              <Link to="/signup" className="text-primary font-medium hover:underline">Sign up</Link>
-            </p>
-          </CardContent>
-        </Card>
+        <div
+          className="rounded-2xl bg-white p-8"
+          style={{
+            border: "1px solid #ede8e3",
+            boxShadow: "0 12px 40px -16px rgba(45,36,32,0.15)",
+          }}
+        >
+          <div className="flex justify-center mb-6">
+            <img
+              src="/logo.png"
+              alt="Thank You for Thank You"
+              style={{ height: "80px", mixBlendMode: "multiply" }}
+              className="w-auto"
+            />
+          </div>
+          <h1
+            className="text-2xl mb-6 text-center"
+            style={{
+              fontFamily: "'Playfair Display', Georgia, serif",
+              fontWeight: 500,
+              color: "#2d2420",
+            }}
+          >
+            Sign in to Thank You for Thank You
+          </h1>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <Input id="email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="password">Password</Label>
+              <Input id="password" type="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
+            </div>
+            <div className="text-right">
+              <button
+                type="button"
+                onClick={async () => {
+                  if (!email) {
+                    toast.error("Enter your email above first");
+                    return;
+                  }
+                  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+                    redirectTo: `${window.location.origin}/reset-password`,
+                  });
+                  if (error) toast.error(error.message);
+                  else toast.success("Password reset email sent. Check your inbox.");
+                }}
+                className="text-sm hover:underline"
+                style={{ color: "#8b4a5a" }}
+              >
+                Forgot password?
+              </button>
+            </div>
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full py-2.5 rounded-md text-sm font-medium transition-opacity hover:opacity-90 disabled:opacity-60"
+              style={{ backgroundColor: "#c17b8a", color: "#ffffff" }}
+            >
+              {loading ? "Signing in..." : "Sign In"}
+            </button>
+          </form>
+          <p className="text-sm text-center mt-6 text-muted-foreground">
+            Don't have an account?{" "}
+            <Link to="/signup" className="font-medium hover:underline" style={{ color: "#8b4a5a" }}>
+              Sign up
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );
