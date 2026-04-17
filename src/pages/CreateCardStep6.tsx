@@ -39,6 +39,7 @@ export default function CreateCardStep5Impact() {
   const [donationAmount, setDonationAmount] = useState<number>(cardData.donationAmount || 10);
   const [recipientName, setRecipientName] = useState(cardData.recipientName || '');
   const [recipientEmail, setRecipientEmail] = useState(cardData.recipientEmail || '');
+  const [senderName, setSenderName] = useState(cardData.senderName || '');
   const [sending, setSending] = useState(false);
 
   useEffect(() => {
