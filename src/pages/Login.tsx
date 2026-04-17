@@ -64,7 +64,7 @@ const Login = () => {
               color: "#2d2420",
             }}
           >
-            Sign in to Thank You for Thank You
+            Welcome back
           </h1>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
