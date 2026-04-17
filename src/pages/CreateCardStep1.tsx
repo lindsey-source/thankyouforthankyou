@@ -329,7 +329,7 @@ export default function CreateCardStep1() {
           <motion.h1
             className="text-4xl md:text-6xl tracking-tight"
             style={{
-              fontFamily: "'Playfair Display', serif",
+              fontFamily: "Georgia, 'Playfair Display', serif",
               color: '#2d2420',
               fontWeight: 500,
               letterSpacing: '-0.01em',
@@ -337,7 +337,7 @@ export default function CreateCardStep1() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            What are you celebrating?
+            Choose Your Occasion
           </motion.h1>
         </div>
 
@@ -367,7 +367,7 @@ export default function CreateCardStep1() {
                 aria-label={`Select ${occasion.name}`}
               >
                 {/* Portrait artwork — 2:3 ratio */}
-                <div className="relative w-full overflow-hidden" style={{ aspectRatio: '2 / 3' }}>
+                <div className="relative w-full overflow-hidden" style={{ aspectRatio: '3 / 4' }}>
                   <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-[1.04]">
                     <Art />
                   </div>
@@ -383,7 +383,7 @@ export default function CreateCardStep1() {
                   <h3
                     className="text-[17px] md:text-[19px] leading-tight"
                     style={{
-                      fontFamily: "'Playfair Display', serif",
+                      fontFamily: "Georgia, 'Playfair Display', serif",
                       color: '#2d2420',
                       fontWeight: 500,
                       letterSpacing: '0.005em',
