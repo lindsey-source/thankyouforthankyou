@@ -48,9 +48,9 @@ const LandingPage = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="py-20" style={{ backgroundColor: "#faf7f2" }}>
+      <section className="py-10 lg:py-12" style={{ backgroundColor: "#faf7f2" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-12 gap-10 items-center">
+          <div className="grid lg:grid-cols-12 gap-8 items-center">
             {/* Left: Headline + CTAs */}
             <div className="text-center lg:text-left lg:col-span-4" style={{ color: "#2d2420" }}>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/15 text-secondary text-sm font-medium mb-6">
