@@ -19,6 +19,7 @@ createRoot(document.getElementById("root")!).render(
       publishableKey={PUBLISHABLE_KEY}
       afterSignInUrl="/dashboard"
       afterSignUpUrl="/dashboard"
+      allowedRedirectOrigins={['https://thankyouforthankyou.lovable.app']}
       signInForceRedirectUrl="/dashboard"
       signUpForceRedirectUrl="/dashboard"
       signInFallbackRedirectUrl="/dashboard"
