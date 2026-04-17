@@ -1,32 +1,35 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCardWizard } from '@/contexts/CardWizardContext';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import { Heart, Baby, GraduationCap, Cake, Gift, Flower2, HandHeart } from 'lucide-react';
 import { ProgressBar } from '@/components/CardDesigner/ProgressBar';
-import { BreadcrumbNav } from '@/components/CardDesigner/BreadcrumbNav';
 
-const STEPS = [
-  { name: 'Occasion', path: '/create-card/step1' },
-  { name: 'Style', path: '/create-card/step2' },
-  { name: 'Customize', path: '/create-card/step3' },
-  { name: 'Message', path: '/create-card/step4' },
-  { name: 'Touches', path: '/create-card/step5' },
-  { name: 'Preview', path: '/create-card/step6' }
+import weddingSample from '@/assets/card-wedding-elegant.jpg';
+import babySample from '@/assets/card-baby-arrival.jpg';
+import graduationSample from '@/assets/card-graduation-rays.jpg';
+import birthdaySample from '@/assets/card-birthday-modern.jpg';
+import generalSample from '@/assets/card-thank-you-artistic.jpg';
+import memorialSample from '@/assets/card-memorial-nature.jpg';
+import charitySample from '@/assets/card-charity-hands.jpg';
+
+const STEP_NAMES = [
+  'Choose Occasion',
+  'Pick Your Style',
+  'Customize Design',
+  'Write Your Message',
+  'Add Finishing Touches',
+  'Preview & Send',
 ];
 
-const STEP_NAMES = ['Choose Occasion', 'Pick Your Style', 'Customize Design', 'Write Your Message', 'Add Finishing Touches', 'Preview & Send'];
-
 const occasions = [
-  { id: 'wedding', name: 'Wedding', icon: Heart, gradient: 'from-pink-100 to-rose-100' },
-  { id: 'baby', name: 'Baby', icon: Baby, gradient: 'from-blue-100 to-cyan-100' },
-  { id: 'graduation', name: 'Graduation', icon: GraduationCap, gradient: 'from-yellow-100 to-amber-100' },
-  { id: 'birthday', name: 'Birthday', icon: Cake, gradient: 'from-purple-100 to-pink-100' },
-  { id: 'general', name: 'General Thank You', icon: Gift, gradient: 'from-orange-100 to-yellow-100' },
-  { id: 'memorial', name: 'Memorial', icon: Flower2, gradient: 'from-gray-100 to-slate-100' },
-  { id: 'charity', name: 'Charity', icon: HandHeart, gradient: 'from-green-100 to-emerald-100' }
+  { id: 'wedding', name: 'Wedding', tagline: 'Celebrate your big day', icon: Heart, image: weddingSample },
+  { id: 'baby', name: 'Baby', tagline: 'Welcome the little one', icon: Baby, image: babySample },
+  { id: 'graduation', name: 'Graduation', tagline: 'Honor the achievement', icon: GraduationCap, image: graduationSample },
+  { id: 'birthday', name: 'Birthday', tagline: 'Mark another year', icon: Cake, image: birthdaySample },
+  { id: 'general', name: 'General Thank You', tagline: 'Everyday gratitude', icon: Gift, image: generalSample },
+  { id: 'memorial', name: 'Memorial', tagline: 'A gentle tribute', icon: Flower2, image: memorialSample },
+  { id: 'charity', name: 'Charity', tagline: 'Give back with grace', icon: HandHeart, image: charitySample },
 ];
 
 export default function CreateCardStep1() {
@@ -40,84 +43,98 @@ export default function CreateCardStep1() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-hero p-4 md:p-8">
-      <div className="max-w-6xl mx-auto">
-        <ProgressBar currentStep={1} totalSteps={6} stepNames={STEP_NAMES} />
-        <BreadcrumbNav currentStep={1} steps={STEPS} />
-        
-        <div className="text-center mb-8">
-          <motion.h1 
-            className="text-4xl md:text-5xl font-bold text-white mb-4"
-            initial={{ opacity: 0, y: -20 }}
+    <div className="min-h-screen" style={{ backgroundColor: '#faf7f2' }}>
+      <ProgressBar currentStep={1} totalSteps={6} stepNames={STEP_NAMES} />
+
+      <div className="max-w-6xl mx-auto px-4 md:px-8 pt-24 pb-20">
+        {/* Header */}
+        <div className="text-center mb-14">
+          <motion.h1
+            className="text-4xl md:text-5xl mb-4"
+            style={{ fontFamily: "'Playfair Display', serif", color: '#2a2622' }}
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            Let's make something beautiful together
+            Your Occasion
           </motion.h1>
-          <motion.p 
-            className="text-lg text-white/90 mb-6"
+          <motion.p
+            className="text-base md:text-lg max-w-xl mx-auto"
+            style={{ color: '#6b6259' }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
+            transition={{ delay: 0.15 }}
           >
-            Choose the occasion for your thank you card
+            Choose the moment you're celebrating. We'll tailor each detail to fit.
           </motion.p>
+        </div>
 
-          {/* Benefits Callout */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="max-w-3xl mx-auto mb-8"
-          >
-            <Card className="bg-white/95 backdrop-blur-sm border-primary/20">
-              <CardContent className="p-6">
-                <div className="flex items-start gap-3">
-                  <Heart className="h-6 w-6 text-primary mt-1 flex-shrink-0" />
-                  <div className="text-left">
-                    <h4 className="font-semibold text-primary mb-2 text-lg">
-                      Your Thank You, Reimagined
-                    </h4>
-                    <p className="text-sm text-foreground/80 leading-relaxed">
-                      Traditional thank you cards cost $3-8 each (card + stamp + time). Instead of that expense, 
-                      send a beautiful digital card and donate that money to charity - turning your gratitude into greater good.
+        {/* Occasion Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          {occasions.map((occasion, index) => {
+            const Icon = occasion.icon;
+            const isSelected = cardData.occasion === occasion.id;
+
+            return (
+              <motion.button
+                key={occasion.id}
+                type="button"
+                onClick={() => handleOccasionSelect(occasion.id)}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.06, duration: 0.4 }}
+                whileHover={{ y: -4 }}
+                className="group text-left rounded-2xl overflow-hidden transition-all duration-300"
+                style={{
+                  backgroundColor: '#ffffff',
+                  border: isSelected ? '2px solid #c17b8a' : '1px solid #ede8e3',
+                  boxShadow: isSelected
+                    ? '0 12px 32px rgba(193, 123, 138, 0.18)'
+                    : '0 4px 16px rgba(42, 38, 34, 0.04)',
+                }}
+              >
+                {/* Sample card preview */}
+                <div className="relative w-full aspect-[4/5] overflow-hidden" style={{ backgroundColor: '#f5f1ea' }}>
+                  <img
+                    src={occasion.image}
+                    alt={`${occasion.name} sample card`}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                  <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    style={{
+                      background: 'linear-gradient(180deg, transparent 60%, rgba(42, 38, 34, 0.25) 100%)',
+                    }}
+                  />
+                </div>
+
+                {/* Footer with icon + name */}
+                <div className="px-6 py-5 flex items-center gap-4">
+                  <div
+                    className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0"
+                    style={{ backgroundColor: isSelected ? '#c17b8a' : '#f5f1ea' }}
+                  >
+                    <Icon
+                      className="w-5 h-5"
+                      style={{ color: isSelected ? '#ffffff' : '#8a9a82' }}
+                      strokeWidth={1.75}
+                    />
+                  </div>
+                  <div className="min-w-0">
+                    <h3
+                      className="text-lg leading-tight"
+                      style={{ fontFamily: "'Playfair Display', serif", color: '#2a2622' }}
+                    >
+                      {occasion.name}
+                    </h3>
+                    <p className="text-xs mt-0.5" style={{ color: '#8a8079' }}>
+                      {occasion.tagline}
                     </p>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {occasions.map((occasion, index) => {
-            const Icon = occasion.icon;
-            return (
-              <motion.div
-                key={occasion.id}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <Card
-                  className={`cursor-pointer transition-all hover:scale-105 hover:shadow-xl ${
-                    cardData.occasion === occasion.id ? 'ring-4 ring-primary' : ''
-                  }`}
-                  onClick={() => handleOccasionSelect(occasion.id)}
-                >
-                  <CardContent className="p-8">
-                    <div className={`w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br ${occasion.gradient} flex items-center justify-center`}>
-                      <Icon className="w-10 h-10 text-gray-700" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-center">{occasion.name}</h3>
-                  </CardContent>
-                </Card>
-              </motion.div>
+              </motion.button>
             );
           })}
-        </div>
-
-        <div className="mt-12 text-center">
-          <p className="text-sm text-white/70">Step 1 of 5</p>
         </div>
       </div>
     </div>
