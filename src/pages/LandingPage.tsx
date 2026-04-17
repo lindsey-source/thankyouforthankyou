@@ -79,229 +79,93 @@ const LandingPage = () => {
               </div>
             </div>
 
-            {/* Right: Custom SVG illustration */}
-            <div className="relative flex items-center justify-center">
-              <svg
-                viewBox="0 0 600 360"
-                xmlns="http://www.w3.org/2000/svg"
+            {/* Right: Product mockup card */}
+            <div className="relative flex items-center justify-center min-h-[380px] lg:min-h-[420px]">
+              {/* Back card (peeking, rotated +3deg) */}
+              <div
+                className="absolute w-[280px] sm:w-[300px] aspect-[3/4] rounded-2xl shadow-soft border"
+                style={{
+                  transform: "rotate(3deg) translate(28px, 16px)",
+                  backgroundColor: "#f5ede9",
+                  borderColor: "rgba(45, 36, 32, 0.06)",
+                }}
+                aria-hidden="true"
+              />
+
+              {/* Front card (rotated -3deg) */}
+              <div
+                className="relative w-[280px] sm:w-[300px] aspect-[3/4] rounded-2xl bg-white border overflow-hidden shadow-warm"
+                style={{
+                  transform: "rotate(-3deg)",
+                  borderColor: "rgba(45, 36, 32, 0.08)",
+                }}
                 role="img"
-                aria-label="A thank-you card transforming into a charitable donation"
-                className="w-full h-auto"
-                style={{ maxHeight: "380px" }}
+                aria-label="Example thank-you e-card preview"
               >
-                <defs>
-                  <linearGradient id="cardShine" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#ffffff" />
-                    <stop offset="100%" stopColor="#fdf6f3" />
-                  </linearGradient>
-                  <linearGradient id="charityFill" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#a8bfa3" />
-                    <stop offset="100%" stopColor="#8faa8b" />
-                  </linearGradient>
-                  <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
-                    <feDropShadow dx="0" dy="6" stdDeviation="8" floodColor="#2d2420" floodOpacity="0.10" />
-                  </filter>
-                </defs>
-
-                {/* Soft background blobs */}
-                <ellipse cx="300" cy="195" rx="280" ry="150" fill="#fdf6f3" />
-                <circle cx="475" cy="120" r="55" fill="#8faa8b" opacity="0.13" />
-                <circle cx="120" cy="260" r="48" fill="#c17b8a" opacity="0.12" />
-
-                {/* ============ LEFT: Envelope with card ============ */}
-                <g transform="translate(60 110)" filter="url(#softShadow)">
-                  {/* Card behind */}
-                  <rect
-                    x="14"
-                    y="-18"
-                    width="132"
-                    height="98"
-                    rx="8"
-                    fill="url(#cardShine)"
-                    stroke="#2d2420"
-                    strokeWidth="2"
-                  />
-                  {/* card content lines */}
-                  <line x1="32" y1="2" x2="128" y2="2" stroke="#c17b8a" strokeWidth="3" strokeLinecap="round" />
-                  <line x1="32" y1="18" x2="112" y2="18" stroke="#2d2420" strokeWidth="1.8" strokeLinecap="round" opacity="0.45" />
-                  <line x1="32" y1="30" x2="120" y2="30" stroke="#2d2420" strokeWidth="1.8" strokeLinecap="round" opacity="0.45" />
-                  <line x1="32" y1="42" x2="96" y2="42" stroke="#2d2420" strokeWidth="1.8" strokeLinecap="round" opacity="0.45" />
-                  {/* tiny heart on card */}
-                  <path
-                    d="M112 56 c -5 -5 -5 -12 1 -12 c 3 0 4 2 5 4 c 1 -2 2 -4 5 -4 c 6 0 6 7 1 12 l -6 6 z"
-                    fill="#c17b8a"
-                  />
-
-                  {/* Envelope body in front */}
-                  <rect
-                    x="0"
-                    y="56"
-                    width="160"
-                    height="86"
-                    rx="8"
-                    fill="#ffffff"
-                    stroke="#2d2420"
-                    strokeWidth="2"
-                  />
-                  {/* envelope flap creases */}
-                  <path
-                    d="M 0 60 L 80 110 L 160 60"
-                    fill="none"
-                    stroke="#2d2420"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M 0 142 L 60 100"
-                    fill="none"
-                    stroke="#2d2420"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    opacity="0.5"
-                  />
-                  <path
-                    d="M 160 142 L 100 100"
-                    fill="none"
-                    stroke="#2d2420"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    opacity="0.5"
-                  />
-                </g>
-
-                {/* ============ MIDDLE: Curved arrow with floating heart ============ */}
-                <g>
-                  {/* Floating heart above arrow */}
-                  <g transform="translate(285 90)">
-                    <path
-                      d="M15 30 C 0 18, 2 4, 14 4 C 20 4, 24 8, 27 13 C 30 8, 34 4, 40 4 C 52 4, 54 18, 39 30 L 27 44 Z"
+                {/* Top blush gradient */}
+                <div
+                  className="relative h-[42%] flex items-center justify-center"
+                  style={{
+                    background:
+                      "linear-gradient(180deg, #e8c4b8 0%, #fdf6f3 100%)",
+                  }}
+                >
+                  <div className="h-14 w-14 rounded-full bg-white/70 backdrop-blur-sm flex items-center justify-center shadow-sm">
+                    <Heart
+                      className="h-7 w-7"
+                      style={{ color: "#c17b8a" }}
                       fill="#c17b8a"
-                      stroke="#2d2420"
-                      strokeWidth="2"
-                      strokeLinejoin="round"
+                      strokeWidth={1.5}
                     />
-                    <path
-                      d="M 20 14 C 18 17, 19 21, 22 22"
-                      fill="none"
-                      stroke="#fdf6f3"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      opacity="0.85"
-                    />
-                  </g>
-                  {/* Curved dashed arrow */}
-                  <path
-                    d="M 250 200 Q 305 145 365 200"
-                    fill="none"
-                    stroke="#2d2420"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeDasharray="2 8"
-                  />
-                  <path
-                    d="M 355 188 L 368 202 L 354 212"
-                    fill="none"
-                    stroke="#2d2420"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </g>
+                  </div>
+                </div>
 
-                {/* ============ RIGHT: Charity circle ($ → ♥) ============ */}
-                <g transform="translate(400 110)" filter="url(#softShadow)">
-                  {/* Outer ring */}
-                  <circle cx="80" cy="80" r="78" fill="url(#charityFill)" stroke="#2d2420" strokeWidth="2" />
-                  {/* Inner cream disc */}
-                  <circle cx="80" cy="80" r="62" fill="#fdf6f3" stroke="#2d2420" strokeWidth="1.5" opacity="0.95" />
+                {/* Card body */}
+                <div className="p-5 flex flex-col h-[58%]">
+                  <p
+                    className="text-xl mb-2"
+                    style={{
+                      fontFamily: "'Playfair Display', Georgia, serif",
+                      color: "#2d2420",
+                    }}
+                  >
+                    Dear Sarah,
+                  </p>
+                  <p
+                    className="text-sm leading-relaxed flex-1"
+                    style={{ color: "#2d2420", opacity: 0.72 }}
+                  >
+                    Thank you so much for being part of our special day. Your
+                    presence meant the world to us.
+                  </p>
 
-                  {/* Dollar sign (left, fading) */}
-                  <g transform="translate(36 50)" opacity="0.45">
-                    <text
-                      x="0"
-                      y="40"
-                      fontFamily="Georgia, serif"
-                      fontSize="46"
-                      fontWeight="700"
-                      fill="#2d2420"
+                  {/* Donation badge */}
+                  <div className="mt-3">
+                    <div
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold"
+                      style={{
+                        backgroundColor: "rgba(143, 170, 139, 0.18)",
+                        color: "#5a7257",
+                      }}
                     >
-                      $
-                    </text>
-                  </g>
+                      <span aria-hidden="true">💚</span>
+                      $3 donated to WWF
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-                  {/* Tiny arrow $ -> heart */}
-                  <path
-                    d="M 64 80 L 84 80"
-                    fill="none"
-                    stroke="#2d2420"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                  <path
-                    d="M 80 76 L 86 80 L 80 84"
-                    fill="none"
-                    stroke="#2d2420"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-
-                  {/* Heart (right, prominent) */}
-                  <g transform="translate(92 56)">
-                    <path
-                      d="M18 38 C 0 22, 2 4, 18 4 C 26 4, 30 10, 34 16 C 38 10, 42 4, 50 4 C 66 4, 68 22, 50 38 L 34 54 Z"
-                      fill="#c17b8a"
-                      stroke="#2d2420"
-                      strokeWidth="2"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M 24 16 C 22 20, 24 24, 28 25"
-                      fill="none"
-                      stroke="#fdf6f3"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      opacity="0.85"
-                    />
-                  </g>
-
-                  {/* Outer ring tick marks for "polish" */}
-                  <g stroke="#2d2420" strokeWidth="1.5" strokeLinecap="round" opacity="0.55">
-                    <line x1="80" y1="6" x2="80" y2="12" />
-                    <line x1="80" y1="148" x2="80" y2="154" />
-                    <line x1="6" y1="80" x2="12" y2="80" />
-                    <line x1="148" y1="80" x2="154" y2="80" />
-                  </g>
-                </g>
-
-                {/* Sparkles */}
-                <g stroke="#2d2420" strokeWidth="2" strokeLinecap="round" fill="none">
-                  <g transform="translate(40 70)">
-                    <line x1="0" y1="-7" x2="0" y2="7" />
-                    <line x1="-7" y1="0" x2="7" y2="0" />
-                  </g>
-                  <g transform="translate(220 70)" opacity="0.8">
-                    <line x1="0" y1="-5" x2="0" y2="5" />
-                    <line x1="-5" y1="0" x2="5" y2="0" />
-                  </g>
-                  <g transform="translate(560 90)">
-                    <line x1="0" y1="-6" x2="0" y2="6" />
-                    <line x1="-6" y1="0" x2="6" y2="0" />
-                  </g>
-                  <g transform="translate(180 300)" opacity="0.75">
-                    <line x1="0" y1="-5" x2="0" y2="5" />
-                    <line x1="-5" y1="0" x2="5" y2="0" />
-                  </g>
-                  <g transform="translate(540 290)">
-                    <line x1="0" y1="-6" x2="0" y2="6" />
-                    <line x1="-6" y1="0" x2="6" y2="0" />
-                  </g>
-                </g>
-                <circle cx="100" cy="305" r="3" fill="#c17b8a" opacity="0.8" />
-                <circle cx="350" cy="295" r="3" fill="#8faa8b" />
-                <circle cx="260" cy="60" r="2.5" fill="#c17b8a" opacity="0.7" />
-              </svg>
+              {/* Subtle decorative dots */}
+              <div
+                className="absolute -top-2 -left-2 h-3 w-3 rounded-full opacity-70"
+                style={{ backgroundColor: "#c17b8a" }}
+                aria-hidden="true"
+              />
+              <div
+                className="absolute -bottom-1 -right-1 h-3 w-3 rounded-full opacity-70"
+                style={{ backgroundColor: "#8faa8b" }}
+                aria-hidden="true"
+              />
             </div>
           </div>
         </div>
