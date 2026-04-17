@@ -83,9 +83,9 @@ const LandingPage = () => {
             <div className="lg:col-span-4 order-first lg:order-none">
               <div className="relative rounded-3xl overflow-hidden shadow-warm aspect-[4/5] bg-muted">
                 <img
-                  src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600"
-                  alt="Friends celebrating together with handwritten thank-you notes"
-                  loading="lazy"
+                  src="https://images.unsplash.com/photo-1543269664-76bc3997d9ea?w=600&q=80"
+                  alt="Friends celebrating together"
+                  loading="eager"
                   className="w-full h-full object-cover"
                 />
                 <div
