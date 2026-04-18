@@ -217,6 +217,29 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
           </div>
         </div>
       )}
+
+      {/* Envelope color band — bottom edge accent */}
+      {envelopeColor && !(charityName || donationAmount > 0) && (
+        <div
+          className="absolute bottom-0 left-0 right-0"
+          style={{
+            height: '8px',
+            backgroundColor: envelopeColor,
+            boxShadow: 'inset 0 1px 0 rgba(0,0,0,0.06)',
+          }}
+          aria-hidden="true"
+        />
+      )}
+      {envelopeColor && (
+        <div
+          className="absolute top-0 left-0 right-0"
+          style={{
+            height: '4px',
+            backgroundColor: envelopeColor,
+          }}
+          aria-hidden="true"
+        />
+      )}
     </div>
   );
 };
