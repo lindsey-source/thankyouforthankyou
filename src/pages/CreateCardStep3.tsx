@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCardWizard } from '@/contexts/CardWizardContext';
-import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
-import { getTemplateImage } from '@/lib/templateImageMap';
 import { ProgressBar } from '@/components/CardDesigner/ProgressBar';
 import { BreadcrumbNav } from '@/components/CardDesigner/BreadcrumbNav';
 import { StepContainer } from '@/components/CardDesigner/StepContainer';
@@ -17,242 +15,216 @@ const STEPS = [
   { name: 'Customize', path: '/create-card/step3' },
   { name: 'Message', path: '/create-card/step4' },
   { name: 'Touches', path: '/create-card/step5' },
-  { name: 'Preview', path: '/create-card/step6' }
+  { name: 'Preview', path: '/create-card/step6' },
 ];
 
-const STEP_NAMES = ['Choose Occasion', 'Pick Your Style', 'Customize Design', 'Write Your Message', 'Choose Your Cause', 'Add Finishing Touches', 'Preview & Send'];
+const STEP_NAMES = [
+  'Choose Occasion',
+  'Pick Your Style',
+  'Customize Design',
+  'Write Your Message',
+  'Choose Your Cause',
+  'Add Finishing Touches',
+  'Preview & Send',
+];
+
+interface PaletteColors {
+  primary: string;
+  secondary: string;
+  accent: string;
+  text: string;
+}
+
+interface FontPair {
+  heading: string;
+  body: string;
+}
+
+const FONT_PAIRINGS: { id: string; name: string; fonts: FontPair }[] = [
+  { id: 'playfair', name: 'Elegant Serif', fonts: { heading: "'Playfair Display', Georgia, serif", body: "'Inter', sans-serif" } },
+  { id: 'inter', name: 'Modern Sans', fonts: { heading: "'Inter', sans-serif", body: "'Inter', sans-serif" } },
+  { id: 'dancing', name: 'Romantic Script', fonts: { heading: "'Dancing Script', cursive", body: "'Montserrat', sans-serif" } },
+  { id: 'cormorant', name: 'Classic Serif', fonts: { heading: "'Cormorant Garamond', Georgia, serif", body: "'Crimson Text', Georgia, serif" } },
+];
 
 export default function CreateCardStep3() {
   const navigate = useNavigate();
   const { cardData, updateCardData, setCurrentStep } = useCardWizard();
-  const [template, setTemplate] = useState<any>(null);
-  const [selectedPaletteId, setSelectedPaletteId] = useState<string>('default');
-  const [selectedFont, setSelectedFont] = useState<string | null>(null);
 
+  // Guard: if user lands here without a chosen design, send them back to Step 2.
   useEffect(() => {
-    loadTemplate();
-  }, []);
-
-  useEffect(() => {
-    if (template) {
-      setSelectedPaletteId('default');
-      setSelectedFont(cardData.fontChoice || 'default');
-    }
-  }, [template, cardData]);
-
-  const loadTemplate = async () => {
-    // Step 2 uses synthetic designs (not DB rows) — fall back to an in-memory template
     if (!cardData.templateId) {
-      setTemplate({
-        id: 'synthetic',
-        name: (cardData.colorPalette as any)?.theme || 'Custom',
+      navigate('/create-card/step2', { replace: true });
+    }
+  }, [cardData.templateId, navigate]);
+
+  // Build the "Original" palette from the design chosen in Step 2 (already in context).
+  const originalPalette: PaletteColors = useMemo(() => {
+    const cp = (cardData.colorPalette as any) || {};
+    return {
+      primary: cp.accent || '#c17b8a',
+      secondary: cp.accentSoft || cp.bg || '#f5ede9',
+      accent: cp.accent || '#c17b8a',
+      text: cp.ink || '#2d2420',
+    };
+  }, [cardData.colorPalette]);
+
+  const colorPalettes = useMemo(
+    () => [
+      { id: 'default', name: 'Original', colors: originalPalette },
+      {
+        id: 'warm',
+        name: 'Warm Sunset',
         colors: {
-          primary: 'hsl(343, 35%, 62%)',
-          secondary: 'hsl(35, 45%, 92%)',
-          accent: 'hsl(40, 38%, 60%)',
-          text: 'hsl(25, 20%, 14%)',
+          primary: 'hsl(25, 75%, 65%)',
+          secondary: 'hsl(45, 85%, 75%)',
+          accent: 'hsl(15, 70%, 60%)',
+          text: 'hsl(25, 40%, 30%)',
         },
-        fonts: { heading: 'Playfair Display', body: 'Inter' },
-        preview_image: null,
-      });
-      return;
+      },
+      {
+        id: 'cool',
+        name: 'Ocean Breeze',
+        colors: {
+          primary: 'hsl(200, 70%, 65%)',
+          secondary: 'hsl(180, 60%, 75%)',
+          accent: 'hsl(210, 65%, 55%)',
+          text: 'hsl(210, 40%, 30%)',
+        },
+      },
+      {
+        id: 'elegant',
+        name: 'Elegant Neutrals',
+        colors: {
+          primary: 'hsl(30, 15%, 85%)',
+          secondary: 'hsl(40, 20%, 90%)',
+          accent: 'hsl(35, 25%, 65%)',
+          text: 'hsl(30, 30%, 25%)',
+        },
+      },
+      {
+        id: 'romantic',
+        name: 'Romantic Blush',
+        colors: {
+          primary: 'hsl(350, 65%, 85%)',
+          secondary: 'hsl(340, 55%, 90%)',
+          accent: 'hsl(355, 70%, 75%)',
+          text: 'hsl(340, 35%, 35%)',
+        },
+      },
+    ],
+    [originalPalette]
+  );
+
+  // Seed selection from the design coming out of Step 2.
+  const initialFont = cardData.fontChoice && FONT_PAIRINGS.some((f) => f.id === cardData.fontChoice)
+    ? cardData.fontChoice
+    : 'playfair';
+
+  const [selectedPaletteId, setSelectedPaletteId] = useState<string>('default');
+  const [selectedFontId, setSelectedFontId] = useState<string>(initialFont);
+
+  // Keep font in sync if context changes (e.g. user goes back to Step 2 and picks a different design).
+  useEffect(() => {
+    if (cardData.fontChoice && FONT_PAIRINGS.some((f) => f.id === cardData.fontChoice)) {
+      setSelectedFontId(cardData.fontChoice);
     }
+  }, [cardData.fontChoice]);
 
-    const { data, error } = await supabase
-      .from('card_templates')
-      .select('*')
-      .eq('id', cardData.templateId)
-      .single();
-
-    if (error) {
-      toast.error('Failed to load template');
-      return;
-    }
-
-    setTemplate(data);
-  };
+  const activePalette = colorPalettes.find((p) => p.id === selectedPaletteId)?.colors || originalPalette;
+  const activeFonts = FONT_PAIRINGS.find((f) => f.id === selectedFontId)?.fonts || FONT_PAIRINGS[0].fonts;
 
   const handleNext = () => {
-    if (!selectedPaletteId || !selectedFont) {
+    if (!selectedPaletteId || !selectedFontId) {
       toast.error('Please select a color palette and font');
       return;
     }
 
-    const selectedPalette = colorPalettes.find(p => p.id === selectedPaletteId)?.colors;
-
     updateCardData({
-      colorPalette: selectedPalette,
-      fontChoice: selectedFont
+      colorPalette: {
+        ...((cardData.colorPalette as any) || {}),
+        ...activePalette,
+      },
+      fontChoice: selectedFontId,
     });
     setCurrentStep(4);
     navigate('/create-card/step4');
   };
 
-  const colorPalettes = template?.colors ? [
-    { id: 'default', name: 'Original', colors: template.colors },
-    { 
-      id: 'warm', 
-      name: 'Warm Sunset',
-      colors: { 
-        primary: 'hsl(25, 75%, 65%)', 
-        secondary: 'hsl(45, 85%, 75%)', 
-        accent: 'hsl(15, 70%, 60%)',
-        text: 'hsl(25, 40%, 30%)'
-      }
-    },
-    { 
-      id: 'cool', 
-      name: 'Ocean Breeze',
-      colors: { 
-        primary: 'hsl(200, 70%, 65%)', 
-        secondary: 'hsl(180, 60%, 75%)', 
-        accent: 'hsl(210, 65%, 55%)',
-        text: 'hsl(210, 40%, 30%)'
-      }
-    },
-    { 
-      id: 'elegant', 
-      name: 'Elegant Neutrals',
-      colors: { 
-        primary: 'hsl(30, 15%, 85%)', 
-        secondary: 'hsl(40, 20%, 90%)', 
-        accent: 'hsl(35, 25%, 65%)',
-        text: 'hsl(30, 30%, 25%)'
-      }
-    },
-    { 
-      id: 'romantic', 
-      name: 'Romantic Blush',
-      colors: { 
-        primary: 'hsl(350, 65%, 85%)', 
-        secondary: 'hsl(340, 55%, 90%)', 
-        accent: 'hsl(355, 70%, 75%)',
-        text: 'hsl(340, 35%, 35%)'
-      }
-    }
-  ] : [];
-
-  const fontPairings = template?.fonts ? [
-    { id: 'default', name: 'Original', fonts: template.fonts },
-    { 
-      id: 'serif', 
-      name: 'Elegant Serif',
-      fonts: { heading: 'Cormorant Garamond', body: 'Crimson Text' }
-    },
-    { 
-      id: 'modern', 
-      name: 'Modern Sans',
-      fonts: { heading: 'Poppins', body: 'Inter' }
-    },
-    { 
-      id: 'script', 
-      name: 'Romantic Script',
-      fonts: { heading: 'Dancing Script', body: 'Montserrat' }
-    }
-  ] : [];
-
-  if (!template) {
-    return (
-      <div className="min-h-screen bg-gradient-hero flex items-center justify-center">
-        <div className="text-white text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
-          <p>Loading template...</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-gradient-hero p-4 md:p-8">
       <ProgressBar currentStep={3} totalSteps={7} stepNames={STEP_NAMES} />
       <BreadcrumbNav currentStep={3} steps={STEPS} />
-      
+
       <StepContainer
         title="Customize your design"
         subtitle="Choose colors and fonts that match your style"
         onBack={() => navigate('/create-card/step2')}
         onNext={handleNext}
       >
-        {/* Live Preview - Real card */}
+        {/* Live Preview */}
         <Card className="bg-white/95 backdrop-blur-sm mb-6">
           <CardContent className="p-6">
             <Label className="text-base font-semibold mb-4 block text-center">Live Preview</Label>
-            {(() => {
-              const activePalette = colorPalettes.find(p => p.id === selectedPaletteId)?.colors || template.colors;
-              const activeFonts = fontPairings.find(f => f.id === selectedFont)?.fonts || template.fonts;
-              return (
-                <div className="max-w-[300px] mx-auto">
-                  <div
-                    className="relative w-full aspect-[3/4] rounded-2xl bg-white border overflow-hidden shadow-warm"
-                    style={{ borderColor: 'rgba(45, 36, 32, 0.08)' }}
-                    role="img"
-                    aria-label="Live card preview"
+            <div className="max-w-[300px] mx-auto">
+              <div
+                className="relative w-full aspect-[3/4] rounded-2xl bg-white border overflow-hidden shadow-warm"
+                style={{ borderColor: 'rgba(45, 36, 32, 0.08)' }}
+                role="img"
+                aria-label="Live card preview"
+              >
+                <div
+                  className="relative flex flex-col items-center justify-center"
+                  style={{
+                    height: '42%',
+                    background: `linear-gradient(135deg, ${activePalette.secondary} 0%, ${activePalette.primary} 100%)`,
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: activeFonts.heading,
+                      fontSize: '44px',
+                      color: activePalette.accent,
+                      letterSpacing: '0.04em',
+                      lineHeight: 1.1,
+                    }}
                   >
-                    {/* Header band using selected primary/secondary */}
+                    Thank You
+                  </span>
+                  <div className="flex items-center gap-2 mt-3 opacity-70" aria-hidden="true">
+                    <div style={{ width: '28px', height: '1px', backgroundColor: activePalette.accent }} />
                     <div
-                      className="relative flex flex-col items-center justify-center"
                       style={{
-                        height: '42%',
-                        background: `linear-gradient(135deg, ${activePalette.secondary} 0%, ${activePalette.primary} 100%)`,
+                        width: '4px',
+                        height: '4px',
+                        backgroundColor: activePalette.accent,
+                        transform: 'rotate(45deg)',
                       }}
-                    >
-                      <span
-                        style={{
-                          fontFamily: activeFonts.heading,
-                          fontSize: '44px',
-                          color: activePalette.accent,
-                          letterSpacing: '0.04em',
-                          lineHeight: 1.1,
-                        }}
-                      >
-                        Thank You
-                      </span>
-                      <div
-                        className="flex items-center gap-2 mt-3 opacity-70"
-                        aria-hidden="true"
-                      >
-                        <div style={{ width: '28px', height: '1px', backgroundColor: activePalette.accent }} />
-                        <div
-                          style={{
-                            width: '4px',
-                            height: '4px',
-                            backgroundColor: activePalette.accent,
-                            transform: 'rotate(45deg)',
-                          }}
-                        />
-                        <div style={{ width: '28px', height: '1px', backgroundColor: activePalette.accent }} />
-                      </div>
-                    </div>
-
-                    {/* Body */}
-                    <div className="p-5 flex flex-col" style={{ height: '58%' }}>
-                      <p
-                        className="text-xl mb-2"
-                        style={{ fontFamily: activeFonts.heading, color: activePalette.text }}
-                      >
-                        Dear Sarah,
-                      </p>
-                      <p
-                        className="text-sm leading-relaxed flex-1"
-                        style={{ fontFamily: activeFonts.body, color: activePalette.text, opacity: 0.75 }}
-                      >
-                        Thank you so much for being part of our special day. Your presence meant the world to us.
-                      </p>
-                      <p
-                        className="text-sm mt-3"
-                        style={{ fontFamily: activeFonts.body, color: activePalette.text, opacity: 0.85 }}
-                      >
-                        With love,
-                      </p>
-                    </div>
+                    />
+                    <div style={{ width: '28px', height: '1px', backgroundColor: activePalette.accent }} />
                   </div>
                 </div>
-              );
-            })()}
+
+                <div className="p-5 flex flex-col" style={{ height: '58%' }}>
+                  <p className="text-xl mb-2" style={{ fontFamily: activeFonts.heading, color: activePalette.text }}>
+                    Dear Sarah,
+                  </p>
+                  <p
+                    className="text-sm leading-relaxed flex-1"
+                    style={{ fontFamily: activeFonts.body, color: activePalette.text, opacity: 0.75 }}
+                  >
+                    Thank you so much for being part of our special day. Your presence meant the world to us.
+                  </p>
+                  <p className="text-sm mt-3" style={{ fontFamily: activeFonts.body, color: activePalette.text, opacity: 0.85 }}>
+                    With love,
+                  </p>
+                </div>
+              </div>
+            </div>
           </CardContent>
         </Card>
 
-        {/* Color Palettes Section */}
+        {/* Color Palettes */}
         <Card className="bg-white/95 backdrop-blur-sm mb-6">
           <CardContent className="p-6">
             <div className="mb-4">
@@ -299,7 +271,7 @@ export default function CreateCardStep3() {
           </CardContent>
         </Card>
 
-        {/* Font Pairings Section */}
+        {/* Font Pairings */}
         <Card className="bg-white/95 backdrop-blur-sm">
           <CardContent className="p-6">
             <div className="mb-4">
@@ -307,12 +279,12 @@ export default function CreateCardStep3() {
               <p className="text-sm text-muted-foreground">Pick typography that expresses your message</p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-              {fontPairings.map((pairing) => {
-                const isSelected = selectedFont === pairing.id;
+              {FONT_PAIRINGS.map((pairing) => {
+                const isSelected = selectedFontId === pairing.id;
                 return (
                   <div
                     key={pairing.id}
-                    onClick={() => setSelectedFont(pairing.id)}
+                    onClick={() => setSelectedFontId(pairing.id)}
                     role="button"
                     tabIndex={0}
                     aria-pressed={isSelected}
@@ -333,19 +305,13 @@ export default function CreateCardStep3() {
                     <div className="space-y-3">
                       <div>
                         <p className="text-xs text-muted-foreground mb-1">Heading</p>
-                        <p
-                          className="text-xl sm:text-2xl truncate"
-                          style={{ fontFamily: pairing.fonts.heading }}
-                        >
+                        <p className="text-xl sm:text-2xl truncate" style={{ fontFamily: pairing.fonts.heading }}>
                           Thank You
                         </p>
                       </div>
                       <div>
                         <p className="text-xs text-muted-foreground mb-1">Body</p>
-                        <p
-                          className="text-sm"
-                          style={{ fontFamily: pairing.fonts.body }}
-                        >
+                        <p className="text-sm" style={{ fontFamily: pairing.fonts.body }}>
                           Thank you for your thoughtful gift.
                         </p>
                       </div>
