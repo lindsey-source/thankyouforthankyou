@@ -140,6 +140,55 @@ const Dashboard = () => {
           </div>
         </div>
 
+        {/* Pre-event Setup */}
+        <Card className="mb-10 border-secondary/30 bg-gradient-card">
+          <CardHeader>
+            <div className="flex items-center gap-2 text-secondary mb-1">
+              <Calendar className="h-4 w-4" />
+              <span className="text-xs font-medium tracking-wide uppercase">
+                Pre-event Setup
+              </span>
+            </div>
+            <CardTitle className="text-2xl">Planning ahead?</CardTitle>
+            <CardDescription>
+              Get set up before your event — design your card and grab the gift tracker so you're
+              ready to send thank-yous the moment you're back.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="rounded-xl border border-border bg-background/60 p-5 flex flex-col">
+                <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center mb-3">
+                  <Palette className="h-5 w-5 text-primary" />
+                </div>
+                <h3 className="font-semibold text-foreground mb-1">Design your card</h3>
+                <p className="text-sm text-muted-foreground mb-4 flex-1">
+                  Pick a template, write your message, and choose your cause. Save it for later.
+                </p>
+                <Link to="/create-card/step1">
+                  <Button variant="hero" size="sm" className="w-full gap-2">
+                    <Plus className="h-4 w-4" />
+                    Start the wizard
+                  </Button>
+                </Link>
+              </div>
+              <div className="rounded-xl border border-border bg-background/60 p-5 flex flex-col">
+                <div className="h-10 w-10 rounded-lg bg-secondary/15 flex items-center justify-center mb-3">
+                  <Download className="h-5 w-5 text-secondary" />
+                </div>
+                <h3 className="font-semibold text-foreground mb-1">Gift tracker template</h3>
+                <p className="text-sm text-muted-foreground mb-4 flex-1">
+                  Bring it to your event. Jot down who gave what, then upload when you're ready.
+                </p>
+                <Button variant="outline" size="sm" onClick={handleDownloadTemplate} className="w-full gap-2">
+                  <Download className="h-4 w-4" />
+                  Download template (CSV)
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Stats */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10">
           <Card className="border-primary/20 bg-gradient-card hover:shadow-warm transition-all duration-300">
