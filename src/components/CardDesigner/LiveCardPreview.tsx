@@ -76,19 +76,19 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
       : fonts.heading;
   const showSignature = signatureStyle !== 'none' && !!sender;
 
-  return (
+  const hasEnvelope = !!envelopeColor;
+
+  // Card face — the actual stationery, with texture rendered as background
+  const cardFace = (
     <div
-      className={`relative w-full aspect-[3/4] rounded-2xl border overflow-hidden shadow-warm ${className}`}
+      className="relative w-full h-full overflow-hidden"
       style={{
-        borderColor: 'rgba(45, 36, 32, 0.08)',
         background: isLinen
-          ? 'repeating-linear-gradient(45deg, rgba(120,100,80,0.05) 0px, rgba(120,100,80,0.05) 1px, transparent 1px, transparent 4px), #fefcf8'
+          ? 'repeating-linear-gradient(45deg, rgba(120,100,80,0.06) 0px, rgba(120,100,80,0.06) 1px, transparent 1px, transparent 4px), #fefcf8'
           : isWatercolor
-          ? 'radial-gradient(ellipse at 20% 10%, rgba(193,123,138,0.12), transparent 60%), radial-gradient(ellipse at 80% 90%, rgba(143,170,139,0.12), transparent 60%), #fffdf9'
+          ? 'radial-gradient(ellipse at 20% 10%, rgba(193,123,138,0.14), transparent 60%), radial-gradient(ellipse at 80% 90%, rgba(143,170,139,0.14), transparent 60%), #fffdf9'
           : '#ffffff',
       }}
-      role="img"
-      aria-label="Live card preview"
     >
       {/* Header art — photo if uploaded, otherwise gradient + decorative thank-you */}
       <div
@@ -217,29 +217,69 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
           </div>
         </div>
       )}
+    </div>
+  );
 
-      {/* Envelope color band — bottom edge accent */}
-      {envelopeColor && !(charityName || donationAmount > 0) && (
+  // No envelope — just render the card face
+  if (!hasEnvelope) {
+    return (
+      <div
+        className={`relative w-full aspect-[3/4] rounded-2xl border overflow-hidden shadow-warm ${className}`}
+        style={{ borderColor: 'rgba(45, 36, 32, 0.08)' }}
+        role="img"
+        aria-label="Live card preview"
+      >
+        {cardFace}
+      </div>
+    );
+  }
+
+  // With envelope — show the card peeking out of an open envelope
+  return (
+    <div
+      className={`relative w-full aspect-[3/4] ${className}`}
+      role="img"
+      aria-label="Live card preview with envelope"
+    >
+      {/* Envelope back — colored backdrop with subtle paper texture */}
+      <div
+        className="absolute inset-0 rounded-2xl shadow-warm"
+        style={{
+          backgroundColor: envelopeColor!,
+          backgroundImage:
+            'repeating-linear-gradient(45deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 5px)',
+        }}
+        aria-hidden="true"
+      />
+
+      {/* Envelope flap — open, folded down at the top */}
+      <div
+        className="absolute top-0 left-0 right-0 overflow-hidden rounded-t-2xl"
+        style={{ height: '18%' }}
+        aria-hidden="true"
+      >
         <div
-          className="absolute bottom-0 left-0 right-0"
+          className="absolute inset-x-0 top-0"
           style={{
-            height: '8px',
-            backgroundColor: envelopeColor,
-            boxShadow: 'inset 0 1px 0 rgba(0,0,0,0.06)',
+            height: '200%',
+            background: envelopeColor!,
+            clipPath: 'polygon(0 0, 100% 0, 50% 50%)',
+            filter: 'brightness(0.92)',
           }}
-          aria-hidden="true"
         />
-      )}
-      {envelopeColor && (
-        <div
-          className="absolute top-0 left-0 right-0"
-          style={{
-            height: '4px',
-            backgroundColor: envelopeColor,
-          }}
-          aria-hidden="true"
-        />
-      )}
+      </div>
+
+      {/* Card face — peeks out of the envelope, leaving envelope color visible at top & bottom */}
+      <div
+        className="absolute left-[6%] right-[6%] top-[14%] bottom-[6%] rounded-lg overflow-hidden border"
+        style={{
+          borderColor: 'rgba(45, 36, 32, 0.12)',
+          boxShadow:
+            '0 6px 14px -4px rgba(0,0,0,0.18), 0 2px 4px -1px rgba(0,0,0,0.08)',
+        }}
+      >
+        {cardFace}
+      </div>
     </div>
   );
 };
