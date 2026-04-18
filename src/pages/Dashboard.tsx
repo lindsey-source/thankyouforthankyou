@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Heart, DollarSign, Mail, Plus, LogOut, Sparkles, Download, Palette, Calendar } from "lucide-react";
+import { Heart, DollarSign, Mail, Plus, LogOut, Sparkles, Download, Palette, Calendar, Upload } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
@@ -156,7 +156,7 @@ const Dashboard = () => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="rounded-xl border border-border bg-background/60 p-5 flex flex-col">
                 <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center mb-3">
                   <Palette className="h-5 w-5 text-primary" />
@@ -184,6 +184,21 @@ const Dashboard = () => {
                   <Download className="h-4 w-4" />
                   Download template (CSV)
                 </Button>
+              </div>
+              <div className="rounded-xl border border-border bg-background/60 p-5 flex flex-col">
+                <div className="h-10 w-10 rounded-lg bg-accent/40 flex items-center justify-center mb-3">
+                  <Upload className="h-5 w-5 text-primary" />
+                </div>
+                <h3 className="font-semibold text-foreground mb-1">Already filled it in?</h3>
+                <p className="text-sm text-muted-foreground mb-4 flex-1">
+                  Skip ahead and upload your gift tracker — we'll prep your thank-you cards.
+                </p>
+                <Link to="/create-card/step5">
+                  <Button variant="warm" size="sm" className="w-full gap-2">
+                    <Upload className="h-4 w-4" />
+                    Upload now
+                  </Button>
+                </Link>
               </div>
             </div>
           </CardContent>
