@@ -24,7 +24,9 @@ export interface WizardCardData {
   charityId: string | null;
   charityName: string | null;
   guestCount: number;
-  donationAmount: number;
+  donationAmount: number;             // flat per-card amount (used in 'flat' mode)
+  donationMode: 'flat' | 'per_guest'; // which source of truth to read
+  donationPerGuest: Record<string, number>; // guestId -> amount overrides (preserved across toggles)
   recipientName: string;
   recipientEmail: string;
   senderName: string;
@@ -69,7 +71,9 @@ const initialCardData: WizardCardData = {
   charityId: null,
   charityName: null,
   guestCount: 50,
-  donationAmount: 0,
+  donationAmount: 3,
+  donationMode: 'flat',
+  donationPerGuest: {},
   recipientName: '',
   recipientEmail: '',
   senderName: '',

@@ -60,8 +60,8 @@ const LandingPage = () => {
                 <span className="text-primary">Give Meaningfully.</span>
               </h1>
               <p className="text-sm md:text-base mb-5 leading-relaxed max-w-xl md:max-w-none mx-auto" style={{ color: "#2d2420", opacity: 0.75 }}>
-                Send personalized thank-you e-cards at scale. The money you'd have spent
-                on paper, printing, and postage becomes a charitable donation instead.
+                Every thank-you you send plants a seed of generosity. Your heartfelt note arrives
+                alongside a real donation to a cause that matters — making your gratitude twice as meaningful.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
                 <Link to="/signup">

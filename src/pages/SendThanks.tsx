@@ -586,7 +586,7 @@ const SendThanks = () => {
                   <>
                     {isBatchMode ? <Users className="mr-2 h-4 w-4" /> : <Send className="mr-2 h-4 w-4" />}
                     {isBatchMode 
-                      ? `Send ${batchData.length} Digital Cards & Donations`
+                      ? `Send to everyone who matters (${batchData.length})`
                       : 'Continue to Card Designer'
                     }
                   </>

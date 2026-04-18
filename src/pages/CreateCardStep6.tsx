@@ -169,7 +169,7 @@ export default function CreateCardStep5Impact() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.15 }}
           >
-            One last look — then turn your gratitude into something even greater.
+            Take a moment. The people who showed up for you deserve to know it.
           </motion.p>
 
           {/* Decorative ornament — matches Step 2 brand motif */}
