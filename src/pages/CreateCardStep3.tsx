@@ -55,21 +55,27 @@ export default function CreateCardStep3() {
   const { cardData, updateCardData, setCurrentStep } = useCardWizard();
   const [previewOpen, setPreviewOpen] = useState(false);
 
-  // Guard: if user lands here without a chosen design, send them back to Step 2.
-  useEffect(() => {
-    if (!cardData.templateId) {
-      navigate('/create-card/step2', { replace: true });
-    }
-  }, [cardData.templateId, navigate]);
+  // Safe fallback palette — used when the user lands on Step 3 without
+  // having picked a design yet. The page must always render (no redirect).
+  const FALLBACK_PALETTE: PaletteColors = {
+    primary: '#c17b8a',
+    secondary: '#f5ede9',
+    accent: '#c17b8a',
+    text: '#2d2420',
+  };
 
-  // Build the "Original" palette from the design chosen in Step 2 (already in context).
+  // Build the "Original" palette from the design chosen in Step 2 (already
+  // in context). If nothing is set yet, fall back to brand defaults instead
+  // of crashing or redirecting away.
   const originalPalette: PaletteColors = useMemo(() => {
     const cp = (cardData.colorPalette as any) || {};
+    const hasPalette = cp && (cp.accent || cp.bg || cp.ink);
+    if (!hasPalette) return FALLBACK_PALETTE;
     return {
-      primary: cp.accent || '#c17b8a',
-      secondary: cp.accentSoft || cp.bg || '#f5ede9',
-      accent: cp.accent || '#c17b8a',
-      text: cp.ink || '#2d2420',
+      primary: cp.accent || FALLBACK_PALETTE.primary,
+      secondary: cp.accentSoft || cp.bg || FALLBACK_PALETTE.secondary,
+      accent: cp.accent || FALLBACK_PALETTE.accent,
+      text: cp.ink || FALLBACK_PALETTE.text,
     };
   }, [cardData.colorPalette]);
 
