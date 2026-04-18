@@ -59,10 +59,17 @@ const GiftTracker = () => {
             Bring this to your event. Jot down who gave what as gifts arrive — then come back and
             we'll turn it into beautiful, meaningful thank-you cards in minutes.
           </p>
-          <Button variant="hero" size="lg" onClick={handleDownload}>
-            <Download className="h-4 w-4 mr-2" />
-            Download Template (CSV)
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+            <Button variant="hero" size="lg" onClick={handleDownload}>
+              <Download className="h-4 w-4 mr-2" />
+              Download Template (CSV)
+            </Button>
+            <Link to="/create-card/step1">
+              <Button variant="outline" size="lg">
+                Already had your event? Start your cards →
+              </Button>
+            </Link>
+          </div>
           <p className="text-xs mt-3" style={{ color: "#2d2420", opacity: 0.55 }}>
             Opens in Excel, Numbers, or Google Sheets · No signup needed
           </p>
