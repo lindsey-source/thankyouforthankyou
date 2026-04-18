@@ -56,6 +56,14 @@ export default function CreateCardStep5() {
         </div>
 
         <div className="space-y-6">
+          {/* Returning-from-pre-event note */}
+          <div className="rounded-xl bg-white/85 backdrop-blur-sm border border-white/60 px-4 py-3 flex items-start gap-3">
+            <Sparkles className="h-4 w-4 text-secondary mt-0.5 flex-shrink-0" />
+            <p className="text-sm text-foreground/80">
+              Coming from a pre-event setup? Upload your completed tracker here.
+            </p>
+          </div>
+
           {/* Guest List Upload — download template, upload CSV/Excel, preview & manual add */}
           <GuestListUpload />
         </div>
