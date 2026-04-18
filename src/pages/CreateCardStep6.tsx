@@ -408,134 +408,55 @@ export default function CreateCardStep5Impact() {
               </div>
             </section>
 
-            {/* Charity */}
-            <section className="space-y-5">
+            {/* Your gift — read-only summary from Choose Your Cause step */}
+            <section className="space-y-3">
               <div>
                 <p
                   className="text-xs uppercase tracking-[0.2em] mb-1"
                   style={{ color: '#8a9a82' }}
                 >
-                  02 — Choose a cause
+                  02 — Your gift
                 </p>
                 <h2
                   className="text-2xl"
                   style={{ fontFamily: "'Playfair Display', serif", color: '#2a2622' }}
                 >
-                  Where should the kindness go?
+                  Where the kindness goes
                 </h2>
               </div>
 
-              <div className="grid grid-cols-1 gap-3">
-                {charities.map((charity) => {
-                  const isSelected = selectedCharity?.id === charity.id;
-                  return (
-                    <button
-                      key={charity.id}
-                      type="button"
-                      onClick={() => setSelectedCharity(charity)}
-                      className="text-left p-4 rounded-xl flex items-start gap-4 transition-all"
-                      style={{
-                        backgroundColor: '#ffffff',
-                        border: isSelected ? '2px solid #c17b8a' : '1px solid #ede8e3',
-                        boxShadow: isSelected
-                          ? '0 8px 22px rgba(193, 123, 138, 0.15)'
-                          : '0 2px 8px rgba(42, 38, 34, 0.04)',
-                      }}
-                    >
-                      {charity.logo_url && (
-                        <img
-                          src={charity.logo_url}
-                          alt={charity.name}
-                          className="w-12 h-12 rounded-lg object-cover flex-shrink-0"
-                        />
-                      )}
-                      <div className="flex-1 min-w-0">
-                        <h4
-                          className="text-base mb-0.5"
-                          style={{ fontFamily: "'Playfair Display', serif", color: '#2a2622' }}
-                        >
-                          {charity.name}
-                        </h4>
-                        <p className="text-xs" style={{ color: '#6b6259' }}>
-                          {charity.description}
-                        </p>
-                      </div>
-                      {isSelected && (
-                        <div
-                          className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0"
-                          style={{ backgroundColor: '#c17b8a' }}
-                        >
-                          <Check className="w-4 h-4 text-white" strokeWidth={2.5} />
-                        </div>
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
-            </section>
-
-            {/* Donation */}
-            <section className="space-y-5">
-              <div>
+              <div
+                className="flex items-center justify-between gap-4 p-5 rounded-xl"
+                style={{
+                  backgroundColor: '#ffffff',
+                  border: '1px solid #ede8e3',
+                  boxShadow: '0 2px 8px rgba(42, 38, 34, 0.04)',
+                }}
+              >
                 <p
-                  className="text-xs uppercase tracking-[0.2em] mb-1"
-                  style={{ color: '#8a9a82' }}
+                  className="text-base flex items-center gap-2"
+                  style={{ color: '#2a2622', fontFamily: "'Playfair Display', serif" }}
                 >
-                  03 — Donation
+                  <Heart className="w-4 h-4" style={{ color: '#8faa8b' }} fill="#8faa8b" />
+                  <span>
+                    <span style={{ color: '#c17b8a', fontWeight: 600 }}>
+                      ${donationAmount.toFixed(2)}
+                    </span>{' '}
+                    donated to{' '}
+                    <span style={{ color: '#5a7257', fontWeight: 600 }}>{charityName}</span>
+                  </span>
                 </p>
-                <h2
-                  className="text-2xl"
-                  style={{ fontFamily: "'Playfair Display', serif", color: '#2a2622' }}
+                <button
+                  type="button"
+                  onClick={() => navigate('/create-card/impact')}
+                  className="text-sm underline underline-offset-4 transition-opacity hover:opacity-70 flex-shrink-0"
+                  style={{ color: '#8a8079' }}
                 >
-                  Add a gift
-                </h2>
+                  change
+                </button>
               </div>
-
-              <div className="grid grid-cols-4 gap-3">
-                {PRESET_AMOUNTS.map((amount) => {
-                  const isActive = donationAmount === amount;
-                  return (
-                    <button
-                      key={amount}
-                      type="button"
-                      onClick={() => setDonationAmount(amount)}
-                      className="py-4 rounded-xl text-lg transition-all"
-                      style={{
-                        fontFamily: "'Playfair Display', serif",
-                        backgroundColor: isActive ? '#c17b8a' : '#ffffff',
-                        color: isActive ? '#ffffff' : '#2a2622',
-                        border: isActive ? '2px solid #c17b8a' : '1px solid #ede8e3',
-                      }}
-                    >
-                      ${amount}
-                    </button>
-                  );
-                })}
-              </div>
-
-              <div className="flex items-center gap-3 pt-2">
-                <span className="text-sm" style={{ color: '#8a8079' }}>
-                  Or custom:
-                </span>
-                <div className="flex items-center gap-1">
-                  <span style={{ color: '#2a2622' }}>$</span>
-                  <input
-                    type="number"
-                    min={0}
-                    value={donationAmount}
-                    onChange={(e) => setDonationAmount(Math.max(0, Number(e.target.value) || 0))}
-                    className="w-20 bg-transparent border-0 border-b text-lg py-1 focus:outline-none"
-                    style={{ color: '#2a2622', borderColor: '#ede8e3' }}
-                  />
-                </div>
-              </div>
-
-              {selectedCharity?.impact_message && (
-                <p className="text-sm italic pt-2" style={{ color: '#6b6259' }}>
-                  “{selectedCharity.impact_message}”
-                </p>
-              )}
             </section>
+
           </div>
 
           {/* RIGHT — Live Impact Summary */}
