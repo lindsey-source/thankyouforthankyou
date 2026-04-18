@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCardWizard } from '@/contexts/CardWizardContext';
 import { motion } from 'framer-motion';
@@ -1108,6 +1108,15 @@ export default function CreateCardStep2() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const occasion = (cardData.occasion as OccasionId | null) || null;
+
+  // Guard: if the user lands on Step 2 without an occasion (e.g. after an
+  // auth redirect or by deep-linking), send them back to Step 1 so they
+  // never see a mismatched/fallback design set.
+  useEffect(() => {
+    if (!occasion) {
+      navigate('/create-card/step1', { replace: true });
+    }
+  }, [occasion, navigate]);
 
   const designs = useMemo(() => {
     if (!occasion) return DESIGN_SETS.general;
