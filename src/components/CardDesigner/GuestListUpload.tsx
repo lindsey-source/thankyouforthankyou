@@ -127,7 +127,7 @@ export const GuestListUpload: React.FC = () => {
           <input
             ref={fileInputRef}
             type="file"
-            accept=".csv"
+            accept=".csv,.xlsx,.xls,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,text/csv"
             onChange={handleFileUpload}
             className="hidden"
           />
