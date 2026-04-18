@@ -2,7 +2,8 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCardWizard } from '@/contexts/CardWizardContext';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ArrowRight, Check } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, X } from 'lucide-react';
+import { AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
 import { ProgressBar } from '@/components/CardDesigner/ProgressBar';
 
