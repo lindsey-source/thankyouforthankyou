@@ -1,4 +1,5 @@
-// CSV utility functions for guest and gift template functionality
+// Guest list parsing utilities — supports CSV and Excel (.xlsx, .xls)
+import * as XLSX from 'xlsx';
 
 export interface GuestGiftData {
   guestName: string;
@@ -50,51 +51,66 @@ const parseSendFlag = (raw: string): boolean => {
   return ['yes', 'y', 'true', '1', 'send'].includes(v);
 };
 
-// Parse uploaded CSV file
+// Convert raw row arrays (from CSV or XLSX) into GuestGiftData
+const rowsToGuestData = (rows: string[][]): GuestGiftData[] => {
+  if (rows.length < 2) {
+    throw new Error('File must have at least a header row and one data row');
+  }
+  const dataRows = rows.slice(1);
+  const out: GuestGiftData[] = [];
+  dataRows.forEach((fields, index) => {
+    if (fields.length < 3 || !fields.some((f) => (f || '').toString().trim())) {
+      console.warn(`Row ${index + 2} has insufficient data, skipping`);
+      return;
+    }
+    out.push({
+      guestName: (fields[0] || '').toString().trim(),
+      emailAddress: (fields[1] || '').toString().trim(),
+      giftDescription: (fields[2] || '').toString().trim(),
+      giftAmount: (fields[3] || '').toString().trim(),
+      relationship: (fields[4] || '').toString().trim(),
+      personalNote: (fields[5] || '').toString().trim(),
+      send: parseSendFlag((fields[6] || '').toString()),
+    });
+  });
+  return out;
+};
+
+// Parse uploaded file — auto-detects CSV vs Excel by extension
 export const parseCSVFile = (file: File): Promise<GuestGiftData[]> => {
+  const name = file.name.toLowerCase();
+  const isExcel = name.endsWith('.xlsx') || name.endsWith('.xls');
+
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
 
     reader.onload = (e) => {
       try {
-        const text = e.target?.result as string;
-        const lines = text.split('\n').filter(line => line.trim() !== '');
-
-        if (lines.length < 2) {
-          reject(new Error('CSV file must have at least a header row and one data row'));
-          return;
+        if (isExcel) {
+          const data = e.target?.result;
+          const wb = XLSX.read(data, { type: 'array' });
+          const sheet = wb.Sheets[wb.SheetNames[0]];
+          const rows = XLSX.utils.sheet_to_json<any[]>(sheet, {
+            header: 1,
+            defval: '',
+            blankrows: false,
+          }) as any[][];
+          resolve(rowsToGuestData(rows.map((r) => r.map((c) => (c == null ? '' : String(c))))));
+        } else {
+          const text = e.target?.result as string;
+          const lines = text.split('\n').filter((line) => line.trim() !== '');
+          const rows = lines.map(parseCSVLine);
+          resolve(rowsToGuestData(rows));
         }
-
-        const dataLines = lines.slice(1);
-        const parsedData: GuestGiftData[] = [];
-
-        dataLines.forEach((line, index) => {
-          const fields = parseCSVLine(line);
-
-          if (fields.length < 3) {
-            console.warn(`Row ${index + 2} has insufficient data, skipping`);
-            return;
-          }
-
-          parsedData.push({
-            guestName: fields[0]?.trim() || '',
-            emailAddress: fields[1]?.trim() || '',
-            giftDescription: fields[2]?.trim() || '',
-            giftAmount: fields[3]?.trim() || '',
-            relationship: fields[4]?.trim() || '',
-            personalNote: fields[5]?.trim() || '',
-            send: parseSendFlag(fields[6] || ''),
-          });
-        });
-
-        resolve(parsedData);
-      } catch (error) {
-        reject(new Error('Failed to parse CSV file'));
+      } catch (error: any) {
+        reject(new Error(error?.message || 'Failed to parse file'));
       }
     };
 
     reader.onerror = () => reject(new Error('Failed to read file'));
-    reader.readAsText(file);
+
+    if (isExcel) reader.readAsArrayBuffer(file);
+    else reader.readAsText(file);
   });
 };
 
