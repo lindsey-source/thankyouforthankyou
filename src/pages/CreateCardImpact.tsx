@@ -46,7 +46,8 @@ const CATEGORIES: Array<{
   { id: 'disaster_relief', label: 'Disaster Relief',  icon: LifeBuoy,     tint: 'hsl(195 35% 92%)', ink: 'hsl(195 40% 38%)' },
 ];
 
-const SAVINGS_PER_GUEST = 4.24; // savings vs paper card per guest
+const PRESET_AMOUNTS = [1, 2, 3, 5, 10] as const;
+const SUGGESTED_AMOUNT = 3;
 
 export default function CreateCardImpact() {
   const navigate = useNavigate();
