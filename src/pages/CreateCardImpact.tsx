@@ -136,8 +136,8 @@ export default function CreateCardImpact() {
       donationMode,
       donationPerGuest: perGuest, // preserved even when in flat mode
     });
-    setCurrentStep(6);
-    navigate('/create-card/step5');
+    setCurrentStep(7);
+    navigate('/create-card/step6');
   };
 
   return (
@@ -167,7 +167,7 @@ export default function CreateCardImpact() {
 
         {/* Back */}
         <button
-          onClick={() => navigate('/create-card/step4')}
+          onClick={() => navigate('/create-card/step5')}
           className="inline-flex items-center gap-2 text-sm mb-8 text-muted-foreground hover:opacity-70 transition-opacity"
         >
           <ArrowLeft className="w-4 h-4" />
