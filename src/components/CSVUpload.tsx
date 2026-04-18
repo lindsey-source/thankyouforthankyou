@@ -230,9 +230,9 @@ const CSVUpload: React.FC<CSVUploadProps> = ({ onUploadComplete }) => {
                   <div className="font-medium text-sm">{guest.guestName}</div>
                   <div className="text-sm text-muted-foreground">{guest.emailAddress}</div>
                   <div className="text-sm text-muted-foreground">Gift: {guest.giftDescription}</div>
-                  {guest.thankYouMessage && (
+                  {guest.personalNote && (
                     <div className="text-sm text-muted-foreground mt-1">
-                      Message: "{guest.thankYouMessage.substring(0, 60)}..."
+                      Note: "{guest.personalNote.substring(0, 60)}..."
                     </div>
                   )}
                 </div>
