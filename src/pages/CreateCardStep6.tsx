@@ -276,13 +276,7 @@ export default function CreateCardStep5Impact() {
                   Dear {recipientName?.trim() || 'friend'},
                 </p>
                 <p
-                  className="text-sm leading-relaxed flex-1 line-clamp-4"
-                  style={{ fontFamily: fonts.body, color: previewText, opacity: 0.75 }}
-                >
-                  {bodyText}
-                </p>
-                <p
-                  className="text-sm leading-relaxed flex-1 line-clamp-3"
+                  className="text-sm leading-relaxed flex-1"
                   style={{ fontFamily: fonts.body, color: previewText, opacity: 0.75 }}
                 >
                   {bodyText}
