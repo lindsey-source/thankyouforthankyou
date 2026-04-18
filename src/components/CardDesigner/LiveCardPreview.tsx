@@ -1,0 +1,188 @@
+import React from 'react';
+import { Heart } from 'lucide-react';
+
+export interface LiveCardPreviewProps {
+  palette: {
+    primary: string;
+    secondary: string;
+    accent: string;
+    text: string;
+  };
+  fonts: {
+    heading: string;
+    body: string;
+  };
+  recipientName?: string;
+  messageHeadline?: string;
+  messageBody?: string;
+  closing?: string;
+  senderName?: string;
+  photoUrl?: string | null;
+  charityName?: string | null;
+  donationAmount?: number;
+  className?: string;
+}
+
+/**
+ * Live preview of the full card face. Pure, prop-driven, real-time.
+ * Renders header art, headline, "Dear [Name]," body, closing, and
+ * a charity donation badge at the bottom.
+ */
+export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
+  palette,
+  fonts,
+  recipientName,
+  messageHeadline,
+  messageBody,
+  closing,
+  senderName,
+  photoUrl,
+  charityName,
+  donationAmount = 0,
+  className = '',
+}) => {
+  const headline = messageHeadline?.trim() || 'Thank You';
+  const greeting = `Dear ${recipientName?.trim() || 'Friend'},`;
+  const body =
+    messageBody?.trim() ||
+    'Thank you so much for being part of our special day. Your presence and generosity meant the world to us.';
+  const closingLine = closing?.trim() || 'With love,';
+  const sender = senderName?.trim();
+
+  return (
+    <div
+      className={`relative w-full aspect-[3/4] rounded-2xl bg-white border overflow-hidden shadow-warm ${className}`}
+      style={{ borderColor: 'rgba(45, 36, 32, 0.08)' }}
+      role="img"
+      aria-label="Live card preview"
+    >
+      {/* Header art — photo if uploaded, otherwise gradient + decorative thank-you */}
+      <div
+        className="relative flex flex-col items-center justify-center overflow-hidden"
+        style={{
+          height: '42%',
+          background: `linear-gradient(135deg, ${palette.secondary} 0%, ${palette.primary} 100%)`,
+        }}
+      >
+        {photoUrl ? (
+          <>
+            <img
+              src={photoUrl}
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-black/20" aria-hidden="true" />
+            <span
+              className="relative z-10 text-white drop-shadow-md"
+              style={{
+                fontFamily: fonts.heading,
+                fontSize: 'clamp(28px, 6vw, 44px)',
+                letterSpacing: '0.04em',
+                lineHeight: 1.1,
+              }}
+            >
+              {headline}
+            </span>
+          </>
+        ) : (
+          <>
+            <span
+              style={{
+                fontFamily: fonts.heading,
+                fontSize: 'clamp(28px, 6vw, 44px)',
+                color: palette.accent,
+                letterSpacing: '0.04em',
+                lineHeight: 1.1,
+              }}
+            >
+              {headline}
+            </span>
+            <div className="flex items-center gap-2 mt-3 opacity-70" aria-hidden="true">
+              <div style={{ width: '28px', height: '1px', backgroundColor: palette.accent }} />
+              <div
+                style={{
+                  width: '4px',
+                  height: '4px',
+                  backgroundColor: palette.accent,
+                  transform: 'rotate(45deg)',
+                }}
+              />
+              <div style={{ width: '28px', height: '1px', backgroundColor: palette.accent }} />
+            </div>
+          </>
+        )}
+      </div>
+
+      {/* Body */}
+      <div
+        className="px-5 pt-4 pb-3 flex flex-col"
+        style={{ height: charityName || donationAmount > 0 ? '46%' : '58%' }}
+      >
+        <p
+          className="text-lg mb-2"
+          style={{ fontFamily: fonts.heading, color: palette.text }}
+        >
+          {greeting}
+        </p>
+        <p
+          className="text-sm leading-relaxed flex-1 overflow-hidden"
+          style={{
+            fontFamily: fonts.body,
+            color: palette.text,
+            opacity: 0.78,
+            display: '-webkit-box',
+            WebkitLineClamp: 5,
+            WebkitBoxOrient: 'vertical',
+          }}
+        >
+          {body}
+        </p>
+        <div className="mt-2">
+          <p
+            className="text-sm"
+            style={{ fontFamily: fonts.body, color: palette.text, opacity: 0.85 }}
+          >
+            {closingLine}
+          </p>
+          {sender && (
+            <p
+              className="text-sm mt-0.5"
+              style={{ fontFamily: fonts.heading, color: palette.text }}
+            >
+              {sender}
+            </p>
+          )}
+        </div>
+      </div>
+
+      {/* Charity / donation badge at the bottom */}
+      {(charityName || donationAmount > 0) && (
+        <div
+          className="absolute bottom-0 left-0 right-0 px-4 py-3 flex items-center gap-2"
+          style={{
+            backgroundColor: palette.accent,
+            color: '#fff',
+            height: '12%',
+          }}
+        >
+          <Heart className="w-4 h-4 flex-shrink-0" fill="currentColor" />
+          <div className="flex-1 min-w-0">
+            <p
+              className="text-[11px] uppercase tracking-wider opacity-90 leading-tight"
+              style={{ fontFamily: fonts.body }}
+            >
+              A gift in your name
+            </p>
+            <p
+              className="text-xs font-semibold truncate leading-tight"
+              style={{ fontFamily: fonts.body }}
+            >
+              {donationAmount > 0 && `$${donationAmount.toFixed(2)} to `}
+              {charityName || 'a chosen cause'}
+            </p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
