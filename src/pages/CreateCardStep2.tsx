@@ -1258,24 +1258,50 @@ export default function CreateCardStep2() {
                   >
                     {design.body}
                   </p>
-                  <div
-                    role="button"
-                    tabIndex={0}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setPreviewId(design.id);
-                    }}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
+                  <div className="mt-5 flex items-center gap-2">
+                    <div
+                      role="button"
+                      tabIndex={0}
+                      onClick={(e) => {
                         e.stopPropagation();
                         setPreviewId(design.id);
-                      }
-                    }}
-                    className="mt-4 w-full py-2 rounded-md text-sm text-center cursor-pointer opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity duration-300 hover:brightness-110"
-                    style={{ backgroundColor: design.accent, color: '#ffffff' }}
-                  >
-                    Preview Card
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          setPreviewId(design.id);
+                        }
+                      }}
+                      className="flex-1 py-2.5 rounded-md text-sm font-medium text-center cursor-pointer transition-all duration-200 hover:brightness-105"
+                      style={{
+                        backgroundColor: '#ffffff',
+                        color: design.ink,
+                        border: `1px solid ${design.accent}`,
+                      }}
+                    >
+                      Preview
+                    </div>
+                    <div
+                      role="button"
+                      tabIndex={0}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedId(design.id);
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          setSelectedId(design.id);
+                        }
+                      }}
+                      className="flex-1 py-2.5 rounded-md text-sm font-semibold text-center cursor-pointer transition-all duration-200 hover:brightness-110 shadow-sm"
+                      style={{ backgroundColor: '#c17b8a', color: '#ffffff' }}
+                      aria-label={`Select ${design.name}`}
+                    >
+                      {isSelected ? '✓ Selected' : 'Select →'}
+                    </div>
                   </div>
                 </div>
               </motion.button>
