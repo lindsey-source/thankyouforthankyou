@@ -27,6 +27,7 @@ import Settings from "./pages/Settings";
 import Help from "./pages/Help";
 import NotFound from "./pages/NotFound";
 import CampaignDetail from "./pages/CampaignDetail";
+import GiftTracker from "./pages/GiftTracker";
 
 const queryClient = new QueryClient();
 
