@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Switch } from '@/components/ui/switch';
-import { Download, Upload, Plus, Trash2, AlertTriangle, CheckCircle, Users } from 'lucide-react';
+import { Download, Upload, Plus, Trash2, AlertTriangle, CheckCircle, Users, UserPlus } from 'lucide-react';
 import { toast } from 'sonner';
 import { parseCSVFile, validateGuestData, generateCSVTemplate } from '@/lib/csvUtils';
 import { useCardWizard, type GuestEntry } from '@/contexts/CardWizardContext';
