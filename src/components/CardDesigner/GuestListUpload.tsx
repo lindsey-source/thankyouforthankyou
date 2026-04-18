@@ -188,6 +188,91 @@ export const GuestListUpload: React.FC = () => {
           </Button>
         </div>
 
+        {/* Quick add — single guest */}
+        <div className="rounded-lg border bg-muted/30 p-4 space-y-3">
+          <div className="flex items-center gap-2">
+            <UserPlus className="w-4 h-4 text-muted-foreground" />
+            <Label className="text-sm font-semibold">Add a guest</Label>
+            <span className="text-xs text-muted-foreground">— quick entry, one at a time</span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div className="space-y-1">
+              <Label htmlFor="qa-name" className="text-xs">
+                Name <span className="text-destructive">*</span>
+              </Label>
+              <Input
+                id="qa-name"
+                value={quickAdd.guestName}
+                onChange={(e) => setQuickAdd({ ...quickAdd, guestName: e.target.value })}
+                onBlur={() => setTouched((t) => ({ ...t, guestName: true }))}
+                placeholder="Jane Doe"
+                className={touched.guestName && errors.guestName ? 'border-destructive focus-visible:ring-destructive' : ''}
+                aria-invalid={touched.guestName && !!errors.guestName}
+              />
+              {touched.guestName && errors.guestName && (
+                <p className="text-xs text-destructive">{errors.guestName}</p>
+              )}
+            </div>
+
+            <div className="space-y-1">
+              <Label htmlFor="qa-email" className="text-xs">
+                Email <span className="text-destructive">*</span>
+              </Label>
+              <Input
+                id="qa-email"
+                type="email"
+                value={quickAdd.emailAddress}
+                onChange={(e) => setQuickAdd({ ...quickAdd, emailAddress: e.target.value })}
+                onBlur={() => setTouched((t) => ({ ...t, emailAddress: true }))}
+                placeholder="jane@example.com"
+                className={touched.emailAddress && errors.emailAddress ? 'border-destructive focus-visible:ring-destructive' : ''}
+                aria-invalid={touched.emailAddress && !!errors.emailAddress}
+              />
+              {touched.emailAddress && errors.emailAddress && (
+                <p className="text-xs text-destructive">{errors.emailAddress}</p>
+              )}
+            </div>
+
+            <div className="space-y-1">
+              <Label htmlFor="qa-gift" className="text-xs">
+                Gift <span className="text-destructive">*</span>
+              </Label>
+              <Input
+                id="qa-gift"
+                value={quickAdd.giftDescription}
+                onChange={(e) => setQuickAdd({ ...quickAdd, giftDescription: e.target.value })}
+                onBlur={() => setTouched((t) => ({ ...t, giftDescription: true }))}
+                placeholder="Crystal vase"
+                className={touched.giftDescription && errors.giftDescription ? 'border-destructive focus-visible:ring-destructive' : ''}
+                aria-invalid={touched.giftDescription && !!errors.giftDescription}
+              />
+              {touched.giftDescription && errors.giftDescription && (
+                <p className="text-xs text-destructive">{errors.giftDescription}</p>
+              )}
+            </div>
+          </div>
+
+          <div className="space-y-1">
+            <Label htmlFor="qa-note" className="text-xs">
+              Personal note <span className="text-muted-foreground">(optional)</span>
+            </Label>
+            <Input
+              id="qa-note"
+              value={quickAdd.personalNote}
+              onChange={(e) => setQuickAdd({ ...quickAdd, personalNote: e.target.value })}
+              placeholder="Loved their toast at the reception"
+            />
+          </div>
+
+          <div className="flex justify-end">
+            <Button type="button" onClick={handleQuickAdd} className="gap-2">
+              <Plus className="w-4 h-4" />
+              Add guest
+            </Button>
+          </div>
+        </div>
+
         {/* Validation warnings */}
         {invalidRows.length > 0 && (
           <Alert className="border-orange-200 bg-orange-50">
