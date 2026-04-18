@@ -40,8 +40,9 @@ export const GuestListUpload: React.FC = () => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (!file.name.toLowerCase().endsWith('.csv')) {
-      toast.error('Please upload a .csv file');
+    const name = file.name.toLowerCase();
+    if (!name.endsWith('.csv') && !name.endsWith('.xlsx') && !name.endsWith('.xls')) {
+      toast.error('Please upload a .csv or .xlsx file');
       return;
     }
 
