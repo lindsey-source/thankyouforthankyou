@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Heart, DollarSign, Mail, Plus, LogOut, Sparkles, Download, Palette, Calendar } from "lucide-react";
+import { Heart, DollarSign, Mail, Plus, LogOut, Sparkles, Download, Palette, Calendar, Upload } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
