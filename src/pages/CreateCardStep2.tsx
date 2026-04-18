@@ -2,7 +2,8 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCardWizard } from '@/contexts/CardWizardContext';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ArrowRight, Check } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, X } from 'lucide-react';
+import { AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
 import { ProgressBar } from '@/components/CardDesigner/ProgressBar';
 
@@ -1106,6 +1107,7 @@ export default function CreateCardStep2() {
   const navigate = useNavigate();
   const { cardData, updateCardData, setCurrentStep } = useCardWizard();
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [previewId, setPreviewId] = useState<string | null>(null);
 
   const occasion = (cardData.occasion as OccasionId | null) || null;
 
@@ -1257,7 +1259,20 @@ export default function CreateCardStep2() {
                     {design.body}
                   </p>
                   <div
-                    className="mt-4 w-full py-2 rounded-md text-sm text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    role="button"
+                    tabIndex={0}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setPreviewId(design.id);
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setPreviewId(design.id);
+                      }
+                    }}
+                    className="mt-4 w-full py-2 rounded-md text-sm text-center cursor-pointer opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity duration-300 hover:brightness-110"
                     style={{ backgroundColor: design.accent, color: '#ffffff' }}
                   >
                     Preview Card
@@ -1268,6 +1283,143 @@ export default function CreateCardStep2() {
           })}
         </div>
       </div>
+
+      {/* Full-screen preview modal */}
+      <AnimatePresence>
+        {previewId && (() => {
+          const design = designs.find((d) => d.id === previewId);
+          if (!design) return null;
+          return (
+            <motion.div
+              key="preview-modal"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8"
+              style={{ backgroundColor: 'rgba(45, 36, 32, 0.72)', backdropFilter: 'blur(6px)' }}
+              onClick={() => setPreviewId(null)}
+              role="dialog"
+              aria-modal="true"
+              aria-label={`Preview of ${design.name}`}
+            >
+              <motion.div
+                initial={{ scale: 0.92, opacity: 0, y: 20 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.92, opacity: 0, y: 20 }}
+                transition={{ type: 'spring', damping: 24, stiffness: 260 }}
+                onClick={(e) => e.stopPropagation()}
+                className="relative w-full max-w-lg max-h-[92vh] overflow-y-auto rounded-3xl shadow-2xl"
+                style={{ backgroundColor: design.bg }}
+              >
+                {/* Close */}
+                <button
+                  type="button"
+                  onClick={() => setPreviewId(null)}
+                  aria-label="Close preview"
+                  className="absolute top-4 right-4 z-30 w-10 h-10 rounded-full flex items-center justify-center bg-white/90 hover:bg-white shadow-md transition-all hover:scale-105"
+                  style={{ color: '#2d2420' }}
+                >
+                  <X className="w-5 h-5" strokeWidth={2.25} />
+                </button>
+
+                {/* Header art */}
+                <HeaderArt design={design} />
+
+                {/* Body */}
+                <div className="p-7 md:p-9">
+                  <div className="flex items-center justify-between gap-2 mb-5 flex-wrap">
+                    <span
+                      className="inline-block px-3 py-1 rounded-full text-xs font-medium"
+                      style={{ backgroundColor: design.tagBg, color: design.tagColor }}
+                    >
+                      {design.name}
+                    </span>
+                    <span
+                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs"
+                      style={{ backgroundColor: design.donationBg, color: design.donationColor }}
+                    >
+                      💚 {design.donation}
+                    </span>
+                  </div>
+
+                  <p
+                    style={{
+                      fontFamily: "'Playfair Display', Georgia, serif",
+                      color: design.ink,
+                      fontSize: '20px',
+                    }}
+                  >
+                    {design.greeting}
+                  </p>
+
+                  <p
+                    className="mt-3 leading-relaxed"
+                    style={{
+                      fontFamily: "'Inter', sans-serif",
+                      color: design.inkSoft,
+                      fontSize: '15px',
+                      opacity: 0.92,
+                    }}
+                  >
+                    {design.body} Your kindness, your presence, and your generosity made this moment one we'll carry with us forever. We are endlessly grateful to have you in our lives.
+                  </p>
+
+                  <p
+                    className="mt-6"
+                    style={{
+                      fontFamily: "'Playfair Display', Georgia, serif",
+                      color: design.ink,
+                      fontSize: '16px',
+                      fontStyle: 'italic',
+                    }}
+                  >
+                    With love,
+                  </p>
+
+                  {/* Charity donation badge */}
+                  <div
+                    className="mt-7 rounded-2xl p-5 text-center"
+                    style={{ backgroundColor: design.donationBg, color: design.donationColor }}
+                  >
+                    <p className="text-xs uppercase tracking-wider mb-1 opacity-80">
+                      A Gift in Your Honor
+                    </p>
+                    <p className="text-base font-medium">
+                      💚 {design.donation}
+                    </p>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="mt-7 flex flex-col sm:flex-row gap-3">
+                    <button
+                      type="button"
+                      onClick={() => setPreviewId(null)}
+                      className="flex-1 py-3 rounded-full text-sm font-medium border transition-all hover:bg-black/5"
+                      style={{ borderColor: '#ede8e3', color: '#6b6259' }}
+                    >
+                      Close
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedId(design.id);
+                        setPreviewId(null);
+                      }}
+                      className="flex-1 py-3 rounded-full text-sm font-medium text-white transition-all hover:scale-[1.02]"
+                      style={{
+                        backgroundColor: design.accent,
+                        boxShadow: `0 6px 18px ${design.accent}55`,
+                      }}
+                    >
+                      Select This Design
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          );
+        })()}
+      </AnimatePresence>
 
       {/* Sticky footer */}
       {selectedId && (
