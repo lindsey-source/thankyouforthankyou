@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 export interface WizardCardData {
   // Step 1
@@ -38,6 +38,8 @@ interface CardWizardContextType {
   resetWizard: () => void;
 }
 
+const STORAGE_KEY = 'tytft.cardWizard.v1';
+
 const initialCardData: WizardCardData = {
   occasion: null,
   templateId: null,
@@ -59,11 +61,40 @@ const initialCardData: WizardCardData = {
   senderName: ''
 };
 
+const loadPersistedData = (): { cardData: WizardCardData; currentStep: number } => {
+  if (typeof window === 'undefined') return { cardData: initialCardData, currentStep: 1 };
+  try {
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    if (!raw) return { cardData: initialCardData, currentStep: 1 };
+    const parsed = JSON.parse(raw);
+    return {
+      cardData: { ...initialCardData, ...(parsed.cardData || {}) },
+      currentStep: typeof parsed.currentStep === 'number' ? parsed.currentStep : 1,
+    };
+  } catch {
+    return { cardData: initialCardData, currentStep: 1 };
+  }
+};
+
 const CardWizardContext = createContext<CardWizardContextType | undefined>(undefined);
 
 export const CardWizardProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [currentStep, setCurrentStep] = useState(1);
-  const [cardData, setCardData] = useState<WizardCardData>(initialCardData);
+  const [{ cardData: initialData, currentStep: initialStep }] = useState(loadPersistedData);
+  const [currentStep, setCurrentStep] = useState<number>(initialStep);
+  const [cardData, setCardData] = useState<WizardCardData>(initialData);
+
+  // Persist on every change so the occasion (and other choices) survive
+  // page refreshes, auth redirects, and accidental navigations.
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({ cardData, currentStep })
+      );
+    } catch {
+      // ignore quota / privacy-mode errors
+    }
+  }, [cardData, currentStep]);
 
   const updateCardData = (data: Partial<WizardCardData>) => {
     setCardData(prev => ({ ...prev, ...data }));
@@ -72,6 +103,11 @@ export const CardWizardProvider: React.FC<{ children: ReactNode }> = ({ children
   const resetWizard = () => {
     setCurrentStep(1);
     setCardData(initialCardData);
+    try {
+      window.localStorage.removeItem(STORAGE_KEY);
+    } catch {
+      // ignore
+    }
   };
 
   return (
