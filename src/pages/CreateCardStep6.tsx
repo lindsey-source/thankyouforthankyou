@@ -34,25 +34,15 @@ export default function CreateCardStep5Impact() {
   const { userId } = useAuth();
   const { cardData, updateCardData, resetWizard } = useCardWizard();
 
-  const [charities, setCharities] = useState<Charity[]>([]);
-  const [selectedCharity, setSelectedCharity] = useState<Charity | null>(null);
-  const [donationAmount, setDonationAmount] = useState<number>(cardData.donationAmount || 10);
   const [recipientName, setRecipientName] = useState(cardData.recipientName || '');
   const [recipientEmail, setRecipientEmail] = useState(cardData.recipientEmail || '');
   const [senderName, setSenderName] = useState(cardData.senderName || '');
   const [sending, setSending] = useState(false);
 
-  useEffect(() => {
-    loadCharities();
-  }, []);
-
-  const loadCharities = async () => {
-    const { data, error } = await supabase.from('charities').select('*');
-    if (!error && data) {
-      setCharities(data);
-      if (data.length > 0 && !selectedCharity) setSelectedCharity(data[0]);
-    }
-  };
+  // Read-only values from prior steps (chosen on /create-card/impact)
+  const donationAmount = cardData.donationAmount || 0;
+  const charityName = cardData.charityName || 'your chosen cause';
+  const charityId = cardData.charityId;
 
   const totalImpact = donationAmount + PRINTING_SAVINGS;
 
