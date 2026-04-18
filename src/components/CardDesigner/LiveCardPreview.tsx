@@ -20,8 +20,19 @@ export interface LiveCardPreviewProps {
   photoUrl?: string | null;
   charityName?: string | null;
   donationAmount?: number;
+  envelopeColor?: string | null;
+  texture?: string | null;
+  signatureStyle?: string | null;
   className?: string;
 }
+
+const TEXTURE_BG: Record<string, string> = {
+  smooth: '#ffffff',
+  linen:
+    "#fefcf8 repeating-linear-gradient(45deg, rgba(120,100,80,0.05) 0px, rgba(120,100,80,0.05) 1px, transparent 1px, transparent 4px)",
+  watercolor:
+    'radial-gradient(ellipse at 20% 10%, rgba(193,123,138,0.10), transparent 60%), radial-gradient(ellipse at 80% 90%, rgba(143,170,139,0.10), transparent 60%), #fffdf9',
+};
 
 /**
  * Live preview of the full card face. Pure, prop-driven, real-time.
@@ -39,6 +50,9 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
   photoUrl,
   charityName,
   donationAmount = 0,
+  envelopeColor,
+  texture,
+  signatureStyle,
   className = '',
 }) => {
   const headline = messageHeadline?.trim() || 'Thank You';
@@ -48,11 +62,31 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
     'Thank you so much for being part of our special day. Your presence and generosity meant the world to us.';
   const closingLine = closing?.trim() || 'With love,';
   const sender = senderName?.trim();
+  const textureKey = (texture || 'smooth').toLowerCase();
+  const textureBg = TEXTURE_BG[textureKey] || TEXTURE_BG.smooth;
+  const isWatercolor = textureKey === 'watercolor';
+  const isLinen = textureKey === 'linen';
+
+  // Signature rendering style
+  const signatureFont =
+    signatureStyle === 'handwritten'
+      ? "'Dancing Script', cursive"
+      : signatureStyle === 'typed'
+      ? fonts.body
+      : fonts.heading;
+  const showSignature = signatureStyle !== 'none' && !!sender;
 
   return (
     <div
-      className={`relative w-full aspect-[3/4] rounded-2xl bg-white border overflow-hidden shadow-warm ${className}`}
-      style={{ borderColor: 'rgba(45, 36, 32, 0.08)' }}
+      className={`relative w-full aspect-[3/4] rounded-2xl border overflow-hidden shadow-warm ${className}`}
+      style={{
+        borderColor: 'rgba(45, 36, 32, 0.08)',
+        background: isLinen
+          ? 'repeating-linear-gradient(45deg, rgba(120,100,80,0.05) 0px, rgba(120,100,80,0.05) 1px, transparent 1px, transparent 4px), #fefcf8'
+          : isWatercolor
+          ? 'radial-gradient(ellipse at 20% 10%, rgba(193,123,138,0.12), transparent 60%), radial-gradient(ellipse at 80% 90%, rgba(143,170,139,0.12), transparent 60%), #fffdf9'
+          : '#ffffff',
+      }}
       role="img"
       aria-label="Live card preview"
     >
@@ -144,10 +178,10 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
           >
             {closingLine}
           </p>
-          {sender && (
+          {showSignature && (
             <p
-              className="text-sm mt-0.5"
-              style={{ fontFamily: fonts.heading, color: palette.text }}
+              className={signatureStyle === 'handwritten' ? 'text-xl mt-1' : 'text-sm mt-0.5'}
+              style={{ fontFamily: signatureFont, color: palette.text }}
             >
               {sender}
             </p>
@@ -182,6 +216,29 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
             </p>
           </div>
         </div>
+      )}
+
+      {/* Envelope color band — bottom edge accent */}
+      {envelopeColor && !(charityName || donationAmount > 0) && (
+        <div
+          className="absolute bottom-0 left-0 right-0"
+          style={{
+            height: '8px',
+            backgroundColor: envelopeColor,
+            boxShadow: 'inset 0 1px 0 rgba(0,0,0,0.06)',
+          }}
+          aria-hidden="true"
+        />
+      )}
+      {envelopeColor && (
+        <div
+          className="absolute top-0 left-0 right-0"
+          style={{
+            height: '4px',
+            backgroundColor: envelopeColor,
+          }}
+          aria-hidden="true"
+        />
       )}
     </div>
   );
