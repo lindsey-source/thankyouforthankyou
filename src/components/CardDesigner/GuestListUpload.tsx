@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Switch } from '@/components/ui/switch';
 import { Download, Upload, Plus, Trash2, AlertTriangle, CheckCircle, Users } from 'lucide-react';
 import { toast } from 'sonner';
 import { parseCSVFile, validateGuestData, generateCSVTemplate } from '@/lib/csvUtils';
@@ -14,7 +15,10 @@ const newGuest = (): GuestEntry => ({
   guestName: '',
   emailAddress: '',
   giftDescription: '',
-  thankYouMessage: '',
+  giftAmount: '',
+  relationship: '',
+  personalNote: '',
+  send: true,
 });
 
 export const GuestListUpload: React.FC = () => {
@@ -24,8 +28,8 @@ export const GuestListUpload: React.FC = () => {
   const [invalidRows, setInvalidRows] = useState<{ row: number; errors: string[] }[]>([]);
 
   const guests = cardData.guests || [];
-
   const setGuests = (next: GuestEntry[]) => updateCardData({ guests: next });
+  const sendCount = guests.filter((g) => g.send).length;
 
   const handleDownloadTemplate = () => {
     generateCSVTemplate();
@@ -53,7 +57,10 @@ export const GuestListUpload: React.FC = () => {
           guestName: g.guestName,
           emailAddress: g.emailAddress,
           giftDescription: g.giftDescription,
-          thankYouMessage: g.thankYouMessage || '',
+          giftAmount: g.giftAmount,
+          relationship: g.relationship,
+          personalNote: g.personalNote,
+          send: g.send,
         })),
       ];
 
@@ -74,11 +81,9 @@ export const GuestListUpload: React.FC = () => {
     }
   };
 
-  const handleAddRow = () => {
-    setGuests([...guests, newGuest()]);
-  };
+  const handleAddRow = () => setGuests([...guests, newGuest()]);
 
-  const handleUpdateGuest = (id: string, field: keyof GuestEntry, value: string) => {
+  const handleUpdateGuest = (id: string, field: keyof GuestEntry, value: string | boolean) => {
     setGuests(guests.map((g) => (g.id === id ? { ...g, [field]: value } : g)));
   };
 
@@ -102,8 +107,8 @@ export const GuestListUpload: React.FC = () => {
           </Label>
           <p className="text-sm text-muted-foreground">
             Download the template, fill it in while opening gifts, and upload it here. We'll
-            generate a personalised thank-you card for each person — you can review and tweak
-            before sending.
+            generate a personalised thank-you card for each person — review and tweak before
+            sending.
           </p>
         </div>
 
@@ -161,7 +166,7 @@ export const GuestListUpload: React.FC = () => {
               <div className="flex items-center gap-2 text-sm">
                 <CheckCircle className="w-4 h-4 text-green-600" />
                 <span className="font-medium">
-                  {guests.length} guest{guests.length === 1 ? '' : 's'} ready
+                  {sendCount} of {guests.length} guest{guests.length === 1 ? '' : 's'} marked to send
                 </span>
               </div>
               <Button
@@ -177,19 +182,22 @@ export const GuestListUpload: React.FC = () => {
 
             <div className="border rounded-lg overflow-hidden">
               <div className="overflow-x-auto">
-                <table className="w-full text-sm">
+                <table className="w-full text-sm min-w-[900px]">
                   <thead className="bg-muted/50 text-muted-foreground">
                     <tr>
                       <th className="text-left px-3 py-2 font-medium">Name</th>
                       <th className="text-left px-3 py-2 font-medium">Email</th>
                       <th className="text-left px-3 py-2 font-medium">Gift</th>
-                      <th className="text-left px-3 py-2 font-medium">Custom message</th>
+                      <th className="text-left px-3 py-2 font-medium w-24">Amount</th>
+                      <th className="text-left px-3 py-2 font-medium w-32">Relationship</th>
+                      <th className="text-left px-3 py-2 font-medium">Personal note</th>
+                      <th className="text-center px-3 py-2 font-medium w-20">Send?</th>
                       <th className="w-10"></th>
                     </tr>
                   </thead>
                   <tbody>
                     {guests.map((g) => (
-                      <tr key={g.id} className="border-t">
+                      <tr key={g.id} className={`border-t ${!g.send ? 'opacity-50' : ''}`}>
                         <td className="px-2 py-1.5">
                           <Input
                             value={g.guestName}
@@ -217,10 +225,33 @@ export const GuestListUpload: React.FC = () => {
                         </td>
                         <td className="px-2 py-1.5">
                           <Input
-                            value={g.thankYouMessage || ''}
-                            onChange={(e) => handleUpdateGuest(g.id, 'thankYouMessage', e.target.value)}
+                            value={g.giftAmount}
+                            onChange={(e) => handleUpdateGuest(g.id, 'giftAmount', e.target.value)}
+                            placeholder="$"
+                            className="h-8 border-0 focus-visible:ring-1 px-2"
+                          />
+                        </td>
+                        <td className="px-2 py-1.5">
+                          <Input
+                            value={g.relationship}
+                            onChange={(e) => handleUpdateGuest(g.id, 'relationship', e.target.value)}
+                            placeholder="Friend"
+                            className="h-8 border-0 focus-visible:ring-1 px-2"
+                          />
+                        </td>
+                        <td className="px-2 py-1.5">
+                          <Input
+                            value={g.personalNote}
+                            onChange={(e) => handleUpdateGuest(g.id, 'personalNote', e.target.value)}
                             placeholder="Optional"
                             className="h-8 border-0 focus-visible:ring-1 px-2"
+                          />
+                        </td>
+                        <td className="px-2 py-1.5 text-center">
+                          <Switch
+                            checked={g.send}
+                            onCheckedChange={(v) => handleUpdateGuest(g.id, 'send', v)}
+                            aria-label="Send to this guest"
                           />
                         </td>
                         <td className="px-1 py-1.5">

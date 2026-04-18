@@ -38,7 +38,10 @@ export interface GuestEntry {
   guestName: string;
   emailAddress: string;
   giftDescription: string;
-  thankYouMessage?: string;
+  giftAmount: string;
+  relationship: string;
+  personalNote: string;
+  send: boolean;
 }
 
 interface CardWizardContextType {
