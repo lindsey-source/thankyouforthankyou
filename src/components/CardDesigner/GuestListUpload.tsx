@@ -106,9 +106,8 @@ export const GuestListUpload: React.FC = () => {
             Guest List
           </Label>
           <p className="text-sm text-muted-foreground">
-            Download the template, fill it in while opening gifts, and upload it here. We'll
-            generate a personalised thank-you card for each person — review and tweak before
-            sending.
+            Fill in the template as you open gifts, then upload below — we'll generate a
+            personalised thank-you card for each person. Review and tweak before sending.
           </p>
         </div>
 
