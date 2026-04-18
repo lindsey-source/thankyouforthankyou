@@ -20,8 +20,19 @@ export interface LiveCardPreviewProps {
   photoUrl?: string | null;
   charityName?: string | null;
   donationAmount?: number;
+  envelopeColor?: string | null;
+  texture?: string | null;
+  signatureStyle?: string | null;
   className?: string;
 }
+
+const TEXTURE_BG: Record<string, string> = {
+  smooth: '#ffffff',
+  linen:
+    "#fefcf8 repeating-linear-gradient(45deg, rgba(120,100,80,0.05) 0px, rgba(120,100,80,0.05) 1px, transparent 1px, transparent 4px)",
+  watercolor:
+    'radial-gradient(ellipse at 20% 10%, rgba(193,123,138,0.10), transparent 60%), radial-gradient(ellipse at 80% 90%, rgba(143,170,139,0.10), transparent 60%), #fffdf9',
+};
 
 /**
  * Live preview of the full card face. Pure, prop-driven, real-time.
