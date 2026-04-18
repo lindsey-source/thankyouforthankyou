@@ -553,7 +553,7 @@ export default function CreateCardStep5Impact() {
                     Supporting
                   </p>
                   <p style={{ color: '#2a2622' }}>
-                    {selectedCharity?.name || (
+                    {cardData.charityName || (
                       <span style={{ color: '#bcb4ab' }}>Choose a cause</span>
                     )}
                   </p>
