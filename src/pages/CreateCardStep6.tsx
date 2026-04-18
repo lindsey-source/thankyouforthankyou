@@ -133,16 +133,34 @@ export default function CreateCardStep5Impact() {
     <div className="min-h-screen" style={{ backgroundColor: '#faf7f2' }}>
       <ProgressBar currentStep={7} totalSteps={7} stepNames={STEP_NAMES} />
 
-      <div className="max-w-7xl mx-auto px-4 md:px-8 pt-8 pb-32">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 pt-6 pb-32">
+        {/* Back link — top of page, matches other steps */}
+        <button
+          onClick={() => navigate('/create-card/step5')}
+          className="inline-flex items-center gap-2 text-sm mb-6 transition-opacity hover:opacity-70"
+          style={{ color: '#8a8079' }}
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back to finishing touches
+        </button>
+
         {/* Header */}
-        <div className="text-center mb-10">
+        <div className="text-center mb-12">
+          <motion.p
+            className="text-xs uppercase tracking-[0.25em] mb-3"
+            style={{ color: '#8faa8b' }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            Step 7 — Preview &amp; Send
+          </motion.p>
           <motion.h1
             className="text-4xl md:text-5xl mb-4"
             style={{ fontFamily: "'Playfair Display', serif", color: '#2a2622' }}
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            Your Impact
+            Your finished card
           </motion.h1>
           <motion.p
             className="text-base md:text-lg max-w-xl mx-auto"
@@ -151,8 +169,18 @@ export default function CreateCardStep5Impact() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.15 }}
           >
-            Send your card and turn your gratitude into something even greater.
+            One last look — then turn your gratitude into something even greater.
           </motion.p>
+
+          {/* Decorative ornament — matches Step 2 brand motif */}
+          <div className="flex items-center justify-center gap-2 mt-6 opacity-60" aria-hidden="true">
+            <div className="h-px w-10" style={{ backgroundColor: '#c17b8a' }} />
+            <div
+              className="h-1.5 w-1.5 rotate-45"
+              style={{ backgroundColor: '#c17b8a' }}
+            />
+            <div className="h-px w-10" style={{ backgroundColor: '#c17b8a' }} />
+          </div>
         </div>
 
         {/* === Final card preview === */}
@@ -248,13 +276,7 @@ export default function CreateCardStep5Impact() {
                   Dear {recipientName?.trim() || 'friend'},
                 </p>
                 <p
-                  className="text-sm leading-relaxed flex-1 line-clamp-4"
-                  style={{ fontFamily: fonts.body, color: previewText, opacity: 0.75 }}
-                >
-                  {bodyText}
-                </p>
-                <p
-                  className="text-sm leading-relaxed flex-1 line-clamp-3"
+                  className="text-sm leading-relaxed flex-1"
                   style={{ fontFamily: fonts.body, color: previewText, opacity: 0.75 }}
                 >
                   {bodyText}
@@ -336,15 +358,7 @@ export default function CreateCardStep5Impact() {
           </div>
         </motion.div>
 
-        {/* Back link */}
-        <button
-          onClick={() => navigate('/create-card/step5')}
-          className="inline-flex items-center gap-2 text-sm mb-8 transition-opacity hover:opacity-70"
-          style={{ color: '#8a8079' }}
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back to finishing touches
-        </button>
+
 
         {/* Two-column layout */}
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-10 lg:gap-14 items-start">
