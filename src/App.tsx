@@ -27,6 +27,7 @@ import Settings from "./pages/Settings";
 import Help from "./pages/Help";
 import NotFound from "./pages/NotFound";
 import CampaignDetail from "./pages/CampaignDetail";
+import GiftTracker from "./pages/GiftTracker";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +42,7 @@ const App = () => (
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="/signup" element={<SignUp />} />
+              <Route path="/gift-tracker" element={<GiftTracker />} />
               <Route path="/login" element={<Login />} />
               <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/sign-up" element={<Navigate to="/signup" replace />} />
