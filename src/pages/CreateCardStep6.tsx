@@ -358,15 +358,7 @@ export default function CreateCardStep5Impact() {
           </div>
         </motion.div>
 
-        {/* Back link */}
-        <button
-          onClick={() => navigate('/create-card/step5')}
-          className="inline-flex items-center gap-2 text-sm mb-8 transition-opacity hover:opacity-70"
-          style={{ color: '#8a8079' }}
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back to finishing touches
-        </button>
+
 
         {/* Two-column layout */}
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-10 lg:gap-14 items-start">
