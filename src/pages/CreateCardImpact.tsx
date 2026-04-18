@@ -59,6 +59,23 @@ export default function CreateCardImpact() {
   const [guestCount, setGuestCount] = useState<number>(cardData.guestCount || 50);
   const [loading, setLoading] = useState(true);
 
+  // Donation state — preserves per-guest overrides when toggling back to flat
+  const [donationMode, setDonationMode] = useState<'flat' | 'per_guest'>(
+    cardData.donationMode || 'flat'
+  );
+  const [flatAmount, setFlatAmount] = useState<number>(
+    cardData.donationAmount || SUGGESTED_AMOUNT
+  );
+  const [customOpen, setCustomOpen] = useState<boolean>(
+    !!cardData.donationAmount && !PRESET_AMOUNTS.includes(cardData.donationAmount as any)
+  );
+  const [perGuest, setPerGuest] = useState<Record<string, number>>(
+    cardData.donationPerGuest || {}
+  );
+
+  const guests = cardData.guests || [];
+  const effectiveGuestCount = guests.length > 0 ? guests.length : guestCount;
+
   useEffect(() => {
     let active = true;
     (async () => {
@@ -77,10 +94,16 @@ export default function CreateCardImpact() {
     return () => { active = false; };
   }, []);
 
-  const totalDonation = useMemo(
-    () => Math.round(guestCount * SAVINGS_PER_GUEST * 100) / 100,
-    [guestCount],
-  );
+  const totalDonation = useMemo(() => {
+    if (donationMode === 'per_guest' && guests.length > 0) {
+      const sum = guests.reduce(
+        (acc, g) => acc + (perGuest[g.id] ?? flatAmount),
+        0
+      );
+      return Math.round(sum * 100) / 100;
+    }
+    return Math.round(flatAmount * effectiveGuestCount * 100) / 100;
+  }, [donationMode, flatAmount, perGuest, guests, effectiveGuestCount]);
 
   const selectedCharity = useMemo(
     () => charities.find(c => c.id === selectedId) || null,
@@ -96,6 +119,10 @@ export default function CreateCardImpact() {
     setSelectedId(c.id);
   };
 
+  const updatePerGuest = (id: string, value: number) => {
+    setPerGuest(prev => ({ ...prev, [id]: value }));
+  };
+
   const handleNext = () => {
     if (!selectedCharity) {
       toast.error('Please choose a cause to support');
@@ -104,8 +131,10 @@ export default function CreateCardImpact() {
     updateCardData({
       charityId: selectedCharity.id,
       charityName: selectedCharity.name,
-      guestCount,
-      donationAmount: totalDonation,
+      guestCount: effectiveGuestCount,
+      donationAmount: flatAmount,
+      donationMode,
+      donationPerGuest: perGuest, // preserved even when in flat mode
     });
     setCurrentStep(6);
     navigate('/create-card/step5');
