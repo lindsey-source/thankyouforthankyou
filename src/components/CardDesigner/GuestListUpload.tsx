@@ -21,15 +21,60 @@ const newGuest = (): GuestEntry => ({
   send: true,
 });
 
+type QuickAddField = 'guestName' | 'emailAddress' | 'giftDescription';
+
 export const GuestListUpload: React.FC = () => {
   const { cardData, updateCardData } = useCardWizard();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [invalidRows, setInvalidRows] = useState<{ row: number; errors: string[] }[]>([]);
 
+  const [quickAdd, setQuickAdd] = useState({
+    guestName: '',
+    emailAddress: '',
+    giftDescription: '',
+    personalNote: '',
+  });
+  const [touched, setTouched] = useState<Record<QuickAddField, boolean>>({
+    guestName: false,
+    emailAddress: false,
+    giftDescription: false,
+  });
+
   const guests = cardData.guests || [];
   const setGuests = (next: GuestEntry[]) => updateCardData({ guests: next });
   const sendCount = guests.filter((g) => g.send).length;
+
+  const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(quickAdd.emailAddress.trim());
+  const errors: Record<QuickAddField, string | null> = {
+    guestName: quickAdd.guestName.trim() ? null : 'Name is required',
+    emailAddress: !quickAdd.emailAddress.trim()
+      ? 'Email is required'
+      : emailValid
+        ? null
+        : 'Enter a valid email',
+    giftDescription: quickAdd.giftDescription.trim() ? null : 'Gift is required',
+  };
+  const canSubmit = !errors.guestName && !errors.emailAddress && !errors.giftDescription;
+
+  const handleQuickAdd = () => {
+    setTouched({ guestName: true, emailAddress: true, giftDescription: true });
+    if (!canSubmit) return;
+    const entry: GuestEntry = {
+      id: crypto.randomUUID(),
+      guestName: quickAdd.guestName.trim(),
+      emailAddress: quickAdd.emailAddress.trim(),
+      giftDescription: quickAdd.giftDescription.trim(),
+      giftAmount: '',
+      relationship: '',
+      personalNote: quickAdd.personalNote.trim(),
+      send: true,
+    };
+    setGuests([...guests, entry]);
+    setQuickAdd({ guestName: '', emailAddress: '', giftDescription: '', personalNote: '' });
+    setTouched({ guestName: false, emailAddress: false, giftDescription: false });
+    toast.success(`${entry.guestName} added.`);
+  };
 
   const handleDownloadTemplate = () => {
     generateCSVTemplate();
