@@ -74,6 +74,15 @@ const LandingPage = () => {
                   See How It Works
                 </Button>
               </div>
+              <div className="mt-3 text-center md:text-left">
+                <Link
+                  to="/gift-tracker"
+                  className="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-primary transition-colors underline-offset-4 hover:underline"
+                >
+                  Planning ahead? Download the gift tracker template
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              </div>
             </div>
 
             {/* Right: Product mockup card */}
