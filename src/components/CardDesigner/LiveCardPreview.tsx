@@ -178,10 +178,10 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
           >
             {closingLine}
           </p>
-          {sender && (
+          {showSignature && (
             <p
-              className="text-sm mt-0.5"
-              style={{ fontFamily: fonts.heading, color: palette.text }}
+              className={signatureStyle === 'handwritten' ? 'text-xl mt-1' : 'text-sm mt-0.5'}
+              style={{ fontFamily: signatureFont, color: palette.text }}
             >
               {sender}
             </p>
