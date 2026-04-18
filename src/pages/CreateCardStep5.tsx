@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCardWizard } from '@/contexts/CardWizardContext';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Sparkles } from 'lucide-react';
 import { ProgressBar } from '@/components/CardDesigner/ProgressBar';
 import { BreadcrumbNav } from '@/components/CardDesigner/BreadcrumbNav';
 import { GuestListUpload } from '@/components/CardDesigner/GuestListUpload';
