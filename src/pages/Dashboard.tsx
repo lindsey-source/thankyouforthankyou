@@ -30,6 +30,15 @@ const Dashboard = () => {
     navigate("/", { replace: true });
   };
 
+  const handleDownloadTemplate = () => {
+    try {
+      generateCSVTemplate();
+      toast.success("Template downloaded — happy planning!");
+    } catch {
+      toast.error("Couldn't start the download. Please try again.");
+    }
+  };
+
   useEffect(() => {
     if (!user) return;
     let cancelled = false;
