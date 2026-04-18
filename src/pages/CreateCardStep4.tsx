@@ -85,7 +85,7 @@ export default function CreateCardStep3Message() {
       closing: formData.closing,
     });
     setCurrentStep(5);
-    navigate('/create-card/impact');
+    navigate('/create-card/step5');
   };
 
   const previewImage = cardData.templateId
