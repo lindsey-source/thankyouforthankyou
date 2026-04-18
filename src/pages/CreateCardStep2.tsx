@@ -1107,6 +1107,7 @@ export default function CreateCardStep2() {
   const navigate = useNavigate();
   const { cardData, updateCardData, setCurrentStep } = useCardWizard();
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [previewId, setPreviewId] = useState<string | null>(null);
 
   const occasion = (cardData.occasion as OccasionId | null) || null;
 
