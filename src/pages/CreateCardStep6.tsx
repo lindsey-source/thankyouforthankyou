@@ -66,7 +66,6 @@ export default function CreateCardStep5Impact() {
     cardData.messageBody?.trim() ||
     'Thank you so much for being part of our special day. Your presence meant the world to us.';
   const closing = cardData.closing?.trim() || 'With love';
-  const charityName = selectedCharity?.name || cardData.charityName || 'your chosen cause';
 
   const handleSend = async () => {
     if (!recipientName.trim() || !recipientEmail.trim()) {
@@ -89,7 +88,7 @@ export default function CreateCardStep5Impact() {
           envelope_color: cardData.envelopeColor,
           texture: cardData.texture,
           signature_style: cardData.signatureStyle,
-          charity_id: selectedCharity?.id,
+          charity_id: charityId,
           donation_amount: donationAmount,
           sent_at: new Date().toISOString(),
         })
@@ -98,11 +97,11 @@ export default function CreateCardStep5Impact() {
 
       if (cardError) throw cardError;
 
-      if (donationAmount > 0 && selectedCharity) {
+      if (donationAmount > 0 && charityId) {
         await supabase.from('transactions').insert({
           user_card_id: savedCard.id,
           amount: donationAmount,
-          charity_id: selectedCharity.id,
+          charity_id: charityId,
           status: 'completed',
         });
       }
