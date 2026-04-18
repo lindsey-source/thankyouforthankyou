@@ -11,6 +11,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { ProgressBar } from '@/components/CardDesigner/ProgressBar';
 import { BreadcrumbNav } from '@/components/CardDesigner/BreadcrumbNav';
+import { GuestListUpload } from '@/components/CardDesigner/GuestListUpload';
 
 const STEPS = [
   { name: 'Occasion', path: '/create-card/step1' },
@@ -143,6 +144,9 @@ export default function CreateCardStep4() {
         </div>
 
         <div className="space-y-6">
+          {/* Guest List Upload — generates a personalised thank-you per guest */}
+          <GuestListUpload />
+
           {/* Photo Upload */}
           <Card className="bg-white/95 backdrop-blur-sm">
             <CardContent className="p-6">

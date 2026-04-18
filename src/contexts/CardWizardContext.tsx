@@ -28,6 +28,17 @@ export interface WizardCardData {
   recipientName: string;
   recipientEmail: string;
   senderName: string;
+
+  // Guest list (multi-recipient)
+  guests: GuestEntry[];
+}
+
+export interface GuestEntry {
+  id: string;
+  guestName: string;
+  emailAddress: string;
+  giftDescription: string;
+  thankYouMessage?: string;
 }
 
 interface CardWizardContextType {
@@ -58,7 +69,8 @@ const initialCardData: WizardCardData = {
   donationAmount: 0,
   recipientName: '',
   recipientEmail: '',
-  senderName: ''
+  senderName: '',
+  guests: []
 };
 
 const loadPersistedData = (): { cardData: WizardCardData; currentStep: number } => {
