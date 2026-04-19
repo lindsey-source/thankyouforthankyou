@@ -300,23 +300,39 @@ const MitzvahArt: React.FC = () => (
 );
 
 const CorporateArt: React.FC = () => (
-  <ArtFrame background="linear-gradient(165deg, #0f1f2e 0%, #1a3148 55%, #081523 100%)">
+  <ArtFrame background="#2C3E50">
     <svg className="absolute inset-0 w-full h-full" viewBox="0 0 200 300" preserveAspectRatio="xMidYMid slice">
-      <DotPattern id="corpDots" color="#c8d4e0" opacity={0.14} />
+      <DotPattern id="corpDots" color="#e8c98a" opacity={0.1} />
       <rect width="200" height="300" fill="url(#corpDots)" />
-      <g transform="translate(100 175)" fill="#c8d4e0">
-        <rect x="-58" y="-30" width="20" height="60" fillOpacity="0.78" />
-        <rect x="-34" y="-72" width="22" height="102" fillOpacity="0.92" />
-        <rect x="-8" y="-50" width="22" height="80" fillOpacity="0.86" />
-        <rect x="18" y="-92" width="22" height="122" fillOpacity="1" />
-        <rect x="44" y="-42" width="14" height="72" fillOpacity="0.78" />
-        <g fill="#0f1f2e" fillOpacity="0.65">
-          <circle cx="-23" cy="-52" r="1.4" /><circle cx="-23" cy="-32" r="1.4" /><circle cx="-23" cy="-12" r="1.4" />
-          <circle cx="3" cy="-30" r="1.4" /><circle cx="3" cy="-10" r="1.4" />
-          <circle cx="29" cy="-72" r="1.4" /><circle cx="29" cy="-52" r="1.4" /><circle cx="29" cy="-32" r="1.4" /><circle cx="29" cy="-12" r="1.4" />
+      {/* Award badge with ribbon tails — gold strokes */}
+      <g transform="translate(100 130)" fill="none" stroke="#e8c98a" strokeLinecap="round" strokeLinejoin="round">
+        {/* Ribbon tails behind badge */}
+        <path d="M -22 28 L -32 78 L -16 66 L -6 86 L 4 36" strokeWidth="2.4" fill="#2C3E50" />
+        <path d="M 22 28 L 32 78 L 16 66 L 6 86 L -4 36" strokeWidth="2.4" fill="#2C3E50" />
+        {/* Outer medallion */}
+        <circle cx="0" cy="0" r="42" strokeWidth="3" />
+        {/* Inner ring */}
+        <circle cx="0" cy="0" r="34" strokeWidth="1.4" strokeOpacity="0.7" />
+        {/* Decorative notches around outer ring */}
+        <g strokeWidth="1.4" strokeOpacity="0.85">
+          {Array.from({ length: 12 }).map((_, i) => {
+            const a = (i * Math.PI * 2) / 12;
+            const x1 = Math.cos(a) * 42;
+            const y1 = Math.sin(a) * 42;
+            const x2 = Math.cos(a) * 47;
+            const y2 = Math.sin(a) * 47;
+            return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} />;
+          })}
         </g>
+        {/* Center star */}
+        <path
+          d="M 0 -18 L 5 -6 L 18 -4 L 8 5 L 11 18 L 0 11 L -11 18 L -8 5 L -18 -4 L -5 -6 Z"
+          fill="#e8c98a"
+          stroke="#e8c98a"
+          strokeWidth="1"
+        />
       </g>
-      <CoverName name="CORPORATE" color="#c8d4e0" secondary="WITH APPRECIATION" />
+      <CoverName name="CORPORATE" color="#e8c98a" secondary="WITH APPRECIATION" />
     </svg>
   </ArtFrame>
 );
