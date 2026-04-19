@@ -617,8 +617,8 @@ export default function CreateCardStep1() {
                 aria-pressed={isSelected}
                 aria-label={`Select ${occasion.name}`}
               >
-                {/* Full-bleed cover artwork — 3:4 ratio */}
-                <div className="relative w-full overflow-hidden" style={{ aspectRatio: '3 / 4' }}>
+                {/* Full-bleed cover artwork — taller 2:3 ratio for bolder presence */}
+                <div className="relative w-full overflow-hidden" style={{ aspectRatio: '2 / 3' }}>
                   <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-[1.04]">
                     <Art />
                   </div>
