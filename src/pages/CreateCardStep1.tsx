@@ -338,17 +338,72 @@ const CorporateArt: React.FC = () => (
 );
 
 const GeneralArt: React.FC = () => (
-  <ArtFrame background="linear-gradient(165deg, #3d2a1a 0%, #5a4028 55%, #2a1c0f 100%)">
+  <ArtFrame background="#3D6B4F">
     <svg className="absolute inset-0 w-full h-full" viewBox="0 0 200 300" preserveAspectRatio="xMidYMid slice">
-      <DotPattern id="genDots" color="#f0d4b8" />
+      <DotPattern id="genDots" color="#f5e0c4" opacity={0.12} />
       <rect width="200" height="300" fill="url(#genDots)" />
-      <g transform="translate(100 130)">
+      {/* Open envelope with a heart rising out — soft gold/cream */}
+      <g transform="translate(100 148)">
+        {/* Envelope back panel */}
         <path
-          d="M0 38 C -32 14, -52 -8, -52 -28 a 26 26 0 0 1 52 -8 a 26 26 0 0 1 52 8 c 0 20, -20 42, -52 66 z"
-          fill="#f0d4b8"
+          d="M -56 -8 L 56 -8 L 56 38 L -56 38 Z"
+          fill="#f5e0c4"
+          stroke="#b88838"
+          strokeWidth="1.4"
+          strokeLinejoin="round"
         />
+        {/* Inner shadow on back panel */}
+        <path
+          d="M -56 -8 L 56 -8 L 56 38 L -56 38 Z"
+          fill="none"
+          stroke="#b88838"
+          strokeOpacity="0.2"
+          strokeWidth="0.6"
+        />
+        {/* Front flap (folded down, open) */}
+        <path
+          d="M -56 38 L 0 8 L 56 38 Z"
+          fill="#e8c98a"
+          stroke="#b88838"
+          strokeWidth="1.4"
+          strokeLinejoin="round"
+        />
+        {/* Open top flap (laying back) */}
+        <path
+          d="M -56 -8 L 0 -42 L 56 -8 L 0 12 Z"
+          fill="#f0d4b8"
+          stroke="#b88838"
+          strokeWidth="1.4"
+          strokeLinejoin="round"
+        />
+        {/* Heart rising out of envelope */}
+        <g transform="translate(0 -28)">
+          <path
+            d="M 0 14 C -14 4, -22 -6, -22 -16 a 11 11 0 0 1 22 -3 a 11 11 0 0 1 22 3 c 0 10, -8 20, -22 30 z"
+            fill="#f5e0c4"
+            stroke="#b88838"
+            strokeWidth="1.6"
+            strokeLinejoin="round"
+          />
+          {/* Heart highlight */}
+          <path
+            d="M -10 -12 q 6 -4 12 0"
+            fill="none"
+            stroke="#fff5e1"
+            strokeOpacity="0.7"
+            strokeWidth="1.2"
+            strokeLinecap="round"
+          />
+        </g>
+        {/* Tiny sparkle dots near heart */}
+        <g fill="#f5e0c4" fillOpacity="0.8">
+          <circle cx="-30" cy="-32" r="1.3" />
+          <circle cx="32" cy="-26" r="1.3" />
+          <circle cx="26" cy="-46" r="1" />
+          <circle cx="-22" cy="-50" r="1" />
+        </g>
       </g>
-      <CoverName name="THANK YOU" color="#f0d4b8" secondary="WITH ALL MY HEART" />
+      <CoverName name="THANK YOU" color="#f5e0c4" secondary="WITH ALL MY HEART" />
     </svg>
   </ArtFrame>
 );
