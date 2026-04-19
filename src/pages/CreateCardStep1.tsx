@@ -158,28 +158,47 @@ const GraduationArt: React.FC = () => (
 );
 
 const BirthdayArt: React.FC = () => (
-  <ArtFrame background="linear-gradient(165deg, #5a1a3d 0%, #7a2552 55%, #421530 100%)">
+  <ArtFrame background="#7B3F6E">
     <svg className="absolute inset-0 w-full h-full" viewBox="0 0 200 300" preserveAspectRatio="xMidYMid slice">
-      <DotPattern id="bdayDots" color="#ffd97a" opacity={0.16} />
+      <DotPattern id="bdayDots" color="#f5e0c4" opacity={0.14} />
       <rect width="200" height="300" fill="url(#bdayDots)" />
-      <g fill="#ffd97a" fillOpacity="0.7">
-        <circle cx="35" cy="55" r="1.6" /><circle cx="165" cy="65" r="1.6" />
-        <circle cx="50" cy="100" r="1.2" /><circle cx="155" cy="110" r="1.2" />
-        <circle cx="30" cy="180" r="1.2" /><circle cx="172" cy="180" r="1.2" />
+      {/* Subtle confetti dots */}
+      <g fill="#f5e0c4" fillOpacity="0.55">
+        <circle cx="35" cy="60" r="1.6" /><circle cx="165" cy="70" r="1.6" />
+        <circle cx="55" cy="105" r="1.2" /><circle cx="150" cy="115" r="1.2" />
+        <circle cx="30" cy="195" r="1.4" /><circle cx="172" cy="200" r="1.4" />
+        <circle cx="80" cy="50" r="1" /><circle cx="125" cy="55" r="1" />
       </g>
-      {/* Birthday cake with candle */}
-      <g transform="translate(100 150)">
-        <path d="M0 -78 q 7 -10 0 -20 q -7 10 0 20 z" fill="#ffd97a" />
-        <circle cx="0" cy="-86" r="1.4" fill="#fff3d6" />
-        <rect x="-2.2" y="-76" width="4.4" height="14" fill="#ffd97a" />
-        <rect x="-28" y="-62" width="56" height="22" rx="2" fill="#ffd97a" />
-        <path d="M-24 -40 q 4 8 8 0 q 4 8 8 0 q 4 8 8 0 q 4 8 8 0" fill="#ffd97a" />
-        <rect x="-44" y="-32" width="88" height="36" rx="2" fill="#ffd97a" fillOpacity="0.92" />
-        <line x1="-44" y1="-20" x2="44" y2="-20" stroke="#5a1a3d" strokeOpacity="0.3" strokeWidth="0.8" />
-        <line x1="-44" y1="-8" x2="44" y2="-8" stroke="#5a1a3d" strokeOpacity="0.3" strokeWidth="0.8" />
-        <ellipse cx="0" cy="6" rx="54" ry="4" fill="#ffd97a" fillOpacity="0.6" />
+      {/* Birthday cake — cream/gold strokes, 3 lit candles */}
+      <g transform="translate(100 160)" stroke="#f5e0c4" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" fill="none">
+        {/* Three flames */}
+        <g fill="#f5e0c4" stroke="none">
+          {/* Left flame */}
+          <path d="M -22 -78 q 4 -6 0 -12 q -4 6 0 12 z" />
+          <circle cx="-22" cy="-83" r="1" fill="#fff5e1" />
+          {/* Center flame (slightly taller) */}
+          <path d="M 0 -82 q 5 -7 0 -14 q -5 7 0 14 z" />
+          <circle cx="0" cy="-88" r="1.2" fill="#fff5e1" />
+          {/* Right flame */}
+          <path d="M 22 -78 q 4 -6 0 -12 q -4 6 0 12 z" />
+          <circle cx="22" cy="-83" r="1" fill="#fff5e1" />
+        </g>
+        {/* Candles */}
+        <line x1="-22" y1="-66" x2="-22" y2="-50" strokeWidth="3" />
+        <line x1="0" y1="-68" x2="0" y2="-50" strokeWidth="3" />
+        <line x1="22" y1="-66" x2="22" y2="-50" strokeWidth="3" />
+        {/* Top tier */}
+        <path d="M -32 -50 L 32 -50 L 32 -28 L -32 -28 Z" />
+        {/* Drips between tiers */}
+        <path d="M -28 -28 q 3 6 6 0 q 3 6 6 0 q 3 6 6 0 q 3 6 6 0 q 3 6 6 0" />
+        {/* Base tier */}
+        <path d="M -48 -22 L 48 -22 L 48 14 L -48 14 Z" />
+        {/* Decorative band on base */}
+        <line x1="-48" y1="-4" x2="48" y2="-4" strokeWidth="1.4" strokeOpacity="0.7" />
+        {/* Plate */}
+        <ellipse cx="0" cy="18" rx="58" ry="4" />
       </g>
-      <CoverName name="BIRTHDAY" color="#ffd97a" secondary="ANOTHER YEAR · THANK YOU" />
+      <CoverName name="BIRTHDAY" color="#f5e0c4" secondary="ANOTHER YEAR · THANK YOU" />
     </svg>
   </ArtFrame>
 );
