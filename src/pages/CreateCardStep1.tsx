@@ -119,22 +119,62 @@ const WeddingArt: React.FC = () => (
 );
 
 const BabyArt: React.FC = () => (
-  <ArtFrame background="linear-gradient(165deg, #1e3a52 0%, #2a4d6a 55%, #15293d 100%)">
+  <ArtFrame background="#5B8FA8">
     <svg className="absolute inset-0 w-full h-full" viewBox="0 0 200 300" preserveAspectRatio="xMidYMid slice">
-      <DotPattern id="babyDots" color="#f2d9b8" />
+      <DotPattern id="babyDots" color="#ffffff" opacity={0.1} />
       <rect width="200" height="300" fill="url(#babyDots)" />
-      <g fill="#f2d9b8" fillOpacity="0.65">
-        <circle cx="40" cy="60" r="1.2" /><circle cx="160" cy="80" r="1.2" />
-        <circle cx="55" cy="200" r="1.2" /><circle cx="150" cy="190" r="1.2" />
-        <circle cx="30" cy="140" r="1" /><circle cx="170" cy="150" r="1" />
-        <circle cx="65" cy="105" r="0.9" /><circle cx="135" cy="55" r="0.9" />
+      {/* Scattered stars */}
+      <g fill="#ffffff" fillOpacity="0.85">
+        {[
+          [38, 70, 3], [162, 60, 2.4], [50, 130, 2], [155, 140, 2.6],
+          [30, 195, 2.4], [170, 200, 2], [60, 235, 1.8], [148, 100, 1.6],
+          [90, 50, 1.6], [115, 245, 2],
+        ].map(([cx, cy, r], i) => (
+          <path
+            key={i}
+            d={`M${cx} ${cy - r} l${r * 0.3} ${r * 0.9} ${r * 0.95} 0 -${r * 0.78} ${r * 0.6} ${r * 0.3} ${r * 0.95} -${r * 0.78} -${r * 0.58} -${r * 0.78} ${r * 0.58} ${r * 0.3} -${r * 0.95} -${r * 0.78} -${r * 0.6} ${r * 0.95} 0 z`}
+          />
+        ))}
       </g>
-      {/* Crescent moon cradling a star */}
-      <g transform="translate(100 132)">
-        <path d="M 22 -34 A 42 42 0 1 0 22 34 A 32 32 0 1 1 22 -34 Z" fill="#f2d9b8" />
-        <path d="M44 -6 l2.6 8 8.4 0 -6.8 5 2.6 8 -6.8 -5 -6.8 5 2.6 -8 -6.8 -5 8.4 0 z" fill="#f2d9b8" />
+      {/* Classic baby onesie / bodysuit silhouette in white outline */}
+      <g transform="translate(100 152)" fill="none" stroke="#ffffff" strokeWidth="3.2" strokeLinejoin="round" strokeLinecap="round">
+        {/* Main body shape */}
+        <path d="
+          M -30 -50
+          C -30 -58, -20 -64, -10 -64
+          L 10 -64
+          C 20 -64, 30 -58, 30 -50
+          L 44 -38
+          C 50 -32, 50 -22, 44 -16
+          L 32 -8
+          L 32 30
+          C 32 38, 26 44, 18 44
+          L 8 44
+          L 8 28
+          C 8 24, 4 22, 0 22
+          C -4 22, -8 24, -8 28
+          L -8 44
+          L -18 44
+          C -26 44, -32 38, -32 30
+          L -32 -8
+          L -44 -16
+          C -50 -22, -50 -32, -44 -38
+          Z
+        " />
+        {/* Neckline */}
+        <path d="M -10 -64 q 10 6 20 0" />
+        {/* Snap buttons at crotch */}
+        <circle cx="-6" cy="36" r="1.6" fill="#ffffff" stroke="none" />
+        <circle cx="6" cy="36" r="1.6" fill="#ffffff" stroke="none" />
+        {/* Tiny chest detail — small heart */}
+        <path
+          d="M0 -28 C -4 -32, -8 -34, -8 -38 a 3 3 0 0 1 8 -1 a 3 3 0 0 1 8 1 c 0 4, -4 6, -8 10 z"
+          fill="#ffffff"
+          fillOpacity="0.9"
+          stroke="none"
+        />
       </g>
-      <CoverName name="LITTLE ONE" color="#f2d9b8" secondary="WELCOMED WITH LOVE" />
+      <CoverName name="BABY" color="#ffffff" secondary="WELCOMED WITH LOVE" />
     </svg>
   </ArtFrame>
 );
