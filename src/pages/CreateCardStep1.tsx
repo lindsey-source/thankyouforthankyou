@@ -452,31 +452,72 @@ const MemorialArt: React.FC = () => (
 );
 
 const CharityArt: React.FC = () => (
-  <ArtFrame background="linear-gradient(165deg, #4a1d2c 0%, #6b2a3e 55%, #3d1825 100%)">
+  <ArtFrame background="#2A6B6B">
     <svg className="absolute inset-0 w-full h-full" viewBox="0 0 200 300" preserveAspectRatio="xMidYMid slice">
-      <DotPattern id="charDots" color="#e8c98a" opacity={0.16} />
+      <DotPattern id="charDots" color="#f5f0e1" opacity={0.1} />
       <rect width="200" height="300" fill="url(#charDots)" />
-      <g transform="translate(100 130)">
-        <path
-          d="M0 4 C -16 -10, -28 -22, -28 -34 a 14 14 0 0 1 28 -4 a 14 14 0 0 1 28 4 c 0 12, -12 24, -28 38 z"
-          fill="#e8c98a"
-        />
-        <path
-          d="M-46 14 q 0 32 46 32 q 46 0 46 -32"
-          fill="none"
-          stroke="#e8c98a"
-          strokeWidth="3.6"
-          strokeLinecap="round"
-        />
-        <path
-          d="M-46 14 q -4 -2 -8 2 M46 14 q 4 -2 8 2"
-          fill="none"
-          stroke="#e8c98a"
-          strokeWidth="3.2"
-          strokeLinecap="round"
-        />
+      {/* Subtle radiance behind heart */}
+      <g transform="translate(100 110)" stroke="#f5f0e1" strokeOpacity="0.18" strokeLinecap="round">
+        <line x1="0" y1="-26" x2="0" y2="-36" strokeWidth="1.2" />
+        <line x1="-18" y1="-20" x2="-26" y2="-28" strokeWidth="1.2" />
+        <line x1="18" y1="-20" x2="26" y2="-28" strokeWidth="1.2" />
+        <line x1="-26" y1="-2" x2="-36" y2="-2" strokeWidth="1.2" />
+        <line x1="26" y1="-2" x2="36" y2="-2" strokeWidth="1.2" />
       </g>
-      <CoverName name="A GIFT IN YOUR NAME" color="#e8c98a" secondary="GIVING BACK" />
+      {/* Two cupped hands holding a small heart */}
+      <g transform="translate(100 150)" stroke="#f5f0e1" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" fill="none">
+        {/* Heart cradled above hands */}
+        <path
+          d="M 0 -20 C -10 -30, -18 -38, -18 -46 a 9 9 0 0 1 18 -3 a 9 9 0 0 1 18 3 c 0 8, -8 16, -18 26 z"
+          fill="#f5f0e1"
+          stroke="#f5f0e1"
+          strokeWidth="1.6"
+        />
+        {/* Left hand — palm cupped, thumb up, fingers curled */}
+        <path
+          d="
+            M -42 14
+            C -42 6, -34 -2, -24 -2
+            L -2 -2
+            C 2 -2, 4 0, 4 4
+            L 4 16
+            C 4 20, 0 22, -4 22
+          "
+        />
+        {/* Left thumb */}
+        <path d="M -24 -2 C -28 -8, -30 -10, -34 -8" />
+        {/* Left fingers detail */}
+        <g strokeWidth="1.6" strokeOpacity="0.7">
+          <path d="M -16 -2 L -16 4" />
+          <path d="M -10 -2 L -10 4" />
+          <path d="M -4 -2 L -4 4" />
+        </g>
+        {/* Left wrist/cuff */}
+        <path d="M -42 14 L -46 26 L -34 26 L -30 18" />
+
+        {/* Right hand — mirror */}
+        <path
+          d="
+            M 42 14
+            C 42 6, 34 -2, 24 -2
+            L 2 -2
+            C -2 -2, -4 0, -4 4
+            L -4 16
+            C -4 20, 0 22, 4 22
+          "
+        />
+        {/* Right thumb */}
+        <path d="M 24 -2 C 28 -8, 30 -10, 34 -8" />
+        {/* Right fingers detail */}
+        <g strokeWidth="1.6" strokeOpacity="0.7">
+          <path d="M 16 -2 L 16 4" />
+          <path d="M 10 -2 L 10 4" />
+          <path d="M 4 -2 L 4 4" />
+        </g>
+        {/* Right wrist/cuff */}
+        <path d="M 42 14 L 46 26 L 34 26 L 30 18" />
+      </g>
+      <CoverName name="A GIFT IN YOUR NAME" color="#f5f0e1" secondary="GIVING BACK" />
     </svg>
   </ArtFrame>
 );
