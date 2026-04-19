@@ -180,17 +180,58 @@ const BabyArt: React.FC = () => (
 );
 
 const GraduationArt: React.FC = () => (
-  <ArtFrame background="linear-gradient(165deg, #2b1a0e 0%, #3d2515 55%, #1f130a 100%)">
+  <ArtFrame background="#1B2A4A">
     <svg className="absolute inset-0 w-full h-full" viewBox="0 0 200 300" preserveAspectRatio="xMidYMid slice">
-      <DotPattern id="gradDots" color="#e8c98a" />
+      <DotPattern id="gradDots" color="#e8c98a" opacity={0.14} />
       <rect width="200" height="300" fill="url(#gradDots)" />
-      <g transform="translate(100 132)" stroke="#e8c98a" strokeLinejoin="round" strokeLinecap="round">
-        <polygon points="-46,0 0,-24 46,0 0,24" fill="#e8c98a" stroke="none" />
-        <path d="M-32 6 L-32 28 Q0 42 32 28 L32 6" fill="#e8c98a" fillOpacity="0.85" strokeWidth="1.2" />
-        <line x1="0" y1="24" x2="0" y2="44" strokeWidth="2.2" />
-        <circle cx="0" cy="46" r="3.6" fill="#e8c98a" stroke="none" />
-        <path d="M0 46 q 14 6 20 20" fill="none" strokeWidth="2.4" />
-        <path d="M20 66 l-3 8 m3 -8 l6 5" fill="none" strokeWidth="2.2" />
+      {/* Mortarboard cap centered, gold fill, tassel to the right */}
+      <g transform="translate(100 140)">
+        {/* Cap base (band beneath the board) */}
+        <path
+          d="M -32 4 L -32 22 Q 0 36 32 22 L 32 4 Z"
+          fill="#d8a955"
+          stroke="#b88838"
+          strokeWidth="1"
+          strokeLinejoin="round"
+        />
+        {/* Top board (square diamond) */}
+        <polygon
+          points="-50,-2 0,-26 50,-2 0,22"
+          fill="#e8c98a"
+          stroke="#b88838"
+          strokeWidth="1.2"
+          strokeLinejoin="round"
+        />
+        <polygon
+          points="-50,-2 0,-26 50,-2 0,22"
+          fill="none"
+          stroke="#fff5e1"
+          strokeOpacity="0.35"
+          strokeWidth="0.6"
+        />
+        {/* Button at center */}
+        <circle cx="0" cy="-2" r="3" fill="#b88838" />
+        <circle cx="0" cy="-2" r="1.4" fill="#fff5e1" fillOpacity="0.8" />
+        {/* Tassel cord curving to the right */}
+        <path
+          d="M 0 -2 Q 22 4 30 22"
+          fill="none"
+          stroke="#e8c98a"
+          strokeWidth="2.4"
+          strokeLinecap="round"
+        />
+        {/* Tassel binding */}
+        <rect x="26" y="20" width="8" height="4" rx="1" fill="#b88838" />
+        {/* Tassel knot */}
+        <circle cx="30" cy="22" r="3.4" fill="#e8c98a" />
+        {/* Tassel strands */}
+        <g stroke="#e8c98a" strokeWidth="2" strokeLinecap="round" fill="none">
+          <line x1="27" y1="25" x2="24" y2="42" />
+          <line x1="30" y1="25" x2="30" y2="44" />
+          <line x1="33" y1="25" x2="36" y2="42" />
+          <line x1="29" y1="25" x2="27" y2="43" />
+          <line x1="31" y1="25" x2="33" y2="43" />
+        </g>
       </g>
       <CoverName name="GRADUATION" color="#e8c98a" secondary="WITH GRATITUDE" />
     </svg>
