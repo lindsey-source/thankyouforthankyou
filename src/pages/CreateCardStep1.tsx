@@ -409,21 +409,44 @@ const GeneralArt: React.FC = () => (
 );
 
 const MemorialArt: React.FC = () => (
-  <ArtFrame background="linear-gradient(170deg, #1a2e1f 0%, #284535 55%, #0f1f15 100%)">
+  <ArtFrame background="#5A5A6A">
     <svg className="absolute inset-0 w-full h-full" viewBox="0 0 200 300" preserveAspectRatio="xMidYMid slice">
-      <DotPattern id="memDots" color="#d4c896" opacity={0.16} />
+      <DotPattern id="memDots" color="#f5e6c4" opacity={0.1} />
       <rect width="200" height="300" fill="url(#memDots)" />
-      <g transform="translate(100 132)" stroke="#d4c896" strokeLinecap="round" strokeLinejoin="round" fill="#d4c896">
-        <path d="M0 -68 C -6 -24, -8 22, 0 66" stroke="#d4c896" strokeWidth="2.4" fill="none" />
-        <ellipse cx="-15" cy="-44" rx="12" ry="4.2" transform="rotate(-30 -15 -44)" />
-        <ellipse cx="-19" cy="-16" rx="14" ry="4.6" transform="rotate(-25 -19 -16)" />
-        <ellipse cx="-21" cy="14" rx="14" ry="4.6" transform="rotate(-20 -21 14)" />
-        <ellipse cx="-17" cy="42" rx="12" ry="4.2" transform="rotate(-15 -17 42)" />
-        <ellipse cx="15" cy="-30" rx="12" ry="4.2" transform="rotate(30 15 -30)" />
-        <ellipse cx="19" cy="0" rx="14" ry="4.6" transform="rotate(25 19 0)" />
-        <ellipse cx="19" cy="28" rx="13" ry="4.4" transform="rotate(20 19 28)" />
+      {/* Star dots scattered around */}
+      <g fill="#f5e6c4" fillOpacity="0.85">
+        <circle cx="38" cy="62" r="1.6" /><circle cx="162" cy="58" r="1.6" />
+        <circle cx="50" cy="120" r="1.2" /><circle cx="155" cy="118" r="1.2" />
+        <circle cx="30" cy="180" r="1.4" /><circle cx="172" cy="180" r="1.4" />
+        <circle cx="68" cy="90" r="1" /><circle cx="135" cy="92" r="1" />
+        <circle cx="42" cy="150" r="0.9" /><circle cx="160" cy="150" r="0.9" />
+        <circle cx="78" cy="55" r="1" /><circle cx="125" cy="50" r="1" />
+        <circle cx="60" cy="220" r="1.2" /><circle cx="145" cy="225" r="1.2" />
       </g>
-      <CoverName name="IN LOVING MEMORY" color="#d4c896" secondary="WITH HEARTFELT THANKS" />
+      {/* Soft glow halo behind flame */}
+      <circle cx="100" cy="105" r="22" fill="#f5e6c4" fillOpacity="0.08" />
+      <circle cx="100" cy="105" r="14" fill="#f5e6c4" fillOpacity="0.12" />
+      {/* Single lit candle, centered */}
+      <g transform="translate(100 165)">
+        {/* Outer flame glow */}
+        <path d="M 0 -68 q 10 -14 0 -28 q -10 14 0 28 z" fill="#f5e6c4" fillOpacity="0.25" />
+        {/* Main flame */}
+        <path d="M 0 -64 q 6 -10 0 -20 q -6 10 0 20 z" fill="#f5e6c4" />
+        {/* Inner flame highlight */}
+        <ellipse cx="0" cy="-72" rx="1.4" ry="3" fill="#fff8e1" />
+        {/* Wick */}
+        <line x1="0" y1="-50" x2="0" y2="-46" stroke="#3d3d4a" strokeWidth="1.4" strokeLinecap="round" />
+        {/* Candle body */}
+        <rect x="-9" y="-46" width="18" height="64" rx="1.5" fill="#f5e6c4" stroke="#b88838" strokeWidth="1" />
+        {/* Side highlight on candle */}
+        <line x1="-5" y1="-40" x2="-5" y2="14" stroke="#fff8e1" strokeOpacity="0.6" strokeWidth="1.4" strokeLinecap="round" />
+        {/* Wax drip */}
+        <path d="M 6 -42 q 2 8 -1 14" fill="none" stroke="#fff8e1" strokeOpacity="0.5" strokeWidth="1" strokeLinecap="round" />
+        {/* Candle holder */}
+        <ellipse cx="0" cy="20" rx="14" ry="3" fill="#b88838" fillOpacity="0.7" />
+        <path d="M -16 18 L 16 18 L 12 28 L -12 28 Z" fill="#b88838" fillOpacity="0.55" stroke="#b88838" strokeWidth="1" strokeLinejoin="round" />
+      </g>
+      <CoverName name="IN LOVING MEMORY" color="#f5e6c4" secondary="WITH HEARTFELT THANKS" />
     </svg>
   </ArtFrame>
 );
