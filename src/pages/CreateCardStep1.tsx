@@ -97,29 +97,23 @@ const CoverName: React.FC<{ name: string; color: string; secondary?: string }> =
 );
 
 const WeddingArt: React.FC = () => (
-  <ArtFrame background="linear-gradient(165deg, #4a1d2c 0%, #6b2a3e 55%, #3d1825 100%)">
+  <ArtFrame background="#8B4A5A">
     <svg className="absolute inset-0 w-full h-full" viewBox="0 0 200 300" preserveAspectRatio="xMidYMid slice">
-      <DotPattern id="weddingDots" color="#f0d4b8" />
+      <DotPattern id="weddingDots" color="#f5e0c4" opacity={0.14} />
       <rect width="200" height="300" fill="url(#weddingDots)" />
-      {/* Botanical wreath frame */}
-      <g fill="none" stroke="#e8c98a" strokeOpacity="0.5" strokeLinecap="round" strokeWidth="0.9">
-        <path d="M55 75 q -8 55 0 110" />
-        <path d="M145 75 q 8 55 0 110" />
-        {[80, 110, 140, 170].map((y) => (
-          <g key={y}>
-            <ellipse cx="55" cy={y} rx="6" ry="1.8" transform={`rotate(-30 55 ${y})`} fill="#e8c98a" fillOpacity="0.55" stroke="none" />
-            <ellipse cx="145" cy={y} rx="6" ry="1.8" transform={`rotate(30 145 ${y})`} fill="#e8c98a" fillOpacity="0.55" stroke="none" />
-          </g>
-        ))}
+      {/* Small heart above ring intersection */}
+      <g transform="translate(100 88)" fill="#f5e0c4">
+        <path d="M0 8 C -7 2, -12 -3, -12 -8 a 6 6 0 0 1 12 -2 a 6 6 0 0 1 12 2 c 0 5, -5 10, -12 16 z" />
       </g>
-      {/* Two interlocking rings */}
-      <g transform="translate(100 130)" fill="none" stroke="#e8c98a" strokeWidth="3.4">
-        <circle cx="-13" cy="0" r="24" />
-        <circle cx="13" cy="0" r="24" />
-        <circle cx="-13" cy="0" r="24" stroke="#fff3d6" strokeOpacity="0.4" strokeWidth="0.7" />
-        <circle cx="13" cy="0" r="24" stroke="#fff3d6" strokeOpacity="0.4" strokeWidth="0.7" />
+      {/* Two interlocking wedding bands — bold gold */}
+      <g transform="translate(100 140)" fill="none" stroke="#f5e0c4" strokeWidth="5">
+        <circle cx="-15" cy="0" r="32" />
+        <circle cx="15" cy="0" r="32" />
+        {/* inner highlight */}
+        <circle cx="-15" cy="0" r="32" stroke="#fff5e1" strokeOpacity="0.55" strokeWidth="1" />
+        <circle cx="15" cy="0" r="32" stroke="#fff5e1" strokeOpacity="0.55" strokeWidth="1" />
       </g>
-      <CoverName name="WEDDING" color="#e8c98a" secondary="WITH GRATITUDE" />
+      <CoverName name="WEDDING" color="#f5e0c4" secondary="WITH GRATITUDE" />
     </svg>
   </ArtFrame>
 );
