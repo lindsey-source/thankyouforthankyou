@@ -34,118 +34,115 @@ const ArtFrame: React.FC<{ background: string; children?: React.ReactNode }> = (
   </div>
 );
 
+/* Shared subtle dot pattern overlay */
+const DotPattern: React.FC<{ id: string; color: string; opacity?: number }> = ({
+  id,
+  color,
+  opacity = 0.22,
+}) => (
+  <defs>
+    <pattern id={id} x="0" y="0" width="22" height="22" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="0.7" fill={color} fillOpacity={opacity} />
+    </pattern>
+  </defs>
+);
+
 const WeddingArt: React.FC = () => (
-  <ArtFrame background="linear-gradient(160deg, #f7e3e5 0%, #f1cdd2 55%, #e6b3bb 100%)">
+  <ArtFrame background="linear-gradient(165deg, #4a1d2c 0%, #6b2a3e 55%, #3d1825 100%)">
     <svg
       className="absolute inset-0 w-full h-full"
       viewBox="0 0 200 300"
       preserveAspectRatio="xMidYMid slice"
-      fill="none"
-      stroke="#7a3744"
-      strokeWidth="0.6"
-      strokeOpacity="0.45"
-      strokeLinecap="round"
     >
-      {/* botanical line art */}
-      <path d="M30 280 C 40 240, 50 220, 70 200 C 85 185, 95 165, 100 140" />
-      <path d="M70 200 q -10 -8 -18 -6" />
-      <path d="M82 180 q 10 -6 18 -2" />
-      <path d="M92 160 q -10 -8 -18 -4" />
-      <path d="M98 145 q 12 -6 20 -1" />
-      <path d="M170 280 C 160 240, 150 220, 130 200 C 115 185, 105 165, 100 140" />
-      <path d="M130 200 q 10 -8 18 -6" />
-      <path d="M118 180 q -10 -6 -18 -2" />
-      <path d="M108 160 q 10 -8 18 -4" />
-      <circle cx="100" cy="138" r="3" fill="#7a3744" fillOpacity="0.35" stroke="none" />
-      <circle cx="100" cy="138" r="6" />
+      <DotPattern id="weddingDots" color="#f0d4b8" opacity={0.18} />
+      <rect width="200" height="300" fill="url(#weddingDots)" />
+      {/* Two interlocking rings — bold gold */}
+      <g transform="translate(100 145)" fill="none" stroke="#e8c98a" strokeWidth="3.2">
+        <circle cx="-14" cy="0" r="28" />
+        <circle cx="14" cy="0" r="28" strokeOpacity="0.95" />
+        {/* tiny highlight */}
+        <circle cx="-14" cy="0" r="28" stroke="#fff3d6" strokeOpacity="0.35" strokeWidth="0.8" />
+        <circle cx="14" cy="0" r="28" stroke="#fff3d6" strokeOpacity="0.35" strokeWidth="0.8" />
+      </g>
+      <circle cx="100" cy="145" r="62" fill="none" stroke="#e8c98a" strokeOpacity="0.2" />
     </svg>
   </ArtFrame>
 );
 
 const BabyArt: React.FC = () => (
-  <ArtFrame background="linear-gradient(165deg, #e8f4ec 0%, #cfe7d6 55%, #b6d7c0 100%)">
+  <ArtFrame background="linear-gradient(165deg, #1e3a52 0%, #2a4d6a 55%, #15293d 100%)">
     <svg
       className="absolute inset-0 w-full h-full"
       viewBox="0 0 200 300"
       preserveAspectRatio="xMidYMid slice"
     >
-      <defs>
-        <pattern id="babyStars" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
-          <path
-            d="M20 10 l2 6 6 0 -5 4 2 6 -5 -4 -5 4 2 -6 -5 -4 6 0 z"
-            fill="#3a5a45"
-            fillOpacity="0.18"
-          />
-        </pattern>
-      </defs>
-      <rect width="200" height="300" fill="url(#babyStars)" />
+      <DotPattern id="babyDots" color="#f2d9b8" opacity={0.18} />
+      <rect width="200" height="300" fill="url(#babyDots)" />
+      {/* Crescent moon cradling a star */}
+      <g transform="translate(100 145)">
+        <path
+          d="M 22 -28 A 36 36 0 1 0 22 28 A 28 28 0 1 1 22 -28 Z"
+          fill="#f2d9b8"
+          fillOpacity="0.92"
+        />
+        <path
+          d="M40 -8 l2.4 7.4 7.8 0 -6.3 4.6 2.4 7.4 -6.3 -4.6 -6.3 4.6 2.4 -7.4 -6.3 -4.6 7.8 0 z"
+          fill="#f2d9b8"
+        />
+      </g>
+      <circle cx="100" cy="145" r="62" fill="none" stroke="#f2d9b8" strokeOpacity="0.2" />
     </svg>
   </ArtFrame>
 );
 
 const GraduationArt: React.FC = () => (
-  <ArtFrame background="linear-gradient(170deg, #faf3e3 0%, #f1e3c2 60%, #e6d099 100%)">
+  <ArtFrame background="linear-gradient(165deg, #2b1a0e 0%, #3d2515 55%, #1f130a 100%)">
     <svg
       className="absolute inset-0 w-full h-full"
       viewBox="0 0 200 300"
       preserveAspectRatio="xMidYMid slice"
-      fill="none"
-      stroke="#8a6a1e"
-      strokeOpacity="0.55"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="0.8"
     >
-      {/* gold cap motif */}
-      <g transform="translate(100 145)">
-        <path d="M-40 0 L0 -18 L40 0 L0 18 Z" fill="#c8a24c" fillOpacity="0.35" />
-        <path d="M-26 6 L-26 26 Q0 38 26 26 L26 6" />
-        <path d="M0 18 L0 32" />
-        <circle cx="0" cy="36" r="3" fill="#8a6a1e" fillOpacity="0.6" stroke="none" />
-        <path d="M0 36 q 8 4 14 12" />
-        <path d="M14 48 l-2 6 m2 -6 l4 4" />
+      <DotPattern id="gradDots" color="#e8c98a" opacity={0.18} />
+      <rect width="200" height="300" fill="url(#gradDots)" />
+      {/* Bold mortarboard cap */}
+      <g transform="translate(100 145)" stroke="#e8c98a" strokeLinejoin="round" strokeLinecap="round">
+        <polygon points="-44,0 0,-22 44,0 0,22" fill="#e8c98a" fillOpacity="0.95" stroke="none" />
+        <path d="M-30 6 L-30 26 Q0 40 30 26 L30 6" fill="#e8c98a" fillOpacity="0.85" strokeWidth="1.2" />
+        <line x1="0" y1="22" x2="0" y2="40" strokeWidth="2" />
+        <circle cx="0" cy="42" r="3.5" fill="#e8c98a" stroke="none" />
+        <path d="M0 42 q 12 6 18 18" fill="none" strokeWidth="2.2" />
+        <path d="M18 60 l-3 7 m3 -7 l5 5" fill="none" strokeWidth="2" />
       </g>
-      {/* corner sparkles */}
-      <g stroke="#8a6a1e" strokeOpacity="0.3">
-        <path d="M30 40 l4 0 M32 38 l0 4" />
-        <path d="M170 60 l4 0 M172 58 l0 4" />
-        <path d="M40 240 l4 0 M42 238 l0 4" />
-        <path d="M160 250 l4 0 M162 248 l0 4" />
-      </g>
+      <circle cx="100" cy="145" r="62" fill="none" stroke="#e8c98a" strokeOpacity="0.2" />
     </svg>
   </ArtFrame>
 );
 
 const BirthdayArt: React.FC = () => (
-  <ArtFrame background="linear-gradient(165deg, #fde6d3 0%, #f8c9a8 55%, #f0a87c 100%)">
+  <ArtFrame background="linear-gradient(165deg, #5a1a3d 0%, #7a2552 55%, #421530 100%)">
     <svg
       className="absolute inset-0 w-full h-full"
       viewBox="0 0 200 300"
       preserveAspectRatio="xMidYMid slice"
     >
-      {/* confetti dots */}
-      {[
-        ['25', '40', '#c17b8a'],
-        ['60', '70', '#8faa8b'],
-        ['150', '50', '#2d2420'],
-        ['170', '110', '#c17b8a'],
-        ['40', '120', '#8faa8b'],
-        ['90', '160', '#2d2420'],
-        ['140', '180', '#c17b8a'],
-        ['30', '210', '#2d2420'],
-        ['170', '230', '#8faa8b'],
-        ['80', '250', '#c17b8a'],
-        ['120', '275', '#2d2420'],
-        ['55', '285', '#8faa8b'],
-      ].map(([cx, cy, fill], i) => (
-        <circle key={i} cx={cx} cy={cy} r={i % 3 === 0 ? 3.5 : 2.5} fill={fill} fillOpacity="0.55" />
-      ))}
-      {/* small streaks */}
-      <g stroke="#7a3744" strokeOpacity="0.35" strokeWidth="1.2" strokeLinecap="round">
-        <path d="M110 90 l8 -10" />
-        <path d="M50 170 l-8 6" />
-        <path d="M160 200 l8 -6" />
+      <DotPattern id="bdayDots" color="#ffd97a" opacity={0.16} />
+      <rect width="200" height="300" fill="url(#bdayDots)" />
+      {/* Birthday cake silhouette with candle */}
+      <g transform="translate(100 160)">
+        {/* candle flame */}
+        <path d="M0 -68 q 6 -8 0 -16 q -6 8 0 16 z" fill="#ffd97a" />
+        {/* candle */}
+        <rect x="-2" y="-66" width="4" height="14" fill="#ffd97a" opacity="0.9" />
+        {/* top tier */}
+        <rect x="-26" y="-52" width="52" height="22" rx="2" fill="#ffd97a" fillOpacity="0.95" />
+        {/* drips */}
+        <path d="M-22 -30 q 4 8 8 0 q 4 8 8 0 q 4 8 8 0 q 4 8 8 0" fill="#ffd97a" fillOpacity="0.95" />
+        {/* base tier */}
+        <rect x="-40" y="-22" width="80" height="34" rx="2" fill="#ffd97a" fillOpacity="0.85" />
+        {/* plate */}
+        <ellipse cx="0" cy="14" rx="50" ry="4" fill="#ffd97a" fillOpacity="0.6" />
       </g>
+      <circle cx="100" cy="145" r="62" fill="none" stroke="#ffd97a" strokeOpacity="0.2" />
     </svg>
   </ArtFrame>
 );
@@ -182,91 +179,123 @@ const MitzvahArt: React.FC = () => (
 );
 
 const CorporateArt: React.FC = () => (
-  <ArtFrame background="linear-gradient(165deg, #e9ecef 0%, #c9cfd6 55%, #a8b2bc 100%)">
+  <ArtFrame background="linear-gradient(165deg, #0f1f2e 0%, #1a3148 55%, #081523 100%)">
     <svg
       className="absolute inset-0 w-full h-full"
       viewBox="0 0 200 300"
       preserveAspectRatio="xMidYMid slice"
-      fill="none"
-      stroke="#3b4754"
-      strokeOpacity="0.4"
-      strokeWidth="0.7"
     >
-      {/* geometric line grid */}
-      <g>
-        {Array.from({ length: 8 }).map((_, i) => (
-          <line key={`h${i}`} x1="0" y1={i * 40 + 10} x2="200" y2={i * 40 + 10} />
-        ))}
-        {Array.from({ length: 6 }).map((_, i) => (
-          <line key={`v${i}`} x1={i * 40} y1="0" x2={i * 40} y2="300" />
-        ))}
+      <DotPattern id="corpDots" color="#c8d4e0" opacity={0.16} />
+      <rect width="200" height="300" fill="url(#corpDots)" />
+      {/* Architectural skyline of bold blocks */}
+      <g transform="translate(100 175)" fill="#c8d4e0">
+        <rect x="-58" y="-30" width="22" height="60" fillOpacity="0.85" />
+        <rect x="-32" y="-70" width="22" height="100" fillOpacity="0.95" />
+        <rect x="-6" y="-50" width="22" height="80" fillOpacity="0.9" />
+        <rect x="20" y="-90" width="22" height="120" fillOpacity="1" />
+        <rect x="46" y="-40" width="14" height="70" fillOpacity="0.8" />
+        {/* window dots */}
+        <g fill="#0f1f2e" fillOpacity="0.6">
+          <circle cx="-21" cy="-50" r="1.4" /><circle cx="-21" cy="-30" r="1.4" /><circle cx="-21" cy="-10" r="1.4" />
+          <circle cx="5" cy="-30" r="1.4" /><circle cx="5" cy="-10" r="1.4" />
+          <circle cx="31" cy="-70" r="1.4" /><circle cx="31" cy="-50" r="1.4" /><circle cx="31" cy="-30" r="1.4" /><circle cx="31" cy="-10" r="1.4" />
+        </g>
       </g>
-      {/* accent diagonals */}
-      <g stroke="#3b4754" strokeOpacity="0.55" strokeWidth="1">
-        <line x1="20" y1="280" x2="180" y2="60" />
-        <line x1="40" y1="280" x2="200" y2="80" />
-      </g>
+      <circle cx="100" cy="145" r="62" fill="none" stroke="#c8d4e0" strokeOpacity="0.18" />
     </svg>
   </ArtFrame>
 );
 
 const GeneralArt: React.FC = () => (
-  <ArtFrame background="linear-gradient(165deg, #f3ede3 0%, #e6dccc 60%, #d4c6ae 100%)">
+  <ArtFrame background="linear-gradient(165deg, #3d2a1a 0%, #5a4028 55%, #2a1c0f 100%)">
     <svg
       className="absolute inset-0 w-full h-full"
       viewBox="0 0 200 300"
       preserveAspectRatio="xMidYMid slice"
-      fill="none"
-      stroke="#7a6a4f"
-      strokeOpacity="0.45"
-      strokeWidth="0.8"
-      strokeLinecap="round"
     >
-      <path d="M30 200 q 70 -120 140 -50" />
-      <path d="M40 215 q 60 -90 130 -30" />
-      <path d="M50 230 q 50 -60 120 -10" />
-      <circle cx="100" cy="150" r="32" strokeOpacity="0.25" />
+      <DotPattern id="genDots" color="#f0d4b8" opacity={0.18} />
+      <rect width="200" height="300" fill="url(#genDots)" />
+      {/* Bold heart */}
+      <g transform="translate(100 145)">
+        <path
+          d="M0 38 C -32 14, -52 -8, -52 -28 a 26 26 0 0 1 52 -8 a 26 26 0 0 1 52 8 c 0 20, -20 42, -52 66 z"
+          fill="#f0d4b8"
+          fillOpacity="0.95"
+        />
+        <path
+          d="M0 38 C -32 14, -52 -8, -52 -28 a 26 26 0 0 1 52 -8 a 26 26 0 0 1 52 8 c 0 20, -20 42, -52 66 z"
+          fill="none"
+          stroke="#fff3d6"
+          strokeOpacity="0.3"
+          strokeWidth="0.8"
+        />
+      </g>
+      <circle cx="100" cy="145" r="62" fill="none" stroke="#f0d4b8" strokeOpacity="0.2" />
     </svg>
   </ArtFrame>
 );
 
 const MemorialArt: React.FC = () => (
-  <ArtFrame background="linear-gradient(170deg, #eef0ec 0%, #d6dcd2 60%, #b8c2b3 100%)">
+  <ArtFrame background="linear-gradient(170deg, #1a2e1f 0%, #284535 55%, #0f1f15 100%)">
     <svg
       className="absolute inset-0 w-full h-full"
       viewBox="0 0 200 300"
       preserveAspectRatio="xMidYMid slice"
-      fill="none"
-      stroke="#4a5a48"
-      strokeOpacity="0.45"
-      strokeLinecap="round"
-      strokeWidth="0.7"
     >
-      <path d="M100 60 C 80 130, 80 200, 100 260" />
-      <path d="M100 110 q -20 -10 -34 -2" />
-      <path d="M100 130 q 22 -10 36 -2" />
-      <path d="M100 160 q -22 -8 -36 0" />
-      <path d="M100 190 q 22 -10 36 -2" />
-      <path d="M100 220 q -18 -6 -28 0" />
+      <DotPattern id="memDots" color="#d4c896" opacity={0.16} />
+      <rect width="200" height="300" fill="url(#memDots)" />
+      {/* Olive branch — bold */}
+      <g transform="translate(100 145)" stroke="#d4c896" strokeLinecap="round" strokeLinejoin="round" fill="#d4c896">
+        <path d="M0 -60 C -6 -20, -8 20, 0 60" stroke="#d4c896" strokeWidth="2.4" fill="none" />
+        {/* leaves left */}
+        <ellipse cx="-14" cy="-38" rx="11" ry="4" transform="rotate(-30 -14 -38)" fillOpacity="0.95" />
+        <ellipse cx="-18" cy="-12" rx="13" ry="4.5" transform="rotate(-25 -18 -12)" fillOpacity="0.95" />
+        <ellipse cx="-20" cy="16" rx="13" ry="4.5" transform="rotate(-20 -20 16)" fillOpacity="0.95" />
+        <ellipse cx="-16" cy="42" rx="11" ry="4" transform="rotate(-15 -16 42)" fillOpacity="0.9" />
+        {/* leaves right */}
+        <ellipse cx="14" cy="-26" rx="11" ry="4" transform="rotate(30 14 -26)" fillOpacity="0.95" />
+        <ellipse cx="18" cy="0" rx="13" ry="4.5" transform="rotate(25 18 0)" fillOpacity="0.95" />
+        <ellipse cx="18" cy="28" rx="12" ry="4.2" transform="rotate(20 18 28)" fillOpacity="0.9" />
+      </g>
+      <circle cx="100" cy="145" r="62" fill="none" stroke="#d4c896" strokeOpacity="0.2" />
     </svg>
   </ArtFrame>
 );
 
 const CharityArt: React.FC = () => (
-  <ArtFrame background="linear-gradient(165deg, #f5e6e9 0%, #ddc1c8 55%, #c19aa4 100%)">
+  <ArtFrame background="linear-gradient(165deg, #4a1d2c 0%, #6b2a3e 55%, #3d1825 100%)">
     <svg
       className="absolute inset-0 w-full h-full"
       viewBox="0 0 200 300"
       preserveAspectRatio="xMidYMid slice"
-      fill="none"
-      stroke="#7a3744"
-      strokeOpacity="0.5"
-      strokeWidth="1"
-      strokeLinecap="round"
-      strokeLinejoin="round"
     >
-      <path d="M100 195 c -14 -22 -38 -28 -38 -50 a 18 18 0 0 1 38 -8 a 18 18 0 0 1 38 8 c 0 22 -24 28 -38 50 z" />
-      <path d="M70 235 q 30 18 60 0" strokeOpacity="0.3" />
+      <DotPattern id="charDots" color="#f0d4b8" opacity={0.16} />
+      <rect width="200" height="300" fill="url(#charDots)" />
+      {/* Open hand cradling a heart */}
+      <g transform="translate(100 145)">
+        {/* heart */}
+        <path
+          d="M0 6 C -16 -8, -28 -20, -28 -32 a 14 14 0 0 1 28 -4 a 14 14 0 0 1 28 4 c 0 12, -12 24, -28 38 z"
+          fill="#e8c98a"
+          fillOpacity="0.98"
+        />
+        {/* hand cradle */}
+        <path
+          d="M-44 14 q 0 30 44 30 q 44 0 44 -30"
+          fill="none"
+          stroke="#e8c98a"
+          strokeWidth="3.4"
+          strokeLinecap="round"
+        />
+        <path
+          d="M-44 14 q -4 -2 -8 2 M44 14 q 4 -2 8 2"
+          fill="none"
+          stroke="#e8c98a"
+          strokeWidth="3"
+          strokeLinecap="round"
+        />
+      </g>
+      <circle cx="100" cy="145" r="62" fill="none" stroke="#e8c98a" strokeOpacity="0.2" />
     </svg>
   </ArtFrame>
 );
