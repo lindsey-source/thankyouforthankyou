@@ -19,55 +19,7 @@ const STEP_NAMES = [
   'Preview & Send',
 ];
 
-type OccasionId =
-  | 'wedding'
-  | 'baby'
-  | 'graduation'
-  | 'birthday'
-  | 'mitzvah'
-  | 'corporate'
-  | 'general'
-  | 'memorial'
-  | 'charity';
-
-/* ---------- Design schema ---------- */
-type HeaderStyle =
-  | 'botanical'        // soft floral curves + leaves
-  | 'monogram'         // centered monogram with thin frame
-  | 'starburst'        // radial lines
-  | 'confetti'         // scattered dots
-  | 'starOfDavid'      // mitzvah star
-  | 'ornamentFrame'    // corner ornaments / classic frame
-  | 'wave'             // soft horizon wave
-  | 'dotsField';       // refined dot grid
-
-type FontFamily = 'serifScript' | 'serifItalic' | 'sansCaps' | 'serifClassic';
-
-interface Design {
-  id: string;
-  occasion: OccasionId;
-  name: string;
-  tag: string;
-  // Color tokens
-  bg: string;            // card body bg
-  headerBg: string;      // gradient/solid behind header art
-  ink: string;           // primary ink for headline
-  inkSoft: string;       // body text
-  accent: string;        // accent for art + buttons
-  accentSoft: string;    // tint
-  tagBg: string;
-  tagColor: string;
-  donationBg: string;
-  donationColor: string;
-  // Style choices
-  headerStyle: HeaderStyle;
-  headlineText: string;
-  font: FontFamily;
-  greeting: string;
-  body: string;
-  donation: string;
-  fontChoice: 'inter' | 'playfair' | 'dancing';
-}
+/* Design schema, HeaderStyle, FontFamily, OccasionId are imported from designTypes. */
 
 /* ---------- Per-occasion design sets (3-4 each) ---------- */
 const DESIGN_SETS: Record<OccasionId, Design[]> = {
