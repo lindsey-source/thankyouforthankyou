@@ -23,6 +23,8 @@ export interface LiveCardPreviewProps {
   envelopeColor?: string | null;
   texture?: string | null;
   signatureStyle?: string | null;
+  /** Optional CSS background for the header art band — overrides the default gradient. */
+  headerBackground?: string | null;
   className?: string;
 }
 
