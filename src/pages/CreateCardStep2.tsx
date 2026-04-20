@@ -9,7 +9,7 @@ import { ProgressBar } from '@/components/CardDesigner/ProgressBar';
 
 const STEP_NAMES = [
   'Choose Occasion',
-  'Thank You Designs for your {occasion ? occasionLabels[occasion] : 'Occasion'}',
+  'Pick Your Style',
   'Customize Design',
   'Write Your Message',
   'Choose Your Cause',
