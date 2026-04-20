@@ -86,6 +86,9 @@ export default function CreateCardStep3() {
     text: '#2d2420',
   };
 
+  // The "Original" palette mirrors the actual Step 2 design — its swatches
+  // show the real header/accent/ink/donation colors so the user recognises
+  // the design they picked, and it's the default selection.
   const originalPalette: PaletteColors = useMemo(() => {
     const cp = (cardData.colorPalette as any) || {};
     const hasPalette = cp && (cp.accent || cp.bg || cp.ink);
@@ -98,15 +101,53 @@ export default function CreateCardStep3() {
     };
   }, [cardData.colorPalette]);
 
+  // Distinct swatches for the "Original" tile — pulled directly from the
+  // saved Step 2 design tokens so users see the actual design colors.
+  const originalSwatches: string[] = useMemo(() => {
+    const cp = (cardData.colorPalette as any) || {};
+    const candidates = [
+      cp.headerBg,      // header band (may be a gradient string)
+      cp.accent,        // accent (e.g. gold)
+      cp.donationBg,    // donation badge
+      cp.ink,           // ink color
+      cp.accentSoft,    // soft accent
+      cp.bg,            // card body
+    ];
+    // Keep only string values, take first 4 distinct ones.
+    const seen = new Set<string>();
+    const out: string[] = [];
+    for (const c of candidates) {
+      if (typeof c !== 'string' || !c) continue;
+      if (seen.has(c)) continue;
+      seen.add(c);
+      out.push(c);
+      if (out.length === 4) break;
+    }
+    if (out.length === 0) {
+      return [
+        FALLBACK_PALETTE.primary,
+        FALLBACK_PALETTE.secondary,
+        FALLBACK_PALETTE.accent,
+        FALLBACK_PALETTE.text,
+      ];
+    }
+    return out;
+  }, [cardData.colorPalette]);
+
+  const originalDesignName: string = useMemo(() => {
+    const cp = (cardData.colorPalette as any) || {};
+    return typeof cp.name === 'string' && cp.name ? cp.name : 'Original';
+  }, [cardData.colorPalette]);
+
   const colorPalettes = useMemo(
     () => [
-      { id: 'default', name: 'Original', colors: originalPalette },
+      { id: 'default', name: originalDesignName, colors: originalPalette, swatches: originalSwatches },
       { id: 'warm', name: 'Warm Sunset', colors: { primary: 'hsl(25, 75%, 65%)', secondary: 'hsl(45, 85%, 75%)', accent: 'hsl(15, 70%, 60%)', text: 'hsl(25, 40%, 30%)' } },
       { id: 'cool', name: 'Ocean Breeze', colors: { primary: 'hsl(200, 70%, 65%)', secondary: 'hsl(180, 60%, 75%)', accent: 'hsl(210, 65%, 55%)', text: 'hsl(210, 40%, 30%)' } },
       { id: 'elegant', name: 'Elegant Neutrals', colors: { primary: 'hsl(30, 15%, 85%)', secondary: 'hsl(40, 20%, 90%)', accent: 'hsl(35, 25%, 65%)', text: 'hsl(30, 30%, 25%)' } },
       { id: 'romantic', name: 'Romantic Blush', colors: { primary: 'hsl(350, 65%, 85%)', secondary: 'hsl(340, 55%, 90%)', accent: 'hsl(355, 70%, 75%)', text: 'hsl(340, 35%, 35%)' } },
     ],
-    [originalPalette]
+    [originalPalette, originalSwatches, originalDesignName]
   );
 
   const initialFont = cardData.fontChoice && FONT_PAIRINGS.some((f) => f.id === cardData.fontChoice)
