@@ -6,6 +6,8 @@ import { ArrowLeft, ArrowRight, Check, X } from 'lucide-react';
 import { AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
 import { ProgressBar } from '@/components/CardDesigner/ProgressBar';
+import { HeaderArt } from '@/components/CardDesigner/HeaderArt';
+import type { Design, HeaderStyle, FontFamily, OccasionId } from '@/components/CardDesigner/designTypes';
 
 const STEP_NAMES = [
   'Choose Occasion',
