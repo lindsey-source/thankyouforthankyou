@@ -10,6 +10,8 @@ import { toast } from 'sonner';
 import { ProgressBar } from '@/components/CardDesigner/ProgressBar';
 import { BreadcrumbNav } from '@/components/CardDesigner/BreadcrumbNav';
 import { LiveCardPreview } from '@/components/CardDesigner/LiveCardPreview';
+import { DesignedCardPreview } from '@/components/CardDesigner/DesignedCardPreview';
+import { readDesignFromPalette } from '@/components/CardDesigner/designTypes';
 import { Check, Eye, ArrowLeft, ArrowRight, Upload, Trash2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
