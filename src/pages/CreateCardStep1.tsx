@@ -442,61 +442,22 @@ const CharityArt: React.FC = () => (
     <svg className="absolute inset-0 w-full h-full" viewBox="0 0 200 300" preserveAspectRatio="xMidYMid slice">
       <DotPattern id="charDots" color="#f5f0e1" opacity={0.1} />
       <rect width="200" height="300" fill="url(#charDots)" />
-      {/* Radiance lines above heart */}
-      <g transform="translate(100 92)" stroke="#f5f0e1" strokeOpacity="0.35" strokeLinecap="round" strokeWidth="1.8">
-        <line x1="0" y1="-30" x2="0" y2="-42" />
-        <line x1="-22" y1="-22" x2="-32" y2="-32" />
-        <line x1="22" y1="-22" x2="32" y2="-32" />
-        <line x1="-32" y1="-2" x2="-44" y2="-2" />
-        <line x1="32" y1="-2" x2="44" y2="-2" />
-      </g>
-      {/* Heart floating above an open palm */}
-      <g transform="translate(100 110)">
-        <path
-          d="M 0 8 C -16 -8, -28 -18, -28 -30 a 14 14 0 0 1 28 -4 a 14 14 0 0 1 28 4 c 0 12, -12 22, -28 38 z"
-          fill="#f5f0e1"
-        />
-      </g>
-      {/* Single open palm cradling from below */}
-      <g transform="translate(100 200)" fill="#f5f0e1" stroke="#f5f0e1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        {/* Palm — wide curved cup */}
-        <path
-          d="
-            M -52 -8
-            C -52 -22, -36 -32, -20 -32
-            L 20 -32
-            C 36 -32, 52 -22, 52 -8
-            C 52 6, 40 18, 20 18
-            L -20 18
-            C -40 18, -52 6, -52 -8
-            Z
-          "
-          fill="#f5f0e1"
-          fillOpacity="0.18"
-          stroke="#f5f0e1"
-          strokeWidth="3.2"
-        />
-        {/* Four fingers across the top of the palm */}
-        <g fill="none" stroke="#f5f0e1" strokeWidth="3.2" strokeLinecap="round">
-          <path d="M -28 -32 C -30 -44, -22 -50, -18 -42 L -16 -32" />
-          <path d="M -10 -32 C -12 -48, -2 -54, 0 -44 L 0 -32" />
-          <path d="M 8 -32 C 6 -48, 16 -52, 18 -42 L 18 -32" />
-          <path d="M 24 -32 C 22 -42, 32 -46, 34 -38 L 32 -30" />
+      {/* Bold centered heart with radiating shine */}
+      <g transform="translate(100 155)">
+        {/* Radiating glow lines around the heart */}
+        <g stroke="#f5f0e1" strokeOpacity="0.7" strokeLinecap="round" strokeWidth="3">
+          <line x1="0" y1="-72" x2="0" y2="-90" />
+          <line x1="-58" y1="-46" x2="-72" y2="-58" />
+          <line x1="58" y1="-46" x2="72" y2="-58" />
+          <line x1="-78" y1="-4" x2="-96" y2="-4" />
+          <line x1="78" y1="-4" x2="96" y2="-4" />
+          <line x1="-46" y1="46" x2="-58" y2="60" />
+          <line x1="46" y1="46" x2="58" y2="60" />
         </g>
-        {/* Thumb on the left */}
+        {/* Large bold heart */}
         <path
-          d="M -52 -8 C -60 -4, -62 6, -54 12"
-          fill="none"
-          stroke="#f5f0e1"
-          strokeWidth="3.2"
-          strokeLinecap="round"
-        />
-        {/* Wrist */}
-        <path
-          d="M -36 18 L -32 32 L 32 32 L 36 18"
-          fill="none"
-          stroke="#f5f0e1"
-          strokeWidth="3.2"
+          d="M 0 50 C -42 16, -68 -10, -68 -34 a 30 30 0 0 1 68 -10 a 30 30 0 0 1 68 10 c 0 24, -26 50, -68 84 z"
+          fill="#f5f0e1"
         />
       </g>
       <CoverName name="A GIFT IN YOUR NAME" color="#f5f0e1" secondary="GIVING BACK" />
