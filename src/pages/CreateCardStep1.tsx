@@ -136,30 +136,29 @@ const BabyArt: React.FC = () => (
           />
         ))}
       </g>
-      {/* Baby pacifier — universally recognizable */}
-      <g transform="translate(100 150)">
-        {/* Outer ring (handle) */}
-        <circle cx="0" cy="-30" r="28" fill="none" stroke="#ffffff" strokeWidth="6" />
-        {/* Shield (mouth guard) — soft rounded rectangle */}
-        <rect
-          x="-34" y="-8" width="68" height="36" rx="18" ry="18"
-          fill="#ffffff"
-        />
-        {/* Two small breathing holes on shield */}
-        <circle cx="-16" cy="10" r="2.4" fill="#5B8FA8" />
-        <circle cx="16" cy="10" r="2.4" fill="#5B8FA8" />
-        {/* Nipple/teat */}
-        <path
-          d="M -14 28 C -14 46, 14 46, 14 28 Z"
-          fill="#ffffff"
-        />
-        <path
-          d="M -10 30 C -10 42, 10 42, 10 30"
-          fill="none"
-          stroke="#5B8FA8"
-          strokeWidth="1.4"
-          strokeOpacity="0.5"
-        />
+      {/* Baby pram / stroller — simple iconic silhouette */}
+      <g
+        transform="translate(100 160)"
+        fill="none"
+        stroke="#ffffff"
+        strokeWidth="5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        {/* Curved hood / canopy — half-circle on the right */}
+        <path d="M -10 0 A 50 50 0 0 1 70 0" />
+        {/* Pram body — basket curve from hood base down and back */}
+        <path d="M -52 0 L 70 0 C 70 30, 50 44, 24 44 L -10 44 C -32 44, -52 30, -52 0 Z" fill="#ffffff" fillOpacity="0.12" />
+        {/* Handle bar extending up-left */}
+        <path d="M -52 0 C -64 -8, -72 -24, -70 -40" />
+        {/* Handle grip */}
+        <path d="M -78 -38 L -62 -42" strokeWidth="6" />
+        {/* Large wheel (right) */}
+        <circle cx="44" cy="62" r="18" />
+        <circle cx="44" cy="62" r="3" fill="#ffffff" stroke="none" />
+        {/* Smaller wheel (left) */}
+        <circle cx="-22" cy="62" r="12" />
+        <circle cx="-22" cy="62" r="2.4" fill="#ffffff" stroke="none" />
       </g>
       <CoverName name="BABY" color="#ffffff" secondary="WELCOMED WITH LOVE" />
     </svg>
