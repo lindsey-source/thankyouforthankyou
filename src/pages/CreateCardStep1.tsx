@@ -136,42 +136,29 @@ const BabyArt: React.FC = () => (
           />
         ))}
       </g>
-      {/* Classic baby onesie / bodysuit silhouette in white outline */}
-      <g transform="translate(100 152)" fill="none" stroke="#ffffff" strokeWidth="3.2" strokeLinejoin="round" strokeLinecap="round">
-        {/* Main body shape */}
-        <path d="
-          M -30 -50
-          C -30 -58, -20 -64, -10 -64
-          L 10 -64
-          C 20 -64, 30 -58, 30 -50
-          L 44 -38
-          C 50 -32, 50 -22, 44 -16
-          L 32 -8
-          L 32 30
-          C 32 38, 26 44, 18 44
-          L 8 44
-          L 8 28
-          C 8 24, 4 22, 0 22
-          C -4 22, -8 24, -8 28
-          L -8 44
-          L -18 44
-          C -26 44, -32 38, -32 30
-          L -32 -8
-          L -44 -16
-          C -50 -22, -50 -32, -44 -38
-          Z
-        " />
-        {/* Neckline */}
-        <path d="M -10 -64 q 10 6 20 0" />
-        {/* Snap buttons at crotch */}
-        <circle cx="-6" cy="36" r="1.6" fill="#ffffff" stroke="none" />
-        <circle cx="6" cy="36" r="1.6" fill="#ffffff" stroke="none" />
-        {/* Tiny chest detail — small heart */}
-        <path
-          d="M0 -28 C -4 -32, -8 -34, -8 -38 a 3 3 0 0 1 8 -1 a 3 3 0 0 1 8 1 c 0 4, -4 6, -8 10 z"
+      {/* Baby pacifier — universally recognizable */}
+      <g transform="translate(100 150)">
+        {/* Outer ring (handle) */}
+        <circle cx="0" cy="-30" r="28" fill="none" stroke="#ffffff" strokeWidth="6" />
+        {/* Shield (mouth guard) — soft rounded rectangle */}
+        <rect
+          x="-34" y="-8" width="68" height="36" rx="18" ry="18"
           fill="#ffffff"
-          fillOpacity="0.9"
-          stroke="none"
+        />
+        {/* Two small breathing holes on shield */}
+        <circle cx="-16" cy="10" r="2.4" fill="#5B8FA8" />
+        <circle cx="16" cy="10" r="2.4" fill="#5B8FA8" />
+        {/* Nipple/teat */}
+        <path
+          d="M -14 28 C -14 46, 14 46, 14 28 Z"
+          fill="#ffffff"
+        />
+        <path
+          d="M -10 30 C -10 42, 10 42, 10 30"
+          fill="none"
+          stroke="#5B8FA8"
+          strokeWidth="1.4"
+          strokeOpacity="0.5"
         />
       </g>
       <CoverName name="BABY" color="#ffffff" secondary="WELCOMED WITH LOVE" />
@@ -456,66 +443,62 @@ const CharityArt: React.FC = () => (
     <svg className="absolute inset-0 w-full h-full" viewBox="0 0 200 300" preserveAspectRatio="xMidYMid slice">
       <DotPattern id="charDots" color="#f5f0e1" opacity={0.1} />
       <rect width="200" height="300" fill="url(#charDots)" />
-      {/* Subtle radiance behind heart */}
-      <g transform="translate(100 110)" stroke="#f5f0e1" strokeOpacity="0.18" strokeLinecap="round">
-        <line x1="0" y1="-26" x2="0" y2="-36" strokeWidth="1.2" />
-        <line x1="-18" y1="-20" x2="-26" y2="-28" strokeWidth="1.2" />
-        <line x1="18" y1="-20" x2="26" y2="-28" strokeWidth="1.2" />
-        <line x1="-26" y1="-2" x2="-36" y2="-2" strokeWidth="1.2" />
-        <line x1="26" y1="-2" x2="36" y2="-2" strokeWidth="1.2" />
+      {/* Radiance lines above heart */}
+      <g transform="translate(100 92)" stroke="#f5f0e1" strokeOpacity="0.35" strokeLinecap="round" strokeWidth="1.8">
+        <line x1="0" y1="-30" x2="0" y2="-42" />
+        <line x1="-22" y1="-22" x2="-32" y2="-32" />
+        <line x1="22" y1="-22" x2="32" y2="-32" />
+        <line x1="-32" y1="-2" x2="-44" y2="-2" />
+        <line x1="32" y1="-2" x2="44" y2="-2" />
       </g>
-      {/* Two cupped hands holding a small heart */}
-      <g transform="translate(100 150)" stroke="#f5f0e1" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" fill="none">
-        {/* Heart cradled above hands */}
+      {/* Heart floating above an open palm */}
+      <g transform="translate(100 110)">
         <path
-          d="M 0 -20 C -10 -30, -18 -38, -18 -46 a 9 9 0 0 1 18 -3 a 9 9 0 0 1 18 3 c 0 8, -8 16, -18 26 z"
+          d="M 0 8 C -16 -8, -28 -18, -28 -30 a 14 14 0 0 1 28 -4 a 14 14 0 0 1 28 4 c 0 12, -12 22, -28 38 z"
           fill="#f5f0e1"
+        />
+      </g>
+      {/* Single open palm cradling from below */}
+      <g transform="translate(100 200)" fill="#f5f0e1" stroke="#f5f0e1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        {/* Palm — wide curved cup */}
+        <path
+          d="
+            M -52 -8
+            C -52 -22, -36 -32, -20 -32
+            L 20 -32
+            C 36 -32, 52 -22, 52 -8
+            C 52 6, 40 18, 20 18
+            L -20 18
+            C -40 18, -52 6, -52 -8
+            Z
+          "
+          fill="#f5f0e1"
+          fillOpacity="0.18"
           stroke="#f5f0e1"
-          strokeWidth="1.6"
+          strokeWidth="3.2"
         />
-        {/* Left hand — palm cupped, thumb up, fingers curled */}
-        <path
-          d="
-            M -42 14
-            C -42 6, -34 -2, -24 -2
-            L -2 -2
-            C 2 -2, 4 0, 4 4
-            L 4 16
-            C 4 20, 0 22, -4 22
-          "
-        />
-        {/* Left thumb */}
-        <path d="M -24 -2 C -28 -8, -30 -10, -34 -8" />
-        {/* Left fingers detail */}
-        <g strokeWidth="1.6" strokeOpacity="0.7">
-          <path d="M -16 -2 L -16 4" />
-          <path d="M -10 -2 L -10 4" />
-          <path d="M -4 -2 L -4 4" />
+        {/* Four fingers across the top of the palm */}
+        <g fill="none" stroke="#f5f0e1" strokeWidth="3.2" strokeLinecap="round">
+          <path d="M -28 -32 C -30 -44, -22 -50, -18 -42 L -16 -32" />
+          <path d="M -10 -32 C -12 -48, -2 -54, 0 -44 L 0 -32" />
+          <path d="M 8 -32 C 6 -48, 16 -52, 18 -42 L 18 -32" />
+          <path d="M 24 -32 C 22 -42, 32 -46, 34 -38 L 32 -30" />
         </g>
-        {/* Left wrist/cuff */}
-        <path d="M -42 14 L -46 26 L -34 26 L -30 18" />
-
-        {/* Right hand — mirror */}
+        {/* Thumb on the left */}
         <path
-          d="
-            M 42 14
-            C 42 6, 34 -2, 24 -2
-            L 2 -2
-            C -2 -2, -4 0, -4 4
-            L -4 16
-            C -4 20, 0 22, 4 22
-          "
+          d="M -52 -8 C -60 -4, -62 6, -54 12"
+          fill="none"
+          stroke="#f5f0e1"
+          strokeWidth="3.2"
+          strokeLinecap="round"
         />
-        {/* Right thumb */}
-        <path d="M 24 -2 C 28 -8, 30 -10, 34 -8" />
-        {/* Right fingers detail */}
-        <g strokeWidth="1.6" strokeOpacity="0.7">
-          <path d="M 16 -2 L 16 4" />
-          <path d="M 10 -2 L 10 4" />
-          <path d="M 4 -2 L 4 4" />
-        </g>
-        {/* Right wrist/cuff */}
-        <path d="M 42 14 L 46 26 L 34 26 L 30 18" />
+        {/* Wrist */}
+        <path
+          d="M -36 18 L -32 32 L 32 32 L 36 18"
+          fill="none"
+          stroke="#f5f0e1"
+          strokeWidth="3.2"
+        />
       </g>
       <CoverName name="A GIFT IN YOUR NAME" color="#f5f0e1" secondary="GIVING BACK" />
     </svg>
