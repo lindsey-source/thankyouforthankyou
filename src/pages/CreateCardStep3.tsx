@@ -168,21 +168,31 @@ export default function CreateCardStep3() {
     navigate('/create-card/step4');
   };
 
-  // Honor the design picked in Step 2: when the user is on the "Original" palette,
-  // render the exact header background (e.g. Golden Cap's navy gradient) and use
-  // the design's headline text as a sensible default.
-  const step2Palette = (cardData.colorPalette as any) || {};
-  const isOriginalPalette = selectedPaletteId === 'default';
-  const step2HeaderBg: string | null =
-    isOriginalPalette && typeof step2Palette.headerBg === 'string' ? step2Palette.headerBg : null;
-  const step2HeadlineText: string | undefined =
-    typeof step2Palette.headlineText === 'string' ? step2Palette.headlineText : undefined;
+  // Read the rich Design picked in Step 2 (saved into cardData.colorPalette).
+  // When present we render the preview through DesignedCardPreview so the
+  // header art / fonts / inks / donation styling all match Step 2 exactly.
+  const step2Design = useMemo(
+    () => readDesignFromPalette(cardData.colorPalette),
+    [cardData.colorPalette]
+  );
 
-  const previewProps = {
+  // Whether the user has changed colors away from "Original". When they have,
+  // we fall back to LiveCardPreview so their custom palette actually shows.
+  const usingOriginalDesign = selectedPaletteId === 'default' && !!step2Design;
+
+  // Whether the user picked a non-design font. When they did, layer it on top
+  // of the design (DesignedCardPreview accepts an optional font override).
+  const designFontId = step2Design?.fontChoice;
+  const fontOverride =
+    step2Design && selectedFontId !== designFontId
+      ? activeFonts
+      : null;
+
+  const liveProps = {
     palette: activePalette,
     fonts: activeFonts,
     recipientName: cardData.recipientName,
-    messageHeadline: cardData.messageHeadline?.trim() ? cardData.messageHeadline : step2HeadlineText,
+    messageHeadline: cardData.messageHeadline,
     messageBody: cardData.messageBody,
     closing: cardData.closing,
     senderName: cardData.senderName,
@@ -192,8 +202,32 @@ export default function CreateCardStep3() {
     envelopeColor,
     texture,
     signatureStyle,
-    headerBackground: step2HeaderBg,
   };
+
+  const designedProps = step2Design
+    ? {
+        design: step2Design,
+        recipientName: cardData.recipientName,
+        messageHeadline: cardData.messageHeadline,
+        messageBody: cardData.messageBody,
+        closing: cardData.closing,
+        senderName: cardData.senderName,
+        photoUrl: cardData.photoUrl,
+        charityName: cardData.charityName,
+        donationAmount: cardData.donationAmount,
+        envelopeColor,
+        texture,
+        signatureStyle,
+        fontOverride,
+      }
+    : null;
+
+  const renderPreview = () =>
+    usingOriginalDesign && designedProps ? (
+      <DesignedCardPreview {...designedProps} />
+    ) : (
+      <LiveCardPreview {...liveProps} />
+    );
 
   const SectionLabel = ({ children, sub }: { children: React.ReactNode; sub?: string }) => (
     <div className="mb-4">
