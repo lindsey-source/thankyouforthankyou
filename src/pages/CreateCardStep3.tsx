@@ -544,7 +544,7 @@ export default function CreateCardStep3() {
               <Card className="bg-white/95 backdrop-blur-sm">
                 <CardContent className="p-5">
                   <Label className="text-base font-semibold mb-3 block text-center">Live Preview</Label>
-                  <LiveCardPreview {...previewProps} />
+                  {renderPreview()}
                   <p className="text-xs text-muted-foreground text-center mt-3">
                     Updates in real-time as you change options
                   </p>
@@ -573,7 +573,7 @@ export default function CreateCardStep3() {
       <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
         <DialogContent className="max-w-md p-6">
           <DialogTitle className="text-center mb-4">Card Preview</DialogTitle>
-          <LiveCardPreview {...previewProps} />
+          {renderPreview()}
           <Button onClick={() => setPreviewOpen(false)} variant="hero" className="w-full mt-4">
             Looks Good
           </Button>
