@@ -10,7 +10,6 @@ import { toast } from 'sonner';
 import { ProgressBar } from '@/components/CardDesigner/ProgressBar';
 import { BreadcrumbNav } from '@/components/CardDesigner/BreadcrumbNav';
 import { LiveCardPreview } from '@/components/CardDesigner/LiveCardPreview';
-import { DesignedCardPreview } from '@/components/CardDesigner/DesignedCardPreview';
 import { readDesignFromPalette } from '@/components/CardDesigner/designTypes';
 import { Check, Eye, ArrowLeft, ArrowRight, Upload, Trash2 } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -168,29 +167,41 @@ export default function CreateCardStep3() {
     navigate('/create-card/step4');
   };
 
-  // Read the rich Design picked in Step 2 (saved into cardData.colorPalette).
-  // When present we render the preview through DesignedCardPreview so the
-  // header art / fonts / inks / donation styling all match Step 2 exactly.
+  // Read the full Step 2 design saved into cardData.colorPalette and pass
+  // every token straight into LiveCardPreview. When the user changes colors
+  // away from "Original", omit the design's bg/headerBg/ink so their custom
+  // palette wins; their fonts always override the design's font.
   const step2Design = useMemo(
     () => readDesignFromPalette(cardData.colorPalette),
     [cardData.colorPalette]
   );
+  const usingOriginalPalette = selectedPaletteId === 'default';
 
-  // Whether the user has changed colors away from "Original". When they have,
-  // we fall back to LiveCardPreview so their custom palette actually shows.
-  const usingOriginalDesign = selectedPaletteId === 'default' && !!step2Design;
-
-  // Whether the user picked a non-design font. When they did, layer it on top
-  // of the design (DesignedCardPreview accepts an optional font override).
-  const designFontId = step2Design?.fontChoice;
-  const fontOverride =
-    step2Design && selectedFontId !== designFontId
-      ? activeFonts
-      : null;
-
-  const liveProps = {
+  const previewProps = {
+    // Generic palette + fonts (always passed; fallback when no design tokens).
     palette: activePalette,
     fonts: activeFonts,
+
+    // Step 2 design tokens — only when the user is on the Original palette,
+    // so a custom palette swap genuinely overrides the design.
+    ...(step2Design && usingOriginalPalette
+      ? {
+          designId: step2Design.id,
+          bg: step2Design.bg,
+          headerBg: step2Design.headerBg,
+          ink: step2Design.ink,
+          inkSoft: step2Design.inkSoft,
+          accent: step2Design.accent,
+          headerStyle: step2Design.headerStyle,
+          headlineText: step2Design.headlineText,
+          font: step2Design.font,
+          fontChoice: step2Design.fontChoice,
+          donationBg: step2Design.donationBg,
+          donationColor: step2Design.donationColor,
+        }
+      : {}),
+
+    // User content + Step 3 customizations
     recipientName: cardData.recipientName,
     messageHeadline: cardData.messageHeadline,
     messageBody: cardData.messageBody,
@@ -203,31 +214,6 @@ export default function CreateCardStep3() {
     texture,
     signatureStyle,
   };
-
-  const designedProps = step2Design
-    ? {
-        design: step2Design,
-        recipientName: cardData.recipientName,
-        messageHeadline: cardData.messageHeadline,
-        messageBody: cardData.messageBody,
-        closing: cardData.closing,
-        senderName: cardData.senderName,
-        photoUrl: cardData.photoUrl,
-        charityName: cardData.charityName,
-        donationAmount: cardData.donationAmount,
-        envelopeColor,
-        texture,
-        signatureStyle,
-        fontOverride,
-      }
-    : null;
-
-  const renderPreview = () =>
-    usingOriginalDesign && designedProps ? (
-      <DesignedCardPreview {...designedProps} />
-    ) : (
-      <LiveCardPreview {...liveProps} />
-    );
 
   const SectionLabel = ({ children, sub }: { children: React.ReactNode; sub?: string }) => (
     <div className="mb-4">
@@ -544,7 +530,7 @@ export default function CreateCardStep3() {
               <Card className="bg-white/95 backdrop-blur-sm">
                 <CardContent className="p-5">
                   <Label className="text-base font-semibold mb-3 block text-center">Live Preview</Label>
-                  {renderPreview()}
+                  <LiveCardPreview {...previewProps} />
                   <p className="text-xs text-muted-foreground text-center mt-3">
                     Updates in real-time as you change options
                   </p>
@@ -573,7 +559,7 @@ export default function CreateCardStep3() {
       <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
         <DialogContent className="max-w-md p-6">
           <DialogTitle className="text-center mb-4">Card Preview</DialogTitle>
-          {renderPreview()}
+          <LiveCardPreview {...previewProps} />
           <Button onClick={() => setPreviewOpen(false)} variant="hero" className="w-full mt-4">
             Looks Good
           </Button>
