@@ -166,11 +166,21 @@ export default function CreateCardStep3() {
     navigate('/create-card/step4');
   };
 
+  // Honor the design picked in Step 2: when the user is on the "Original" palette,
+  // render the exact header background (e.g. Golden Cap's navy gradient) and use
+  // the design's headline text as a sensible default.
+  const step2Palette = (cardData.colorPalette as any) || {};
+  const isOriginalPalette = selectedPaletteId === 'default';
+  const step2HeaderBg: string | null =
+    isOriginalPalette && typeof step2Palette.headerBg === 'string' ? step2Palette.headerBg : null;
+  const step2HeadlineText: string | undefined =
+    typeof step2Palette.headlineText === 'string' ? step2Palette.headlineText : undefined;
+
   const previewProps = {
     palette: activePalette,
     fonts: activeFonts,
     recipientName: cardData.recipientName,
-    messageHeadline: cardData.messageHeadline,
+    messageHeadline: cardData.messageHeadline?.trim() ? cardData.messageHeadline : step2HeadlineText,
     messageBody: cardData.messageBody,
     closing: cardData.closing,
     senderName: cardData.senderName,
@@ -180,6 +190,7 @@ export default function CreateCardStep3() {
     envelopeColor,
     texture,
     signatureStyle,
+    headerBackground: step2HeaderBg,
   };
 
   const SectionLabel = ({ children, sub }: { children: React.ReactNode; sub?: string }) => (

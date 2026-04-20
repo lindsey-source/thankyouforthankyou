@@ -23,6 +23,8 @@ export interface LiveCardPreviewProps {
   envelopeColor?: string | null;
   texture?: string | null;
   signatureStyle?: string | null;
+  /** Optional CSS background for the header art band — overrides the default gradient. */
+  headerBackground?: string | null;
   className?: string;
 }
 
@@ -53,6 +55,7 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
   envelopeColor,
   texture,
   signatureStyle,
+  headerBackground,
   className = '',
 }) => {
   const headline = messageHeadline?.trim() || 'Thank You';
@@ -95,7 +98,9 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
         className="relative flex flex-col items-center justify-center overflow-hidden"
         style={{
           height: '42%',
-          background: `linear-gradient(135deg, ${palette.secondary} 0%, ${palette.primary} 100%)`,
+          background:
+            headerBackground ||
+            `linear-gradient(135deg, ${palette.secondary} 0%, ${palette.primary} 100%)`,
         }}
       >
         {photoUrl ? (
