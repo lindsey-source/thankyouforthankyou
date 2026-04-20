@@ -337,15 +337,22 @@ export default function CreateCardStep3() {
                       selected={selectedPaletteId === palette.id}
                       onClick={() => setSelectedPaletteId(palette.id)}
                     >
-                      <div className="mb-3">
+                      <div className="mb-3 flex items-center gap-2">
                         <span className="font-semibold text-sm sm:text-base">{palette.name}</span>
+                        {palette.id === 'default' && (
+                          <span className="text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded bg-[#c17b8a]/10 text-[#c17b8a] font-semibold">
+                            From your design
+                          </span>
+                        )}
                       </div>
                       <div className="flex gap-2">
-                        {Object.values(palette.colors).slice(0, 4).map((color: any, idx) => (
+                        {((palette as any).swatches as string[] | undefined ||
+                          (Object.values(palette.colors).slice(0, 4) as string[])
+                        ).map((color, idx) => (
                           <div
                             key={idx}
-                            className="flex-1 h-10 sm:h-12 rounded-lg shadow-sm"
-                            style={{ backgroundColor: color }}
+                            className="flex-1 h-10 sm:h-12 rounded-lg shadow-sm border border-black/5"
+                            style={{ background: color }}
                           />
                         ))}
                       </div>
