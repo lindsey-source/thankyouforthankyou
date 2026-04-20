@@ -1172,7 +1172,7 @@ export default function CreateCardStep2() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            Designs for your {occasion ? occasionLabels[occasion] : 'Occasion'}
+            Thank You Designs for your {occasion ? occasionLabels[occasion] : 'Occasion'}
           </motion.h1>
           <motion.p
             className="text-base md:text-lg max-w-xl mx-auto"
