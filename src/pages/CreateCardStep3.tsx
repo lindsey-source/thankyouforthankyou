@@ -13,7 +13,7 @@ import { ProgressBar } from '@/components/CardDesigner/ProgressBar';
 import { BreadcrumbNav } from '@/components/CardDesigner/BreadcrumbNav';
 import { LiveCardPreview } from '@/components/CardDesigner/LiveCardPreview';
 import { DESIGN_SETS } from './CreateCardStep2';
-import type { Design, OccasionId } from '@/components/CardDesigner/designTypes';
+import { readDesignFromPalette, type Design, type OccasionId } from '@/components/CardDesigner/designTypes';
 
 /* ---------- Wizard chrome ---------- */
 const STEPS = [
@@ -102,10 +102,13 @@ export default function CreateCardStep3() {
 
   // Always-defined design (never blank, never crash).
   const design: Design = useMemo(() => {
-    const cp = cardData.colorPalette as Design | null | undefined;
-    if (cp && (cp as any).headerStyle && (cp as any).headerBg) return cp as Design;
     const occ = (cardData.occasion as OccasionId) ?? 'general';
-    return DESIGN_SETS[occ]?.[0] ?? DESIGN_SETS.general[0];
+    const fallback = DESIGN_SETS[occ]?.[0] ?? DESIGN_SETS.general[0];
+    const saved = readDesignFromPalette(cardData.colorPalette);
+
+    return saved
+      ? { ...fallback, ...saved }
+      : fallback;
   }, [cardData.colorPalette, cardData.occasion]);
 
   // Local control state — these only retint/restyle the preview.

@@ -58,7 +58,15 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
   headlineOverride,
   photoUrl,
 }) => {
-  const { headerStyle, accent, ink, headerBg, headlineText, font, id } = design;
+  const {
+    headerStyle,
+    accent = '#c17b8a',
+    ink = '#2d2420',
+    headerBg = '#faf7f2',
+    headlineText = 'Thank You',
+    font = 'serifClassic',
+    id,
+  } = design;
   const isDarkBg = isDarkBackground(headerBg);
   const headlineColor = isDarkBg
     ? accent.startsWith('#c') || accent.startsWith('#d')
