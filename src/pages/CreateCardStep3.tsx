@@ -137,34 +137,37 @@ export default function CreateCardStep3() {
   });
 
   /* ---------- Live preview props ----------
-     Accent circles only override the header background.
-     All other wording, art, and structure stay locked to the chosen design. */
+     CRITICAL: headlineText/greeting/body/closing come ONLY from the design
+     object and NEVER change when accent or font changes. */
   const fontFamily = FONT_CHOICES.find(f => f.id === fontChoice)!.family;
   const previewProps = {
     palette: {
-      primary: design.accent,
+      primary: accentColor,
       secondary: design.accentSoft,
-      accent: design.accent,
+      accent: accentColor,
       text: design.ink,
     },
     fonts: { heading: fontFamily, body: fontFamily },
     designId: design.id,
     bg: design.bg,
-    headerBg: accentColor,
+    headerBg: design.headerBg,
     ink: design.ink,
     inkSoft: design.inkSoft,
-    accent: design.accent,
+    accent: accentColor,                 // ← retints header art only
     headerStyle: design.headerStyle,
-    headlineText: design.headlineText,
+    headlineText: design.headlineText,   // ← from design, never mutated
     font: design.font,
     fontChoice,
     donationBg: design.donationBg,
     donationColor: design.donationColor,
+
+    // Wording fields fixed to design — never altered by these controls.
     messageHeadline: design.headlineText,
     messageBody: design.body,
     closing: 'With heartfelt thanks,',
     recipientName: cardData.recipientName || design.greeting.replace(/^Dear\s+/i, '').replace(/,$/, ''),
     senderName: cardData.senderName,
+
     photoUrl: cardData.photoUrl,
     charityName: cardData.charityName,
     donationAmount: cardData.donationAmount,
