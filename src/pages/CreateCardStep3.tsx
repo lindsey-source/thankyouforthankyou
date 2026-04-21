@@ -221,13 +221,13 @@ export default function CreateCardStep3() {
       <div className="w-full max-w-7xl mx-auto">
         <div className="text-center mb-8">
           <motion.h1
-            className="text-3xl md:text-4xl font-bold text-white mb-2"
+            className="text-3xl md:text-4xl font-bold text-stone-800 mb-2"
             initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}
           >
             Customize your design
           </motion.h1>
           <motion.p
-            className="text-lg text-white/90"
+            className="text-lg text-stone-500"
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}
           >
             Pick an accent, a font, and finishing touches — your message stays put
