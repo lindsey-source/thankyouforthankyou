@@ -215,7 +215,7 @@ export default function CreateCardStep3() {
 
   return (
     <div className="min-h-screen bg-gradient-hero p-4 md:p-8 pb-24 lg:pb-8">
-      <ProgressBar currentStep={3} totalSteps={7} stepNames={STEP_NAMES} />
+      <ProgressBar currentStep={3} totalSteps={6} stepNames={STEP_NAMES} />
       <BreadcrumbNav currentStep={3} steps={STEPS} />
 
       <div className="w-full max-w-7xl mx-auto">
