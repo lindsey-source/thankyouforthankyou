@@ -9,6 +9,8 @@ import { useCardWizard } from '@/contexts/CardWizardContext';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { ProgressBar } from '@/components/CardDesigner/ProgressBar';
 import { BreadcrumbNav } from '@/components/CardDesigner/BreadcrumbNav';
 import { LiveCardPreview } from '@/components/CardDesigner/LiveCardPreview';
@@ -20,7 +22,6 @@ const STEPS = [
   { name: 'Occasion', path: '/create-card/step1' },
   { name: 'Style', path: '/create-card/step2' },
   { name: 'Customize', path: '/create-card/step3' },
-  { name: 'Message', path: '/create-card/step4' },
   { name: 'Recipients', path: '/create-card/step5' },
   { name: 'Cause', path: '/create-card/impact' },
   { name: 'Preview', path: '/create-card/step6' },
@@ -29,7 +30,6 @@ const STEP_NAMES = [
   'Choose Occasion',
   'Pick Your Style',
   'Customize Design',
-  'Write Your Message',
   'Recipients',
   'Choose Your Cause',
   'Preview & Send',
@@ -124,6 +124,20 @@ export default function CreateCardStep3() {
   const [texture, setTexture] = useState<string>(cardData.texture ?? 'smooth');
   const [signatureStyle, setSignatureStyle] = useState<string>(cardData.signatureStyle ?? 'handwritten');
 
+  // Message + closing — pre-fill from saved data, fall back to design defaults.
+  const [messageBody, setMessageBody] = useState<string>(
+    () => cardData.messageBody?.trim() || design.body
+  );
+  const [closing, setClosing] = useState<string>(
+    () => cardData.closing?.trim() || 'With love,'
+  );
+
+  // Live-sync into wizard so the preview (and downstream steps) stay current.
+  React.useEffect(() => {
+    updateCardData({ messageBody, closing });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [messageBody, closing]);
+
   // Photo upload
   const onDrop = useCallback((files: File[]) => {
     const file = files[0];
@@ -166,8 +180,8 @@ export default function CreateCardStep3() {
 
     // Wording fields fixed to design — never altered by these controls.
     messageHeadline: design.headlineText,
-    messageBody: design.body,
-    closing: 'With heartfelt thanks,',
+    messageBody,
+    closing,
     recipientName: cardData.recipientName || design.greeting.replace(/^Dear\s+/i, '').replace(/,$/, ''),
     senderName: cardData.senderName,
 
@@ -187,9 +201,11 @@ export default function CreateCardStep3() {
       envelopeColor,
       texture,
       signatureStyle,
+      messageBody,
+      closing,
     });
     setCurrentStep(4);
-    navigate('/create-card/step4');
+    navigate('/create-card/step5');
   };
 
   const handleBack = () => {
@@ -199,7 +215,7 @@ export default function CreateCardStep3() {
 
   return (
     <div className="min-h-screen bg-gradient-hero p-4 md:p-8 pb-24 lg:pb-8">
-      <ProgressBar currentStep={3} totalSteps={7} stepNames={STEP_NAMES} />
+      <ProgressBar currentStep={3} totalSteps={6} stepNames={STEP_NAMES} />
       <BreadcrumbNav currentStep={3} steps={STEPS} />
 
       <div className="w-full max-w-7xl mx-auto">
@@ -284,6 +300,44 @@ export default function CreateCardStep3() {
                       </button>
                     );
                   })}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Section 2.5 — Your Message */}
+            <Card className="bg-white/95 backdrop-blur-sm">
+              <CardContent className="p-6 space-y-4">
+                <div>
+                  <Label className="text-xl font-bold block">Your Message</Label>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Edit the body and closing — the preview updates as you type
+                  </p>
+                </div>
+
+                <div>
+                  <Label htmlFor="message-body" className="text-base font-semibold mb-2 block">
+                    Message
+                  </Label>
+                  <Textarea
+                    id="message-body"
+                    value={messageBody}
+                    onChange={(e) => setMessageBody(e.target.value)}
+                    rows={6}
+                    className="resize-y min-h-[140px]"
+                    placeholder="Write your thank-you message…"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="closing-line" className="text-base font-semibold mb-2 block">
+                    Closing
+                  </Label>
+                  <Input
+                    id="closing-line"
+                    value={closing}
+                    onChange={(e) => setClosing(e.target.value)}
+                    placeholder="With love,"
+                  />
                 </div>
               </CardContent>
             </Card>

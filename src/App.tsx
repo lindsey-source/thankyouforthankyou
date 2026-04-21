@@ -16,7 +16,7 @@ import CardDesign from "./pages/CardDesign";
 import CreateCardStep1 from "./pages/CreateCardStep1";
 import CreateCardStep2 from "./pages/CreateCardStep2";
 import CreateCardStep3 from "./pages/CreateCardStep3";
-import CreateCardStep4 from "./pages/CreateCardStep4";
+
 import CreateCardStep5 from "./pages/CreateCardStep5";
 import CreateCardStep6 from "./pages/CreateCardStep6";
 import CreateCardImpact from "./pages/CreateCardImpact";
@@ -50,7 +50,7 @@ const App = () => (
               <Route path="/create-card/step1" element={<ProtectedRoute><CreateCardStep1 /></ProtectedRoute>} />
               <Route path="/create-card/step2" element={<ProtectedRoute><CreateCardStep2 /></ProtectedRoute>} />
               <Route path="/create-card/step3" element={<ProtectedRoute><CreateCardStep3 /></ProtectedRoute>} />
-              <Route path="/create-card/step4" element={<ProtectedRoute><CreateCardStep4 /></ProtectedRoute>} />
+              <Route path="/create-card/step4" element={<Navigate to="/create-card/step3" replace />} />
               <Route path="/create-card/impact" element={<ProtectedRoute><CreateCardImpact /></ProtectedRoute>} />
               <Route path="/create-card/step5" element={<ProtectedRoute><CreateCardStep5 /></ProtectedRoute>} />
               <Route path="/create-card/step6" element={<ProtectedRoute><CreateCardStep6 /></ProtectedRoute>} />
