@@ -44,13 +44,13 @@ export default function CreateCardStep5() {
         <BreadcrumbNav currentStep={5} steps={STEPS} />
         <div className="text-center mb-8">
           <motion.h1
-            className="text-3xl md:text-4xl font-bold text-white mb-2"
+            className="text-3xl md:text-4xl font-bold text-stone-800 mb-2"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
           >
             Recipients
           </motion.h1>
-          <p className="text-white/90">
+          <p className="text-stone-500">
             Add the people you want to thank — upload a list or add them one by one
           </p>
         </div>
@@ -79,7 +79,7 @@ export default function CreateCardStep5() {
             Back
           </Button>
 
-          <p className="text-sm text-white/70">Step 5 of 7</p>
+          <p className="text-sm text-stone-500">Step 5 of 7</p>
 
           <Button variant="hero" onClick={handleNext}>
             Next
