@@ -141,7 +141,7 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
               headerStyle: headerStyle!,
               accent: accentColor,
               ink: inkColor,
-              headerBg: headerBg!,
+              headerBg: accent || headerBg!,
               headlineText: headline,
               font: font || 'serifClassic',
             }}
@@ -155,7 +155,7 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
           style={{
             height: '42%',
             background:
-              headerBg || `linear-gradient(135deg, ${palette.secondary} 0%, ${palette.primary} 100%)`,
+              accent || headerBg || `linear-gradient(135deg, ${palette.secondary} 0%, ${palette.primary} 100%)`,
           }}
         >
           {photoUrl ? (
