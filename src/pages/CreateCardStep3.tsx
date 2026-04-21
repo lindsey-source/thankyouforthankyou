@@ -304,6 +304,44 @@ export default function CreateCardStep3() {
               </CardContent>
             </Card>
 
+            {/* Section 2.5 — Your Message */}
+            <Card className="bg-white/95 backdrop-blur-sm">
+              <CardContent className="p-6 space-y-4">
+                <div>
+                  <Label className="text-xl font-bold block">Your Message</Label>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Edit the body and closing — the preview updates as you type
+                  </p>
+                </div>
+
+                <div>
+                  <Label htmlFor="message-body" className="text-base font-semibold mb-2 block">
+                    Message
+                  </Label>
+                  <Textarea
+                    id="message-body"
+                    value={messageBody}
+                    onChange={(e) => setMessageBody(e.target.value)}
+                    rows={6}
+                    className="resize-y min-h-[140px]"
+                    placeholder="Write your thank-you message…"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="closing-line" className="text-base font-semibold mb-2 block">
+                    Closing
+                  </Label>
+                  <Input
+                    id="closing-line"
+                    value={closing}
+                    onChange={(e) => setClosing(e.target.value)}
+                    placeholder="With love,"
+                  />
+                </div>
+              </CardContent>
+            </Card>
+
             {/* Section 3 — Finishing Touches */}
             <Card className="bg-white/95 backdrop-blur-sm">
               <CardContent className="p-6 space-y-8">
