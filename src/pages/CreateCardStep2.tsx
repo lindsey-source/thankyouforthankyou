@@ -22,7 +22,7 @@ const STEP_NAMES = [
 /* Design schema, HeaderStyle, FontFamily, OccasionId are imported from designTypes. */
 
 /* ---------- Per-occasion design sets (3-4 each) ---------- */
-const DESIGN_SETS: Record<OccasionId, Design[]> = {
+export const DESIGN_SETS: Record<OccasionId, Design[]> = {
   wedding: [
     {
       id: 'wedding-rose-garden',
