@@ -201,9 +201,11 @@ export default function CreateCardStep3() {
       envelopeColor,
       texture,
       signatureStyle,
+      messageBody,
+      closing,
     });
     setCurrentStep(4);
-    navigate('/create-card/step4');
+    navigate('/create-card/step5');
   };
 
   const handleBack = () => {
