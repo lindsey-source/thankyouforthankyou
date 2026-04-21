@@ -124,6 +124,20 @@ export default function CreateCardStep3() {
   const [texture, setTexture] = useState<string>(cardData.texture ?? 'smooth');
   const [signatureStyle, setSignatureStyle] = useState<string>(cardData.signatureStyle ?? 'handwritten');
 
+  // Message + closing — pre-fill from saved data, fall back to design defaults.
+  const [messageBody, setMessageBody] = useState<string>(
+    () => cardData.messageBody?.trim() || design.body
+  );
+  const [closing, setClosing] = useState<string>(
+    () => cardData.closing?.trim() || 'With love,'
+  );
+
+  // Live-sync into wizard so the preview (and downstream steps) stay current.
+  React.useEffect(() => {
+    updateCardData({ messageBody, closing });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [messageBody, closing]);
+
   // Photo upload
   const onDrop = useCallback((files: File[]) => {
     const file = files[0];
