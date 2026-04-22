@@ -118,15 +118,16 @@ const LandingPage = () => {
                   }}
                 >
                   <span
+                    className="text-center px-4"
                     style={{
                       fontFamily: "'Dancing Script', cursive",
-                      fontSize: "48px",
+                      fontSize: "40px",
                       color: "#8b4a5a",
-                      letterSpacing: "0.05em",
+                      letterSpacing: "0.04em",
                       lineHeight: 1.1,
                     }}
                   >
-                    Thank You
+                    With Love &amp; Gratitude
                   </span>
                   <div
                     style={{
