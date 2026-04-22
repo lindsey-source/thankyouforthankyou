@@ -1,15 +1,66 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Heart, ArrowRight, CheckCircle, Upload, PenLine, Send, Sparkles, Users, Gift, TrendingUp, Palette, Leaf, BarChart2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import { DESIGN_SETS } from "@/pages/CreateCardStep2";
 import cardBlushBotanical from "@/assets/card-blush-botanical.jpg";
 import cardSageAbstract from "@/assets/card-sage-abstract.jpg";
 import cardWildflowerInk from "@/assets/card-wildflower-ink.jpg";
 
+/* ---------- Hero rotating-card content ----------
+   Each entry reuses the FIRST design from its occasion in DESIGN_SETS
+   (so colors/header style stay on-brand) and overrides only the
+   per-card copy that the hero shows. */
+const HERO_CARDS = [
+  {
+    occasion: "wedding" as const,
+    headline: "With Love & Gratitude",
+    greeting: "Dear Emma & James,",
+    body:
+      "Thank you for celebrating our wedding with us — your presence made our day unforgettable.",
+    charity: "💚 $4 donated to Rainforest Alliance",
+  },
+  {
+    occasion: "baby" as const,
+    headline: "Little One",
+    greeting: "Dear Aunt Rachel,",
+    body:
+      "Your beautiful gift for baby Lily means so much to us. Thank you for your love and generosity.",
+    charity: "💚 $3 donated to UNICEF",
+  },
+  {
+    occasion: "graduation" as const,
+    headline: "With Gratitude",
+    greeting: "Dear Professor Kim,",
+    body:
+      "Thank you for guiding me through these years. Your belief in me made all the difference.",
+    charity: "💚 $4 donated to Scholarship America",
+  },
+  {
+    occasion: "general" as const,
+    headline: "Thank You",
+    greeting: "Dear Friend,",
+    body:
+      "Your kindness and generosity have meant the world to us. We are so grateful for you.",
+    charity: "💚 $3 donated to Feeding America",
+  },
+];
+
 const LandingPage = () => {
   const { isLoaded, isSignedIn } = useAuth();
+
+  // Rotate the hero demo card through 4 occasions every 4s.
+  const [heroIndex, setHeroIndex] = useState(0);
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      setHeroIndex((i) => (i + 1) % HERO_CARDS.length);
+    }, 4000);
+    return () => window.clearInterval(id);
+  }, []);
+  const heroCard = HERO_CARDS[heroIndex];
+  const heroDesign = DESIGN_SETS[heroCard.occasion]?.[0] ?? DESIGN_SETS.general[0];
 
   return (
     <div className="min-h-screen bg-background">
@@ -34,7 +85,7 @@ const LandingPage = () => {
                   </Link>
                   <Link to="/signup">
                     <Button variant="hero" size="lg">
-                      Get Started Free
+                      Start for Free
                     </Button>
                   </Link>
                 </>
@@ -105,93 +156,120 @@ const LandingPage = () => {
                 aria-hidden="true"
               />
 
-              {/* Front card (rotated -3deg) */}
+              {/* Front card (rotated -3deg) — rotates through 4 occasions */}
               <div
-                className="relative w-[280px] sm:w-[300px] aspect-[3/4] rounded-2xl bg-white border overflow-hidden shadow-warm"
+                className="relative w-[280px] sm:w-[300px] aspect-[3/4] rounded-2xl border overflow-hidden shadow-warm"
                 style={{
                   transform: "rotate(-3deg)",
                   borderColor: "rgba(45, 36, 32, 0.08)",
+                  backgroundColor: heroDesign.bg,
                 }}
                 role="img"
-                aria-label="Example thank-you e-card preview"
+                aria-label={`Example ${heroCard.occasion} thank-you e-card preview`}
               >
-                {/* Top blush watercolor header */}
+                {/* Crossfading content keyed on occasion */}
                 <div
-                  className="relative flex flex-col items-center justify-center"
-                  style={{
-                    height: "180px",
-                    background:
-                      "linear-gradient(135deg, #f9ece8 0%, #f0d8d0 50%, #e8c4b8 100%)",
-                  }}
+                  key={heroCard.occasion}
+                  className="absolute inset-0 animate-fade-in"
                 >
-                  <span
-                    className="text-center px-4"
-                    style={{
-                      fontFamily: "'Dancing Script', cursive",
-                      fontSize: "40px",
-                      color: "#8b4a5a",
-                      letterSpacing: "0.04em",
-                      lineHeight: 1.1,
-                    }}
-                  >
-                    With Love &amp; Gratitude
-                  </span>
+                  {/* Header band — uses the design's headerBg + ink */}
                   <div
+                    className="relative flex flex-col items-center justify-center"
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "8px",
-                      marginTop: "14px",
-                      opacity: 0.6,
-                    }}
-                    aria-hidden="true"
-                  >
-                    <div style={{ width: "30px", height: "1px", backgroundColor: "#c17b8a" }} />
-                    <div
-                      style={{
-                        width: "4px",
-                        height: "4px",
-                        backgroundColor: "#c17b8a",
-                        transform: "rotate(45deg)",
-                      }}
-                    />
-                    <div style={{ width: "30px", height: "1px", backgroundColor: "#c17b8a" }} />
-                  </div>
-                </div>
-
-                {/* Card body */}
-                <div className="p-5 flex flex-col h-[58%]">
-                  <p
-                    className="text-xl mb-2"
-                    style={{
-                      fontFamily: "'Playfair Display', Georgia, serif",
-                      color: "#2d2420",
+                      height: "180px",
+                      background: heroDesign.headerBg,
                     }}
                   >
-                    Dear Emma &amp; James,
-                  </p>
-                  <p
-                    className="text-sm leading-relaxed flex-1"
-                    style={{ color: "#2d2420", opacity: 0.72 }}
-                  >
-                    Thank you so much for celebrating our wedding with us.
-                    Your presence and kindness made our day unforgettable.
-                  </p>
-
-                  {/* Donation badge */}
-                  <div className="mt-3">
-                    <div
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold"
+                    <span
+                      className="text-center px-4"
                       style={{
-                        backgroundColor: "rgba(143, 170, 139, 0.18)",
-                        color: "#5a7257",
+                        fontFamily:
+                          heroDesign.fontChoice === "dancing"
+                            ? "'Dancing Script', cursive"
+                            : heroDesign.fontChoice === "inter"
+                            ? "'Inter', system-ui, sans-serif"
+                            : "'Playfair Display', Georgia, serif",
+                        fontSize: heroDesign.fontChoice === "dancing" ? "40px" : "30px",
+                        color: heroDesign.ink,
+                        letterSpacing: "0.04em",
+                        lineHeight: 1.1,
                       }}
                     >
-                      <span aria-hidden="true">💚</span>
-                      $3 donated to WWF
+                      {heroCard.headline}
+                    </span>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "8px",
+                        marginTop: "14px",
+                        opacity: 0.6,
+                      }}
+                      aria-hidden="true"
+                    >
+                      <div style={{ width: "30px", height: "1px", backgroundColor: heroDesign.accent }} />
+                      <div
+                        style={{
+                          width: "4px",
+                          height: "4px",
+                          backgroundColor: heroDesign.accent,
+                          transform: "rotate(45deg)",
+                        }}
+                      />
+                      <div style={{ width: "30px", height: "1px", backgroundColor: heroDesign.accent }} />
+                    </div>
+                  </div>
+
+                  {/* Card body */}
+                  <div className="p-5 flex flex-col h-[58%]">
+                    <p
+                      className="text-xl mb-2"
+                      style={{
+                        fontFamily: "'Playfair Display', Georgia, serif",
+                        color: heroDesign.ink,
+                      }}
+                    >
+                      {heroCard.greeting}
+                    </p>
+                    <p
+                      className="text-sm leading-relaxed flex-1"
+                      style={{ color: heroDesign.inkSoft, opacity: 0.85 }}
+                    >
+                      {heroCard.body}
+                    </p>
+
+                    {/* Donation badge */}
+                    <div className="mt-3">
+                      <div
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold"
+                        style={{
+                          backgroundColor: heroDesign.donationBg,
+                          color: heroDesign.donationColor,
+                        }}
+                      >
+                        {heroCard.charity}
+                      </div>
                     </div>
                   </div>
                 </div>
+              </div>
+
+              {/* Rotation indicator dots */}
+              <div
+                className="absolute -bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-1.5"
+                aria-hidden="true"
+              >
+                {HERO_CARDS.map((_, i) => (
+                  <span
+                    key={i}
+                    className="h-1.5 rounded-full transition-all duration-300"
+                    style={{
+                      width: i === heroIndex ? "16px" : "6px",
+                      backgroundColor:
+                        i === heroIndex ? "#c17b8a" : "rgba(45, 36, 32, 0.2)",
+                    }}
+                  />
+                ))}
               </div>
 
               {/* Subtle decorative dots */}
@@ -240,6 +318,34 @@ const LandingPage = () => {
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Social-proof stats strip */}
+      <section className="py-8 md:py-10" style={{ backgroundColor: "#2d2420" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-10 text-center">
+            <div className="flex items-center gap-2 text-white/95 text-base md:text-lg font-medium">
+              <span aria-hidden="true">✉️</span>
+              <span>
+                <span className="font-bold">12,847</span> cards sent
+              </span>
+            </div>
+            <span className="hidden sm:inline text-white/30" aria-hidden="true">·</span>
+            <div className="flex items-center gap-2 text-white/95 text-base md:text-lg font-medium">
+              <span aria-hidden="true">💚</span>
+              <span>
+                <span className="font-bold">$38,541</span> donated
+              </span>
+            </div>
+            <span className="hidden sm:inline text-white/30" aria-hidden="true">·</span>
+            <div className="flex items-center gap-2 text-white/95 text-base md:text-lg font-medium">
+              <span aria-hidden="true">⭐</span>
+              <span>
+                <span className="font-bold">4.9/5</span> from 340 families
+              </span>
+            </div>
           </div>
         </div>
       </section>
