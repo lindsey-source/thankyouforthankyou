@@ -533,6 +533,15 @@ export default function CreateCardStep1() {
           >
             Choose Your Occasion
           </motion.h1>
+          <motion.p
+            className="mt-4 text-base md:text-lg max-w-2xl mx-auto leading-relaxed"
+            style={{ color: '#2d2420', opacity: 0.7 }}
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 0.7, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.4 }}
+          >
+            You'll write a personal message and upload your guest list after — one card design sends to everyone who matters.
+          </motion.p>
         </div>
 
         {/* Occasion Cards — premium greeting card covers */}
