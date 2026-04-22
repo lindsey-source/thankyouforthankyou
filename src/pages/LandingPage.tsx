@@ -118,15 +118,16 @@ const LandingPage = () => {
                   }}
                 >
                   <span
+                    className="text-center px-4"
                     style={{
                       fontFamily: "'Dancing Script', cursive",
-                      fontSize: "48px",
+                      fontSize: "40px",
                       color: "#8b4a5a",
-                      letterSpacing: "0.05em",
+                      letterSpacing: "0.04em",
                       lineHeight: 1.1,
                     }}
                   >
-                    Thank You
+                    With Love &amp; Gratitude
                   </span>
                   <div
                     style={{
@@ -160,14 +161,14 @@ const LandingPage = () => {
                       color: "#2d2420",
                     }}
                   >
-                    Dear Sarah,
+                    Dear Emma &amp; James,
                   </p>
                   <p
                     className="text-sm leading-relaxed flex-1"
                     style={{ color: "#2d2420", opacity: 0.72 }}
                   >
-                    Thank you so much for being part of our special day. Your
-                    presence meant the world to us.
+                    Thank you so much for celebrating our wedding with us.
+                    Your presence and kindness made our day unforgettable.
                   </p>
 
                   {/* Donation badge */}
