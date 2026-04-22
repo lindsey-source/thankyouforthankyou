@@ -19,6 +19,34 @@ import { ChevronDown } from 'lucide-react';
 import { DESIGN_SETS } from './CreateCardStep2';
 import { readDesignFromPalette, type Design, type OccasionId } from '@/components/CardDesigner/designTypes';
 
+/* ---------- Hardcoded last-resort design ----------
+   Guarantees the page can ALWAYS render, even if DESIGN_SETS is missing,
+   the occasion is unknown, or saved data is corrupt. A blank page is an
+   instant exit — this constant ensures that never happens. */
+const FALLBACK_DESIGN: Design = {
+  id: 'fallback-classic',
+  occasion: 'general',
+  name: 'Classic Cream',
+  tag: 'Timeless',
+  bg: '#FAF7F2',
+  headerBg: 'linear-gradient(135deg, #F5E6D3 0%, #E8D5C4 100%)',
+  ink: '#2D2420',
+  inkSoft: '#5A4F47',
+  accent: '#C17B8A',
+  accentSoft: '#E8C4CC',
+  tagBg: '#F5E6D3',
+  tagColor: '#2D2420',
+  donationBg: '#8FAA8B',
+  donationColor: '#FFFFFF',
+  headerStyle: 'botanical',
+  headlineText: 'Thank You',
+  font: 'serifClassic',
+  greeting: 'Dear Friend,',
+  body: 'Thank you so much for your thoughtfulness and generosity. Your kindness means the world to us.',
+  donation: 'A gift in your name to a chosen cause.',
+  fontChoice: 'playfair',
+};
+
 /* ---------- Wizard chrome ---------- */
 const STEPS = [
   { name: 'Occasion', path: '/create-card/step1' },
@@ -104,14 +132,18 @@ export default function CreateCardStep3() {
 
   // Always-defined design (never blank, never crash).
   const design: Design = useMemo(() => {
-    const occ = (cardData.occasion as OccasionId) ?? 'general';
-    const fallback = DESIGN_SETS[occ]?.[0] ?? DESIGN_SETS['general']?.[0] ?? DESIGN_SETS['wedding']?.[0];
-    const saved = readDesignFromPalette(cardData.colorPalette);
+    const occ = (cardData?.occasion as OccasionId) ?? 'general';
+    const fallback =
+      DESIGN_SETS?.[occ]?.[0] ??
+      DESIGN_SETS?.['general']?.[0] ??
+      DESIGN_SETS?.['wedding']?.[0] ??
+      FALLBACK_DESIGN;
+    const saved = readDesignFromPalette(cardData?.colorPalette);
 
     return saved
       ? { ...fallback, ...saved }
       : fallback;
-  }, [cardData.colorPalette, cardData.occasion]);
+  }, [cardData?.colorPalette, cardData?.occasion]);
 
   // Local control state — these only retint/restyle the preview.
   const [accentColor, setAccentColor] = useState<string>(() => closestSwatch(design.accent));
