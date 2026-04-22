@@ -63,8 +63,7 @@ const LandingPage = () => {
                 Every thank-you you send plants a seed of generosity. Your heartfelt note arrives
                 alongside a real donation to a cause that matters — making your gratitude twice as meaningful.
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
-              <div className="flex flex-col items-start gap-3">
+              <div className="flex flex-col items-center md:items-start gap-3">
                 <Link to="/signup">
                   <Button variant="hero" size="default">
                     Start sending thank-yous
