@@ -479,6 +479,38 @@ export default function CreateCardStep3() {
               </CardContent>
             </Card>
 
+            {/* Mobile-only collapsible Live Preview (below controls) */}
+            <div className="lg:hidden">
+              <Collapsible open={mobilePreviewOpen} onOpenChange={setMobilePreviewOpen}>
+                <Card className="bg-white/95 backdrop-blur-sm">
+                  <CollapsibleTrigger asChild>
+                    <button
+                      type="button"
+                      className="w-full flex items-center justify-between p-4 text-left"
+                      aria-expanded={mobilePreviewOpen}
+                    >
+                      <span className="text-base font-semibold text-[#2d2420]">
+                        Preview your card
+                      </span>
+                      <ChevronDown
+                        className={`w-5 h-5 text-[#2d2420] transition-transform ${
+                          mobilePreviewOpen ? 'rotate-180' : ''
+                        }`}
+                      />
+                    </button>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <CardContent className="p-5 pt-0">
+                      <p className="text-xs uppercase tracking-wider text-muted-foreground mb-3 text-center">
+                        Live Preview
+                      </p>
+                      <LiveCardPreview {...previewProps} />
+                    </CardContent>
+                  </CollapsibleContent>
+                </Card>
+              </Collapsible>
+            </div>
+
             {/* Nav buttons (desktop) */}
             <div className="hidden lg:flex items-center justify-between pt-2">
               <Button variant="outline" onClick={handleBack} className="bg-white/95">
@@ -490,8 +522,8 @@ export default function CreateCardStep3() {
             </div>
           </div>
 
-          {/* ============= RIGHT: Sticky Live Preview ============= */}
-          <div className="lg:sticky lg:top-24 lg:self-start">
+          {/* ============= RIGHT: Sticky Live Preview (desktop only) ============= */}
+          <div className="hidden lg:block lg:sticky lg:top-24 lg:self-start">
             <Card className="bg-white/95 backdrop-blur-sm">
               <CardContent className="p-5">
                 <p className="text-xs uppercase tracking-wider text-muted-foreground mb-3 text-center">
