@@ -210,6 +210,40 @@ const LandingPage = () => {
         </div>
       </section>
 
+      {/* Wedding gift tracker callout */}
+      <section className="py-12 md:py-16" style={{ backgroundColor: "#faf7f2" }}>
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div
+            className="rounded-3xl border shadow-soft p-8 md:p-12 flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-10"
+            style={{
+              backgroundColor: "#fdf6f3",
+              borderColor: "rgba(193, 123, 138, 0.2)",
+            }}
+          >
+            <div
+              className="flex-shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center"
+              style={{ backgroundColor: "rgba(193, 123, 138, 0.15)" }}
+            >
+              <Gift className="h-7 w-7" style={{ color: "#c17b8a" }} />
+            </div>
+            <div className="flex-1">
+              <h2 className="text-2xl md:text-3xl font-bold mb-2 tracking-tight" style={{ color: "#2d2420" }}>
+                Getting married? Plan ahead.
+              </h2>
+              <p className="text-base md:text-lg leading-relaxed" style={{ color: "#2d2420", opacity: 0.75 }}>
+                Download the gift tracker before your big day — fill it in as you open gifts, then upload when you're ready to send thank-yous.
+              </p>
+            </div>
+            <Link to="/gift-tracker" className="flex-shrink-0">
+              <Button variant="hero" size="lg">
+                Download the template
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* How It Works — 4-step workflow */}
       <section className="py-20" style={{ backgroundColor: "#f5ede9" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
