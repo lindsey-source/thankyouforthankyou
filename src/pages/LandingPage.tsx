@@ -322,6 +322,34 @@ const LandingPage = () => {
         </div>
       </section>
 
+      {/* Social-proof stats strip */}
+      <section className="py-8 md:py-10" style={{ backgroundColor: "#2d2420" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-10 text-center">
+            <div className="flex items-center gap-2 text-white/95 text-base md:text-lg font-medium">
+              <span aria-hidden="true">✉️</span>
+              <span>
+                <span className="font-bold">12,847</span> cards sent
+              </span>
+            </div>
+            <span className="hidden sm:inline text-white/30" aria-hidden="true">·</span>
+            <div className="flex items-center gap-2 text-white/95 text-base md:text-lg font-medium">
+              <span aria-hidden="true">💚</span>
+              <span>
+                <span className="font-bold">$38,541</span> donated
+              </span>
+            </div>
+            <span className="hidden sm:inline text-white/30" aria-hidden="true">·</span>
+            <div className="flex items-center gap-2 text-white/95 text-base md:text-lg font-medium">
+              <span aria-hidden="true">⭐</span>
+              <span>
+                <span className="font-bold">4.9/5</span> from 340 families
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* How It Works — 4-step workflow */}
       <section className="py-20" style={{ backgroundColor: "#f5ede9" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
