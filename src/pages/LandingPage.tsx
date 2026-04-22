@@ -161,14 +161,14 @@ const LandingPage = () => {
                       color: "#2d2420",
                     }}
                   >
-                    Dear Sarah,
+                    Dear Emma &amp; James,
                   </p>
                   <p
                     className="text-sm leading-relaxed flex-1"
                     style={{ color: "#2d2420", opacity: 0.72 }}
                   >
-                    Thank you so much for being part of our special day. Your
-                    presence meant the world to us.
+                    Thank you so much for celebrating our wedding with us.
+                    Your presence and kindness made our day unforgettable.
                   </p>
 
                   {/* Donation badge */}
