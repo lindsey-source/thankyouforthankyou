@@ -125,6 +125,7 @@ export default function CreateCardStep3() {
   const [envelopeColor, setEnvelopeColor] = useState<string | null>(cardData.envelopeColor ?? null);
   const [texture, setTexture] = useState<string>(cardData.texture ?? 'smooth');
   const [signatureStyle, setSignatureStyle] = useState<string>(cardData.signatureStyle ?? 'handwritten');
+  const [mobilePreviewOpen, setMobilePreviewOpen] = useState(false);
 
   // Message + closing — pre-fill from saved data, fall back to design defaults.
   const [messageBody, setMessageBody] = useState<string>(
