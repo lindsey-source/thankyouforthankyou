@@ -1,12 +1,52 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Heart, ArrowRight, CheckCircle, Upload, PenLine, Send, Sparkles, Users, Gift, TrendingUp, Palette, Leaf, BarChart2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import { DESIGN_SETS } from "@/pages/CreateCardStep2";
 import cardBlushBotanical from "@/assets/card-blush-botanical.jpg";
 import cardSageAbstract from "@/assets/card-sage-abstract.jpg";
 import cardWildflowerInk from "@/assets/card-wildflower-ink.jpg";
+
+/* ---------- Hero rotating-card content ----------
+   Each entry reuses the FIRST design from its occasion in DESIGN_SETS
+   (so colors/header style stay on-brand) and overrides only the
+   per-card copy that the hero shows. */
+const HERO_CARDS = [
+  {
+    occasion: "wedding" as const,
+    headline: "With Love & Gratitude",
+    greeting: "Dear Emma & James,",
+    body:
+      "Thank you for celebrating our wedding with us — your presence made our day unforgettable.",
+    charity: "💚 $4 donated to Rainforest Alliance",
+  },
+  {
+    occasion: "baby" as const,
+    headline: "Little One",
+    greeting: "Dear Aunt Rachel,",
+    body:
+      "Your beautiful gift for baby Lily means so much to us. Thank you for your love and generosity.",
+    charity: "💚 $3 donated to UNICEF",
+  },
+  {
+    occasion: "graduation" as const,
+    headline: "With Gratitude",
+    greeting: "Dear Professor Kim,",
+    body:
+      "Thank you for guiding me through these years. Your belief in me made all the difference.",
+    charity: "💚 $4 donated to Scholarship America",
+  },
+  {
+    occasion: "general" as const,
+    headline: "Thank You",
+    greeting: "Dear Friend,",
+    body:
+      "Your kindness and generosity have meant the world to us. We are so grateful for you.",
+    charity: "💚 $3 donated to Feeding America",
+  },
+];
 
 const LandingPage = () => {
   const { isLoaded, isSignedIn } = useAuth();
