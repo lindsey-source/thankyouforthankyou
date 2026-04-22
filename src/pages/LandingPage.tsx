@@ -51,6 +51,17 @@ const HERO_CARDS = [
 const LandingPage = () => {
   const { isLoaded, isSignedIn } = useAuth();
 
+  // Rotate the hero demo card through 4 occasions every 4s.
+  const [heroIndex, setHeroIndex] = useState(0);
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      setHeroIndex((i) => (i + 1) % HERO_CARDS.length);
+    }, 4000);
+    return () => window.clearInterval(id);
+  }, []);
+  const heroCard = HERO_CARDS[heroIndex];
+  const heroDesign = DESIGN_SETS[heroCard.occasion]?.[0] ?? DESIGN_SETS.general[0];
+
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation */}
@@ -74,7 +85,7 @@ const LandingPage = () => {
                   </Link>
                   <Link to="/signup">
                     <Button variant="hero" size="lg">
-                      Get Started Free
+                      Start for Free
                     </Button>
                   </Link>
                 </>
