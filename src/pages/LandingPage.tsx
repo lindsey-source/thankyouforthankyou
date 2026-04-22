@@ -64,15 +64,20 @@ const LandingPage = () => {
                 alongside a real donation to a cause that matters — making your gratitude twice as meaningful.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
+              <div className="flex flex-col items-start gap-3">
                 <Link to="/signup">
                   <Button variant="hero" size="default">
-                    Create Your Card Now
+                    Start sending thank-yous
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
-                <Button variant="outline" size="default">
-                  See How It Works
-                </Button>
+                <a
+                  href="#how-it-works"
+                  className="text-sm underline-offset-4 hover:underline"
+                  style={{ color: "#2d2420", opacity: 0.7 }}
+                >
+                  See how it works
+                </a>
               </div>
               <div className="mt-3 text-center md:text-left">
                 <Link
