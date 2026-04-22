@@ -78,6 +78,9 @@ const LandingPage = () => {
                   See how it works
                 </a>
               </div>
+              <p className="mt-3 text-sm text-stone-500 text-center md:text-left">
+                Free to start · No credit card required
+              </p>
               <div className="mt-3 text-center md:text-left">
                 <Link
                   to="/gift-tracker"
