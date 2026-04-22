@@ -103,7 +103,7 @@ export default function CreateCardStep3() {
   // Always-defined design (never blank, never crash).
   const design: Design = useMemo(() => {
     const occ = (cardData.occasion as OccasionId) ?? 'general';
-    const fallback = DESIGN_SETS[occ]?.[0] ?? DESIGN_SETS.general[0];
+    const fallback = DESIGN_SETS[occ]?.[0] ?? DESIGN_SETS['general']?.[0] ?? DESIGN_SETS['wedding']?.[0];
     const saved = readDesignFromPalette(cardData.colorPalette);
 
     return saved
