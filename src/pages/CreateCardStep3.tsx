@@ -132,14 +132,18 @@ export default function CreateCardStep3() {
 
   // Always-defined design (never blank, never crash).
   const design: Design = useMemo(() => {
-    const occ = (cardData.occasion as OccasionId) ?? 'general';
-    const fallback = DESIGN_SETS[occ]?.[0] ?? DESIGN_SETS['general']?.[0] ?? DESIGN_SETS['wedding']?.[0];
-    const saved = readDesignFromPalette(cardData.colorPalette);
+    const occ = (cardData?.occasion as OccasionId) ?? 'general';
+    const fallback =
+      DESIGN_SETS?.[occ]?.[0] ??
+      DESIGN_SETS?.['general']?.[0] ??
+      DESIGN_SETS?.['wedding']?.[0] ??
+      FALLBACK_DESIGN;
+    const saved = readDesignFromPalette(cardData?.colorPalette);
 
     return saved
       ? { ...fallback, ...saved }
       : fallback;
-  }, [cardData.colorPalette, cardData.occasion]);
+  }, [cardData?.colorPalette, cardData?.occasion]);
 
   // Local control state — these only retint/restyle the preview.
   const [accentColor, setAccentColor] = useState<string>(() => closestSwatch(design.accent));
