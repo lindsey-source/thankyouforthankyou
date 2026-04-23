@@ -306,7 +306,7 @@ const LandingPage = () => {
             </div>
             <div className="flex-1">
               <h2 className="text-2xl md:text-3xl font-bold mb-2 tracking-tight" style={{ color: "#2d2420" }}>
-                Getting married? Plan ahead.
+                Having an Event? Plan ahead.
               </h2>
               <p className="text-base md:text-lg leading-relaxed" style={{ color: "#2d2420", opacity: 0.75 }}>
                 Download the gift tracker before your big day — fill it in as you open gifts, then upload when you're ready to send thank-yous.
