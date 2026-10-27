@@ -10,6 +10,7 @@ import {
 import { supabase } from '@/integrations/supabase/client';
 import { useCardWizard } from '@/contexts/CardWizardContext';
 import { ProgressBar } from '@/components/CardDesigner/ProgressBar';
+import { LiveCardPreview } from '@/components/CardDesigner/LiveCardPreview';
 
 type Charity = {
   id: string;
@@ -18,16 +19,6 @@ type Charity = {
   category: string | null;
   impact_message: string | null;
 };
-
-const STEP_NAMES = [
-  'Choose Occasion',
-  'Pick Your Style',
-  'Customize Design',
-  'Write Your Message',
-  'Choose Your Cause',
-  'Add Finishing Touches',
-  'Preview & Send',
-];
 
 const CATEGORIES: Array<{
   id: string;
@@ -140,11 +131,19 @@ export default function CreateCardImpact() {
     navigate('/create-card/step6');
   };
 
+  const palette = (cardData.colorPalette as any) || {};
+  const previewFonts =
+    cardData.fontChoice === 'dancing'
+      ? { heading: "'Dancing Script', cursive", body: "'Inter', sans-serif" }
+      : cardData.fontChoice === 'inter'
+        ? { heading: "'Inter', sans-serif", body: "'Inter', sans-serif" }
+        : { heading: "'Playfair Display', Georgia, serif", body: "'Inter', sans-serif" };
+
   return (
     <div className="min-h-screen bg-brand-cream">
       <ProgressBar currentStep={5} />
 
-      <div className="max-w-6xl mx-auto px-4 md:px-8 pt-8 pb-40">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 pt-8 pb-40">
         {/* Header */}
         <div className="text-center mb-10">
           <motion.h1
@@ -174,6 +173,8 @@ export default function CreateCardImpact() {
           Back
         </button>
 
+        <div className="lg:grid lg:grid-cols-[1fr_340px] lg:gap-12 items-start">
+        <div className="min-w-0">
         {/* Category Tabs */}
         <div className="flex flex-wrap justify-center gap-2 md:gap-3 mb-10">
           {CATEGORIES.map(cat => {
@@ -198,8 +199,8 @@ export default function CreateCardImpact() {
           })}
         </div>
 
-        {/* Charity grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-12">
+        {/* Charity grid — one clear choice per row */}
+        <div className="grid grid-cols-1 gap-5 mb-12">
           {loading
             ? Array.from({ length: 2 }).map((_, i) => (
                 <div key={i} className="h-44 rounded-2xl bg-white/60 animate-pulse border border-border" />
@@ -506,6 +507,54 @@ export default function CreateCardImpact() {
             </AnimatePresence>
           </div>
         </motion.div>
+        </div>
+
+        {/* Large live preview — sticky on desktop, stacked below on phones */}
+        <div className="mt-12 lg:mt-0 lg:sticky lg:top-24">
+          <p
+            className="text-xs uppercase tracking-[0.2em] text-center mb-4"
+            style={{ color: 'hsl(var(--brand-sage))' }}
+          >
+            Your card, live
+          </p>
+          <LiveCardPreview
+            palette={{
+              primary: palette.headerBg || '#f0d8d0',
+              secondary: palette.bg || '#f9ece8',
+              accent: palette.accent || '#8b4a5a',
+              text: palette.ink || '#2d2420',
+            }}
+            fonts={previewFonts}
+            bg={palette.bg}
+            headerBg={palette.headerBg}
+            ink={palette.ink}
+            inkSoft={palette.inkSoft}
+            headerStyle={palette.headerStyle}
+            headlineText={palette.headlineText}
+            font={palette.font}
+            donationBg={palette.donationBg}
+            donationColor={palette.donationColor}
+            recipientName={cardData.recipientName}
+            messageHeadline={cardData.messageHeadline}
+            messageBody={cardData.messageBody}
+            closing={cardData.closing}
+            senderName={cardData.senderName}
+            photoUrl={cardData.photoUrl}
+            texture={cardData.texture}
+            signatureStyle={cardData.signatureStyle}
+            charityName={selectedCharity?.name || null}
+            donationAmount={flatAmount}
+          />
+          <p
+            className="text-center text-sm mt-4"
+            style={{ fontFamily: "'Playfair Display', Georgia, serif", color: 'hsl(var(--muted-foreground))' }}
+          >
+            {selectedCharity
+              ? `$${flatAmount} per card to ${selectedCharity.name}`
+              : 'The donation badge appears once you pick a cause'}
+          </p>
+        </div>
+        </div>
       </div>
 
       {/* Sticky footer */}

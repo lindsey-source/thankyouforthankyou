@@ -8,6 +8,7 @@ import { toast } from 'sonner';
 import { ProgressBar } from '@/components/CardDesigner/ProgressBar';
 import { HeaderArt } from '@/components/CardDesigner/HeaderArt';
 import type { Design, HeaderStyle, FontFamily, OccasionId } from '@/components/CardDesigner/designTypes';
+import { LiveCardPreview } from '@/components/CardDesigner/LiveCardPreview';
 
 const STEP_NAMES = [
   'Choose Occasion',
@@ -908,6 +909,15 @@ export default function CreateCardStep2() {
     return DESIGN_SETS[occasion] || DESIGN_SETS.general;
   }, [occasion]);
 
+  // Large live preview follows the selected design (first design until one is picked)
+  const previewDesign = designs.find((d) => d.id === selectedId) || designs[0];
+  const previewFonts =
+    previewDesign?.fontChoice === 'dancing'
+      ? { heading: "'Dancing Script', cursive", body: "'Inter', sans-serif" }
+      : previewDesign?.fontChoice === 'inter'
+        ? { heading: "'Inter', sans-serif", body: "'Inter', sans-serif" }
+        : { heading: "'Playfair Display', Georgia, serif", body: "'Inter', sans-serif" };
+
   const handleContinue = () => {
     if (!selectedId) {
       toast.error('Please choose a design');
@@ -978,6 +988,7 @@ Pick Your Style
           Back to occasions
         </button>
 
+        <div className="lg:grid lg:grid-cols-[1fr_360px] lg:gap-12 items-start">
         {/* Design grid — 2 columns */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
           {designs.map((design, index) => {
@@ -1090,6 +1101,45 @@ Pick Your Style
               </motion.button>
             );
           })}
+        </div>
+
+        {/* Large live preview — sticky on desktop, stacked below on phones */}
+        {previewDesign && (
+          <div className="mt-12 lg:mt-0 lg:sticky lg:top-24">
+            <p
+              className="text-xs uppercase tracking-[0.2em] text-center mb-4"
+              style={{ color: '#8a9a82' }}
+            >
+              Your card, live
+            </p>
+            <LiveCardPreview
+              palette={{
+                primary: previewDesign.headerBg,
+                secondary: previewDesign.bg,
+                accent: previewDesign.accent,
+                text: previewDesign.ink,
+              }}
+              fonts={previewFonts}
+              designId={previewDesign.id}
+              bg={previewDesign.bg}
+              headerBg={previewDesign.headerBg}
+              ink={previewDesign.ink}
+              inkSoft={previewDesign.inkSoft}
+              headerStyle={previewDesign.headerStyle}
+              headlineText={previewDesign.headlineText}
+              font={previewDesign.font}
+              donationBg={previewDesign.donationBg}
+              donationColor={previewDesign.donationColor}
+              charityName={previewDesign.donation}
+            />
+            <p
+              className="text-center text-sm mt-4"
+              style={{ fontFamily: "'Playfair Display', Georgia, serif", color: '#6b6259' }}
+            >
+              {previewDesign.name}
+            </p>
+          </div>
+        )}
         </div>
       </div>
 

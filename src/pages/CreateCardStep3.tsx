@@ -288,7 +288,7 @@ export default function CreateCardStep3() {
         </div>
 
         <motion.div
-          className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-6"
+          className="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-6 lg:gap-10"
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
         >
           {/* ============= LEFT: Controls ============= */}

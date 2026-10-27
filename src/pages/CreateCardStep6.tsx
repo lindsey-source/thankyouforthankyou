@@ -7,6 +7,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Heart, Mail, Sparkles, Check } from 'lucide-react';
 import { toast } from 'sonner';
 import { ProgressBar } from '@/components/CardDesigner/ProgressBar';
+import { LiveCardPreview } from '@/components/CardDesigner/LiveCardPreview';
+import { EnvelopeReveal } from '@/components/CardDesigner/EnvelopeReveal';
 
 const STEP_NAMES = [
   'Choose Occasion',
@@ -135,14 +137,6 @@ export default function CreateCardStep5Impact() {
 
         {/* Header */}
         <div className="text-center mb-12">
-          <motion.p
-            className="text-xs uppercase tracking-[0.25em] mb-3"
-            style={{ color: '#8faa8b' }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          >
-            Step 7 — Preview &amp; Send
-          </motion.p>
           <motion.h1
             className="text-4xl md:text-5xl mb-4"
             style={{ fontFamily: "'Playfair Display', serif", color: '#2a2622' }}
@@ -172,7 +166,7 @@ export default function CreateCardStep5Impact() {
           </div>
         </div>
 
-        {/* === Final card preview === */}
+        {/* === See it as your guests will — envelope reveal === */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -180,136 +174,47 @@ export default function CreateCardStep5Impact() {
           className="mb-12"
         >
           <p
-            className="text-xs uppercase tracking-[0.2em] text-center mb-4"
+            className="text-xs uppercase tracking-[0.2em] text-center mb-8"
             style={{ color: '#8a9a82' }}
           >
-            Your finished card
+            See it as your guests will
           </p>
 
-          <div className="relative flex items-center justify-center min-h-[460px] md:min-h-[520px]">
-            {/* Back peeking card */}
-            <div
-              className="absolute w-[300px] sm:w-[340px] aspect-[3/4] rounded-2xl border"
-              style={{
-                transform: 'rotate(3deg) translate(32px, 18px)',
-                backgroundColor: '#f5ede9',
-                borderColor: 'rgba(45, 36, 32, 0.06)',
-                boxShadow: '0 10px 30px rgba(45, 36, 32, 0.06)',
-              }}
-              aria-hidden="true"
-            />
-
-            {/* Front card — uses live wizard data */}
-            <motion.div
-              whileHover={{ rotate: -1, scale: 1.01 }}
-              transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-              className="relative w-[300px] sm:w-[340px] aspect-[3/4] rounded-2xl bg-white border overflow-hidden"
-              style={{
-                transform: 'rotate(-3deg)',
-                borderColor: 'rgba(45, 36, 32, 0.08)',
-                boxShadow: '0 24px 60px rgba(45, 36, 32, 0.18)',
-              }}
-              role="img"
-              aria-label="Your finished thank-you card"
+          <div className="flex items-center justify-center min-h-[460px] md:min-h-[520px]">
+            <EnvelopeReveal
+              recipientName={recipientName}
+              envelopeColor={cardData.envelopeColor}
             >
-              {/* Header band */}
-              <div
-                className="relative flex flex-col items-center justify-center"
-                style={{
-                  height: '42%',
-                  background: `linear-gradient(135deg, ${previewSecondary} 0%, ${previewPrimary} 100%)`,
+              <LiveCardPreview
+                palette={{
+                  primary: previewPrimary,
+                  secondary: previewSecondary,
+                  accent: previewAccent,
+                  text: previewText,
                 }}
-              >
-                {cardData.photoUrl ? (
-                  <img
-                    src={cardData.photoUrl}
-                    alt=""
-                    className="absolute inset-0 w-full h-full object-cover opacity-80"
-                  />
-                ) : null}
-                <span
-                  className="relative z-10 text-center px-4"
-                  style={{
-                    fontFamily: fonts.heading,
-                    fontSize: '44px',
-                    color: previewAccent,
-                    letterSpacing: '0.04em',
-                    lineHeight: 1.05,
-                  }}
-                >
-                  {headline}
-                </span>
-                <div
-                  className="relative z-10 flex items-center gap-2 mt-3 opacity-70"
-                  aria-hidden="true"
-                >
-                  <div style={{ width: '30px', height: '1px', backgroundColor: previewAccent }} />
-                  <div
-                    style={{
-                      width: '4px',
-                      height: '4px',
-                      backgroundColor: previewAccent,
-                      transform: 'rotate(45deg)',
-                    }}
-                  />
-                  <div style={{ width: '30px', height: '1px', backgroundColor: previewAccent }} />
-                </div>
-              </div>
-
-              {/* Body */}
-              <div className="p-5 flex flex-col" style={{ height: '58%' }}>
-                <p
-                  className="text-lg mb-2"
-                  style={{ fontFamily: fonts.heading, color: previewText }}
-                >
-                  Dear {recipientName?.trim() || 'friend'},
-                </p>
-                <p
-                  className="text-sm leading-relaxed flex-1"
-                  style={{ fontFamily: fonts.body, color: previewText, opacity: 0.75 }}
-                >
-                  {bodyText}
-                </p>
-                <p
-                  className="text-sm mt-2"
-                  style={{ fontFamily: fonts.body, color: previewText, opacity: 0.85 }}
-                >
-                  {closing},
-                </p>
-                <p
-                  className="text-sm"
-                  style={{ fontFamily: fonts.heading, color: previewText, opacity: 0.95 }}
-                >
-                  {senderName.trim() || <span style={{ opacity: 0.4 }}>Your name</span>}
-                </p>
-
-                {/* Donation badge */}
-                <div className="mt-3">
-                  <div
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold"
-                    style={{
-                      backgroundColor: 'rgba(143, 170, 139, 0.18)',
-                      color: '#5a7257',
-                    }}
-                  >
-                    <Heart className="w-3 h-3" fill="#5a7257" />
-                    ${donationAmount.toFixed(2)} donated to {charityName}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Decorative dots */}
-            <div
-              className="absolute -top-2 left-1/4 h-3 w-3 rounded-full opacity-70"
-              style={{ backgroundColor: '#c17b8a' }}
-              aria-hidden="true"
-            />
-            <div
-              className="absolute -bottom-1 right-1/4 h-3 w-3 rounded-full opacity-70"
-              style={{ backgroundColor: '#8faa8b' }}
-              aria-hidden="true"
-            />
+                fonts={fonts}
+                bg={palette.bg}
+                headerBg={palette.headerBg}
+                ink={palette.ink}
+                inkSoft={palette.inkSoft}
+                headerStyle={palette.headerStyle}
+                headlineText={palette.headlineText}
+                font={palette.font}
+                donationBg={palette.donationBg}
+                donationColor={palette.donationColor}
+                recipientName={recipientName || undefined}
+                messageHeadline={cardData.messageHeadline}
+                messageBody={cardData.messageBody}
+                closing={cardData.closing}
+                senderName={senderName || undefined}
+                photoUrl={cardData.photoUrl}
+                charityName={cardData.charityName}
+                donationAmount={donationAmount}
+                texture={cardData.texture}
+                signatureStyle={cardData.signatureStyle}
+                className="h-full"
+              />
+            </EnvelopeReveal>
           </div>
 
           {/* Summary line */}
