@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Heart, ArrowRight, Upload, PenLine, Send, Palette, Leaf } from "lucide-react";
+import { Heart, ArrowRight, Upload, PenLine, Send, Palette, Leaf, Mail, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { DESIGN_SETS } from "@/pages/CreateCardStep2";
@@ -17,7 +17,7 @@ const HERO_CARDS = [
     greeting: "Dear Emma & James,",
     body:
       "Thank you for celebrating our wedding with us — your presence made our day unforgettable.",
-    charity: "💚 $4 donated to Rainforest Alliance",
+    charity: "$4 donated to Rainforest Alliance",
   },
   {
     occasion: "baby" as const,
@@ -25,7 +25,7 @@ const HERO_CARDS = [
     greeting: "Dear Aunt Rachel,",
     body:
       "Your beautiful gift for baby Lily means so much to us. Thank you for your love and generosity.",
-    charity: "💚 $3 donated to UNICEF",
+    charity: "$3 donated to UNICEF",
   },
   {
     occasion: "graduation" as const,
@@ -33,7 +33,7 @@ const HERO_CARDS = [
     greeting: "Dear Professor Kim,",
     body:
       "Thank you for guiding me through these years. Your belief in me made all the difference.",
-    charity: "💚 $4 donated to Scholarship America",
+    charity: "$4 donated to Scholarship America",
   },
   {
     occasion: "general" as const,
@@ -41,7 +41,7 @@ const HERO_CARDS = [
     greeting: "Dear Friend,",
     body:
       "Your kindness and generosity have meant the world to us. We are so grateful for you.",
-    charity: "💚 $3 donated to Feeding America",
+    charity: "$3 donated to Feeding America",
   },
 ];
 
