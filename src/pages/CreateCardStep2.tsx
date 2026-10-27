@@ -1020,7 +1020,14 @@ Pick Your Style
                   </div>
                 )}
 
-                <HeaderArt design={design} />
+                <HeaderArt
+                  design={design}
+                  subtext={
+                    design.occasion === 'wedding'
+                      ? `${cardData.coupleNames?.trim() || 'Emma & James'} · ${cardData.weddingDate?.trim() || 'June 14, 2027'}`
+                      : undefined
+                  }
+                />
 
                 <div className="p-6">
                   <div className="flex items-center justify-between gap-2 mb-4 flex-wrap">
@@ -1131,6 +1138,9 @@ Pick Your Style
               donationBg={previewDesign.donationBg}
               donationColor={previewDesign.donationColor}
               charityName={previewDesign.donation}
+              {...(previewDesign.occasion === 'wedding'
+                ? { coupleNames: cardData.coupleNames, weddingDate: cardData.weddingDate }
+                : {})}
             />
             <p
               className="text-center text-sm mt-4"
@@ -1182,7 +1192,14 @@ Pick Your Style
                 </button>
 
                 {/* Header art */}
-                <HeaderArt design={design} />
+                <HeaderArt
+                  design={design}
+                  subtext={
+                    design.occasion === 'wedding'
+                      ? `${cardData.coupleNames?.trim() || 'Emma & James'} · ${cardData.weddingDate?.trim() || 'June 14, 2027'}`
+                      : undefined
+                  }
+                />
 
                 {/* Body */}
                 <div className="p-7 md:p-9">
