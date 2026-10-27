@@ -148,7 +148,7 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
       {headerStyle === 'starburst' && (
         <svg
           viewBox="0 0 200 120"
-          className="absolute inset-0 w-full h-full opacity-80"
+          className="absolute inset-0 w-full h-full opacity-40"
           fill="none"
           strokeLinecap="round"
         >
@@ -188,7 +188,7 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
               cy={cy}
               r={i % 3 === 0 ? 3.2 : 2.2}
               fill={i % 2 === 0 ? accent : ink}
-              fillOpacity="0.55"
+              fillOpacity="0.3"
             />
           ))}
         </svg>
