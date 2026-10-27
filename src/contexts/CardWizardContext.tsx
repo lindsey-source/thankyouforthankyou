@@ -36,6 +36,11 @@ export interface WizardCardData {
   coupleNames: string;
   weddingDate: string;
 
+  // Baby details (Customize, baby occasions only)
+  babyName: string;
+  babyDate: string;
+  parentsNames: string;
+
   // Guest list (multi-recipient)
   guests: GuestEntry[];
 }
@@ -84,6 +89,9 @@ const initialCardData: WizardCardData = {
   senderName: '',
   coupleNames: '',
   weddingDate: '',
+  babyName: '',
+  babyDate: '',
+  parentsNames: '',
   guests: []
 };
 

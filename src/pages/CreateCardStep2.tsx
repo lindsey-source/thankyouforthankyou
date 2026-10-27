@@ -9,6 +9,7 @@ import { ProgressBar } from '@/components/CardDesigner/ProgressBar';
 import { HeaderArt } from '@/components/CardDesigner/HeaderArt';
 import type { Design, HeaderStyle, FontFamily, OccasionId } from '@/components/CardDesigner/designTypes';
 import { LiveCardPreview, coupleInitials } from '@/components/CardDesigner/LiveCardPreview';
+import { resolveBabyDetails } from '@/lib/babyDetails';
 
 const STEP_NAMES = [
   'Choose Occasion',
@@ -1025,7 +1026,7 @@ Pick Your Style
                   subtext={
                     design.occasion === 'wedding'
                       ? `${cardData.coupleNames?.trim() || 'Emma & James'} · ${cardData.weddingDate?.trim() || 'June 14, 2027'}`
-                      : undefined
+                      : design.occasion === 'baby' ? resolveBabyDetails(cardData).titleLine : undefined
                   }
                   initials={design.occasion === 'wedding' ? coupleInitials(cardData.coupleNames) : undefined}
                 />
@@ -1067,6 +1068,9 @@ Pick Your Style
                   >
                     {design.body}
                   </p>
+                  {design.occasion === 'baby' && (
+                    <p className="mt-3 text-sm text-foreground font-serif">With love,<br />{resolveBabyDetails(cardData).signOff}</p>
+                  )}
                   <div className="mt-5 flex items-center gap-2">
                     <div
                       role="button"
@@ -1149,6 +1153,9 @@ Pick Your Style
               {...(previewDesign.occasion === 'wedding'
                 ? { coupleNames: cardData.coupleNames, weddingDate: cardData.weddingDate }
                 : {})}
+              {...(previewDesign.occasion === 'baby'
+                ? { babyName: cardData.babyName, babyDate: cardData.babyDate, parentsNames: cardData.parentsNames }
+                : {})}
             />
             <p
               className="text-center text-sm mt-4"
@@ -1205,7 +1212,7 @@ Pick Your Style
                   subtext={
                     design.occasion === 'wedding'
                       ? `${cardData.coupleNames?.trim() || 'Emma & James'} · ${cardData.weddingDate?.trim() || 'June 14, 2027'}`
-                      : undefined
+                      : design.occasion === 'baby' ? resolveBabyDetails(cardData).titleLine : undefined
                   }
                   initials={design.occasion === 'wedding' ? coupleInitials(cardData.coupleNames) : undefined}
                 />
@@ -1260,6 +1267,9 @@ Pick Your Style
                   >
                     With love,
                   </p>
+                  {design.occasion === 'baby' && (
+                    <p className="mt-1 text-base text-foreground font-serif">{resolveBabyDetails(cardData).signOff}</p>
+                  )}
 
                   {/* Charity donation badge */}
                   <div
