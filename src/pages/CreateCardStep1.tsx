@@ -177,7 +177,6 @@ export default function CreateCardStep1() {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 md:gap-7">
           {occasions.map((occasion, index) => {
             const isSelected = cardData.occasion === occasion.id;
-            const Art = occasion.Art;
 
             return (
               <motion.button
@@ -201,13 +200,8 @@ export default function CreateCardStep1() {
                 {/* Full-bleed cover artwork — taller 2:3 ratio for bolder presence */}
                 <div className="relative w-full overflow-hidden" style={{ aspectRatio: '2 / 3' }}>
                   <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-[1.04]">
-                    <Art />
+                    <StationeryCover occasion={occasion} />
                   </div>
-                  {/* gentle inner edge */}
-                  <div
-                    className="pointer-events-none absolute inset-0"
-                    style={{ boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.18)' }}
-                  />
                 </div>
               </motion.button>
             );
