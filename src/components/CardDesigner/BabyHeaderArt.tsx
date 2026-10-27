@@ -1,6 +1,6 @@
 import React from 'react';
 import wash from '@/assets/baby-watercolor-wash.jpg';
-import rainbow from '@/assets/baby-watercolor-rainbow.jpg';
+import rainbow from '@/assets/baby-watercolor-rainbow-cutout.png';
 
 interface BabyHeaderArtProps {
   styleKey: 'babyMoon' | 'babyWash' | 'babyMinimal' | 'babyRainbow';
@@ -18,7 +18,7 @@ export function BabyHeaderArt({ styleKey, height, className = '', headlineFont, 
   return (
     <div className={`baby-header ${styleClass} ${className}`} style={{ height }}>
       {styleKey === 'babyWash' && <img src={wash} width={1200} height={800} loading="lazy" alt="" className="baby-wash-art" aria-hidden="true" />}
-      {styleKey === 'babyRainbow' && <img src={rainbow} width={1200} height={800} loading="lazy" alt="" className="baby-rainbow-art" aria-hidden="true" />}
+      {styleKey === 'babyRainbow' && <img src={rainbow} width={1086} height={549} loading="lazy" alt="" className="baby-rainbow-art" aria-hidden="true" />}
       {styleKey === 'babyMoon' && (
         <svg className="baby-moon-art" viewBox="0 0 220 85" fill="none" aria-hidden="true">
           <path d="M119 7C97 5 84 19 86 37C88 56 107 68 126 58C109 58 99 47 99 33C99 22 106 12 119 7Z" fill="currentColor" />
