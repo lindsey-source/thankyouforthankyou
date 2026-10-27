@@ -104,39 +104,28 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
         {/* Thin gold wreath with the couple's initials */}
         <div className="relative">
         <svg viewBox="0 0 120 96" className="w-[92px] h-auto" fill="none" aria-hidden="true">
-          {/* Laurel branches forming the wreath */}
+          {/* Full thin gold wreath — ring plus laurel leaves, tied at the bottom */}
           <g stroke={GOLD_CREST} strokeWidth="1" strokeLinecap="round">
-            <path d="M 60 88 C 34 84, 18 64, 20 38" />
-            <path d="M 60 88 C 86 84, 102 64, 100 38" />
-            {/* Leaves — left branch */}
-            {[0, 1, 2, 3, 4].map((i) => {
-              const t = i / 4;
-              const x = 60 - 40 * Math.sin(t * 1.35) * 1.02;
-              const y = 88 - 50 * t * 1.02;
-              const a = -35 - t * 55;
+            <circle cx="60" cy="48" r="34" />
+            {/* Leaves around the ring, paired on each side */}
+            {[15, 45, 75, 105, 135, 165].map((deg) => {
+              const a = (deg * Math.PI) / 180;
+              const bx = 60 + 34 * Math.cos(a);
+              const by = 48 - 34 * Math.sin(a);
+              const tangent = -deg;
               return (
-                <g key={`l${i}`} transform={`translate(${x} ${y}) rotate(${a})`}>
+                <g key={deg} transform={`translate(${bx} ${by}) rotate(${tangent})`}>
                   <path d="M 0 0 Q 5 -3 10 0 Q 5 3 0 0 Z" fill={GOLD_CREST} fillOpacity="0.55" stroke="none" />
+                  <path d="M 2 2 Q 6 5 4 10 Q 1 6 2 2 Z" fill={GOLD_CREST} fillOpacity="0.4" stroke="none" />
                 </g>
               );
             })}
-            {/* Leaves — right branch */}
-            {[0, 1, 2, 3, 4].map((i) => {
-              const t = i / 4;
-              const x = 60 + 40 * Math.sin(t * 1.35) * 1.02;
-              const y = 88 - 50 * t * 1.02;
-              const a = 35 + t * 55;
-              return (
-                <g key={`r${i}`} transform={`translate(${x} ${y}) rotate(${a})`}>
-                  <path d="M 0 0 Q 5 -3 10 0 Q 5 3 0 0 Z" fill={GOLD_CREST} fillOpacity="0.55" stroke="none" />
-                </g>
-              );
-            })}
-            {/* Small bow where the branches meet */}
-            <path d="M 56 88 Q 60 84 64 88" strokeWidth="0.8" />
+            {/* Small bow where the branches meet at the bottom */}
+            <path d="M 54 84 Q 60 78 66 84" strokeWidth="0.8" />
+            <path d="M 56 85 L 54 90 M 64 85 L 66 90" strokeWidth="0.7" />
           </g>
           {/* Fine inner ring */}
-          <circle cx="60" cy="52" r="26" stroke={GOLD_CREST} strokeWidth="0.5" strokeOpacity="0.6" />
+          <circle cx="60" cy="48" r="26" stroke={GOLD_CREST} strokeWidth="0.5" strokeOpacity="0.6" />
         </svg>
         {/* Initials inside the wreath */}
         <span
