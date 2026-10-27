@@ -1,5 +1,7 @@
 import React from 'react';
 import type { Design, FontFamily, HeaderStyle } from './designTypes';
+import peonyCorner from '@/assets/watercolor-peony-corner.png';
+import eucalyptusSprig from '@/assets/watercolor-eucalyptus-sprig.png';
 
 interface HeaderArtProps {
   /** Full design from Step 2 (provides accent/ink/headerBg/headerStyle/headlineText/font). */
@@ -52,6 +54,24 @@ const isDarkBackground = (bg: string) => {
 };
 
 const CREAM_INK = '#f3e7d3';
+
+/** Small interlocking wedding-rings motif. */
+const RingsMotif: React.FC<{ color: string; className?: string }> = ({ color, className = '' }) => (
+  <svg viewBox="0 0 34 16" className={`w-[28px] h-auto ${className}`} fill="none" aria-hidden="true">
+    <circle cx="12" cy="8" r="6.5" stroke={color} strokeWidth="1" />
+    <circle cx="22" cy="8" r="6.5" stroke={color} strokeWidth="1" />
+  </svg>
+);
+
+/** Large couple monogram used across the wedding headers. */
+const monogramStyle = (color: string): React.CSSProperties => ({
+  fontFamily: "'Playfair Display', Georgia, serif",
+  fontSize: '26px',
+  fontWeight: 400,
+  letterSpacing: '0.14em',
+  color,
+  lineHeight: 1.1,
+});
 
 /**
  * Reusable header art renderer used by Step 2 (design grid) and Step 3 (live preview).
