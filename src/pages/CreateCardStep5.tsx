@@ -95,6 +95,9 @@ export default function CreateCardStep5() {
               photoUrl={cardData.photoUrl}
               texture={cardData.texture}
               signatureStyle={cardData.signatureStyle}
+              {...(cardData.occasion === 'wedding'
+                ? { coupleNames: cardData.coupleNames, weddingDate: cardData.weddingDate }
+                : {})}
             />
             <p
               className="text-center text-sm mt-4"

@@ -45,6 +45,9 @@ export interface LiveCardPreviewProps {
   envelopeColor?: string | null;
   texture?: string | null;
   signatureStyle?: string | null;
+  /** Wedding occasions: couple's names and wedding date (shown under the title and as the sign-off). */
+  coupleNames?: string;
+  weddingDate?: string;
   className?: string;
 }
 
@@ -94,6 +97,8 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
   envelopeColor,
   texture,
   signatureStyle,
+  coupleNames,
+  weddingDate,
   className = '',
 }) => {
   // Resolved colors: design tokens win, palette is the fallback
@@ -111,7 +116,14 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
     messageBody?.trim() ||
     'Thank you so much for being part of our special day. Your presence and generosity meant the world to us.';
   const closingLine = closing?.trim() || 'With love,';
-  const sender = senderName?.trim();
+  // Wedding: the couple's names sign the card; fall back to senderName.
+  const sender = coupleNames?.trim() || senderName?.trim();
+
+  // Small caps line under the title — soft example until the couple fills it in.
+  const isWedding = coupleNames !== undefined || weddingDate !== undefined;
+  const weddingLine = isWedding
+    ? `${coupleNames?.trim() || 'Emma & James'} · ${weddingDate?.trim() || 'June 14, 2027'}`
+    : undefined;
 
   const signatureFont =
     signatureStyle === 'handwritten'
@@ -148,6 +160,7 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
             height="100%"
             photoUrl={photoUrl}
             headlineFont={fonts.heading}
+            subtext={weddingLine}
           />
         </div>
       ) : (
@@ -164,7 +177,7 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
               <img src={photoUrl} alt="" className="absolute inset-0 w-full h-full object-cover" />
               <div className="absolute inset-0 bg-black/20" aria-hidden="true" />
               <span
-                className="relative z-10 text-white drop-shadow-md"
+                className="relative z-10 text-white drop-shadow-md text-center"
                 style={{
                   fontFamily: fonts.heading,
                   fontSize: 'clamp(24px, 5vw, 34px)', fontWeight: 400,
@@ -173,11 +186,20 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
                 }}
               >
                 {headline}
+                {weddingLine && (
+                  <span
+                    className="block"
+                    style={{ fontSize: '10px', letterSpacing: '0.22em', textTransform: 'uppercase', opacity: 0.85, marginTop: '8px' }}
+                  >
+                    {weddingLine}
+                  </span>
+                )}
               </span>
             </>
           ) : (
             <>
               <span
+                className="text-center"
                 style={{
                   fontFamily: fonts.heading,
                   fontSize: 'clamp(24px, 5vw, 34px)', fontWeight: 400,
@@ -187,6 +209,14 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
                 }}
               >
                 {headline}
+                {weddingLine && (
+                  <span
+                    className="block"
+                    style={{ fontSize: '10px', letterSpacing: '0.22em', textTransform: 'uppercase', opacity: 0.85, marginTop: '8px' }}
+                  >
+                    {weddingLine}
+                  </span>
+                )}
               </span>
               <div className="flex items-center gap-2 mt-3 opacity-70" aria-hidden="true">
                 <div style={{ width: '28px', height: '1px', backgroundColor: accentColor }} />

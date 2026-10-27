@@ -31,6 +31,10 @@ export interface WizardCardData {
   recipientEmail: string;
   senderName: string;
 
+  // Wedding details (Step 3, wedding occasions only)
+  coupleNames: string;
+  weddingDate: string;
+
   // Guest list (multi-recipient)
   guests: GuestEntry[];
 }
@@ -77,6 +81,8 @@ const initialCardData: WizardCardData = {
   recipientName: '',
   recipientEmail: '',
   senderName: '',
+  coupleNames: '',
+  weddingDate: '',
   guests: []
 };
 
