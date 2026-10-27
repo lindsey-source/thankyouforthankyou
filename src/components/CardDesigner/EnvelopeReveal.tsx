@@ -47,24 +47,30 @@ export const EnvelopeReveal: React.FC<EnvelopeRevealProps> = ({
             className="relative w-[320px] sm:w-[360px]"
             style={{ perspective: '1200px' }}
           >
-            {/* Card rising out of the envelope */}
-            <motion.div
-              className="absolute left-1/2 w-[240px] sm:w-[270px] aspect-[3/4] z-10"
-              style={{ x: '-50%', top: '12%' }}
-              initial={false}
-              animate={open ? { y: '-58%' } : { y: '6%' }}
-              transition={{ delay: open ? 0.45 : 0, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-              onAnimationComplete={() => {
-                if (open) setRevealed(true);
-              }}
+            {/* Card rising out of the envelope — clipped below the envelope's bottom edge
+                so it stays hidden until it rises above the flap line */}
+            <div
+              className="absolute inset-0 z-10 pointer-events-none"
+              style={{ clipPath: 'inset(-160% 0 0 0)' }}
             >
-              <div
-                className="w-full h-full rounded-xl overflow-hidden bg-white"
-                style={{ boxShadow: '0 18px 44px -14px rgba(45, 36, 32, 0.28)' }}
+              <motion.div
+                className="absolute left-1/2 w-[240px] sm:w-[270px] aspect-[3/4]"
+                style={{ x: '-50%', top: '10%' }}
+                initial={false}
+                animate={open ? { y: '-56%' } : { y: '4%' }}
+                transition={{ delay: open ? 0.45 : 0, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+                onAnimationComplete={() => {
+                  if (open) setRevealed(true);
+                }}
               >
-                {children}
-              </div>
-            </motion.div>
+                <div
+                  className="w-full h-full rounded-xl overflow-hidden bg-white"
+                  style={{ boxShadow: '0 18px 44px -14px rgba(45, 36, 32, 0.28)' }}
+                >
+                  {children}
+                </div>
+              </motion.div>
+            </div>
 
             {/* Envelope body */}
             <div
