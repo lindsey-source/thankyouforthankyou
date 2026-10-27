@@ -597,7 +597,6 @@ const LandingPage = () => {
         </div>
       </section>
 
-
       {/* CTA Section */}
       <section className="bg-brand-sage-soft text-brand-dark">
         <div className="max-w-3xl mx-auto text-center px-6 sm:px-10">
