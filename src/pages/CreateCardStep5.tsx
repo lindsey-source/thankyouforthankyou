@@ -74,7 +74,7 @@ export default function CreateCardStep5() {
               palette={{
                 primary: palette.headerBg || '#f0d8d0',
                 secondary: palette.bg || '#f9ece8',
-                accent: cardData.accentColor || palette.accent || '#8b4a5a',
+                accent: palette.accent || '#8b4a5a',
                 text: palette.ink || '#2d2420',
               }}
               fonts={fonts}
