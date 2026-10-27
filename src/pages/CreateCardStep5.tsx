@@ -80,7 +80,7 @@ export default function CreateCardStep5() {
             Back
           </Button>
 
-          <p className="text-sm text-stone-500">Step 4 of 6</p>
+          <span />
 
           <Button variant="hero" onClick={handleNext}>
             Next
