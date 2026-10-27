@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Design, FontFamily, HeaderStyle } from './designTypes';
 import peonyCorner from '@/assets/watercolor-peony-corner.png';
-import eucalyptusSprig from '@/assets/watercolor-eucalyptus-sprig.png';
+import marbleGold from '@/assets/wedding-marble-gold.jpg';
 
 interface HeaderArtProps {
   /** Full design from Step 2 (provides accent/ink/headerBg/headerStyle/headlineText/font). */
@@ -224,7 +224,7 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
     );
   }
 
-  // Ivory Elegance: ivory paper, double gold frame, peonies spilling from the top-right corner.
+  // Ivory Elegance: quiet ivory, an oversized gold monogram, and fine rules only.
   if (headerStyle === 'ivoryFrame' && !photoUrl) {
     const GOLD = '#c9a96e';
     return (
@@ -232,23 +232,10 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
         className={`relative flex flex-col items-center justify-center overflow-hidden ${className}`}
         style={{ height, background: headerBg }}
       >
-        {/* Double gold frame */}
-        <div className="absolute pointer-events-none" style={{ inset: '10px', border: `1px solid ${GOLD}` }} aria-hidden="true" />
-        <div className="absolute pointer-events-none" style={{ inset: '15px', border: `0.5px solid ${GOLD}`, opacity: 0.7 }} aria-hidden="true" />
-        {/* Watercolor peonies spilling from the top-right corner (mirrored) */}
-        <img
-          src={peonyCorner}
-          alt=""
-          loading="lazy"
-          width={1024}
-          height={1024}
-          className="absolute -top-5 -right-5 w-[52%] max-w-[180px] pointer-events-none select-none"
-          style={{ transform: 'scaleX(-1)' }}
-          aria-hidden="true"
-        />
-        <div className="relative z-10 flex flex-col items-center px-6">
-          <span style={monogramStyle(ink)}>{initials || 'E & J'}</span>
-          <RingsMotif color={GOLD} className="mt-1.5" />
+        <div className="relative z-10 flex flex-col items-center px-8 gap-4">
+          <span className="w-16 border-t" style={{ borderColor: 'hsl(var(--stationery-gold))' }} aria-hidden="true" />
+          <span style={{ ...monogramStyle(GOLD), fontSize: '42px' }}>{initials || 'E & J'}</span>
+          <span className="w-16 border-t" style={{ borderColor: 'hsl(var(--stationery-gold))' }} aria-hidden="true" />
           <span
             className="text-center mt-1"
             style={{ ...fontStyle, color: ink, lineHeight: 1.15 }}
@@ -265,9 +252,8 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
     );
   }
 
-  // Garden Party: sage & ivory, watercolor eucalyptus spilling in from both top corners.
+  // Marble & Gold: white marble with a foil seam, beneath perfectly crisp type.
   if (headerStyle === 'gardenLeaves' && !photoUrl) {
-    const SAGE = '#5e7a5a';
     const GOLD = '#c9a96e';
     return (
       <div
@@ -275,28 +261,16 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
         style={{ height, background: headerBg }}
       >
         <img
-          src={eucalyptusSprig}
+          src={marbleGold}
           alt=""
           loading="lazy"
           width={1024}
           height={1024}
-          className="absolute -top-4 -left-6 w-[34%] max-w-[120px] pointer-events-none select-none"
-          style={{ transform: 'rotate(38deg)' }}
-          aria-hidden="true"
-        />
-        <img
-          src={eucalyptusSprig}
-          alt=""
-          loading="lazy"
-          width={1024}
-          height={1024}
-          className="absolute -top-4 -right-6 w-[34%] max-w-[120px] pointer-events-none select-none"
-          style={{ transform: 'scaleX(-1) rotate(38deg)' }}
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
           aria-hidden="true"
         />
         <div className="relative z-10 flex flex-col items-center px-6">
-          <span style={monogramStyle(SAGE)}>{initials || 'E & J'}</span>
-          <RingsMotif color={GOLD} className="mt-1.5" />
+          <span style={{ ...monogramStyle(GOLD), fontSize: '32px' }}>{initials || 'E & J'}</span>
           <span
             className="text-center mt-1"
             style={{ ...fontStyle, color: ink, lineHeight: 1.15 }}
@@ -313,7 +287,7 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
     );
   }
 
-  // Timeless: deep navy, gold art deco frame, cream type, peonies spilling from the top-left.
+  // Timeless: deep navy, gold art deco geometry and cream type. No florals.
   if (headerStyle === 'decoFrame' && !photoUrl) {
     const GOLD = '#c9a96e';
     return (
@@ -329,26 +303,13 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
           </g>
           {/* Stepped corner details */}
           <g stroke={GOLD} strokeWidth="0.8" strokeLinecap="square">
-            <path d="M10 26 V18 Q10 10 18 10 H26" />
-            <path d="M190 26 V18 Q190 10 182 10 H174" />
-            <path d="M10 94 V102 Q10 110 18 110 H26" />
-            <path d="M190 94 V102 Q190 110 182 110 H174" />
+            <path d="M10 30 H20 V20 H30 V10 M170 10 V20 H180 V30 H190" />
+            <path d="M10 90 H20 V100 H30 V110 M170 110 V100 H180 V90 H190" />
+            <path d="M88 15 L100 23 L112 15 M88 105 L100 97 L112 105" />
           </g>
         </svg>
-        {/* Watercolor peonies spilling from the top-left corner */}
-        <img
-          src={peonyCorner}
-          alt=""
-          loading="lazy"
-          width={1024}
-          height={1024}
-          className="absolute -top-5 -left-5 w-[50%] max-w-[170px] pointer-events-none select-none"
-          style={{ opacity: 0.92 }}
-          aria-hidden="true"
-        />
         <div className="relative z-10 flex flex-col items-center px-8">
           <span style={monogramStyle(GOLD)}>{initials || 'E & J'}</span>
-          <RingsMotif color={GOLD} className="mt-1.5" />
           <span
             className="text-center mt-1"
             style={{

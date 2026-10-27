@@ -147,7 +147,7 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
 
   // If we have a Step 2 headerStyle, render the rich header through HeaderArt.
   // Otherwise fall back to the simple gradient header.
-  const useDesignHeader = !!headerStyle && !!headerBg;
+  const useDesignHeader = headerStyle && headerBg;
 
   const cardFace = (
     <div
@@ -181,10 +181,10 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
           <HeaderArt
             design={{
               id: designId || 'preview',
-              headerStyle: headerStyle!,
+              headerStyle,
               accent: accentColor,
               ink: inkColor,
-              headerBg: accent || headerBg!,
+              headerBg: isWedding ? headerBg : accent || headerBg,
               headlineText: headline,
               font: font || 'serifClassic',
             }}
