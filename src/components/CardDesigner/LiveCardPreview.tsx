@@ -2,6 +2,7 @@ import React from 'react';
 import { Heart } from 'lucide-react';
 import { HeaderArt } from './HeaderArt';
 import type { FontFamily, HeaderStyle } from './designTypes';
+import { cleanWeddingMessage, WEDDING_MESSAGE_EXAMPLE } from '@/lib/weddingMessages';
 
 export interface LiveCardPreviewProps {
   /** Generic 4-color palette — used as a fallback when full Step 2 tokens are missing. */
@@ -118,17 +119,17 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
   const donationTextColor = donationColor || '#ffffff';
 
   // Resolved content
+  const isWedding = coupleNames !== undefined || weddingDate !== undefined || designId?.startsWith('wedding-') === true;
   const headline = messageHeadline?.trim() || headlineText || 'Thank You';
   const greeting = `Dear ${recipientName?.trim() || 'Friend'},`;
   const body =
-    messageBody?.trim() ||
-    'Thank you so much for being part of our special day. Your presence and generosity meant the world to us.';
+    cleanWeddingMessage(messageBody, isWedding).trim() ||
+    (isWedding ? WEDDING_MESSAGE_EXAMPLE : 'Thank you so much for being part of our special day. Your presence and generosity meant the world to us.');
   const closingLine = closing?.trim() || 'With love,';
   // Wedding: the couple's names sign the card; fall back to senderName.
   const sender = coupleNames?.trim() || senderName?.trim();
 
   // Small caps line under the title — soft example until the couple fills it in.
-  const isWedding = coupleNames !== undefined || weddingDate !== undefined;
   const weddingLine = isWedding
     ? `${coupleNames?.trim() || 'Emma & James'} · ${weddingDate?.trim() || 'June 14, 2027'}`
     : undefined;
