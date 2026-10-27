@@ -147,6 +147,7 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
             }}
             height="100%"
             photoUrl={photoUrl}
+            headlineFont={fonts.heading}
           />
         </div>
       ) : (

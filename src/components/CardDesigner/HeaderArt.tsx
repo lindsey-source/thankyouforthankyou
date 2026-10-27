@@ -15,11 +15,13 @@ interface HeaderArtProps {
   headlineOverride?: string;
   /** Optional photo to use as header background; when set, hides the SVG art. */
   photoUrl?: string | null;
+  /** Optional user-chosen headline font family (Step 3 font choice). Falls back to the light serif. */
+  headlineFont?: string;
 }
 
-// Fine-stationery titles: every design uses a light serif with gentle letter spacing.
-const fontStyleFor = (font: FontFamily): React.CSSProperties => ({
-  fontFamily: "'Playfair Display', Georgia, serif",
+// Fine-stationery titles: light weight with gentle letter spacing; font family follows the user's choice.
+const fontStyleFor = (font: FontFamily, headlineFont?: string): React.CSSProperties => ({
+  fontFamily: headlineFont || "'Playfair Display', Georgia, serif",
   fontStyle: font === 'serifItalic' ? 'italic' : 'normal',
   fontSize: '28px',
   fontWeight: 400,
@@ -45,6 +47,7 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
   className = '',
   headlineOverride,
   photoUrl,
+  headlineFont,
 }) => {
   const {
     headerStyle,
@@ -57,7 +60,7 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
   } = design;
   const isDarkBg = isDarkBackground(headerBg);
   const headlineColor = isDarkBg ? CREAM_INK : ink;
-  const fontStyle = fontStyleFor(font);
+  const fontStyle = fontStyleFor(font, headlineFont);
   const headline = headlineOverride?.trim() || headlineText;
 
   // When a photo is uploaded, replace the art with the photo + dark scrim.
