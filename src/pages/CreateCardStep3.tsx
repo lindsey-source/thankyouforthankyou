@@ -396,7 +396,6 @@ export default function CreateCardStep3() {
                     className="resize-y min-h-[140px]"
                     placeholder="Thank you so much for the beautiful gift — having you there meant the world to us."
                   />
-                  />
                 </div>
 
                 <div>
