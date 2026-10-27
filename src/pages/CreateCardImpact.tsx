@@ -10,6 +10,7 @@ import {
 import { supabase } from '@/integrations/supabase/client';
 import { useCardWizard } from '@/contexts/CardWizardContext';
 import { ProgressBar } from '@/components/CardDesigner/ProgressBar';
+import { LiveCardPreview } from '@/components/CardDesigner/LiveCardPreview';
 
 type Charity = {
   id: string;
@@ -18,16 +19,6 @@ type Charity = {
   category: string | null;
   impact_message: string | null;
 };
-
-const STEP_NAMES = [
-  'Choose Occasion',
-  'Pick Your Style',
-  'Customize Design',
-  'Write Your Message',
-  'Choose Your Cause',
-  'Add Finishing Touches',
-  'Preview & Send',
-];
 
 const CATEGORIES: Array<{
   id: string;
@@ -140,11 +131,19 @@ export default function CreateCardImpact() {
     navigate('/create-card/step6');
   };
 
+  const palette = (cardData.colorPalette as any) || {};
+  const previewFonts =
+    cardData.fontChoice === 'dancing'
+      ? { heading: "'Dancing Script', cursive", body: "'Inter', sans-serif" }
+      : cardData.fontChoice === 'inter'
+        ? { heading: "'Inter', sans-serif", body: "'Inter', sans-serif" }
+        : { heading: "'Playfair Display', Georgia, serif", body: "'Inter', sans-serif" };
+
   return (
     <div className="min-h-screen bg-brand-cream">
       <ProgressBar currentStep={5} />
 
-      <div className="max-w-6xl mx-auto px-4 md:px-8 pt-8 pb-40">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 pt-8 pb-40">
         {/* Header */}
         <div className="text-center mb-10">
           <motion.h1
