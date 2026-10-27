@@ -5,3 +5,4 @@
 - Wedding grid and live previews share HeaderArt; design fontChoice must match its default title font so selecting a style preserves typography while explicit font overrides remain available.
 - Preserve existing wedding design IDs and header-style keys when changing artwork so saved cards continue to resolve; wedding header surfaces remain design-led rather than accent-tinted.
 - Normalize obsolete sample messages at wizard draft hydration and updates through the shared message sanitizer so legacy saved content cannot re-enter previews, while personal writing is preserved.
+- Homepage wedding gallery headers reuse HeaderArt and the wedding design set so artwork and default typography stay aligned with the builder.
