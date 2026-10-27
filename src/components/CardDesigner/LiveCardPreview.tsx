@@ -151,9 +151,26 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
 
   const cardFace = (
     <div
-      className="card-stationery relative w-full h-full overflow-hidden"
+      className={`card-stationery relative w-full h-full overflow-hidden${isWedding ? ' card-deckle' : ''}`}
       style={{ background: textureBackground(texture, cardBg) }}
     >
+      {isWedding && (
+        <>
+          {/* Deckle-edge displacement filter (shared def) */}
+          <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
+            <filter id="deckle-edge">
+              <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" result="noise" />
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2" />
+            </filter>
+          </svg>
+          {/* Fine double gold border */}
+          <div
+            className="absolute pointer-events-none z-[7]"
+            style={{ inset: '13px', border: '0.5px solid hsl(40 45% 62% / 0.5)', borderRadius: '6px' }}
+            aria-hidden="true"
+          />
+        </>
+      )}
       {useDesignHeader ? (
         <div style={{ height: '42%' }}>
           <HeaderArt
