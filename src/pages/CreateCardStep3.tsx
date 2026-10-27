@@ -2,7 +2,7 @@ import React, { useMemo, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDropzone } from 'react-dropzone';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ArrowRight, Upload, Trash2, Check } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Upload, Trash2, Check, Sparkles } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { useCardWizard } from '@/contexts/CardWizardContext';

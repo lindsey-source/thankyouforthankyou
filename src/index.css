@@ -245,3 +245,15 @@
 .homepage .stationery-card {
   box-shadow: 0 1px 2px hsl(25 20% 20% / 0.05), 0 10px 24px -16px hsl(25 25% 20% / 0.16);
 }
+
+/* Card builder: fine-stationery finish (gold inner border + paper grain) */
+.card-stationery { position: relative; }
+.card-stationery::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 5;
+  background-image: radial-gradient(hsl(30 25% 55% / 0.07) 1px, transparent 1px);
+  background-size: 5px 5px;
+}
+.card-stationery::after {
+  content: ""; position: absolute; inset: 8px; pointer-events: none; z-index: 6;
+  border: 1px solid hsl(40 45% 62% / 0.55); border-radius: 8px;
+}

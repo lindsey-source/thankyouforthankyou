@@ -130,7 +130,7 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
 
   const cardFace = (
     <div
-      className="relative w-full h-full overflow-hidden"
+      className="card-stationery relative w-full h-full overflow-hidden"
       style={{ background: textureBackground(texture, cardBg) }}
     >
       {useDesignHeader ? (
@@ -274,7 +274,7 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
   if (!hasEnvelope) {
     return (
       <div
-        className={`card-stationery relative w-full aspect-[3/4] rounded-2xl border overflow-hidden ${className}`}
+        className={`relative w-full aspect-[3/4] rounded-2xl border shadow-soft overflow-hidden ${className}`}
         style={{ borderColor: 'rgba(45, 36, 32, 0.08)' }}
         role="img"
         aria-label="Live card preview"
