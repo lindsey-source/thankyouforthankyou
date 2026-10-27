@@ -159,7 +159,7 @@ export default function CreateCardStep3() {
     const saved = readDesignFromPalette(cardData?.colorPalette);
 
     return saved
-      ? { ...fallback, ...saved }
+      ? { ...fallback, ...saved, id: saved.id || cardData.templateId || fallback.id }
       : fallback;
   }, [cardData?.colorPalette, cardData?.occasion]);
 
