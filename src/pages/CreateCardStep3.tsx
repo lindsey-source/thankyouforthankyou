@@ -98,6 +98,22 @@ const SIGNATURES = [
   { id: 'typed',       name: 'Typed' },
 ];
 
+/* ---------- Message tone starters — complete, finished drafts to edit ---------- */
+const MESSAGE_TONES: { label: string; text: string }[] = [
+  {
+    label: 'Warm',
+    text: "Thank you so much for thinking of us. Your kindness made this moment even more special, and we're truly grateful to have you in our lives.",
+  },
+  {
+    label: 'Heartfelt',
+    text: "From the bottom of our hearts, thank you. Your generosity meant more than words can say, and we'll always remember how loved you made us feel.",
+  },
+  {
+    label: 'Short and sweet',
+    text: "Thank you so much! We're so grateful for your thoughtfulness and for being part of this.",
+  },
+];
+
 /* ---------- Helpers ---------- */
 // Parse "#rrggbb" → {r,g,b}; tolerate gradients/non-hex by returning null.
 const hexToRgb = (hex: string): { r: number; g: number; b: number } | null => {
@@ -160,9 +176,10 @@ export default function CreateCardStep3() {
   const [signatureStyle, setSignatureStyle] = useState<string>(cardData.signatureStyle ?? 'handwritten');
   const [mobilePreviewOpen, setMobilePreviewOpen] = useState(false);
 
-  // Message + closing — pre-fill from saved data, fall back to design defaults.
+  // Message + closing — start EMPTY (soft placeholder in the box), never pre-fill
+  // the gallery teaser text. Saved user text is restored; tone buttons fill drafts.
   const [messageBody, setMessageBody] = useState<string>(
-    () => cardData.messageBody?.trim() || design.body
+    () => cardData.messageBody?.trim() || ''
   );
   const [closing, setClosing] = useState<string>(
     () => cardData.closing?.trim() || 'With love,'
