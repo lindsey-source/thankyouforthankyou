@@ -7,6 +7,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Heart, Mail, Sparkles, Check } from 'lucide-react';
 import { toast } from 'sonner';
 import { ProgressBar } from '@/components/CardDesigner/ProgressBar';
+import { LiveCardPreview } from '@/components/CardDesigner/LiveCardPreview';
+import { EnvelopeReveal } from '@/components/CardDesigner/EnvelopeReveal';
 
 const STEP_NAMES = [
   'Choose Occasion',
@@ -135,14 +137,6 @@ export default function CreateCardStep5Impact() {
 
         {/* Header */}
         <div className="text-center mb-12">
-          <motion.p
-            className="text-xs uppercase tracking-[0.25em] mb-3"
-            style={{ color: '#8faa8b' }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          >
-            Step 7 — Preview &amp; Send
-          </motion.p>
           <motion.h1
             className="text-4xl md:text-5xl mb-4"
             style={{ fontFamily: "'Playfair Display', serif", color: '#2a2622' }}
