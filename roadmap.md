@@ -1,4 +1,6 @@
 # Refinement tasks
+- [ ] Give the four wedding styles distinct artwork and matching live title fonts.
+- [ ] Verify wedding style selection and live previews.
 - [x] Make buttons smaller, dusty rose, 12px corners, and glow-free.
 - [x] Replace heavy shadows with faint soft shadows and thin warm borders.
 - [x] Remove floating decorative dots from the homepage hero.
