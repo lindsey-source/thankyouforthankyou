@@ -98,6 +98,22 @@ const SIGNATURES = [
   { id: 'typed',       name: 'Typed' },
 ];
 
+/* ---------- Message tone starters — complete, finished drafts to edit ---------- */
+const MESSAGE_TONES: { label: string; text: string }[] = [
+  {
+    label: 'Warm',
+    text: "Thank you so much for thinking of us. Your kindness made this moment even more special, and we're truly grateful to have you in our lives.",
+  },
+  {
+    label: 'Heartfelt',
+    text: "From the bottom of our hearts, thank you. Your generosity meant more than words can say, and we'll always remember how loved you made us feel.",
+  },
+  {
+    label: 'Short and sweet',
+    text: "Thank you so much! We're so grateful for your thoughtfulness and for being part of this.",
+  },
+];
+
 /* ---------- Helpers ---------- */
 // Parse "#rrggbb" → {r,g,b}; tolerate gradients/non-hex by returning null.
 const hexToRgb = (hex: string): { r: number; g: number; b: number } | null => {
@@ -160,9 +176,10 @@ export default function CreateCardStep3() {
   const [signatureStyle, setSignatureStyle] = useState<string>(cardData.signatureStyle ?? 'handwritten');
   const [mobilePreviewOpen, setMobilePreviewOpen] = useState(false);
 
-  // Message + closing — pre-fill from saved data, fall back to design defaults.
+  // Message + closing — start EMPTY (soft placeholder in the box), never pre-fill
+  // the gallery teaser text. Saved user text is restored; tone buttons fill drafts.
   const [messageBody, setMessageBody] = useState<string>(
-    () => cardData.messageBody?.trim() || design.body
+    () => cardData.messageBody?.trim() || ''
   );
   const [closing, setClosing] = useState<string>(
     () => cardData.closing?.trim() || 'With love,'
@@ -354,13 +371,30 @@ export default function CreateCardStep3() {
                   <Label htmlFor="message-body" className="text-base font-semibold mb-2 block">
                     Message
                   </Label>
+                  <div className="mb-3">
+                    <Label className="text-xs font-medium text-stone-500 mb-2 block">
+                      Need a starting point? Pick a tone:
+                    </Label>
+                    <div className="flex flex-wrap gap-2">
+                      {MESSAGE_TONES.map((tone) => (
+                        <button
+                          key={tone.label}
+                          type="button"
+                          onClick={() => setMessageBody(tone.text)}
+                          className="px-3 py-1.5 rounded-xl text-sm font-medium bg-white border border-[#e8ddd3] text-[#2d2420] shadow-[0_1px_2px_rgba(45,36,32,0.06)] hover:border-[#c17b8a] hover:bg-[#c17b8a]/10 transition-colors"
+                        >
+                          {tone.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                   <Textarea
                     id="message-body"
                     value={messageBody}
                     onChange={(e) => setMessageBody(e.target.value)}
                     rows={6}
                     className="resize-y min-h-[140px]"
-                    placeholder="Write your thank-you message…"
+                    placeholder="Thank you so much for the beautiful gift — having you there meant the world to us."
                   />
                 </div>
 
