@@ -47,12 +47,12 @@ const App = () => (
               <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/sign-up" element={<Navigate to="/signup" replace />} />
               <Route path="/sign-in" element={<Navigate to="/login" replace />} />
-              <Route path="/create-card/step1" element={<ProtectedRoute><CreateCardStep1 /></ProtectedRoute>} />
-              <Route path="/create-card/step2" element={<ProtectedRoute><CreateCardStep2 /></ProtectedRoute>} />
-              <Route path="/create-card/step3" element={<ProtectedRoute><CreateCardStep3 /></ProtectedRoute>} />
+              <Route path="/create-card/step1" element={<CreateCardStep1 />} />
+              <Route path="/create-card/step2" element={<CreateCardStep2 />} />
+              <Route path="/create-card/step3" element={<CreateCardStep3 />} />
               <Route path="/create-card/step4" element={<Navigate to="/create-card/step3" replace />} />
-              <Route path="/create-card/impact" element={<ProtectedRoute><CreateCardImpact /></ProtectedRoute>} />
-              <Route path="/create-card/step5" element={<ProtectedRoute><CreateCardStep5 /></ProtectedRoute>} />
+              <Route path="/create-card/impact" element={<CreateCardImpact />} />
+              <Route path="/create-card/step5" element={<CreateCardStep5 />} />
               <Route path="/create-card/step6" element={<ProtectedRoute><CreateCardStep6 /></ProtectedRoute>} />
               <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
               <Route path="/send-thanks" element={<SendThanks />} />
