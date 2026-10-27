@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Heart, ArrowRight, CheckCircle, Upload, PenLine, Send, Sparkles, Users, Gift, TrendingUp, Palette, Leaf, BarChart2 } from "lucide-react";
+import { Heart, ArrowRight, Upload, PenLine, Send, Palette, Leaf } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { DESIGN_SETS } from "@/pages/CreateCardStep2";
-import cardBlushBotanical from "@/assets/card-blush-botanical.jpg";
-import cardSageAbstract from "@/assets/card-sage-abstract.jpg";
-import cardWildflowerInk from "@/assets/card-wildflower-ink.jpg";
 
 /* ---------- Hero rotating-card content ----------
    Each entry reuses the FIRST design from its occasion in DESIGN_SETS
@@ -63,10 +60,10 @@ const LandingPage = () => {
   const heroDesign = DESIGN_SETS[heroCard.occasion]?.[0] ?? DESIGN_SETS.general[0];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="homepage min-h-screen bg-background">
       {/* Navigation */}
       <nav className="bg-background/80 backdrop-blur-sm border-b border-border sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-12">
           <div className="flex justify-between items-center h-20">
             <div className="flex items-center">
               <img src="/logo.png" alt="Thank You for Thank You" style={{ height: '72px', mixBlendMode: 'multiply' }} className="w-auto" />
@@ -96,21 +93,17 @@ const LandingPage = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="py-8 md:py-10" style={{ backgroundColor: "#faf7f2" }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-8 md:gap-12">
+      <section className="homepage-hero bg-background">
+        <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-20 md:gap-16 lg:gap-24">
             {/* Left: Headline + CTAs */}
             <div className="text-center md:text-left" style={{ color: "#2d2420" }}>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/15 text-secondary text-xs font-medium mb-3">
-                <Sparkles className="h-3.5 w-3.5" />
-                Gratitude that gives back
-              </div>
-              <h1 className="text-4xl sm:text-5xl xl:text-6xl mb-4 leading-[1.15] tracking-tight" style={{ color: "#2d2420" }}>
+              <h1 className="text-4xl sm:text-5xl xl:text-6xl mb-8 leading-[1.25]" style={{ color: "#2d2420" }}>
                 Thank Differently.
                 <br />
                 <span className="text-primary">Give Meaningfully.</span>
               </h1>
-              <p className="text-sm md:text-base mb-5 leading-relaxed max-w-xl md:max-w-none mx-auto" style={{ color: "#2d2420", opacity: 0.75 }}>
+              <p className="text-sm md:text-base mb-10 leading-loose max-w-md mx-auto md:mx-0" style={{ color: "#2d2420", opacity: 0.75 }}>
                 Every thank-you you send plants a seed of generosity. Your heartfelt note arrives
                 alongside a real donation to a cause that matters — making your gratitude twice as meaningful.
               </p>
@@ -132,36 +125,26 @@ const LandingPage = () => {
               <p className="mt-3 text-sm text-stone-500 text-center md:text-left">
                 Free to start · No credit card required
               </p>
-              <div className="mt-3 text-center md:text-left">
-                <Link
-                  to="/gift-tracker"
-                  className="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-primary transition-colors underline-offset-4 hover:underline"
-                >
-                  Planning ahead? Download the gift tracker template
-                  <ArrowRight className="h-3.5 w-3.5" />
-                </Link>
-              </div>
+
             </div>
 
             {/* Right: Product mockup card */}
-            <div className="relative flex items-center justify-center min-h-[340px] md:min-h-[380px]">
+            <div className="relative flex items-center justify-center min-h-[450px] md:min-h-[480px]">
               {/* Back card (peeking, rotated +3deg) */}
               <div
-                className="absolute w-[280px] sm:w-[300px] aspect-[3/4] rounded-2xl shadow-soft border"
+                className="absolute w-[280px] sm:w-[300px] aspect-[3/4] rounded-xl shadow-soft border border-border"
                 style={{
                   transform: "rotate(3deg) translate(28px, 16px)",
-                  backgroundColor: "#f5ede9",
-                  borderColor: "rgba(45, 36, 32, 0.06)",
+                  backgroundColor: "hsl(var(--muted))",
                 }}
                 aria-hidden="true"
               />
 
               {/* Front card (rotated -3deg) — rotates through 4 occasions */}
               <div
-                className="relative w-[280px] sm:w-[300px] aspect-[3/4] rounded-2xl border overflow-hidden shadow-warm"
+                className="relative w-[280px] sm:w-[300px] aspect-[3/4] rounded-xl border border-border overflow-hidden shadow-soft"
                 style={{
                   transform: "rotate(-3deg)",
-                  borderColor: "rgba(45, 36, 32, 0.08)",
                   backgroundColor: heroDesign.bg,
                 }}
                 role="img"
@@ -254,93 +237,50 @@ const LandingPage = () => {
                 </div>
               </div>
 
-              {/* Rotation indicator dots */}
-              <div
-                className="absolute -bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-1.5"
-                aria-hidden="true"
-              >
-                {HERO_CARDS.map((_, i) => (
-                  <span
-                    key={i}
-                    className="h-1.5 rounded-full transition-all duration-300"
-                    style={{
-                      width: i === heroIndex ? "16px" : "6px",
-                      backgroundColor:
-                        i === heroIndex ? "#c17b8a" : "rgba(45, 36, 32, 0.2)",
-                    }}
-                  />
-                ))}
-              </div>
+            </div>
 
-              {/* Subtle decorative dots */}
-              <div
-                className="absolute -top-2 -left-2 h-3 w-3 rounded-full opacity-70"
-                style={{ backgroundColor: "#c17b8a" }}
-                aria-hidden="true"
-              />
-              <div
-                className="absolute -bottom-1 -right-1 h-3 w-3 rounded-full opacity-70"
-                style={{ backgroundColor: "#8faa8b" }}
-                aria-hidden="true"
-              />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Wedding gift tracker callout */}
-      <section className="py-12 md:py-16" style={{ backgroundColor: "#faf7f2" }}>
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div
-            className="rounded-3xl border shadow-soft p-8 md:p-12 flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-10"
-            style={{
-              backgroundColor: "#fdf6f3",
-              borderColor: "rgba(193, 123, 138, 0.2)",
-            }}
-          >
-            <div
-              className="flex-shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center"
-              style={{ backgroundColor: "rgba(193, 123, 138, 0.15)" }}
-            >
-              <Gift className="h-7 w-7" style={{ color: "#c17b8a" }} />
-            </div>
-            <div className="flex-1">
-              <h2 className="text-3xl md:text-4xl mb-3 tracking-tight" style={{ color: "#2d2420" }}>
-                Having an Event? Plan ahead.
-              </h2>
-              <p className="text-base md:text-lg leading-relaxed" style={{ color: "#2d2420", opacity: 0.75 }}>
-                Download the gift tracker before your big day — fill it in as you open gifts, then upload when you're ready to send thank-yous.
-              </p>
-            </div>
-            <Link to="/gift-tracker" className="flex-shrink-0">
-              <Button variant="hero" size="lg">
-                Download the template
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
+      {/* Gift tracker callout */}
+      <section className="bg-muted/30">
+        <div className="max-w-3xl mx-auto px-6 sm:px-10 text-center">
+          <h2 className="text-3xl md:text-4xl mb-8 text-foreground">
+            Having an Event? Plan ahead.
+          </h2>
+          <p className="text-sm md:text-base leading-loose text-muted-foreground max-w-md mx-auto mb-10">
+            Download the gift tracker before your big day — fill it in as you open gifts, then upload when you're ready to send thank-yous.
+          </p>
+          <Link to="/gift-tracker">
+            <Button variant="hero" size="lg">
+              Download the template
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </Link>
         </div>
       </section>
 
       {/* Social-proof stats strip */}
-      <section className="py-8 md:py-10" style={{ backgroundColor: "#2d2420" }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-10 text-center">
-            <div className="flex items-center gap-2 text-white/95 text-base md:text-lg font-medium">
+      <section className="homepage-stats bg-brand-dark text-brand-cream">
+        <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-12">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-10 sm:gap-16 text-center">
+            <div className="flex items-center gap-2 text-brand-cream text-base md:text-lg font-medium">
               <span aria-hidden="true">✉️</span>
               <span>
                 <span className="font-bold">12,847</span> cards sent
               </span>
             </div>
-            <span className="hidden sm:inline text-white/30" aria-hidden="true">·</span>
-            <div className="flex items-center gap-2 text-white/95 text-base md:text-lg font-medium">
+            <span className="hidden sm:inline text-brand-cream/30" aria-hidden="true">·</span>
+            <div className="flex items-center gap-2 text-brand-cream text-base md:text-lg font-medium">
               <span aria-hidden="true">💚</span>
               <span>
                 <span className="font-bold">$38,541</span> donated
               </span>
             </div>
-            <span className="hidden sm:inline text-white/30" aria-hidden="true">·</span>
-            <div className="flex items-center gap-2 text-white/95 text-base md:text-lg font-medium">
+            <span className="hidden sm:inline text-brand-cream/30" aria-hidden="true">·</span>
+            <div className="flex items-center gap-2 text-brand-cream text-base md:text-lg font-medium">
               <span aria-hidden="true">⭐</span>
               <span>
                 <span className="font-bold">4.9/5</span> from 340 families
@@ -351,16 +291,16 @@ const LandingPage = () => {
       </section>
 
       {/* How It Works — 4-step workflow */}
-      <section className="py-20" style={{ backgroundColor: "#f5ede9" }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+      <section id="how-it-works" className="bg-background scroll-mt-20">
+        <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-12">
+          <div className="text-center mb-20">
             <h2 className="text-5xl mb-4" style={{ color: "#2d2420" }}>How It Works</h2>
-            <p className="text-lg max-w-2xl mx-auto" style={{ color: "#2d2420", opacity: 0.7 }}>
+            <p className="text-sm md:text-base leading-loose max-w-md mx-auto" style={{ color: "#2d2420", opacity: 0.7 }}>
               From your guest list to a real-world donation in four simple steps.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-4 relative">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 lg:gap-16 max-w-4xl mx-auto">
             {[
               {
                 icon: Upload,
@@ -382,16 +322,12 @@ const LandingPage = () => {
                 title: "Costs Become Donations",
                 description: "What you saved on paper and postage goes directly to charity.",
               },
-            ].map((step, index, arr) => {
+            ].map((step, index) => {
               const Icon = step.icon;
               return (
                 <div key={index} className="relative">
                   <div
-                    className="h-full rounded-2xl p-6 border transition-all duration-300 hover:shadow-warm hover:-translate-y-1"
-                    style={{
-                      backgroundColor: "#ffffff",
-                      borderColor: "rgba(45, 36, 32, 0.08)",
-                    }}
+                    className="h-full rounded-lg p-8 sm:p-10 border border-border bg-card shadow-soft"
                   >
                     <div className="relative w-14 h-14 mb-5">
                       <div
@@ -400,7 +336,7 @@ const LandingPage = () => {
                       >
                         <Icon className="h-6 w-6" strokeWidth={1.75} />
                       </div>
-                      <div className="absolute -top-2 -right-2 h-7 w-7 rounded-full bg-primary text-primary-foreground text-xs font-bold flex items-center justify-center shadow-sm">
+                      <div className="absolute -top-2 -right-2 h-7 w-7 rounded-full bg-primary text-primary-foreground text-xs font-bold flex items-center justify-center border border-border shadow-soft">
                         {index + 1}
                       </div>
                     </div>
@@ -411,16 +347,7 @@ const LandingPage = () => {
                       {step.description}
                     </p>
                   </div>
-                  {/* Connector arrow between steps (desktop only) */}
-                  {index < arr.length - 1 && (
-                    <div
-                      className="hidden lg:flex absolute top-1/2 -right-2 -translate-y-1/2 z-10 h-7 w-7 rounded-full items-center justify-center"
-                      style={{ backgroundColor: "#f5ede9", color: "#8faa8b" }}
-                      aria-hidden="true"
-                    >
-                      <ArrowRight className="h-4 w-4" strokeWidth={2.25} />
-                    </div>
-                  )}
+
                 </div>
               );
             })}
@@ -429,16 +356,16 @@ const LandingPage = () => {
       </section>
 
       {/* Features */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+      <section>
+        <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-12">
+          <div className="text-center mb-20">
             <h2 className="text-5xl text-foreground mb-5">Thoughtful. Effortless. Impactful.</h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-sm md:text-base leading-loose text-muted-foreground max-w-md mx-auto">
               Perfect for weddings, celebrations, and life's meaningful moments that deserve appreciation
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-10 lg:gap-16">
             {[
               {
                 title: "Perfect for Life's Moments",
@@ -455,32 +382,14 @@ const LandingPage = () => {
                 description: "Skip paper, printing, envelopes, and postage. Redirect those savings into meaningful charitable donations.",
                 Icon: Leaf,
               },
-              {
-                title: "Recipient Choice",
-                description: "Let recipients choose their favorite charity from your curated list, making the gift even more personal.",
-                Icon: Users,
-              },
-              {
-                title: "Time & Impact Tracking",
-                description: "See your gratitude's reach with delivery confirmations, charity selections, and cumulative impact reports.",
-                Icon: BarChart2,
-              },
-              {
-                title: "Premium Experience",
-                description: "No ads, no spam, just beautiful digital-with-soul experiences that recipients will treasure.",
-                Icon: Sparkles,
-              },
             ].map((feature, index) => {
               const FeatureIcon = feature.Icon;
               return (
                 <Card
                   key={index}
-                  className="bg-card transition-all duration-300 group"
-                  style={{ border: "1px solid #ede8e3" }}
-                  onMouseEnter={(e) => (e.currentTarget.style.borderColor = "#c17b8a")}
-                  onMouseLeave={(e) => (e.currentTarget.style.borderColor = "#ede8e3")}
+                  className="bg-card border-border rounded-lg shadow-soft"
                 >
-                  <CardContent className="p-8">
+                  <CardContent className="p-8 lg:p-10">
                     <div
                       className="mb-5 inline-flex items-center justify-center rounded-md transition-colors duration-300"
                       style={{
@@ -503,7 +412,7 @@ const LandingPage = () => {
                     >
                       {feature.title}
                     </h3>
-                    <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
+                    <p className="text-sm leading-loose text-muted-foreground">{feature.description}</p>
                   </CardContent>
                 </Card>
               );
@@ -513,9 +422,9 @@ const LandingPage = () => {
       </section>
 
       {/* Card Design Gallery */}
-      <section className="py-20 bg-muted/30">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+      <section id="card-gallery" className="bg-muted/30 scroll-mt-20">
+        <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-12">
+          <div className="text-center mb-20">
             <h2
               className="text-4xl mb-4"
               style={{
@@ -526,19 +435,15 @@ const LandingPage = () => {
             >
               Beautiful Cards, Meaningful Impact
             </h2>
-            <p className="text-xl text-muted-foreground">
+            <p className="text-sm md:text-base leading-loose text-muted-foreground max-w-md mx-auto">
               Every design crafted to feel personal. Every send creates a donation.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-20 max-w-4xl mx-auto">
             {/* Card 1 — Wedding (Pink Rose Branch) */}
             <div
-              className="group rounded-2xl overflow-hidden bg-white transition-all duration-300 hover:-translate-y-1"
-              style={{
-                border: "1px solid #ede8e3",
-                boxShadow: "0 10px 40px -12px rgba(193,123,138,0.15)",
-              }}
+              className="group rounded-lg overflow-hidden bg-card border border-border shadow-soft"
             >
               <div
                 className="relative flex items-center justify-center"
@@ -589,8 +494,8 @@ const LandingPage = () => {
                   With Love & Gratitude
                 </span>
               </div>
-              <div className="p-6">
-                <div className="flex items-center justify-between mb-3">
+              <div className="p-8 sm:p-10">
+                <div className="flex flex-wrap items-center gap-3 mb-6">
                   <span
                     className="inline-block px-3 py-1 rounded-full text-xs"
                     style={{ backgroundColor: "#f5ede9", color: "#8b4a5a" }}
@@ -619,96 +524,13 @@ const LandingPage = () => {
                 >
                   Your wedding was the most beautiful day…
                 </p>
-                <button
-                  className="mt-4 w-full py-2 rounded-md text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{ backgroundColor: "#c17b8a", color: "#fdf6f3" }}
-                >
-                  Preview Card
-                </button>
-              </div>
-            </div>
 
-            {/* Card 2 — Corporate (Cream + Gold) */}
-            <div
-              className="group rounded-2xl overflow-hidden bg-white transition-all duration-300 hover:-translate-y-1"
-              style={{
-                border: "1px solid #ede8e3",
-                boxShadow: "0 10px 40px -12px rgba(201,169,110,0.15)",
-              }}
-            >
-              <div
-                className="relative flex items-center justify-center"
-                style={{ height: "180px", backgroundColor: "#faf6ef" }}
-              >
-                {/* Corner accents */}
-                <div style={{ position: "absolute", top: "16px", left: "16px", width: "20px", height: "20px", borderTop: "1px solid #c9a96e", borderLeft: "1px solid #c9a96e" }} />
-                <div style={{ position: "absolute", top: "16px", right: "16px", width: "20px", height: "20px", borderTop: "1px solid #c9a96e", borderRight: "1px solid #c9a96e" }} />
-                <div style={{ position: "absolute", bottom: "16px", left: "16px", width: "20px", height: "20px", borderBottom: "1px solid #c9a96e", borderLeft: "1px solid #c9a96e" }} />
-                <div style={{ position: "absolute", bottom: "16px", right: "16px", width: "20px", height: "20px", borderBottom: "1px solid #c9a96e", borderRight: "1px solid #c9a96e" }} />
-                <div className="flex flex-col items-center">
-                  <div style={{ width: "80px", height: "1px", backgroundColor: "#c9a96e", marginBottom: "14px" }} />
-                  <span
-                    style={{
-                      fontFamily: "'Inter', sans-serif",
-                      fontSize: "15px",
-                      letterSpacing: "0.28em",
-                      color: "#2d2420",
-                      fontWeight: 400,
-                      textTransform: "uppercase",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    A Note of Appreciation
-                  </span>
-                  <div style={{ width: "80px", height: "1px", backgroundColor: "#c9a96e", marginTop: "14px" }} />
-                </div>
-              </div>
-              <div className="p-6">
-                <div className="flex items-center justify-between mb-3">
-                  <span
-                    className="inline-block px-3 py-1 rounded-full text-xs"
-                    style={{ backgroundColor: "#f5efe2", color: "#8a7340" }}
-                  >
-                    Corporate & Professional
-                  </span>
-                  <span
-                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs"
-                    style={{ backgroundColor: "#eef2e8", color: "#3d5a3a" }}
-                  >
-                    💚 $3 donated to local food bank
-                  </span>
-                </div>
-                <p
-                  style={{
-                    fontFamily: "'Playfair Display', Georgia, serif",
-                    color: "#2d2420",
-                    fontSize: "16px",
-                  }}
-                >
-                  Dear Team,
-                </p>
-                <p
-                  className="mt-1 text-sm leading-relaxed line-clamp-1"
-                  style={{ color: "#2d2420", opacity: 0.7 }}
-                >
-                  Your hard work on Q3 made all the difference…
-                </p>
-                <button
-                  className="mt-4 w-full py-2 rounded-md text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{ backgroundColor: "#2d2420", color: "#c9a96e" }}
-                >
-                  Preview Card
-                </button>
               </div>
             </div>
 
             {/* Card 3 — Baby Showers (Sage + Wildflowers) */}
             <div
-              className="group rounded-2xl overflow-hidden bg-white transition-all duration-300 hover:-translate-y-1"
-              style={{
-                border: "1px solid #ede8e3",
-                boxShadow: "0 10px 40px -12px rgba(143,170,139,0.18)",
-              }}
+              className="group rounded-lg overflow-hidden bg-card border border-border shadow-soft"
             >
               <div
                 className="relative flex items-center justify-center"
@@ -752,8 +574,8 @@ const LandingPage = () => {
                   Welcome, Little One
                 </span>
               </div>
-              <div className="p-6">
-                <div className="flex items-center justify-between mb-3">
+              <div className="p-8 sm:p-10">
+                <div className="flex flex-wrap items-center gap-3 mb-6">
                   <span
                     className="inline-block px-3 py-1 rounded-full text-xs"
                     style={{ backgroundColor: "#eef2e8", color: "#3d5a3a" }}
@@ -782,192 +604,47 @@ const LandingPage = () => {
                 >
                   We're so thrilled to celebrate baby Lily…
                 </p>
-                <button
-                  className="mt-4 w-full py-2 rounded-md text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{ backgroundColor: "#3d5a3a", color: "#fdf6f3" }}
-                >
-                  Preview Card
-                </button>
+
               </div>
             </div>
 
-            {/* Card 4 — Galas (Navy + Gold) */}
-            <div
-              className="group rounded-2xl overflow-hidden bg-white transition-all duration-300 hover:-translate-y-1"
-              style={{
-                border: "1px solid #ede8e3",
-                boxShadow: "0 10px 40px -12px rgba(30,42,58,0.25)",
-              }}
-            >
-              <div
-                className="relative flex items-center justify-center"
-                style={{ height: "180px", backgroundColor: "#1e2a3a" }}
-              >
-                <div
-                  className="absolute"
-                  style={{
-                    width: "56px",
-                    height: "56px",
-                    borderRadius: "9999px",
-                    border: "1px solid rgba(255,255,255,0.5)",
-                    top: "22px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <span
-                    style={{
-                      fontFamily: "'Playfair Display', Georgia, serif",
-                      color: "#ffffff",
-                      fontSize: "22px",
-                      letterSpacing: "0.05em",
-                    }}
-                  >
-                    TY
-                  </span>
-                </div>
-                <span
-                  className="text-center px-4"
-                  style={{
-                    fontFamily: "'Playfair Display', Georgia, serif",
-                    fontSize: "28px",
-                    color: "#c9a96e",
-                    fontStyle: "italic",
-                    fontWeight: 500,
-                    marginTop: "70px",
-                    letterSpacing: "0.02em",
-                    lineHeight: 1.15,
-                  }}
-                >
-                  L'Chaim & Thank You
-                </span>
-              </div>
-              <div className="p-6">
-                <div className="flex items-center justify-between mb-3">
-                  <span
-                    className="inline-block px-3 py-1 rounded-full text-xs"
-                    style={{ backgroundColor: "#1e2a3a", color: "#c9a96e" }}
-                  >
-                    Bar/Bat Mitzvahs & Galas
-                  </span>
-                  <span
-                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs"
-                    style={{ backgroundColor: "#eef2e8", color: "#3d5a3a" }}
-                  >
-                    💚 $5 donated to Jewish Federation
-                  </span>
-                </div>
-                <p
-                  style={{
-                    fontFamily: "'Playfair Display', Georgia, serif",
-                    color: "#2d2420",
-                    fontSize: "16px",
-                  }}
-                >
-                  Dear David,
-                </p>
-                <p
-                  className="mt-1 text-sm leading-relaxed line-clamp-1"
-                  style={{ color: "#2d2420", opacity: 0.7 }}
-                >
-                  Your presence at Noah's Bar Mitzvah meant everything…
-                </p>
-                <button
-                  className="mt-4 w-full py-2 rounded-md text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{ backgroundColor: "#c9a96e", color: "#1e2a3a" }}
-                >
-                  Preview Card
-                </button>
-              </div>
-            </div>
           </div>
         </div>
       </section>
 
-      {/* Social Proof Section */}
-      <section className="py-16" style={{ backgroundColor: '#f5ede9' }}>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl text-foreground mb-5">Loved by Hosts Everywhere</h2>
-          </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card className="bg-muted/20 border-none">
-              <CardContent className="p-8">
-                <div className="w-14 h-14 rounded-full flex items-center justify-center text-white font-semibold text-lg mb-4" style={{ backgroundColor: '#8faa8b' }}>
-                  SM
-                </div>
-                <p className="text-muted-foreground mb-6 italic">
-                  "After our wedding, I had 200+ thank-you notes to send. This platform saved me weeks of work and donated $1,000 to our favorite charity. Our guests loved the personal touch!"
-                </p>
-                <div className="font-semibold">— Sarah & Mike, Newlyweds</div>
-              </CardContent>
-            </Card>
-            <Card className="bg-muted/20 border-none">
-              <CardContent className="p-8">
-                <div className="w-14 h-14 rounded-full flex items-center justify-center text-white font-semibold text-lg mb-4" style={{ backgroundColor: '#8faa8b' }}>
-                  JL
-                </div>
-                <p className="text-muted-foreground mb-6 italic">
-                  "Perfect for baby shower thank-yous! Instead of buying cards and stamps, I redirected that money to children's charities. The e-cards were beautiful and eco-friendly."
-                </p>
-                <div className="font-semibold">— Jennifer, New Mom</div>
-              </CardContent>
-            </Card>
-            <Card className="bg-muted/20 border-none">
-              <CardContent className="p-8">
-                <div className="w-14 h-14 rounded-full flex items-center justify-center text-white font-semibold text-lg mb-4" style={{ backgroundColor: '#8faa8b' }}>
-                  DP
-                </div>
-                <p className="text-muted-foreground mb-6 italic">
-                  "Used this for my son's bar mitzvah. Guests could choose which charity to support - it sparked amazing conversations about giving back. Truly meaningful."
-                </p>
-                <div className="font-semibold">— David, Proud Father</div>
-              </CardContent>
-            </Card>
-          </div>
+      {/* One quiet, editorial testimonial */}
+      <section>
+        <div className="max-w-3xl mx-auto px-6 sm:px-10 text-center">
+          <h2 className="text-4xl md:text-5xl text-foreground mb-16">Loved by Hosts Everywhere</h2>
+          <blockquote className="max-w-xl mx-auto">
+            <p className="text-base leading-loose text-muted-foreground mb-10 italic">
+              "After our wedding, I had 200+ thank-you notes to send. This platform saved me weeks of work and donated $1,000 to our favorite charity. Our guests loved the personal touch!"
+            </p>
+            <cite className="text-sm not-italic text-foreground">— Sarah &amp; Mike, Newlyweds</cite>
+          </blockquote>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 text-white" style={{ backgroundColor: '#2d4a35' }}>
-        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-5xl mb-6">Start Your Gratitude Campaign</h2>
-          <p className="text-xl mb-8 text-white/90">
-            Transform your thank-you process into something beautiful, meaningful, and impactful. 
+      <section className="bg-brand-sage-soft text-brand-dark">
+        <div className="max-w-3xl mx-auto text-center px-6 sm:px-10">
+          <h2 className="text-4xl md:text-5xl mb-8">Start Your Gratitude Campaign</h2>
+          <p className="text-sm md:text-base leading-loose mb-10 text-muted-foreground max-w-md mx-auto">
+            Transform your thank-you process into something beautiful, meaningful, and impactful.
             Your first 3 cards are on us.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/signup">
-              <Button variant="hero" size="xl" className="bg-white !text-[#2d4a35] hover:bg-white/90">
-                Get Started Free
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
-            <Button variant="outline" size="xl" className="!border-white !text-white hover:bg-white/10">
-              See Sample Cards
+          <Link to="/signup">
+            <Button variant="hero" size="xl">
+              Get Started Free
+              <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
-          </div>
-          <div className="flex items-center justify-center gap-6 mt-8 text-white/80">
-            <div className="flex items-center gap-2">
-              <CheckCircle className="h-5 w-5" />
-              <span>3 free cards to start</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle className="h-5 w-5" />
-              <span>No subscription required</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle className="h-5 w-5" />
-              <span>Tax receipts provided</span>
-            </div>
-          </div>
+          </Link>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-muted py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <footer className="bg-background py-20">
+        <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-12">
           <div className="text-center">
             <div className="flex items-center justify-center gap-2 mb-4">
               <Heart className="h-6 w-6 text-primary" />
@@ -976,7 +653,7 @@ const LandingPage = () => {
             <p className="text-muted-foreground mb-6">
               Making every "thank you" a force for good
             </p>
-            <div className="flex justify-center gap-8 text-sm text-muted-foreground">
+            <div className="flex flex-wrap justify-center gap-x-8 gap-y-5 text-sm text-muted-foreground">
               <a href="#" className="hover:text-primary transition-colors">About Us</a>
               <a href="#" className="hover:text-primary transition-colors">Contact</a>
               <Link to="/help" className="hover:text-primary transition-colors">Help</Link>
