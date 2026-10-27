@@ -131,7 +131,6 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
         <span
           className="absolute inset-0 flex items-center justify-center"
           style={{
-            paddingBottom: '14px',
             fontFamily: "'Playfair Display', Georgia, serif",
             fontSize: '19px',
             fontWeight: 400,
