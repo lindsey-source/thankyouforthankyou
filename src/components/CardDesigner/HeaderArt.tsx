@@ -290,9 +290,36 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
     );
   }
 
-  // Garden Party: sage & ivory, fine line-drawn leaves encircling the initials.
+  // Garden Party: sage & ivory, a fine laurel wreath of line-drawn leaves around the initials.
   if (headerStyle === 'gardenLeaves' && !photoUrl) {
     const SAGE = '#5e7a5a';
+    // Sample points + tangents along a cubic bezier branch so leaves follow the curve.
+    const branchLeaves = (
+      p0: [number, number],
+      p1: [number, number],
+      p2: [number, number],
+      p3: [number, number],
+    ) =>
+      [0.16, 0.36, 0.56, 0.76, 0.92].map((t) => {
+        const mt = 1 - t;
+        const x = mt ** 3 * p0[0] + 3 * mt * mt * t * p1[0] + 3 * mt * t * t * p2[0] + t ** 3 * p3[0];
+        const y = mt ** 3 * p0[1] + 3 * mt * mt * t * p1[1] + 3 * mt * t * t * p2[1] + t ** 3 * p3[1];
+        const dx = 3 * mt * mt * (p1[0] - p0[0]) + 6 * mt * t * (p2[0] - p1[0]) + 3 * t * t * (p3[0] - p2[0]);
+        const dy = 3 * mt * mt * (p1[1] - p0[1]) + 6 * mt * t * (p2[1] - p1[1]) + 3 * t * t * (p3[1] - p2[1]);
+        return { x, y, ang: (Math.atan2(dy, dx) * 180) / Math.PI };
+      });
+    const leftBranch: [[number, number], [number, number], [number, number], [number, number]] = [
+      [60, 86],
+      [30, 78],
+      [22, 40],
+      [54, 12],
+    ];
+    const rightBranch: [[number, number], [number, number], [number, number], [number, number]] = [
+      [60, 86],
+      [90, 78],
+      [98, 40],
+      [66, 12],
+    ];
     return (
       <div
         className={`relative flex flex-col items-center justify-center overflow-hidden ${className}`}
@@ -300,23 +327,28 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
       >
         <div className="relative">
           <svg viewBox="0 0 120 96" className="w-[96px] h-auto" fill="none" aria-hidden="true">
-            {/* Fine line-drawn leaves in a loose ring around the initials */}
             <g stroke={SAGE} strokeWidth="0.8" strokeLinecap="round">
-              {Array.from({ length: 12 }).map((_, i) => {
-                const deg = i * 30;
-                const a = (deg * Math.PI) / 180;
-                const bx = 60 + 33 * Math.cos(a);
-                const by = 48 - 33 * Math.sin(a);
-                return (
-                  <g key={i} transform={`translate(${bx} ${by}) rotate(${-deg})`}>
-                    <path d="M 0 0 Q 5 -3 10 0 Q 5 3 0 0 Z" fill={SAGE} fillOpacity="0.28" strokeWidth="0.5" />
-                    <path d="M 1 0 L 9 0" strokeWidth="0.4" strokeOpacity="0.6" />
+              {/* Two laurel branches curving up from a tie at the bottom */}
+              <path d="M 60 86 C 30 78, 22 40, 54 12" strokeWidth="0.7" />
+              <path d="M 60 86 C 90 78, 98 40, 66 12" strokeWidth="0.7" />
+              {/* Fine line-drawn leaves along each branch */}
+              {[leftBranch, rightBranch].map((b, bi) =>
+                branchLeaves(...b).map((leaf, li) => (
+                  <g key={`${bi}-${li}`} transform={`translate(${leaf.x} ${leaf.y}) rotate(${leaf.ang - 40})`}>
+                    <path
+                      d="M 0 0 Q 5 -3.5 11 0 Q 5 3.5 0 0 Z"
+                      fill={SAGE}
+                      fillOpacity="0.22"
+                      strokeWidth="0.5"
+                    />
+                    <path d="M 1 0 L 10 0" strokeWidth="0.4" strokeOpacity="0.55" />
                   </g>
-                );
-              })}
+                )),
+              )}
+              {/* Small tie where the branches meet */}
+              <path d="M 56 88 Q 60 84 64 88" strokeWidth="0.7" />
+              <path d="M 57 89 L 55 93 M 63 89 L 65 93" strokeWidth="0.6" />
             </g>
-            {/* Hairline ring */}
-            <circle cx="60" cy="48" r="25" stroke={SAGE} strokeWidth="0.5" strokeOpacity="0.5" />
           </svg>
           <span
             className="absolute inset-0 flex items-center justify-center"
