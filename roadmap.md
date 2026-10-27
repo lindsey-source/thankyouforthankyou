@@ -1,4 +1,5 @@
 # Refinement tasks
+- [ ] Redesign four baby styles and verify matching personalized previews.
 - [x] Add baby fields, shared Style/preview details, and persistent sign-off.
 - [x] Test baby personalization and verify the flow across screen sizes.
 - [x] Correct wedding message voice in all samples and previews.
