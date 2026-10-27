@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Heart, ArrowRight, Upload, PenLine, Send, Palette, Leaf, Mail, Star } from "lucide-react";
+import { Heart, ArrowRight, Upload, PenLine, Send, Palette, Leaf } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { DESIGN_SETS } from "@/pages/CreateCardStep2";
@@ -261,31 +261,15 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Social-proof stats strip */}
-      <section className="homepage-stats bg-brand-dark text-brand-cream">
-        <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-12">
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-10 sm:gap-16 text-center">
-            <div className="flex items-center gap-2 text-brand-cream text-base md:text-lg font-medium">
-              <Mail className="h-5 w-5" strokeWidth={1.25} style={{ color: "#c17b8a" }} aria-hidden="true" />
-              <span>
-                <span className="font-bold">12,847</span> cards sent
-              </span>
-            </div>
-            <span className="hidden sm:inline text-brand-cream/30" aria-hidden="true">·</span>
-            <div className="flex items-center gap-2 text-brand-cream text-base md:text-lg font-medium">
-              <Heart className="h-5 w-5" strokeWidth={1.25} style={{ color: "#8faa8b" }} aria-hidden="true" />
-              <span>
-                <span className="font-bold">$38,541</span> donated
-              </span>
-            </div>
-            <span className="hidden sm:inline text-brand-cream/30" aria-hidden="true">·</span>
-            <div className="flex items-center gap-2 text-brand-cream text-base md:text-lg font-medium">
-              <Star className="h-5 w-5" strokeWidth={1.25} style={{ color: "#c17b8a" }} aria-hidden="true" />
-              <span>
-                <span className="font-bold">4.9/5</span> from 340 families
-              </span>
-            </div>
-          </div>
+      {/* One quiet, honest line */}
+      <section className="homepage-statement bg-background">
+        <div className="max-w-2xl mx-auto px-6 sm:px-10 text-center">
+          <p
+            className="text-2xl md:text-[28px] leading-[1.7] font-light"
+            style={{ fontFamily: "'Playfair Display', Georgia, serif", color: "#2d2420" }}
+          >
+            Now welcoming our first families.
+          </p>
         </div>
       </section>
 
@@ -610,19 +594,6 @@ const LandingPage = () => {
             </div>
 
           </div>
-        </div>
-      </section>
-
-      {/* One quiet, editorial testimonial */}
-      <section>
-        <div className="max-w-3xl mx-auto px-6 sm:px-10 text-center">
-          <h2 className="text-4xl md:text-5xl text-foreground mb-16">Loved by Hosts Everywhere</h2>
-          <blockquote className="max-w-xl mx-auto">
-            <p className="text-base leading-loose text-muted-foreground mb-10 italic">
-              "After our wedding, I had 200+ thank-you notes to send. This platform saved me weeks of work and donated $1,000 to our favorite charity. Our guests loved the personal touch!"
-            </p>
-            <cite className="text-sm not-italic text-foreground">— Sarah &amp; Mike, Newlyweds</cite>
-          </blockquote>
         </div>
       </section>
 
