@@ -225,3 +225,23 @@
 .homepage .stationery-tilt-left { transform: rotate(-1.5deg); }
 .homepage .stationery-tilt-right { transform: rotate(1.5deg); }
 .homepage .stationery-card:hover { transform: rotate(0deg); }
+
+/* Homepage fine-stationery card finish */
+.homepage .stationery-paper { position: relative; }
+.homepage .stationery-paper::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 1;
+  background-image: radial-gradient(hsl(30 25% 55% / 0.07) 1px, transparent 1px);
+  background-size: 5px 5px;
+}
+.homepage .stationery-paper::after {
+  content: ""; position: absolute; inset: 8px; pointer-events: none; z-index: 2;
+  border: 1px solid hsl(40 45% 62% / 0.55); border-radius: 6px;
+}
+.homepage .stationery-header::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: hsl(38 40% 96% / 0.32);
+}
+.homepage .stationery-header.is-dark::before { background: hsl(38 30% 85% / 0.08); }
+.homepage .stationery-card {
+  box-shadow: 0 1px 2px hsl(25 20% 20% / 0.05), 0 10px 24px -16px hsl(25 25% 20% / 0.16);
+}

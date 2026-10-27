@@ -45,6 +45,16 @@ const HERO_CARDS = [
   },
 ];
 
+/* Homepage-only: detect dark card headers so titles switch to warm cream. */
+const isDarkHeader = (bg: string) => {
+  const m = bg.match(/#([0-9a-f]{6})/i);
+  if (!m) return false;
+  const n = parseInt(m[1], 16);
+  const r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+  return 0.299 * r + 0.587 * g + 0.114 * b < 110;
+};
+const CREAM_INK = "#f3e7d3";
+
 const LandingPage = () => {
   const { isLoaded, isSignedIn } = useAuth();
 
@@ -58,6 +68,8 @@ const LandingPage = () => {
   }, []);
   const heroCard = HERO_CARDS[heroIndex];
   const heroDesign = DESIGN_SETS[heroCard.occasion]?.[0] ?? DESIGN_SETS.general[0];
+  const heroDark = isDarkHeader(heroDesign.headerBg);
+  const heroTitleInk = heroDark ? CREAM_INK : heroDesign.ink;
 
   return (
     <div className="homepage min-h-screen bg-background">
@@ -142,7 +154,7 @@ const LandingPage = () => {
 
               {/* Front card (rotated -3deg) — rotates through 4 occasions */}
               <div
-                className="relative w-[280px] sm:w-[300px] aspect-[3/4] rounded-xl border border-border overflow-hidden shadow-soft"
+                className="stationery-card stationery-paper relative w-[280px] sm:w-[300px] aspect-[3/4] rounded-xl border border-border overflow-hidden"
                 style={{
                   transform: "rotate(-3deg)",
                   backgroundColor: heroDesign.bg,
@@ -157,24 +169,20 @@ const LandingPage = () => {
                 >
                   {/* Header band — uses the design's headerBg + ink */}
                   <div
-                    className="relative flex flex-col items-center justify-center"
+                    className={`stationery-header relative flex flex-col items-center justify-center ${heroDark ? "is-dark" : ""}`}
                     style={{
                       height: "240px",
                       background: heroDesign.headerBg,
                     }}
                   >
                     <span
-                      className="text-center px-4"
+                      className="relative z-10 text-center px-4"
                       style={{
-                        fontFamily:
-                          heroDesign.fontChoice === "dancing"
-                            ? "'Dancing Script', cursive"
-                            : heroDesign.fontChoice === "inter"
-                            ? "'Inter', system-ui, sans-serif"
-                            : "'Playfair Display', Georgia, serif",
-                        fontSize: heroDesign.fontChoice === "dancing" ? "40px" : "30px",
-                        color: heroDesign.ink,
-                        letterSpacing: "0.04em",
+                        fontFamily: "'Playfair Display', Georgia, serif",
+                        fontWeight: 400,
+                        fontSize: "30px",
+                        color: heroTitleInk,
+                        letterSpacing: "0.06em",
                         lineHeight: 1.1,
                       }}
                     >
@@ -190,16 +198,16 @@ const LandingPage = () => {
                       }}
                       aria-hidden="true"
                     >
-                      <div style={{ width: "30px", height: "1px", backgroundColor: heroDesign.accent }} />
+                      <div style={{ width: "30px", height: "1px", backgroundColor: heroDark ? CREAM_INK : heroDesign.accent }} />
                       <div
                         style={{
                           width: "4px",
                           height: "4px",
-                          backgroundColor: heroDesign.accent,
+                          backgroundColor: heroDark ? CREAM_INK : heroDesign.accent,
                           transform: "rotate(45deg)",
                         }}
                       />
-                      <div style={{ width: "30px", height: "1px", backgroundColor: heroDesign.accent }} />
+                      <div style={{ width: "30px", height: "1px", backgroundColor: heroDark ? CREAM_INK : heroDesign.accent }} />
                     </div>
                   </div>
 
@@ -426,10 +434,10 @@ const LandingPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-20 lg:gap-24 max-w-5xl mx-auto">
             {/* Card 1 — Wedding (Pink Rose Branch) */}
             <div
-              className="stationery-card stationery-tilt-left group rounded-lg overflow-hidden bg-card border border-border"
+              className="stationery-card stationery-paper stationery-tilt-left group rounded-lg overflow-hidden bg-card border border-border"
             >
               <div
-                className="relative flex items-center justify-center"
+                className="stationery-header relative flex items-center justify-center"
                 style={{
                   height: "240px",
                   background:
@@ -438,7 +446,7 @@ const LandingPage = () => {
               >
                 <svg
                   viewBox="0 0 200 120"
-                  className="absolute inset-0 w-full h-full opacity-90"
+                  className="absolute inset-0 w-full h-full opacity-40"
                   fill="none"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -467,10 +475,11 @@ const LandingPage = () => {
                 <span
                   className="relative z-10 text-center px-4"
                   style={{
-                    fontFamily: "'Dancing Script', cursive",
-                    fontSize: "46px",
+                    fontFamily: "'Playfair Display', Georgia, serif",
+                    fontWeight: 400,
+                    fontSize: "32px",
                     color: "#7a3a4a",
-                    letterSpacing: "0.03em",
+                    letterSpacing: "0.06em",
                     lineHeight: 1.1,
                   }}
                 >
@@ -514,10 +523,10 @@ const LandingPage = () => {
 
             {/* Card 3 — Baby Showers (Sage + Wildflowers) */}
             <div
-              className="stationery-card stationery-tilt-right group rounded-lg overflow-hidden bg-card border border-border"
+              className="stationery-card stationery-paper stationery-tilt-right group rounded-lg overflow-hidden bg-card border border-border"
             >
               <div
-                className="relative flex items-center justify-center"
+                className="stationery-header relative flex items-center justify-center"
                 style={{
                   height: "240px",
                   background:
@@ -526,7 +535,7 @@ const LandingPage = () => {
               >
                 <svg
                   viewBox="0 0 200 120"
-                  className="absolute inset-0 w-full h-full opacity-80"
+                  className="absolute inset-0 w-full h-full opacity-50"
                   fill="none"
                   strokeLinecap="round"
                   aria-hidden="true"
@@ -548,10 +557,11 @@ const LandingPage = () => {
                 <span
                   className="relative z-10 text-center px-4"
                   style={{
-                    fontFamily: "'Dancing Script', cursive",
-                    fontSize: "48px",
+                    fontFamily: "'Playfair Display', Georgia, serif",
+                    fontWeight: 400,
+                    fontSize: "32px",
                     color: "#2f4a2c",
-                    letterSpacing: "0.03em",
+                    letterSpacing: "0.06em",
                     lineHeight: 1.1,
                   }}
                 >
