@@ -186,6 +186,25 @@
     letter-spacing: 0;
   }
 
+  .homepage h1 span {
+    font-family: inherit;
+  }
+
+  .homepage nav img {
+    min-width: 100px;
+    object-fit: contain;
+  }
+
+  @media (max-width: 480px) {
+    .homepage nav > div {
+      padding-inline: 16px;
+    }
+
+    .homepage nav a:last-child button {
+      padding-inline: 16px;
+    }
+  }
+
   .homepage h2 {
     max-width: 720px;
     margin-inline: auto;
