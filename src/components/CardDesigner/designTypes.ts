@@ -12,7 +12,8 @@ export type HeaderStyle =
   | 'starOfDavid'
   | 'ornamentFrame'
   | 'wave'
-  | 'dotsField';
+  | 'dotsField'
+  | 'weddingCrest';
 
 export type FontFamily = 'serifScript' | 'serifItalic' | 'sansCaps' | 'serifClassic';
 
