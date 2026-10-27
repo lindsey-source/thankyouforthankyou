@@ -446,7 +446,7 @@ const LandingPage = () => {
               >
                 <svg
                   viewBox="0 0 200 120"
-                  className="absolute inset-0 w-full h-full opacity-90"
+                  className="absolute inset-0 w-full h-full opacity-40"
                   fill="none"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -535,7 +535,7 @@ const LandingPage = () => {
               >
                 <svg
                   viewBox="0 0 200 120"
-                  className="absolute inset-0 w-full h-full opacity-80"
+                  className="absolute inset-0 w-full h-full opacity-50"
                   fill="none"
                   strokeLinecap="round"
                   aria-hidden="true"
