@@ -177,7 +177,7 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
               <img src={photoUrl} alt="" className="absolute inset-0 w-full h-full object-cover" />
               <div className="absolute inset-0 bg-black/20" aria-hidden="true" />
               <span
-                className="relative z-10 text-white drop-shadow-md"
+                className="relative z-10 text-white drop-shadow-md text-center"
                 style={{
                   fontFamily: fonts.heading,
                   fontSize: 'clamp(24px, 5vw, 34px)', fontWeight: 400,
@@ -186,11 +186,20 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
                 }}
               >
                 {headline}
+                {weddingLine && (
+                  <span
+                    className="block"
+                    style={{ fontSize: '10px', letterSpacing: '0.22em', textTransform: 'uppercase', opacity: 0.85, marginTop: '8px' }}
+                  >
+                    {weddingLine}
+                  </span>
+                )}
               </span>
             </>
           ) : (
             <>
               <span
+                className="text-center"
                 style={{
                   fontFamily: fonts.heading,
                   fontSize: 'clamp(24px, 5vw, 34px)', fontWeight: 400,
@@ -200,6 +209,14 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
                 }}
               >
                 {headline}
+                {weddingLine && (
+                  <span
+                    className="block"
+                    style={{ fontSize: '10px', letterSpacing: '0.22em', textTransform: 'uppercase', opacity: 0.85, marginTop: '8px' }}
+                  >
+                    {weddingLine}
+                  </span>
+                )}
               </span>
               <div className="flex items-center gap-2 mt-3 opacity-70" aria-hidden="true">
                 <div style={{ width: '28px', height: '1px', backgroundColor: accentColor }} />
