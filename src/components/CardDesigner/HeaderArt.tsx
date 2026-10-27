@@ -81,8 +81,6 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
   const fontStyle = fontStyleFor(font, headlineFont);
   const headline = headlineOverride?.trim() || headlineText;
 
-  // When a photo is uploaded, replace the art with the photo + dark scrim.
-  if (photoUrl) {
   // Wedding stationery: gold wreath crest + script headline + serif names.
   if (headerStyle === 'weddingCrest' && !photoUrl) {
     const GOLD_CREST = '#c9a96e';
