@@ -98,6 +98,9 @@ export default function CreateCardStep5() {
               {...(cardData.occasion === 'wedding'
                 ? { coupleNames: cardData.coupleNames, weddingDate: cardData.weddingDate }
                 : {})}
+              {...(cardData.occasion === 'baby'
+                ? { babyName: cardData.babyName, babyDate: cardData.babyDate, parentsNames: cardData.parentsNames }
+                : {})}
             />
             <p
               className="text-center text-sm mt-4"
