@@ -65,6 +65,7 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
   photoUrl,
   headlineFont,
   subtext,
+  initials,
 }) => {
   const {
     headerStyle,
