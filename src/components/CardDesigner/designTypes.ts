@@ -19,7 +19,11 @@ export type HeaderStyle =
   | 'roseStem'
   | 'ivoryFrame'
   | 'gardenLeaves'
-  | 'decoFrame';
+  | 'decoFrame'
+  | 'babyMoon'
+  | 'babyWash'
+  | 'babyMinimal'
+  | 'babyRainbow';
 
 export type FontFamily = 'serifScript' | 'serifItalic' | 'sansCaps' | 'serifClassic';
 

@@ -2,6 +2,8 @@ import React from 'react';
 import type { Design, FontFamily, HeaderStyle } from './designTypes';
 import peonyCorner from '@/assets/watercolor-peony-corner.png';
 import marbleGold from '@/assets/wedding-marble-gold.jpg';
+import { BabyHeaderArt } from './BabyHeaderArt';
+import { babyStyleFor } from './babyStyles';
 
 interface HeaderArtProps {
   /** Full design from Step 2 (provides accent/ink/headerBg/headerStyle/headlineText/font). */
@@ -100,6 +102,11 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
   const headlineColor = isDarkBg ? CREAM_INK : ink;
   const fontStyle = fontStyleFor(font, headlineFont);
   const headline = headlineOverride?.trim() || headlineText;
+  // Stable IDs also upgrade restored baby drafts without reintroducing old artwork.
+  const babyStyle = babyStyleFor(id);
+  if (babyStyle && !photoUrl) {
+    return <BabyHeaderArt styleKey={babyStyle.headerStyle} height={height} className={className} headlineFont={headlineFont} subtext={subtext} />;
+  }
 
   // Wedding stationery: gold wreath crest + script headline + serif names.
   if (headerStyle === 'weddingCrest' && !photoUrl) {

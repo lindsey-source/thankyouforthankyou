@@ -34,6 +34,10 @@
     --brand-rose-soft: 347 45% 92%;
     --brand-sage-soft: 115 20% 92%;
     --stationery-gold: 39 46% 61%;
+    --baby-twilight: 216 30% 22%;
+    --baby-paper: 42 45% 96%;
+    --baby-gold: 39 48% 70%;
+    --baby-ink: 20 18% 22%;
 
     /* Primary: Dusty Rose #c17b8a */
     --primary: 347 35% 62%;
@@ -137,6 +141,35 @@
 @layer base {
   * {
     @apply border-border;
+  }
+
+  .baby-header {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: hsl(var(--baby-paper));
+    color: hsl(var(--baby-ink));
+    container-type: inline-size;
+  }
+  .baby-header--babyMoon { background: hsl(var(--baby-twilight)); color: hsl(var(--baby-paper)); }
+  .baby-header-copy { position: relative; z-index: 1; width: 100%; text-align: center; padding: 0 26px; }
+  .baby-header-title { display: block; font-family: 'Playfair Display', Georgia, serif; font-size: 25px; font-weight: 400; line-height: 1.25; letter-spacing: 0; text-wrap: balance; overflow-wrap: anywhere; }
+  .baby-header-name { font-size: 42px; line-height: 1.15; }
+  .baby-header-details { display: block; margin-top: 12px; font-family: 'Playfair Display', Georgia, serif; font-size: 9px; line-height: 1.7; letter-spacing: 0.16em; text-transform: uppercase; text-wrap: balance; overflow-wrap: anywhere; }
+  .baby-moon-art { position: relative; z-index: 1; width: 180px; height: 70px; flex-shrink: 0; margin-bottom: 10px; color: hsl(var(--baby-gold)); }
+  .baby-wash-art { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .baby-rainbow-art { position: absolute; top: 0; width: 100%; height: 62%; object-fit: contain; }
+  .baby-header--babyRainbow { justify-content: flex-end; }
+  .baby-header--babyRainbow .baby-header-copy { padding-bottom: 20px; }
+  .baby-header--babyWash .baby-header-copy { padding-left: 42px; padding-right: 42px; }
+  @container (max-width: 280px) {
+    .baby-header-title { font-size: 22px; }
+    .baby-header-name { font-size: 36px; }
+    .baby-header-details { font-size: 8px; letter-spacing: 0.12em; }
+    .baby-header--babyWash .baby-header-copy { padding-left: 24px; padding-right: 24px; }
   }
 
   body {
