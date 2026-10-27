@@ -62,6 +62,7 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
   headlineOverride,
   photoUrl,
   headlineFont,
+  subtext,
 }) => {
   const {
     headerStyle,
@@ -91,6 +92,7 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
           style={{ ...fontStyle, lineHeight: 1.1 }}
         >
           {headline}
+          {subtext && <span className="block" style={subtextStyle('#f3e7d3')}>{subtext}</span>}
         </span>
       </div>
     );
@@ -158,6 +160,7 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
             style={{ ...fontStyle, color: headlineColor, top: '128px' }}
           >
             {headline}
+            {subtext && <span className="block" style={subtextStyle(headlineColor)}>{subtext}</span>}
           </span>
         </>
       )}
@@ -255,8 +258,9 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
           ))}
           <div className="flex flex-col items-center">
             <div style={{ width: '70px', height: '1px', backgroundColor: accent, marginBottom: '14px' }} />
-            <span className="text-center px-4" style={{ ...fontStyle, color: headlineColor, whiteSpace: 'nowrap' }}>
+            <span className="text-center px-4" style={{ ...fontStyle, color: headlineColor }}>
               {headline}
+              {subtext && <span className="block" style={subtextStyle(headlineColor)}>{subtext}</span>}
             </span>
             <div style={{ width: '70px', height: '1px', backgroundColor: accent, marginTop: '14px' }} />
           </div>
@@ -300,6 +304,7 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
           style={{ ...fontStyle, color: headlineColor, lineHeight: 1.1 }}
         >
           {headline}
+          {subtext && <span className="block" style={subtextStyle(headlineColor)}>{subtext}</span>}
         </span>
       )}
     </div>
