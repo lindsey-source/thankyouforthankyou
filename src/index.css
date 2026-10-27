@@ -208,3 +208,20 @@
     line-height: 1.35;
   }
 }
+
+/* Homepage gallery: warm paper surface with tilted stationery cards */
+.homepage .homepage-paper {
+  background-color: hsl(36 45% 95%);
+  background-image:
+    radial-gradient(hsl(30 30% 70% / 0.08) 1px, transparent 1px),
+    radial-gradient(hsl(30 30% 60% / 0.06) 1px, transparent 1px);
+  background-size: 7px 7px, 13px 13px;
+  background-position: 0 0, 3px 5px;
+}
+.homepage .stationery-card {
+  box-shadow: 0 1px 2px hsl(25 20% 20% / 0.06), 0 12px 28px -14px hsl(25 25% 20% / 0.18);
+  transition: transform 0.4s ease;
+}
+.homepage .stationery-tilt-left { transform: rotate(-1.5deg); }
+.homepage .stationery-tilt-right { transform: rotate(1.5deg); }
+.homepage .stationery-card:hover { transform: rotate(0deg); }
