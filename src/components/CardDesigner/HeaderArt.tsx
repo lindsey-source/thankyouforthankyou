@@ -17,7 +17,21 @@ interface HeaderArtProps {
   photoUrl?: string | null;
   /** Optional user-chosen headline font family (Step 3 font choice). Falls back to the light serif. */
   headlineFont?: string;
+  /** Optional small letter-spaced caps line under the headline (e.g. wedding couple + date). */
+  subtext?: string;
 }
+
+/* Small letter-spaced caps line shown under the headline */
+const subtextStyle = (color: string): React.CSSProperties => ({
+  fontFamily: "'Playfair Display', Georgia, serif",
+  fontSize: '10px',
+  fontWeight: 400,
+  letterSpacing: '0.22em',
+  textTransform: 'uppercase',
+  color,
+  opacity: 0.85,
+  marginTop: '8px',
+});
 
 // Fine-stationery titles: light weight with gentle letter spacing; font family follows the user's choice.
 const fontStyleFor = (font: FontFamily, headlineFont?: string): React.CSSProperties => ({
