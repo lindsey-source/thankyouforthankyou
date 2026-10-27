@@ -104,6 +104,7 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
           aria-hidden="true"
         />
         {/* Thin gold wreath with the couple's initials */}
+        <div className="relative">
         <svg viewBox="0 0 120 96" className="w-[92px] h-auto" fill="none" aria-hidden="true">
           {/* Laurel branches forming the wreath */}
           <g stroke={GOLD_CREST} strokeWidth="1" strokeLinecap="round">
@@ -141,9 +142,9 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
         </svg>
         {/* Initials inside the wreath */}
         <span
-          className="absolute"
+          className="absolute inset-0 flex items-center justify-center"
           style={{
-            top: 'calc(50% - 62px)',
+            paddingBottom: '14px',
             fontFamily: "'Playfair Display', Georgia, serif",
             fontSize: '19px',
             fontWeight: 400,
@@ -153,6 +154,7 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
         >
           {initials || 'E & J'}
         </span>
+        </div>
         {/* Refined script headline */}
         <span
           className="relative z-10 text-center px-4 mt-1"
