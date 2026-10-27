@@ -51,6 +51,14 @@ export interface LiveCardPreviewProps {
   className?: string;
 }
 
+/** "Lindsey & Josh" → "L & J"; falls back to the soft example initials. */
+export const coupleInitials = (names?: string | null): string => {
+  const parts = (names || '').split(/&|and/i).map((s) => s.trim()).filter(Boolean);
+  if (parts.length >= 2) return `${parts[0][0].toUpperCase()} & ${parts[1][0].toUpperCase()}`;
+  if (parts.length === 1 && parts[0]) return parts[0][0].toUpperCase();
+  return 'E & J';
+};
+
 const textureBackground = (texture: string | null | undefined, baseBg: string) => {
   const key = (texture || 'smooth').toLowerCase();
   if (key === 'linen') {
@@ -124,6 +132,7 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
   const weddingLine = isWedding
     ? `${coupleNames?.trim() || 'Emma & James'} · ${weddingDate?.trim() || 'June 14, 2027'}`
     : undefined;
+  const initials = isWedding ? coupleInitials(coupleNames) : undefined;
 
   const signatureFont =
     signatureStyle === 'handwritten'
@@ -161,6 +170,7 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
             photoUrl={photoUrl}
             headlineFont={fonts.heading}
             subtext={weddingLine}
+            initials={initials}
           />
         </div>
       ) : (
