@@ -3,6 +3,18 @@ import { useNavigate } from 'react-router-dom';
 import { useCardWizard } from '@/contexts/CardWizardContext';
 import { motion } from 'framer-motion';
 import { ProgressBar } from '@/components/CardDesigner/ProgressBar';
+import {
+  Heart,
+  Baby,
+  GraduationCap,
+  Cake,
+  Star,
+  Briefcase,
+  Mail,
+  Flame,
+  HandHeart,
+  type LucideIcon,
+} from 'lucide-react';
 
 const TOTAL_STEPS = 7;
 
