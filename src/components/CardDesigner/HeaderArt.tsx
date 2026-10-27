@@ -83,11 +83,101 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
 
   // When a photo is uploaded, replace the art with the photo + dark scrim.
   if (photoUrl) {
+  // Wedding stationery: gold wreath crest + script headline + serif names.
+  if (headerStyle === 'weddingCrest' && !photoUrl) {
+    const GOLD_CREST = '#c9a96e';
+    const scriptStyle: React.CSSProperties = {
+      ...fontStyle,
+      fontFamily: headlineFont || "'Dancing Script', cursive",
+      fontSize: '34px',
+      letterSpacing: '0.02em',
+    };
     return (
       <div
-        className={`relative flex items-center justify-center overflow-hidden ${className}`}
+        className={`relative flex flex-col items-center justify-center overflow-hidden ${className}`}
         style={{ height, background: headerBg }}
       >
+        {/* Soft cream wash mutes the header color */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ background: isDarkBg ? 'hsl(38 30% 85% / 0.08)' : 'hsl(38 40% 96% / 0.32)' }}
+          aria-hidden="true"
+        />
+        {/* Thin gold wreath with the couple's initials */}
+        <svg viewBox="0 0 120 96" className="w-[92px] h-auto" fill="none" aria-hidden="true">
+          {/* Laurel branches forming the wreath */}
+          <g stroke={GOLD_CREST} strokeWidth="1" strokeLinecap="round">
+            <path d="M 60 88 C 34 84, 18 64, 20 38" />
+            <path d="M 60 88 C 86 84, 102 64, 100 38" />
+            {/* Leaves — left branch */}
+            {[0, 1, 2, 3, 4].map((i) => {
+              const t = i / 4;
+              const x = 60 - 40 * Math.sin(t * 1.35) * 1.02;
+              const y = 88 - 50 * t * 1.02;
+              const a = -35 - t * 55;
+              return (
+                <g key={`l${i}`} transform={`translate(${x} ${y}) rotate(${a})`}>
+                  <path d="M 0 0 Q 5 -3 10 0 Q 5 3 0 0 Z" fill={GOLD_CREST} fillOpacity="0.55" stroke="none" />
+                </g>
+              );
+            })}
+            {/* Leaves — right branch */}
+            {[0, 1, 2, 3, 4].map((i) => {
+              const t = i / 4;
+              const x = 60 + 40 * Math.sin(t * 1.35) * 1.02;
+              const y = 88 - 50 * t * 1.02;
+              const a = 35 + t * 55;
+              return (
+                <g key={`r${i}`} transform={`translate(${x} ${y}) rotate(${a})`}>
+                  <path d="M 0 0 Q 5 -3 10 0 Q 5 3 0 0 Z" fill={GOLD_CREST} fillOpacity="0.55" stroke="none" />
+                </g>
+              );
+            })}
+            {/* Small bow where the branches meet */}
+            <path d="M 56 88 Q 60 84 64 88" strokeWidth="0.8" />
+          </g>
+          {/* Fine inner ring */}
+          <circle cx="60" cy="52" r="26" stroke={GOLD_CREST} strokeWidth="0.5" strokeOpacity="0.6" />
+        </svg>
+        {/* Initials inside the wreath */}
+        <span
+          className="absolute"
+          style={{
+            top: 'calc(50% - 62px)',
+            fontFamily: "'Playfair Display', Georgia, serif",
+            fontSize: '19px',
+            fontWeight: 400,
+            letterSpacing: '0.08em',
+            color: GOLD_CREST,
+          }}
+        >
+          {initials || 'E & J'}
+        </span>
+        {/* Refined script headline */}
+        <span
+          className="relative z-10 text-center px-4 mt-1"
+          style={{ ...scriptStyle, color: headlineColor, lineHeight: 1.15 }}
+        >
+          {headline}
+        </span>
+        {/* Names + date in classic serif caps */}
+        {subtext && (
+          <span
+            className="relative z-10 text-center px-4"
+            style={{ ...subtextStyle(isDarkBg ? CREAM_INK : ink), marginTop: '6px' }}
+          >
+            {subtext}
+          </span>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className={`relative flex items-center justify-center overflow-hidden ${className}`}
+      style={{ height, background: headerBg }}
+    >
         <img src={photoUrl} alt="" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-black/30" aria-hidden="true" />
         <span
