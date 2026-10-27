@@ -8,7 +8,7 @@ import { toast } from 'sonner';
 import { ProgressBar } from '@/components/CardDesigner/ProgressBar';
 import { HeaderArt } from '@/components/CardDesigner/HeaderArt';
 import type { Design, HeaderStyle, FontFamily, OccasionId } from '@/components/CardDesigner/designTypes';
-import { LiveCardPreview } from '@/components/CardDesigner/LiveCardPreview';
+import { LiveCardPreview, coupleInitials } from '@/components/CardDesigner/LiveCardPreview';
 
 const STEP_NAMES = [
   'Choose Occasion',
@@ -1027,7 +1027,15 @@ Pick Your Style
                       ? `${cardData.coupleNames?.trim() || 'Emma & James'} · ${cardData.weddingDate?.trim() || 'June 14, 2027'}`
                       : undefined
                   }
+                  initials={design.occasion === 'wedding' ? coupleInitials(cardData.coupleNames) : undefined}
                 />
+                {design.occasion === 'wedding' && (
+                  <div
+                    className="absolute pointer-events-none z-[7]"
+                    style={{ inset: '13px', border: '0.5px solid hsl(40 45% 62% / 0.5)', borderRadius: '6px' }}
+                    aria-hidden="true"
+                  />
+                )}
 
                 <div className="p-6">
                   <div className="flex items-center justify-between gap-2 mb-4 flex-wrap">
@@ -1199,6 +1207,7 @@ Pick Your Style
                       ? `${cardData.coupleNames?.trim() || 'Emma & James'} · ${cardData.weddingDate?.trim() || 'June 14, 2027'}`
                       : undefined
                   }
+                  initials={design.occasion === 'wedding' ? coupleInitials(cardData.coupleNames) : undefined}
                 />
 
                 {/* Body */}
