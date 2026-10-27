@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Heart, ArrowRight, Upload, PenLine, Send, Sparkles, Palette, Leaf } from "lucide-react";
+import { Heart, ArrowRight, Upload, PenLine, Send, Palette, Leaf } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { DESIGN_SETS } from "@/pages/CreateCardStep2";
-import cardBlushBotanical from "@/assets/card-blush-botanical.jpg";
-import cardSageAbstract from "@/assets/card-sage-abstract.jpg";
-import cardWildflowerInk from "@/assets/card-wildflower-ink.jpg";
 
 /* ---------- Hero rotating-card content ----------
    Each entry reuses the FIRST design from its occasion in DESIGN_SETS
@@ -135,21 +132,19 @@ const LandingPage = () => {
             <div className="relative flex items-center justify-center min-h-[450px] md:min-h-[480px]">
               {/* Back card (peeking, rotated +3deg) */}
               <div
-                className="absolute w-[280px] sm:w-[300px] aspect-[3/4] rounded-2xl shadow-soft border"
+                className="absolute w-[280px] sm:w-[300px] aspect-[3/4] rounded-xl shadow-soft border border-border"
                 style={{
                   transform: "rotate(3deg) translate(28px, 16px)",
-                  backgroundColor: "#f5ede9",
-                  borderColor: "rgba(45, 36, 32, 0.06)",
+                  backgroundColor: "hsl(var(--muted))",
                 }}
                 aria-hidden="true"
               />
 
               {/* Front card (rotated -3deg) — rotates through 4 occasions */}
               <div
-                className="relative w-[280px] sm:w-[300px] aspect-[3/4] rounded-2xl border overflow-hidden shadow-warm"
+                className="relative w-[280px] sm:w-[300px] aspect-[3/4] rounded-xl border border-border overflow-hidden shadow-soft"
                 style={{
                   transform: "rotate(-3deg)",
-                  borderColor: "rgba(45, 36, 32, 0.08)",
                   backgroundColor: heroDesign.bg,
                 }}
                 role="img"
@@ -242,23 +237,7 @@ const LandingPage = () => {
                 </div>
               </div>
 
-              {/* Rotation indicator dots */}
-              <div
-                className="absolute -bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-1.5"
-                aria-hidden="true"
-              >
-                {HERO_CARDS.map((_, i) => (
-                  <span
-                    key={i}
-                    className="h-1.5 rounded-full transition-all duration-300"
-                    style={{
-                      width: i === heroIndex ? "16px" : "6px",
-                      backgroundColor:
-                        i === heroIndex ? "#c17b8a" : "rgba(45, 36, 32, 0.2)",
-                    }}
-                  />
-                ))}
-              </div>
+            </div>
 
             </div>
           </div>
@@ -348,7 +327,7 @@ const LandingPage = () => {
               return (
                 <div key={index} className="relative">
                   <div
-                    className="h-full rounded-lg p-8 sm:p-10 border border-border bg-card"
+                    className="h-full rounded-lg p-8 sm:p-10 border border-border bg-card shadow-soft"
                   >
                     <div className="relative w-14 h-14 mb-5">
                       <div
@@ -357,7 +336,7 @@ const LandingPage = () => {
                       >
                         <Icon className="h-6 w-6" strokeWidth={1.75} />
                       </div>
-                      <div className="absolute -top-2 -right-2 h-7 w-7 rounded-full bg-primary text-primary-foreground text-xs font-bold flex items-center justify-center shadow-sm">
+                      <div className="absolute -top-2 -right-2 h-7 w-7 rounded-full bg-primary text-primary-foreground text-xs font-bold flex items-center justify-center border border-border shadow-soft">
                         {index + 1}
                       </div>
                     </div>
@@ -408,7 +387,7 @@ const LandingPage = () => {
               return (
                 <Card
                   key={index}
-                  className="bg-card border-border rounded-lg shadow-none"
+                  className="bg-card border-border rounded-lg shadow-soft"
                 >
                   <CardContent className="p-8 lg:p-10">
                     <div
@@ -464,11 +443,7 @@ const LandingPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-20 max-w-4xl mx-auto">
             {/* Card 1 — Wedding (Pink Rose Branch) */}
             <div
-              className="group rounded-lg overflow-hidden bg-card transition-all duration-300 hover:-translate-y-1"
-              style={{
-                border: "1px solid #ede8e3",
-                boxShadow: "0 10px 40px -12px rgba(193,123,138,0.15)",
-              }}
+              className="group rounded-lg overflow-hidden bg-card border border-border shadow-soft"
             >
               <div
                 className="relative flex items-center justify-center"
@@ -555,11 +530,7 @@ const LandingPage = () => {
 
             {/* Card 3 — Baby Showers (Sage + Wildflowers) */}
             <div
-              className="group rounded-lg overflow-hidden bg-card transition-all duration-300 hover:-translate-y-1"
-              style={{
-                border: "1px solid #ede8e3",
-                boxShadow: "0 10px 40px -12px rgba(143,170,139,0.18)",
-              }}
+              className="group rounded-lg overflow-hidden bg-card border border-border shadow-soft"
             >
               <div
                 className="relative flex items-center justify-center"

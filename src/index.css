@@ -69,9 +69,9 @@
     --gradient-card: linear-gradient(145deg, hsl(var(--brand-cream)) 0%, hsl(var(--brand-cream-deep)) 100%);
 
     /* Shadows with brand colors */
-    --shadow-warm: 0 10px 30px -5px hsl(347 35% 62% / 0.18);
-    --shadow-soft: 0 4px 20px -2px hsl(20 18% 15% / 0.08);
-    --shadow-glow: 0 0 40px hsl(347 35% 62% / 0.25);
+    --shadow-soft: 0 2px 10px -3px hsl(var(--brand-dark) / 0.045);
+    --shadow-warm: var(--shadow-soft);
+    --shadow-glow: var(--shadow-soft);
 
     /* Animations */
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
