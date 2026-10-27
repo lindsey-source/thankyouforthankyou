@@ -13,7 +13,11 @@ export type HeaderStyle =
   | 'ornamentFrame'
   | 'wave'
   | 'dotsField'
-  | 'weddingCrest';
+  | 'weddingCrest'
+  | 'roseStem'
+  | 'ivoryFrame'
+  | 'gardenLeaves'
+  | 'decoFrame';
 
 export type FontFamily = 'serifScript' | 'serifItalic' | 'sansCaps' | 'serifClassic';
 
