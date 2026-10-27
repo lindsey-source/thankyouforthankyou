@@ -159,7 +159,7 @@ const LandingPage = () => {
                   <div
                     className="relative flex flex-col items-center justify-center"
                     style={{
-                      height: "180px",
+                      height: "240px",
                       background: heroDesign.headerBg,
                     }}
                   >
@@ -405,7 +405,7 @@ const LandingPage = () => {
       </section>
 
       {/* Card Design Gallery */}
-      <section id="card-gallery" className="bg-muted/30 scroll-mt-20">
+      <section id="card-gallery" className="homepage-paper scroll-mt-20">
         <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-12">
           <div className="text-center mb-20">
             <h2
@@ -423,15 +423,15 @@ const LandingPage = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-20 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-20 lg:gap-24 max-w-5xl mx-auto">
             {/* Card 1 — Wedding (Pink Rose Branch) */}
             <div
-              className="group rounded-lg overflow-hidden bg-card border border-border shadow-soft"
+              className="stationery-card stationery-tilt-left group rounded-lg overflow-hidden bg-card border border-border"
             >
               <div
                 className="relative flex items-center justify-center"
                 style={{
-                  height: "180px",
+                  height: "240px",
                   background:
                     "linear-gradient(180deg, #fdf6f3 0%, #f9d9d2 100%)",
                 }}
@@ -468,8 +468,8 @@ const LandingPage = () => {
                   className="relative z-10 text-center px-4"
                   style={{
                     fontFamily: "'Dancing Script', cursive",
-                    fontSize: "38px",
-                    color: "#b06070",
+                    fontSize: "46px",
+                    color: "#7a3a4a",
                     letterSpacing: "0.03em",
                     lineHeight: 1.1,
                   }}
@@ -514,12 +514,12 @@ const LandingPage = () => {
 
             {/* Card 3 — Baby Showers (Sage + Wildflowers) */}
             <div
-              className="group rounded-lg overflow-hidden bg-card border border-border shadow-soft"
+              className="stationery-card stationery-tilt-right group rounded-lg overflow-hidden bg-card border border-border"
             >
               <div
                 className="relative flex items-center justify-center"
                 style={{
-                  height: "180px",
+                  height: "240px",
                   background:
                     "linear-gradient(180deg, #eef2e8 0%, #c5d4bc 100%)",
                 }}
@@ -549,8 +549,8 @@ const LandingPage = () => {
                   className="relative z-10 text-center px-4"
                   style={{
                     fontFamily: "'Dancing Script', cursive",
-                    fontSize: "40px",
-                    color: "#3d5a3a",
+                    fontSize: "48px",
+                    color: "#2f4a2c",
                     letterSpacing: "0.03em",
                     lineHeight: 1.1,
                   }}
