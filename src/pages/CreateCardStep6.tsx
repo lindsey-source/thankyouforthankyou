@@ -212,6 +212,9 @@ export default function CreateCardStep5Impact() {
                 donationAmount={donationAmount}
                 texture={cardData.texture}
                 signatureStyle={cardData.signatureStyle}
+                {...(cardData.occasion === 'wedding'
+                  ? { coupleNames: cardData.coupleNames, weddingDate: cardData.weddingDate }
+                  : {})}
                 className="h-full"
               />
             </EnvelopeReveal>

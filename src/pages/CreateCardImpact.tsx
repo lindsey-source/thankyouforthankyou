@@ -544,6 +544,9 @@ export default function CreateCardImpact() {
             signatureStyle={cardData.signatureStyle}
             charityName={selectedCharity?.name || null}
             donationAmount={flatAmount}
+            {...(cardData.occasion === 'wedding'
+              ? { coupleNames: cardData.coupleNames, weddingDate: cardData.weddingDate }
+              : {})}
           />
           <p
             className="text-center text-sm mt-4"
