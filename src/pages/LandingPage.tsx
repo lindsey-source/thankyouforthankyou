@@ -597,18 +597,6 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* One quiet, editorial testimonial */}
-      <section>
-        <div className="max-w-3xl mx-auto px-6 sm:px-10 text-center">
-          <h2 className="text-4xl md:text-5xl text-foreground mb-16">Loved by Hosts Everywhere</h2>
-          <blockquote className="max-w-xl mx-auto">
-            <p className="text-base leading-loose text-muted-foreground mb-10 italic">
-              "After our wedding, I had 200+ thank-you notes to send. This platform saved me weeks of work and donated $1,000 to our favorite charity. Our guests loved the personal touch!"
-            </p>
-            <cite className="text-sm not-italic text-foreground">— Sarah &amp; Mike, Newlyweds</cite>
-          </blockquote>
-        </div>
-      </section>
 
       {/* CTA Section */}
       <section className="bg-brand-sage-soft text-brand-dark">
