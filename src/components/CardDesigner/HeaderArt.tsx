@@ -173,7 +173,9 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
     );
   }
 
-  return (
+  // When a photo is uploaded, replace the art with the photo + dark scrim.
+  if (photoUrl) {
+    return (
     <div
       className={`relative flex items-center justify-center overflow-hidden ${className}`}
       style={{ height, background: headerBg }}
