@@ -17,35 +17,23 @@ interface HeaderArtProps {
   photoUrl?: string | null;
 }
 
-const fontStyleFor = (font: FontFamily): React.CSSProperties => {
-  if (font === 'serifScript')
-    return { fontFamily: "'Dancing Script', cursive", fontSize: '40px', letterSpacing: '0.02em' };
-  if (font === 'serifItalic')
-    return {
-      fontFamily: "'Playfair Display', Georgia, serif",
-      fontStyle: 'italic',
-      fontSize: '28px',
-      fontWeight: 500,
-      letterSpacing: '0.02em',
-    };
-  if (font === 'sansCaps')
-    return {
-      fontFamily: "'Inter', sans-serif",
-      fontSize: '14px',
-      letterSpacing: '0.28em',
-      textTransform: 'uppercase',
-      fontWeight: 400,
-    };
-  return {
-    fontFamily: "'Playfair Display', Georgia, serif",
-    fontSize: '30px',
-    fontWeight: 500,
-    letterSpacing: '0.01em',
-  };
+// Fine-stationery titles: every design uses a light serif with gentle letter spacing.
+const fontStyleFor = (font: FontFamily): React.CSSProperties => ({
+  fontFamily: "'Playfair Display', Georgia, serif",
+  fontStyle: font === 'serifItalic' ? 'italic' : 'normal',
+  fontSize: '28px',
+  fontWeight: 400,
+  letterSpacing: '0.06em',
+});
+
+const isDarkBackground = (bg: string) => {
+  const m = bg.match(/#([0-9a-f]{6})/i);
+  if (!m) return false;
+  const n = parseInt(m[1], 16);
+  return 0.299 * ((n >> 16) & 255) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255) < 110;
 };
 
-const isDarkBackground = (bg: string) =>
-  bg.includes('#1') || bg.includes('#2') || bg.includes('1a1a1a');
+const CREAM_INK = '#f3e7d3';
 
 /**
  * Reusable header art renderer used by Step 2 (design grid) and Step 3 (live preview).
@@ -68,11 +56,7 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
     id,
   } = design;
   const isDarkBg = isDarkBackground(headerBg);
-  const headlineColor = isDarkBg
-    ? accent.startsWith('#c') || accent.startsWith('#d')
-      ? accent
-      : '#ffffff'
-    : ink;
+  const headlineColor = isDarkBg ? CREAM_INK : ink;
   const fontStyle = fontStyleFor(font);
   const headline = headlineOverride?.trim() || headlineText;
 
@@ -100,10 +84,16 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
       className={`relative flex items-center justify-center overflow-hidden ${className}`}
       style={{ height, background: headerBg }}
     >
+      {/* Soft cream wash mutes every header color */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: isDarkBg ? 'hsl(38 30% 85% / 0.08)' : 'hsl(38 40% 96% / 0.32)' }}
+        aria-hidden="true"
+      />
       {headerStyle === 'botanical' && (
         <svg
           viewBox="0 0 200 120"
-          className="absolute inset-0 w-full h-full opacity-90"
+          className="absolute inset-0 w-full h-full opacity-40"
           fill="none"
           strokeLinecap="round"
         >
@@ -128,7 +118,7 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
               width: '64px',
               height: '64px',
               borderRadius: '9999px',
-              border: `1px solid ${isDarkBg ? 'rgba(255,255,255,0.5)' : accent}`,
+              border: `1px solid ${isDarkBg ? 'rgba(243,231,211,0.5)' : accent}`,
               top: '32px',
               display: 'flex',
               alignItems: 'center',
@@ -138,7 +128,7 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
             <span
               style={{
                 fontFamily: "'Playfair Display', Georgia, serif",
-                color: isDarkBg ? '#ffffff' : ink,
+                color: isDarkBg ? CREAM_INK : ink,
                 fontSize: '22px',
                 letterSpacing: '0.05em',
               }}
@@ -158,7 +148,7 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
       {headerStyle === 'starburst' && (
         <svg
           viewBox="0 0 200 120"
-          className="absolute inset-0 w-full h-full opacity-80"
+          className="absolute inset-0 w-full h-full opacity-40"
           fill="none"
           strokeLinecap="round"
         >
@@ -198,7 +188,7 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
               cy={cy}
               r={i % 3 === 0 ? 3.2 : 2.2}
               fill={i % 2 === 0 ? accent : ink}
-              fillOpacity="0.55"
+              fillOpacity="0.3"
             />
           ))}
         </svg>

@@ -2,7 +2,7 @@ import React, { useMemo, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDropzone } from 'react-dropzone';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ArrowRight, Upload, Trash2, Check } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Upload, Trash2, Check, Sparkles } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { useCardWizard } from '@/contexts/CardWizardContext';
@@ -382,7 +382,7 @@ export default function CreateCardStep3() {
             <Card className="bg-white/95 backdrop-blur-sm">
               <CardContent className="p-6 space-y-8">
                 <div>
-                  <Label className="text-2xl font-bold block">✨ Finishing Touches</Label>
+                  <Label className="text-2xl font-bold flex items-center gap-2"><Sparkles className="w-5 h-5 text-primary" strokeWidth={1.5} /> Finishing Touches</Label>
                   <p className="text-sm text-muted-foreground mt-1">
                     Photo, envelope, paper texture, and signature
                   </p>

@@ -165,8 +165,8 @@ export const GuestListUpload: React.FC = () => {
             onClick={handleDownloadTemplate}
             className="flex-1 gap-2"
           >
-            <Download className="w-4 h-4" />
-            📥 Download Guest List Template
+            <Download className="w-4 h-4" strokeWidth={1.5} />
+            Download Guest List Template
           </Button>
 
           <input

@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCardWizard } from '@/contexts/CardWizardContext';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ArrowRight, Check, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, X, Heart } from "lucide-react";
 import { AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
 import { ProgressBar } from '@/components/CardDesigner/ProgressBar';
@@ -991,13 +991,13 @@ Pick Your Style
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.07, duration: 0.4 }}
                 whileHover={{ y: -4 }}
-                className="group relative text-left rounded-2xl overflow-hidden transition-all duration-300"
+                className="card-stationery group relative text-left rounded-2xl overflow-hidden transition-all duration-300"
                 style={{
                   backgroundColor: design.bg,
                   border: isSelected ? '2px solid #c17b8a' : '1px solid #ede8e3',
                   boxShadow: isSelected
                     ? '0 16px 44px rgba(193, 123, 138, 0.22)'
-                    : '0 10px 40px -12px rgba(45, 36, 32, 0.12)',
+                    : '0 1px 2px rgba(45, 36, 32, 0.05), 0 10px 24px -16px rgba(45, 36, 32, 0.16)',
                 }}
               >
                 {isSelected && (
@@ -1023,7 +1023,7 @@ Pick Your Style
                       className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs"
                       style={{ backgroundColor: design.donationBg, color: design.donationColor }}
                     >
-                      💚 {design.donation}
+                      <Heart className="inline h-3 w-3 mr-1" strokeWidth={1.5} />{design.donation}
                     </span>
                   </div>
                   <p
@@ -1083,7 +1083,7 @@ Pick Your Style
                       style={{ backgroundColor: '#c17b8a', color: '#ffffff' }}
                       aria-label={`Select ${design.name}`}
                     >
-                      {isSelected ? '✓ Selected' : 'Select →'}
+                      {isSelected ? 'Selected' : 'Select'}
                     </div>
                   </div>
                 </div>
@@ -1117,7 +1117,7 @@ Pick Your Style
                 exit={{ scale: 0.92, opacity: 0, y: 20 }}
                 transition={{ type: 'spring', damping: 24, stiffness: 260 }}
                 onClick={(e) => e.stopPropagation()}
-                className="relative w-full max-w-lg max-h-[92vh] overflow-y-auto rounded-3xl shadow-2xl"
+                className="card-stationery relative w-full max-w-lg max-h-[92vh] overflow-y-auto rounded-3xl shadow-2xl"
                 style={{ backgroundColor: design.bg }}
               >
                 {/* Close */}
@@ -1147,7 +1147,7 @@ Pick Your Style
                       className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs"
                       style={{ backgroundColor: design.donationBg, color: design.donationColor }}
                     >
-                      💚 {design.donation}
+                      <Heart className="inline h-3 w-3 mr-1" strokeWidth={1.5} />{design.donation}
                     </span>
                   </div>
 
@@ -1194,7 +1194,7 @@ Pick Your Style
                       A Gift in Your Honor
                     </p>
                     <p className="text-base font-medium">
-                      💚 {design.donation}
+                      <Heart className="inline h-3 w-3 mr-1" strokeWidth={1.5} />{design.donation}
                     </p>
                   </div>
 

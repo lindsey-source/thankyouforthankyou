@@ -130,7 +130,7 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
 
   const cardFace = (
     <div
-      className="relative w-full h-full overflow-hidden"
+      className="card-stationery relative w-full h-full overflow-hidden"
       style={{ background: textureBackground(texture, cardBg) }}
     >
       {useDesignHeader ? (
@@ -166,8 +166,8 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
                 className="relative z-10 text-white drop-shadow-md"
                 style={{
                   fontFamily: fonts.heading,
-                  fontSize: 'clamp(28px, 6vw, 44px)',
-                  letterSpacing: '0.04em',
+                  fontSize: 'clamp(24px, 5vw, 34px)', fontWeight: 400,
+                  letterSpacing: '0.06em',
                   lineHeight: 1.1,
                 }}
               >
@@ -179,9 +179,9 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
               <span
                 style={{
                   fontFamily: fonts.heading,
-                  fontSize: 'clamp(28px, 6vw, 44px)',
+                  fontSize: 'clamp(24px, 5vw, 34px)', fontWeight: 400,
                   color: accentColor,
-                  letterSpacing: '0.04em',
+                  letterSpacing: '0.06em',
                   lineHeight: 1.1,
                 }}
               >
@@ -250,7 +250,7 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
             height: '12%',
           }}
         >
-          <Heart className="w-4 h-4 flex-shrink-0" fill="currentColor" />
+          <Heart className="w-4 h-4 flex-shrink-0" strokeWidth={1.5} />
           <div className="flex-1 min-w-0">
             <p
               className="text-[11px] uppercase tracking-wider opacity-90 leading-tight"
@@ -274,7 +274,7 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
   if (!hasEnvelope) {
     return (
       <div
-        className={`relative w-full aspect-[3/4] rounded-2xl border overflow-hidden shadow-warm ${className}`}
+        className={`relative w-full aspect-[3/4] rounded-2xl border shadow-soft overflow-hidden ${className}`}
         style={{ borderColor: 'rgba(45, 36, 32, 0.08)' }}
         role="img"
         aria-label="Live card preview"
