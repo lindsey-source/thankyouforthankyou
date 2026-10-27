@@ -51,6 +51,14 @@ export interface LiveCardPreviewProps {
   className?: string;
 }
 
+/** "Lindsey & Josh" → "L & J"; falls back to the soft example initials. */
+export const coupleInitials = (names?: string | null): string => {
+  const parts = (names || '').split(/&|and/i).map((s) => s.trim()).filter(Boolean);
+  if (parts.length >= 2) return `${parts[0][0].toUpperCase()} & ${parts[1][0].toUpperCase()}`;
+  if (parts.length === 1 && parts[0]) return parts[0][0].toUpperCase();
+  return 'E & J';
+};
+
 const textureBackground = (texture: string | null | undefined, baseBg: string) => {
   const key = (texture || 'smooth').toLowerCase();
   if (key === 'linen') {
@@ -124,6 +132,7 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
   const weddingLine = isWedding
     ? `${coupleNames?.trim() || 'Emma & James'} · ${weddingDate?.trim() || 'June 14, 2027'}`
     : undefined;
+  const initials = isWedding ? coupleInitials(coupleNames) : undefined;
 
   const signatureFont =
     signatureStyle === 'handwritten'
@@ -142,9 +151,26 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
 
   const cardFace = (
     <div
-      className="card-stationery relative w-full h-full overflow-hidden"
+      className={`card-stationery relative w-full h-full overflow-hidden${isWedding ? ' card-deckle' : ''}`}
       style={{ background: textureBackground(texture, cardBg) }}
     >
+      {isWedding && (
+        <>
+          {/* Deckle-edge displacement filter (shared def) */}
+          <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
+            <filter id="deckle-edge">
+              <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" result="noise" />
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2" />
+            </filter>
+          </svg>
+          {/* Fine double gold border */}
+          <div
+            className="absolute pointer-events-none z-[7]"
+            style={{ inset: '13px', border: '0.5px solid hsl(40 45% 62% / 0.5)', borderRadius: '6px' }}
+            aria-hidden="true"
+          />
+        </>
+      )}
       {useDesignHeader ? (
         <div style={{ height: '42%' }}>
           <HeaderArt
@@ -161,6 +187,7 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
             photoUrl={photoUrl}
             headlineFont={fonts.heading}
             subtext={weddingLine}
+            initials={initials}
           />
         </div>
       ) : (

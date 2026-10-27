@@ -19,6 +19,8 @@ interface HeaderArtProps {
   headlineFont?: string;
   /** Optional small letter-spaced caps line under the headline (e.g. wedding couple + date). */
   subtext?: string;
+  /** Wedding crest: couple's initials inside the gold wreath (e.g. "E & J"). */
+  initials?: string;
 }
 
 /* Small letter-spaced caps line shown under the headline */
@@ -63,6 +65,7 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
   photoUrl,
   headlineFont,
   subtext,
+  initials,
 }) => {
   const {
     headerStyle,
@@ -78,13 +81,93 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
   const fontStyle = fontStyleFor(font, headlineFont);
   const headline = headlineOverride?.trim() || headlineText;
 
+  // Wedding stationery: gold wreath crest + script headline + serif names.
+  if (headerStyle === 'weddingCrest' && !photoUrl) {
+    const GOLD_CREST = '#c9a96e';
+    const scriptStyle: React.CSSProperties = {
+      ...fontStyle,
+      fontFamily: headlineFont || "'Dancing Script', cursive",
+      fontSize: '34px',
+      letterSpacing: '0.02em',
+    };
+    return (
+      <div
+        className={`relative flex flex-col items-center justify-center overflow-hidden ${className}`}
+        style={{ height, background: headerBg }}
+      >
+        {/* Soft cream wash mutes the header color */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ background: isDarkBg ? 'hsl(38 30% 85% / 0.08)' : 'hsl(38 40% 96% / 0.32)' }}
+          aria-hidden="true"
+        />
+        {/* Thin gold wreath with the couple's initials */}
+        <div className="relative">
+        <svg viewBox="0 0 120 96" className="w-[92px] h-auto" fill="none" aria-hidden="true">
+          {/* Full thin gold wreath — ring plus laurel leaves, tied at the bottom */}
+          <g stroke={GOLD_CREST} strokeWidth="1" strokeLinecap="round">
+            <circle cx="60" cy="48" r="34" />
+            {/* Leaves around the ring, paired on each side */}
+            {[15, 45, 75, 105, 135, 165].map((deg) => {
+              const a = (deg * Math.PI) / 180;
+              const bx = 60 + 34 * Math.cos(a);
+              const by = 48 - 34 * Math.sin(a);
+              const tangent = -deg;
+              return (
+                <g key={deg} transform={`translate(${bx} ${by}) rotate(${tangent})`}>
+                  <path d="M 0 0 Q 5 -3 10 0 Q 5 3 0 0 Z" fill={GOLD_CREST} fillOpacity="0.55" stroke="none" />
+                  <path d="M 2 2 Q 6 5 4 10 Q 1 6 2 2 Z" fill={GOLD_CREST} fillOpacity="0.4" stroke="none" />
+                </g>
+              );
+            })}
+            {/* Small bow where the branches meet at the bottom */}
+            <path d="M 54 84 Q 60 78 66 84" strokeWidth="0.8" />
+            <path d="M 56 85 L 54 90 M 64 85 L 66 90" strokeWidth="0.7" />
+          </g>
+          {/* Fine inner ring */}
+          <circle cx="60" cy="48" r="26" stroke={GOLD_CREST} strokeWidth="0.5" strokeOpacity="0.6" />
+        </svg>
+        {/* Initials inside the wreath */}
+        <span
+          className="absolute inset-0 flex items-center justify-center"
+          style={{
+            fontFamily: "'Playfair Display', Georgia, serif",
+            fontSize: '19px',
+            fontWeight: 400,
+            letterSpacing: '0.08em',
+            color: GOLD_CREST,
+          }}
+        >
+          {initials || 'E & J'}
+        </span>
+        </div>
+        {/* Refined script headline */}
+        <span
+          className="relative z-10 text-center px-4 mt-1"
+          style={{ ...scriptStyle, color: headlineColor, lineHeight: 1.15 }}
+        >
+          {headline}
+        </span>
+        {/* Names + date in classic serif caps */}
+        {subtext && (
+          <span
+            className="relative z-10 text-center px-4"
+            style={{ ...subtextStyle(isDarkBg ? CREAM_INK : ink), marginTop: '6px' }}
+          >
+            {subtext}
+          </span>
+        )}
+      </div>
+    );
+  }
+
   // When a photo is uploaded, replace the art with the photo + dark scrim.
   if (photoUrl) {
     return (
-      <div
-        className={`relative flex items-center justify-center overflow-hidden ${className}`}
-        style={{ height, background: headerBg }}
-      >
+    <div
+      className={`relative flex items-center justify-center overflow-hidden ${className}`}
+      style={{ height, background: headerBg }}
+    >
         <img src={photoUrl} alt="" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-black/30" aria-hidden="true" />
         <span
