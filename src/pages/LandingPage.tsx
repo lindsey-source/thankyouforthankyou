@@ -105,7 +105,7 @@ const LandingPage = () => {
                 <Sparkles className="h-3.5 w-3.5" />
                 Gratitude that gives back
               </div>
-              <h1 className="text-3xl sm:text-4xl xl:text-5xl font-bold mb-3 leading-[1.05] tracking-tight" style={{ color: "#2d2420" }}>
+              <h1 className="text-4xl sm:text-5xl xl:text-6xl mb-4 leading-[1.15] tracking-tight" style={{ color: "#2d2420" }}>
                 Thank Differently.
                 <br />
                 <span className="text-primary">Give Meaningfully.</span>
@@ -305,7 +305,7 @@ const LandingPage = () => {
               <Gift className="h-7 w-7" style={{ color: "#c17b8a" }} />
             </div>
             <div className="flex-1">
-              <h2 className="text-2xl md:text-3xl font-bold mb-2 tracking-tight" style={{ color: "#2d2420" }}>
+              <h2 className="text-3xl md:text-4xl mb-3 tracking-tight" style={{ color: "#2d2420" }}>
                 Having an Event? Plan ahead.
               </h2>
               <p className="text-base md:text-lg leading-relaxed" style={{ color: "#2d2420", opacity: 0.75 }}>
@@ -354,7 +354,7 @@ const LandingPage = () => {
       <section className="py-20" style={{ backgroundColor: "#f5ede9" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-3" style={{ color: "#2d2420" }}>How It Works</h2>
+            <h2 className="text-5xl mb-4" style={{ color: "#2d2420" }}>How It Works</h2>
             <p className="text-lg max-w-2xl mx-auto" style={{ color: "#2d2420", opacity: 0.7 }}>
               From your guest list to a real-world donation in four simple steps.
             </p>
@@ -432,7 +432,7 @@ const LandingPage = () => {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-foreground mb-4">Thoughtful. Effortless. Impactful.</h2>
+            <h2 className="text-5xl text-foreground mb-5">Thoughtful. Effortless. Impactful.</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Perfect for weddings, celebrations, and life's meaningful moments that deserve appreciation
             </p>
@@ -889,7 +889,7 @@ const LandingPage = () => {
       <section className="py-16" style={{ backgroundColor: '#f5ede9' }}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-foreground mb-4">Loved by Hosts Everywhere</h2>
+            <h2 className="text-4xl md:text-5xl text-foreground mb-5">Loved by Hosts Everywhere</h2>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             <Card className="bg-muted/20 border-none">
@@ -932,7 +932,7 @@ const LandingPage = () => {
       {/* CTA Section */}
       <section className="py-20 text-white" style={{ backgroundColor: '#2d4a35' }}>
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold mb-6">Start Your Gratitude Campaign</h2>
+          <h2 className="text-5xl mb-6">Start Your Gratitude Campaign</h2>
           <p className="text-xl mb-8 text-white/90">
             Transform your thank-you process into something beautiful, meaningful, and impactful. 
             Your first 3 cards are on us.
