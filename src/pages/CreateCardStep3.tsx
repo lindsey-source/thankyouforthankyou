@@ -209,6 +209,9 @@ export default function CreateCardStep3() {
   /* ---------- Live preview props ----------
      CRITICAL: headlineText/greeting/body/closing come ONLY from the design
      object and NEVER change when accent or font changes. */
+  const isWedding = design.occasion === 'wedding';
+  const [coupleNames, setCoupleNames] = useState(cardData.coupleNames || '');
+  const [weddingDate, setWeddingDate] = useState(cardData.weddingDate || '');
   const fontFamily = FONT_CHOICES.find(f => f.id === fontChoice)!.family;
   const previewProps = {
     palette: {
@@ -244,6 +247,8 @@ export default function CreateCardStep3() {
     envelopeColor,
     texture,
     signatureStyle,
+    // Wedding-only details (undefined for other occasions, so no caps line shows)
+    ...(isWedding ? { coupleNames, weddingDate } : {}),
   };
 
   const handleNext = () => {
@@ -256,6 +261,7 @@ export default function CreateCardStep3() {
       signatureStyle,
       messageBody,
       closing,
+      ...(isWedding ? { coupleNames, weddingDate } : {}),
     });
     setCurrentStep(4);
     navigate('/create-card/step4');
@@ -356,6 +362,44 @@ export default function CreateCardStep3() {
                 </div>
               </CardContent>
             </Card>
+
+            {/* Section 2.25 — Wedding details (wedding occasions only) */}
+            {isWedding && (
+              <Card className="bg-white/95 backdrop-blur-sm">
+                <CardContent className="p-6 space-y-4">
+                  <div>
+                    <Label className="text-xl font-bold block">The Happy Couple</Label>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      Shown under the title and as the card's sign-off
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <Label htmlFor="couple-names" className="text-base font-semibold mb-2 block">
+                        Couple's names
+                      </Label>
+                      <Input
+                        id="couple-names"
+                        value={coupleNames}
+                        onChange={(e) => setCoupleNames(e.target.value)}
+                        placeholder="Emma & James"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="wedding-date" className="text-base font-semibold mb-2 block">
+                        Wedding date
+                      </Label>
+                      <Input
+                        id="wedding-date"
+                        value={weddingDate}
+                        onChange={(e) => setWeddingDate(e.target.value)}
+                        placeholder="June 14, 2027"
+                      />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
 
             {/* Section 2.5 — Your Message */}
             <Card className="bg-white/95 backdrop-blur-sm">
