@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Heart, ArrowRight, Upload, PenLine, Send, Palette, Leaf } from "lucide-react";
+import { Heart, ArrowRight, Upload, PenLine, Send, Palette, Leaf, Mail, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { DESIGN_SETS } from "@/pages/CreateCardStep2";
@@ -17,7 +17,7 @@ const HERO_CARDS = [
     greeting: "Dear Emma & James,",
     body:
       "Thank you for celebrating our wedding with us — your presence made our day unforgettable.",
-    charity: "💚 $4 donated to Rainforest Alliance",
+    charity: "$4 donated to Rainforest Alliance",
   },
   {
     occasion: "baby" as const,
@@ -25,7 +25,7 @@ const HERO_CARDS = [
     greeting: "Dear Aunt Rachel,",
     body:
       "Your beautiful gift for baby Lily means so much to us. Thank you for your love and generosity.",
-    charity: "💚 $3 donated to UNICEF",
+    charity: "$3 donated to UNICEF",
   },
   {
     occasion: "graduation" as const,
@@ -33,7 +33,7 @@ const HERO_CARDS = [
     greeting: "Dear Professor Kim,",
     body:
       "Thank you for guiding me through these years. Your belief in me made all the difference.",
-    charity: "💚 $4 donated to Scholarship America",
+    charity: "$4 donated to Scholarship America",
   },
   {
     occasion: "general" as const,
@@ -41,7 +41,7 @@ const HERO_CARDS = [
     greeting: "Dear Friend,",
     body:
       "Your kindness and generosity have meant the world to us. We are so grateful for you.",
-    charity: "💚 $3 donated to Feeding America",
+    charity: "$3 donated to Feeding America",
   },
 ];
 
@@ -230,6 +230,7 @@ const LandingPage = () => {
                           color: heroDesign.donationColor,
                         }}
                       >
+                        <Heart className="h-3 w-3" strokeWidth={1.5} style={{ color: "#8faa8b" }} />
                         {heroCard.charity}
                       </div>
                     </div>
@@ -265,21 +266,21 @@ const LandingPage = () => {
         <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-12">
           <div className="flex flex-col sm:flex-row items-center justify-center gap-10 sm:gap-16 text-center">
             <div className="flex items-center gap-2 text-brand-cream text-base md:text-lg font-medium">
-              <span aria-hidden="true">✉️</span>
+              <Mail className="h-5 w-5" strokeWidth={1.25} style={{ color: "#c17b8a" }} aria-hidden="true" />
               <span>
                 <span className="font-bold">12,847</span> cards sent
               </span>
             </div>
             <span className="hidden sm:inline text-brand-cream/30" aria-hidden="true">·</span>
             <div className="flex items-center gap-2 text-brand-cream text-base md:text-lg font-medium">
-              <span aria-hidden="true">💚</span>
+              <Heart className="h-5 w-5" strokeWidth={1.25} style={{ color: "#8faa8b" }} aria-hidden="true" />
               <span>
                 <span className="font-bold">$38,541</span> donated
               </span>
             </div>
             <span className="hidden sm:inline text-brand-cream/30" aria-hidden="true">·</span>
             <div className="flex items-center gap-2 text-brand-cream text-base md:text-lg font-medium">
-              <span aria-hidden="true">⭐</span>
+              <Star className="h-5 w-5" strokeWidth={1.25} style={{ color: "#c17b8a" }} aria-hidden="true" />
               <span>
                 <span className="font-bold">4.9/5</span> from 340 families
               </span>
@@ -504,7 +505,8 @@ const LandingPage = () => {
                     className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs"
                     style={{ backgroundColor: "#eef2e8", color: "#3d5a3a" }}
                   >
-                    💚 $4 donated to Rainforest Alliance
+                    <Heart className="h-3 w-3" strokeWidth={1.5} style={{ color: "#3d5a3a" }} />
+                    $4 donated to Rainforest Alliance
                   </span>
                 </div>
                 <p
@@ -584,7 +586,8 @@ const LandingPage = () => {
                     className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs"
                     style={{ backgroundColor: "#eef2e8", color: "#3d5a3a" }}
                   >
-                    💚 $3 donated to UNICEF
+                    <Heart className="h-3 w-3" strokeWidth={1.5} style={{ color: "#3d5a3a" }} />
+                    $3 donated to UNICEF
                   </span>
                 </div>
                 <p
