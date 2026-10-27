@@ -151,9 +151,14 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
 
   const cardFace = (
     <div
-      className={`card-stationery relative w-full h-full overflow-hidden${isWedding ? ' card-deckle' : ''}`}
-      style={{ background: textureBackground(texture, cardBg) }}
+      className="card-stationery relative w-full h-full overflow-hidden"
     >
+      {/* Paper layer: background + (wedding) deckled edge. Kept under all content so no filter ever touches text. */}
+      <div
+        className={`absolute inset-0 -z-10 pointer-events-none${isWedding ? ' card-deckle' : ''}`}
+        style={{ background: textureBackground(texture, cardBg) }}
+        aria-hidden="true"
+      />
       {isWedding && (
         <>
           {/* Deckle-edge displacement filter (shared def) */}
