@@ -1,5 +1,7 @@
 import React from 'react';
 import type { Design, FontFamily, HeaderStyle } from './designTypes';
+import peonyCorner from '@/assets/watercolor-peony-corner.png';
+import eucalyptusSprig from '@/assets/watercolor-eucalyptus-sprig.png';
 
 interface HeaderArtProps {
   /** Full design from Step 2 (provides accent/ink/headerBg/headerStyle/headlineText/font). */
@@ -52,6 +54,24 @@ const isDarkBackground = (bg: string) => {
 };
 
 const CREAM_INK = '#f3e7d3';
+
+/** Small interlocking wedding-rings motif. */
+const RingsMotif: React.FC<{ color: string; className?: string }> = ({ color, className = '' }) => (
+  <svg viewBox="0 0 34 16" className={`w-[28px] h-auto ${className}`} fill="none" aria-hidden="true">
+    <circle cx="12" cy="8" r="6.5" stroke={color} strokeWidth="1" />
+    <circle cx="22" cy="8" r="6.5" stroke={color} strokeWidth="1" />
+  </svg>
+);
+
+/** Large couple monogram used across the wedding headers. */
+const monogramStyle = (color: string): React.CSSProperties => ({
+  fontFamily: "'Playfair Display', Georgia, serif",
+  fontSize: '26px',
+  fontWeight: 400,
+  letterSpacing: '0.14em',
+  color,
+  lineHeight: 1.1,
+});
 
 /**
  * Reusable header art renderer used by Step 2 (design grid) and Step 3 (live preview).
@@ -161,63 +181,32 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
     );
   }
 
-  // Rose Garden: cream paper, hand-drawn gold-foil botanical stem down the left side.
+  // Rose Garden: cream paper, watercolor blush peonies spilling from the top-left corner.
   if (headerStyle === 'roseStem' && !photoUrl) {
     const GOLD = '#c9a96e';
-    const GOLD_DEEP = '#b08d4f';
     return (
       <div
         className={`relative flex flex-col items-center justify-center overflow-hidden ${className}`}
         style={{ height, background: headerBg }}
       >
-        {/* Gold-foil botanical stem down the left side */}
-        <svg
-          viewBox="0 0 60 120"
-          className="absolute left-0 top-0 h-full w-auto pointer-events-none"
-          fill="none"
+        <img
+          src={peonyCorner}
+          alt=""
+          loading="lazy"
+          width={1024}
+          height={1024}
+          className="absolute -top-5 -left-5 w-[58%] max-w-[200px] pointer-events-none select-none"
           aria-hidden="true"
-          preserveAspectRatio="xMinYMid slice"
-        >
-          {/* Main hand-drawn stem with gentle waviness */}
-          <path
-            d="M30 116 C 26 100, 35 88, 29 72 C 24 58, 33 46, 28 32 C 25 22, 31 12, 28 4"
-            stroke={GOLD}
-            strokeWidth="1"
-            strokeLinecap="round"
-          />
-          {/* Paired leaves along the stem */}
-          {[
-            { y: 100, side: 1 },
-            { y: 84, side: -1 },
-            { y: 66, side: 1 },
-            { y: 50, side: -1 },
-            { y: 34, side: 1 },
-            { y: 18, side: -1 },
-          ].map(({ y, side }, i) => (
-            <g key={i} transform={`translate(29 ${y}) scale(${side} 1)`}>
-              <path
-                d="M0 0 Q 10 -6 17 -2 Q 10 4 0 0 Z"
-                fill={GOLD}
-                fillOpacity="0.5"
-                stroke={GOLD_DEEP}
-                strokeWidth="0.4"
-              />
-              <path d="M1 -0.5 Q 9 -3 15 -2" stroke={GOLD_DEEP} strokeWidth="0.4" />
-            </g>
-          ))}
-          {/* Small buds */}
-          <circle cx="28" cy="4" r="2.2" fill={GOLD} fillOpacity="0.7" />
-          <circle cx="33" cy="9" r="1.4" fill={GOLD} fillOpacity="0.55" />
-          <circle cx="24" cy="10" r="1.4" fill={GOLD} fillOpacity="0.55" />
-        </svg>
-        {/* Content shifted right to clear the stem */}
-        <div className="relative z-10 flex flex-col items-center pl-14 pr-4">
+        />
+        <div className="relative z-10 flex flex-col items-center px-6">
+          <span style={monogramStyle(ink)}>{initials || 'E & J'}</span>
+          <RingsMotif color={GOLD} className="mt-1.5" />
           <span
-            className="text-center"
+            className="text-center mt-1"
             style={{
               ...fontStyle,
               fontFamily: headlineFont || "'Dancing Script', cursive",
-              fontSize: '32px',
+              fontSize: '30px',
               letterSpacing: '0.02em',
               color: ink,
               lineHeight: 1.15,
@@ -226,7 +215,7 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
             {headline}
           </span>
           {subtext && (
-            <span className="text-center" style={{ ...subtextStyle(ink), marginTop: '8px' }}>
+            <span className="text-center" style={{ ...subtextStyle(ink), marginTop: '6px' }}>
               {subtext}
             </span>
           )}
@@ -235,7 +224,7 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
     );
   }
 
-  // Ivory Elegance: ivory paper, double gold frame with corner flourishes.
+  // Ivory Elegance: ivory paper, double gold frame, peonies spilling from the top-right corner.
   if (headerStyle === 'ivoryFrame' && !photoUrl) {
     const GOLD = '#c9a96e';
     return (
@@ -246,42 +235,28 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
         {/* Double gold frame */}
         <div className="absolute pointer-events-none" style={{ inset: '10px', border: `1px solid ${GOLD}` }} aria-hidden="true" />
         <div className="absolute pointer-events-none" style={{ inset: '15px', border: `0.5px solid ${GOLD}`, opacity: 0.7 }} aria-hidden="true" />
-        {/* Corner flourishes inside the inner frame */}
-        <svg viewBox="0 0 200 120" className="absolute inset-0 w-full h-full pointer-events-none" fill="none" aria-hidden="true">
-          {[
-            'M 26 34 Q 26 26 34 26',
-            'M 174 34 Q 174 26 166 26',
-            'M 26 86 Q 26 94 34 94',
-            'M 174 86 Q 174 94 166 94',
-          ].map((d, i) => (
-            <g key={i} stroke={GOLD} strokeWidth="0.8" strokeLinecap="round">
-              <path d={d} />
-              <circle
-                cx={[26, 174, 26, 174][i]}
-                cy={[34, 34, 86, 86][i]}
-                r="1.1"
-                fill={GOLD}
-                stroke="none"
-              />
-              <circle
-                cx={[34, 166, 34, 166][i]}
-                cy={[26, 26, 94, 94][i]}
-                r="1.1"
-                fill={GOLD}
-                stroke="none"
-              />
-            </g>
-          ))}
-        </svg>
+        {/* Watercolor peonies spilling from the top-right corner (mirrored) */}
+        <img
+          src={peonyCorner}
+          alt=""
+          loading="lazy"
+          width={1024}
+          height={1024}
+          className="absolute -top-5 -right-5 w-[52%] max-w-[180px] pointer-events-none select-none"
+          style={{ transform: 'scaleX(-1)' }}
+          aria-hidden="true"
+        />
         <div className="relative z-10 flex flex-col items-center px-6">
+          <span style={monogramStyle(ink)}>{initials || 'E & J'}</span>
+          <RingsMotif color={GOLD} className="mt-1.5" />
           <span
-            className="text-center"
+            className="text-center mt-1"
             style={{ ...fontStyle, color: ink, lineHeight: 1.15 }}
           >
             {headline}
           </span>
           {subtext && (
-            <span className="text-center" style={{ ...subtextStyle(ink), marginTop: '8px' }}>
+            <span className="text-center" style={{ ...subtextStyle(ink), marginTop: '6px' }}>
               {subtext}
             </span>
           )}
@@ -290,95 +265,55 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
     );
   }
 
-  // Garden Party: sage & ivory, a fine laurel wreath of line-drawn leaves around the initials.
+  // Garden Party: sage & ivory, watercolor eucalyptus spilling in from both top corners.
   if (headerStyle === 'gardenLeaves' && !photoUrl) {
     const SAGE = '#5e7a5a';
-    // Sample points + tangents along a cubic bezier branch so leaves follow the curve.
-    const branchLeaves = (
-      p0: [number, number],
-      p1: [number, number],
-      p2: [number, number],
-      p3: [number, number],
-    ) =>
-      [0.16, 0.36, 0.56, 0.76, 0.92].map((t) => {
-        const mt = 1 - t;
-        const x = mt ** 3 * p0[0] + 3 * mt * mt * t * p1[0] + 3 * mt * t * t * p2[0] + t ** 3 * p3[0];
-        const y = mt ** 3 * p0[1] + 3 * mt * mt * t * p1[1] + 3 * mt * t * t * p2[1] + t ** 3 * p3[1];
-        const dx = 3 * mt * mt * (p1[0] - p0[0]) + 6 * mt * t * (p2[0] - p1[0]) + 3 * t * t * (p3[0] - p2[0]);
-        const dy = 3 * mt * mt * (p1[1] - p0[1]) + 6 * mt * t * (p2[1] - p1[1]) + 3 * t * t * (p3[1] - p2[1]);
-        return { x, y, ang: (Math.atan2(dy, dx) * 180) / Math.PI };
-      });
-    const leftBranch: [[number, number], [number, number], [number, number], [number, number]] = [
-      [60, 86],
-      [30, 78],
-      [22, 40],
-      [54, 12],
-    ];
-    const rightBranch: [[number, number], [number, number], [number, number], [number, number]] = [
-      [60, 86],
-      [90, 78],
-      [98, 40],
-      [66, 12],
-    ];
+    const GOLD = '#c9a96e';
     return (
       <div
         className={`relative flex flex-col items-center justify-center overflow-hidden ${className}`}
         style={{ height, background: headerBg }}
       >
-        <div className="relative">
-          <svg viewBox="0 0 120 96" className="w-[96px] h-auto" fill="none" aria-hidden="true">
-            <g stroke={SAGE} strokeWidth="0.8" strokeLinecap="round">
-              {/* Two laurel branches curving up from a tie at the bottom */}
-              <path d="M 60 86 C 30 78, 22 40, 54 12" strokeWidth="0.7" />
-              <path d="M 60 86 C 90 78, 98 40, 66 12" strokeWidth="0.7" />
-              {/* Fine line-drawn leaves along each branch */}
-              {[leftBranch, rightBranch].map((b, bi) =>
-                branchLeaves(...b).map((leaf, li) => (
-                  <g key={`${bi}-${li}`} transform={`translate(${leaf.x} ${leaf.y}) rotate(${leaf.ang - 40})`}>
-                    <path
-                      d="M 0 0 Q 5 -3.5 11 0 Q 5 3.5 0 0 Z"
-                      fill={SAGE}
-                      fillOpacity="0.22"
-                      strokeWidth="0.5"
-                    />
-                    <path d="M 1 0 L 10 0" strokeWidth="0.4" strokeOpacity="0.55" />
-                  </g>
-                )),
-              )}
-              {/* Small tie where the branches meet */}
-              <path d="M 56 88 Q 60 84 64 88" strokeWidth="0.7" />
-              <path d="M 57 89 L 55 93 M 63 89 L 65 93" strokeWidth="0.6" />
-            </g>
-          </svg>
+        <img
+          src={eucalyptusSprig}
+          alt=""
+          loading="lazy"
+          width={1024}
+          height={1024}
+          className="absolute -top-4 -left-6 w-[34%] max-w-[120px] pointer-events-none select-none"
+          style={{ transform: 'rotate(38deg)' }}
+          aria-hidden="true"
+        />
+        <img
+          src={eucalyptusSprig}
+          alt=""
+          loading="lazy"
+          width={1024}
+          height={1024}
+          className="absolute -top-4 -right-6 w-[34%] max-w-[120px] pointer-events-none select-none"
+          style={{ transform: 'scaleX(-1) rotate(38deg)' }}
+          aria-hidden="true"
+        />
+        <div className="relative z-10 flex flex-col items-center px-6">
+          <span style={monogramStyle(SAGE)}>{initials || 'E & J'}</span>
+          <RingsMotif color={GOLD} className="mt-1.5" />
           <span
-            className="absolute inset-0 flex items-center justify-center"
-            style={{
-              fontFamily: "'Playfair Display', Georgia, serif",
-              fontSize: '19px',
-              fontWeight: 400,
-              letterSpacing: '0.08em',
-              color: SAGE,
-            }}
+            className="text-center mt-1"
+            style={{ ...fontStyle, color: ink, lineHeight: 1.15 }}
           >
-            {initials || 'E & J'}
+            {headline}
           </span>
+          {subtext && (
+            <span className="text-center" style={{ ...subtextStyle(ink), marginTop: '6px' }}>
+              {subtext}
+            </span>
+          )}
         </div>
-        <span
-          className="relative z-10 text-center px-4 mt-1"
-          style={{ ...fontStyle, color: ink, lineHeight: 1.15 }}
-        >
-          {headline}
-        </span>
-        {subtext && (
-          <span className="relative z-10 text-center px-4" style={{ ...subtextStyle(ink), marginTop: '6px' }}>
-            {subtext}
-          </span>
-        )}
       </div>
     );
   }
 
-  // Timeless: deep navy, gold art deco frame, cream type.
+  // Timeless: deep navy, gold art deco frame, cream type, peonies spilling from the top-left.
   if (headerStyle === 'decoFrame' && !photoUrl) {
     const GOLD = '#c9a96e';
     return (
@@ -399,25 +334,23 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
             <path d="M10 94 V102 Q10 110 18 110 H26" />
             <path d="M190 94 V102 Q190 110 182 110 H174" />
           </g>
-          {/* Small deco fan at top center */}
-          <g stroke={GOLD} strokeWidth="0.7" strokeLinecap="round">
-            {[-40, -20, 0, 20, 40].map((deg) => {
-              const a = ((deg - 90) * Math.PI) / 180;
-              return (
-                <line
-                  key={deg}
-                  x1="100"
-                  y1="15"
-                  x2={100 + Math.cos(a) * 9}
-                  y2={15 - Math.sin(a) * -9}
-                />
-              );
-            })}
-          </g>
         </svg>
+        {/* Watercolor peonies spilling from the top-left corner */}
+        <img
+          src={peonyCorner}
+          alt=""
+          loading="lazy"
+          width={1024}
+          height={1024}
+          className="absolute -top-5 -left-5 w-[50%] max-w-[170px] pointer-events-none select-none"
+          style={{ opacity: 0.92 }}
+          aria-hidden="true"
+        />
         <div className="relative z-10 flex flex-col items-center px-8">
+          <span style={monogramStyle(GOLD)}>{initials || 'E & J'}</span>
+          <RingsMotif color={GOLD} className="mt-1.5" />
           <span
-            className="text-center"
+            className="text-center mt-1"
             style={{
               ...fontStyle,
               color: CREAM_INK,
@@ -430,7 +363,7 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
             {headline}
           </span>
           {subtext && (
-            <span className="text-center" style={{ ...subtextStyle(CREAM_INK), marginTop: '10px' }}>
+            <span className="text-center" style={{ ...subtextStyle(CREAM_INK), marginTop: '8px' }}>
               {subtext}
             </span>
           )}
@@ -438,6 +371,7 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
       </div>
     );
   }
+
 
   // When a photo is uploaded, replace the art with the photo + dark scrim.
   if (photoUrl) {
