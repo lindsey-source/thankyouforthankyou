@@ -371,13 +371,31 @@ export default function CreateCardStep3() {
                   <Label htmlFor="message-body" className="text-base font-semibold mb-2 block">
                     Message
                   </Label>
+                  <div className="mb-3">
+                    <Label className="text-xs font-medium text-stone-500 mb-2 block">
+                      Need a starting point? Pick a tone:
+                    </Label>
+                    <div className="flex flex-wrap gap-2">
+                      {MESSAGE_TONES.map((tone) => (
+                        <button
+                          key={tone.label}
+                          type="button"
+                          onClick={() => setMessageBody(tone.text)}
+                          className="px-3 py-1.5 rounded-xl text-sm font-medium bg-white border border-[#e8ddd3] text-[#2d2420] shadow-[0_1px_2px_rgba(45,36,32,0.06)] hover:border-[#c17b8a] hover:bg-[#c17b8a]/10 transition-colors"
+                        >
+                          {tone.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                   <Textarea
                     id="message-body"
                     value={messageBody}
                     onChange={(e) => setMessageBody(e.target.value)}
                     rows={6}
                     className="resize-y min-h-[140px]"
-                    placeholder="Write your thank-you message…"
+                    placeholder="Thank you so much for the beautiful gift — having you there meant the world to us."
+                  />
                   />
                 </div>
 
