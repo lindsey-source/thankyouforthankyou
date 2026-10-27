@@ -45,7 +45,7 @@ export const DESIGN_SETS: Record<OccasionId, Design[]> = {
       headlineText: 'Thank You',
       font: 'serifScript',
       greeting: 'Dear Aunt Rachel,',
-      body: 'Thank you for celebrating with us. Having you there made our day even more special.',
+      body: 'Thank you for celebrating with us. Having you there made our wedding day even more beautiful.',
       donation: '$4 to Rainforest Alliance',
       fontChoice: 'dancing',
     },
@@ -139,7 +139,7 @@ export const DESIGN_SETS: Record<OccasionId, Design[]> = {
       headlineText: 'Welcome, Little Star',
       font: 'serifClassic',
       greeting: 'Dear Sarah,',
-      body: 'Thank you for surrounding our growing family with so much love. Your thoughtfulness means the world to us.',
+      body: 'Thank you for welcoming our little one with so much love. Your kindness lights up these first days for our family.',
       donation: '$3 to UNICEF',
       fontChoice: 'playfair',
     },
@@ -162,7 +162,7 @@ export const DESIGN_SETS: Record<OccasionId, Design[]> = {
       headlineText: 'Welcome, Little One',
       font: 'serifClassic',
       greeting: 'Dear Aunt Mary,',
-      body: 'Thank you for surrounding our growing family with so much love. Your thoughtfulness means the world to us.',
+      body: 'Thank you for the sweet gift and the warm wishes. Our newest arrival is already surrounded by so much love.',
       donation: '$3 to March of Dimes',
       fontChoice: 'playfair',
     },
@@ -185,7 +185,7 @@ export const DESIGN_SETS: Record<OccasionId, Design[]> = {
       headlineText: 'Lily',
       font: 'serifClassic',
       greeting: 'Dear Grandma,',
-      body: 'Thank you for surrounding our growing family with so much love. Your thoughtfulness means the world to us.',
+      body: 'Thank you for celebrating our baby with us. Your thoughtfulness means the world to our growing family.',
       donation: '$3 to Save the Children',
       fontChoice: 'playfair',
     },
@@ -208,7 +208,7 @@ export const DESIGN_SETS: Record<OccasionId, Design[]> = {
       headlineText: 'Hello, Little Wonder',
       font: 'serifClassic',
       greeting: 'Dear Friends,',
-      body: 'Thank you for surrounding our growing family with so much love. Your thoughtfulness means the world to us.',
+      body: "Thank you for showering our little one with love. We can't wait for you to meet our baby soon.",
       donation: '$3 to UNICEF',
       fontChoice: 'playfair',
     },
@@ -233,7 +233,7 @@ export const DESIGN_SETS: Record<OccasionId, Design[]> = {
       headlineText: 'With Gratitude',
       font: 'serifItalic',
       greeting: 'Dear Professor Kim,',
-      body: 'Thank you for guiding me through…',
+      body: "Thank you for guiding me through every step of the way. I couldn't have reached graduation without you.",
       donation: '$4 to Scholarship America',
       fontChoice: 'playfair',
     },
@@ -256,7 +256,7 @@ export const DESIGN_SETS: Record<OccasionId, Design[]> = {
       headlineText: 'Thank You',
       font: 'serifClassic',
       greeting: 'Dear Mom & Dad,',
-      body: 'Thank you for your endless support…',
+      body: 'Thank you for your endless support. Your gift and encouragement mean so much as I start this next chapter.',
       donation: '$4 to DonorsChoose',
       fontChoice: 'playfair',
     },
@@ -279,7 +279,7 @@ export const DESIGN_SETS: Record<OccasionId, Design[]> = {
       headlineText: 'I Did It — Thank You!',
       font: 'serifScript',
       greeting: 'Dear Friends,',
-      body: 'I couldn\'t have done it without you…',
+      body: 'I couldn\'t have done it without you. Thank you for celebrating my graduation with me.',
       donation: '$4 to Khan Academy',
       fontChoice: 'playfair',
     },
@@ -302,7 +302,7 @@ export const DESIGN_SETS: Record<OccasionId, Design[]> = {
       headlineText: 'Class Of',
       font: 'sansCaps',
       greeting: 'Dear Mentor,',
-      body: 'Your wisdom shaped my path…',
+      body: 'Your wisdom shaped my path. Thank you for believing in me all the way to graduation.',
       donation: '$4 to Teach For America',
       fontChoice: 'inter',
     },
@@ -327,7 +327,7 @@ export const DESIGN_SETS: Record<OccasionId, Design[]> = {
       headlineText: 'Hooray — Thank You!',
       font: 'serifScript',
       greeting: 'Dear Friends,',
-      body: 'Thank you for making my day so fun…',
+      body: 'Thank you for making my birthday so much fun. Celebrating with you was the best part.',
       donation: '$3 to Make-A-Wish',
       fontChoice: 'playfair',
     },
@@ -350,7 +350,7 @@ export const DESIGN_SETS: Record<OccasionId, Design[]> = {
       headlineText: 'A Golden Year',
       font: 'serifItalic',
       greeting: 'Dear Aunt Linda,',
-      body: 'Your gift made me feel so loved…',
+      body: 'Your birthday gift made me feel so loved. Thank you for celebrating another year with me.',
       donation: '$3 to UNICEF',
       fontChoice: 'playfair',
     },
@@ -373,7 +373,7 @@ export const DESIGN_SETS: Record<OccasionId, Design[]> = {
       headlineText: 'Thank You, Truly',
       font: 'serifScript',
       greeting: 'Dear Best Friend,',
-      body: 'You always know how to celebrate me…',
+      body: 'You always know how to make my birthday special. Thank you for the lovely gift and kind wishes.',
       donation: '$3 to Rainforest Alliance',
       fontChoice: 'playfair',
     },
@@ -396,7 +396,7 @@ export const DESIGN_SETS: Record<OccasionId, Design[]> = {
       headlineText: 'BIG Thanks!',
       font: 'sansCaps',
       greeting: 'Dear Crew,',
-      body: 'You made my birthday legendary…',
+      body: 'You made my birthday legendary. Thank you for being part of the celebration.',
       donation: '$3 to Boys & Girls Clubs',
       fontChoice: 'inter',
     },
@@ -421,7 +421,7 @@ export const DESIGN_SETS: Record<OccasionId, Design[]> = {
       headlineText: "L'Chaim & Thank You",
       font: 'serifItalic',
       greeting: 'Dear David,',
-      body: "Your presence at Noah's Bar Mitzvah meant everything…",
+      body: "Your presence at the celebration meant everything. Thank you for sharing this milestone with our family.",
       donation: '$5 to Jewish Federation',
       fontChoice: 'playfair',
     },
@@ -444,7 +444,7 @@ export const DESIGN_SETS: Record<OccasionId, Design[]> = {
       headlineText: 'Todah Rabah',
       font: 'serifClassic',
       greeting: 'Dear Friends,',
-      body: 'Thank you for celebrating this milestone…',
+      body: 'Thank you for celebrating this milestone with us. Your warm wishes and generous gift mean so much.',
       donation: '$5 to PJ Library',
       fontChoice: 'playfair',
     },
@@ -467,7 +467,7 @@ export const DESIGN_SETS: Record<OccasionId, Design[]> = {
       headlineText: 'With Heartfelt Thanks',
       font: 'serifScript',
       greeting: 'Dear Family,',
-      body: 'Your blessings mean the world to us…',
+      body: 'Your blessings mean the world to us. Thank you for being part of this special simcha.',
       donation: '$5 to Hazon (Jewish Environmental)',
       fontChoice: 'playfair',
     },
@@ -490,7 +490,7 @@ export const DESIGN_SETS: Record<OccasionId, Design[]> = {
       headlineText: 'Mazel Tov & Thank You',
       font: 'serifItalic',
       greeting: 'Dear Loved Ones,',
-      body: 'A simcha shared is a simcha doubled…',
+      body: 'A simcha shared is a simcha doubled. Thank you for celebrating with our family.',
       donation: '$5 to Jewish Family Services',
       fontChoice: 'playfair',
     },
@@ -515,7 +515,7 @@ export const DESIGN_SETS: Record<OccasionId, Design[]> = {
       headlineText: 'A Note of Appreciation',
       font: 'sansCaps',
       greeting: 'Dear Team,',
-      body: 'Your hard work on Q3 made all the difference…',
+      body: 'Your hard work this quarter made all the difference. Thank you for everything you bring to the team.',
       donation: '$3 to local food bank',
       fontChoice: 'inter',
     },
@@ -538,7 +538,7 @@ export const DESIGN_SETS: Record<OccasionId, Design[]> = {
       headlineText: 'Thank You',
       font: 'sansCaps',
       greeting: 'Dear Partner,',
-      body: 'We value our continued collaboration…',
+      body: 'We value our continued collaboration. Thank you for your partnership and trust.',
       donation: '$3 to United Way',
       fontChoice: 'inter',
     },
@@ -561,7 +561,7 @@ export const DESIGN_SETS: Record<OccasionId, Design[]> = {
       headlineText: 'With Sincere Thanks',
       font: 'serifClassic',
       greeting: 'Dear Client,',
-      body: 'Thank you for trusting our team…',
+      body: "Thank you for trusting our team. It's a privilege to work alongside you.",
       donation: '$3 to The Nature Conservancy',
       fontChoice: 'playfair',
     },
@@ -584,7 +584,7 @@ export const DESIGN_SETS: Record<OccasionId, Design[]> = {
       headlineText: 'In Appreciation',
       font: 'sansCaps',
       greeting: 'Dear Colleague,',
-      body: 'Your contribution did not go unnoticed…',
+      body: 'Your contribution did not go unnoticed. Thank you for going above and beyond.',
       donation: '$3 to American Red Cross',
       fontChoice: 'inter',
     },
@@ -609,7 +609,7 @@ export const DESIGN_SETS: Record<OccasionId, Design[]> = {
       headlineText: 'Thank You',
       font: 'serifScript',
       greeting: 'Dear Friend,',
-      body: 'Your kindness means more than words…',
+      body: 'Your kindness means more than words can say. Thank you for thinking of me.',
       donation: '$3 to local charity',
       fontChoice: 'playfair',
     },
@@ -632,7 +632,7 @@ export const DESIGN_SETS: Record<OccasionId, Design[]> = {
       headlineText: 'A Note of Thanks',
       font: 'serifItalic',
       greeting: 'Dear Friend,',
-      body: 'I am so grateful for your generosity…',
+      body: 'I am so grateful for your generosity. Thank you for your thoughtful gift.',
       donation: '$3 to UNICEF',
       fontChoice: 'playfair',
     },
@@ -655,7 +655,7 @@ export const DESIGN_SETS: Record<OccasionId, Design[]> = {
       headlineText: 'Thanks',
       font: 'sansCaps',
       greeting: 'Hi,',
-      body: 'Just a quick note to say thank you…',
+      body: 'Just a quick note to say thank you. You made my day brighter.',
       donation: '$3 to Doctors Without Borders',
       fontChoice: 'inter',
     },
@@ -678,7 +678,7 @@ export const DESIGN_SETS: Record<OccasionId, Design[]> = {
       headlineText: 'With Gratitude',
       font: 'serifScript',
       greeting: 'Dear Friend,',
-      body: 'Your kindness has not gone unnoticed…',
+      body: 'Your kindness has not gone unnoticed. Thank you for being so thoughtful.',
       donation: '$3 to The Nature Conservancy',
       fontChoice: 'playfair',
     },
@@ -703,7 +703,7 @@ export const DESIGN_SETS: Record<OccasionId, Design[]> = {
       headlineText: 'In Loving Memory',
       font: 'serifClassic',
       greeting: 'Dear Friend,',
-      body: 'Your kindness during this time meant so much…',
+      body: 'Your kindness during this difficult time meant so much to our family. Thank you.',
       donation: '$4 to Hospice Foundation',
       fontChoice: 'playfair',
     },
@@ -726,7 +726,7 @@ export const DESIGN_SETS: Record<OccasionId, Design[]> = {
       headlineText: 'With Heartfelt Thanks',
       font: 'serifItalic',
       greeting: 'Dear Friend,',
-      body: 'Your sympathy has been a comfort…',
+      body: 'Your sympathy has been a comfort to us. Thank you for holding us in your thoughts.',
       donation: '$4 to American Cancer Society',
       fontChoice: 'playfair',
     },
@@ -749,7 +749,7 @@ export const DESIGN_SETS: Record<OccasionId, Design[]> = {
       headlineText: 'In Cherished Memory',
       font: 'serifItalic',
       greeting: 'Dear Friend,',
-      body: 'Thank you for honoring their memory…',
+      body: 'Thank you for honoring their memory with such care. Your support means more than we can say.',
       donation: '$4 to Alzheimer\'s Association',
       fontChoice: 'playfair',
     },
@@ -772,7 +772,7 @@ export const DESIGN_SETS: Record<OccasionId, Design[]> = {
       headlineText: 'With Quiet Gratitude',
       font: 'serifScript',
       greeting: 'Dear Friend,',
-      body: 'Your kind words brought us peace…',
+      body: 'Your kind words brought us peace. Thank you for remembering with us.',
       donation: '$4 to The Nature Conservancy',
       fontChoice: 'playfair',
     },
@@ -797,7 +797,7 @@ export const DESIGN_SETS: Record<OccasionId, Design[]> = {
       headlineText: 'A Note of Hope',
       font: 'serifScript',
       greeting: 'Dear Friend,',
-      body: 'Your generosity gives others a fresh start…',
+      body: 'Your generosity gives others a fresh start. Thank you for making a real difference.',
       donation: '$3 to chosen cause',
       fontChoice: 'playfair',
     },
@@ -820,7 +820,7 @@ export const DESIGN_SETS: Record<OccasionId, Design[]> = {
       headlineText: 'From the Heart',
       font: 'serifItalic',
       greeting: 'Dear Friend,',
-      body: 'Your kindness warms more lives than you know…',
+      body: 'Your kindness warms more lives than you know. Thank you for giving so generously.',
       donation: '$3 to chosen cause',
       fontChoice: 'playfair',
     },
@@ -843,7 +843,7 @@ export const DESIGN_SETS: Record<OccasionId, Design[]> = {
       headlineText: 'Stronger Together',
       font: 'sansCaps',
       greeting: 'Dear Supporter,',
-      body: 'Together we lift our community higher…',
+      body: 'Together we lift our community higher. Thank you for your support.',
       donation: '$3 to chosen cause',
       fontChoice: 'inter',
     },
@@ -866,7 +866,7 @@ export const DESIGN_SETS: Record<OccasionId, Design[]> = {
       headlineText: 'Forever Grateful',
       font: 'serifClassic',
       greeting: 'Dear Friend,',
-      body: 'Your gift made a lasting difference…',
+      body: 'Your gift made a lasting difference. Thank you for your generosity.',
       donation: '$3 to chosen cause',
       fontChoice: 'playfair',
     },
@@ -911,7 +911,7 @@ export default function CreateCardStep2() {
   }, [occasion]);
 
   // Large live preview follows the selected design (first design until one is picked)
-  const previewDesign = designs.find((d) => d.id === selectedId) || designs[0];
+  const previewDesign = designs.find((d) => d.id === (previewId || selectedId)) || designs[0];
   const previewFonts =
     previewDesign?.fontChoice === 'dancing'
       ? { heading: "'Dancing Script', cursive", body: "'Inter', sans-serif" }
@@ -1050,7 +1050,7 @@ Pick Your Style
                       className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs"
                       style={{ backgroundColor: design.donationBg, color: design.donationColor }}
                     >
-                      <Heart className="inline h-3 w-3 mr-1" strokeWidth={1.5} />{design.donation}
+                      <Heart className="inline h-3 w-3 mr-1" strokeWidth={1.5} />A gift in your name
                     </span>
                   </div>
                   <p
@@ -1149,6 +1149,7 @@ Pick Your Style
               font={previewDesign.font}
               donationBg={previewDesign.donationBg}
               donationColor={previewDesign.donationColor}
+              messageBody={previewDesign.body}
               charityName={previewDesign.donation}
               {...(previewDesign.occasion === 'wedding'
                 ? { coupleNames: cardData.coupleNames, weddingDate: cardData.weddingDate }
@@ -1230,7 +1231,7 @@ Pick Your Style
                       className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs"
                       style={{ backgroundColor: design.donationBg, color: design.donationColor }}
                     >
-                      <Heart className="inline h-3 w-3 mr-1" strokeWidth={1.5} />{design.donation}
+                      <Heart className="inline h-3 w-3 mr-1" strokeWidth={1.5} />A gift in your name
                     </span>
                   </div>
 
@@ -1253,7 +1254,7 @@ Pick Your Style
                       opacity: 0.92,
                     }}
                   >
-                    {design.body} Your kindness, your presence, and your generosity made this moment one we'll carry with us forever. We are endlessly grateful to have you in our lives.
+                    {design.body}
                   </p>
 
                   <p
@@ -1277,7 +1278,7 @@ Pick Your Style
                     style={{ backgroundColor: design.donationBg, color: design.donationColor }}
                   >
                     <p className="text-xs uppercase tracking-wider mb-1 opacity-80">
-                      A Gift in Your Honor
+                      A gift in your name
                     </p>
                     <p className="text-base font-medium">
                       <Heart className="inline h-3 w-3 mr-1" strokeWidth={1.5} />{design.donation}

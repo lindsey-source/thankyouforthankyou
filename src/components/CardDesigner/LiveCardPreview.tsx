@@ -133,7 +133,7 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
   const greeting = `Dear ${recipientName?.trim() || 'Friend'},`;
   const body =
     cleanWeddingMessage(messageBody, isWedding).trim() ||
-    (isWedding ? WEDDING_MESSAGE_EXAMPLE : 'Thank you so much for being part of our special day. Your presence and generosity meant the world to us.');
+    (isWedding ? WEDDING_MESSAGE_EXAMPLE : isBaby ? 'Thank you for welcoming our little one with so much love. Your thoughtfulness means the world to our growing family.' : 'Thank you so much for your kindness and generosity. It truly meant the world to me.');
   const closingLine = closing?.trim() || 'With love,';
   // Wedding: the couple's names sign the card; fall back to senderName.
   const sender = isBaby ? babyDetails.signOff : coupleNames?.trim() || senderName?.trim();
