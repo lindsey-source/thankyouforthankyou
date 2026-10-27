@@ -161,6 +161,252 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
     );
   }
 
+  // Rose Garden: cream paper, hand-drawn gold-foil botanical stem down the left side.
+  if (headerStyle === 'roseStem' && !photoUrl) {
+    const GOLD = '#c9a96e';
+    const GOLD_DEEP = '#b08d4f';
+    return (
+      <div
+        className={`relative flex flex-col items-center justify-center overflow-hidden ${className}`}
+        style={{ height, background: headerBg }}
+      >
+        {/* Gold-foil botanical stem down the left side */}
+        <svg
+          viewBox="0 0 60 120"
+          className="absolute left-0 top-0 h-full w-auto pointer-events-none"
+          fill="none"
+          aria-hidden="true"
+          preserveAspectRatio="xMinYMid slice"
+        >
+          {/* Main hand-drawn stem with gentle waviness */}
+          <path
+            d="M30 116 C 26 100, 35 88, 29 72 C 24 58, 33 46, 28 32 C 25 22, 31 12, 28 4"
+            stroke={GOLD}
+            strokeWidth="1"
+            strokeLinecap="round"
+          />
+          {/* Paired leaves along the stem */}
+          {[
+            { y: 100, side: 1 },
+            { y: 84, side: -1 },
+            { y: 66, side: 1 },
+            { y: 50, side: -1 },
+            { y: 34, side: 1 },
+            { y: 18, side: -1 },
+          ].map(({ y, side }, i) => (
+            <g key={i} transform={`translate(29 ${y}) scale(${side} 1)`}>
+              <path
+                d="M0 0 Q 10 -6 17 -2 Q 10 4 0 0 Z"
+                fill={GOLD}
+                fillOpacity="0.5"
+                stroke={GOLD_DEEP}
+                strokeWidth="0.4"
+              />
+              <path d="M1 -0.5 Q 9 -3 15 -2" stroke={GOLD_DEEP} strokeWidth="0.4" />
+            </g>
+          ))}
+          {/* Small buds */}
+          <circle cx="28" cy="4" r="2.2" fill={GOLD} fillOpacity="0.7" />
+          <circle cx="33" cy="9" r="1.4" fill={GOLD} fillOpacity="0.55" />
+          <circle cx="24" cy="10" r="1.4" fill={GOLD} fillOpacity="0.55" />
+        </svg>
+        {/* Content shifted right to clear the stem */}
+        <div className="relative z-10 flex flex-col items-center pl-14 pr-4">
+          <span
+            className="text-center"
+            style={{
+              ...fontStyle,
+              fontFamily: headlineFont || "'Dancing Script', cursive",
+              fontSize: '32px',
+              letterSpacing: '0.02em',
+              color: ink,
+              lineHeight: 1.15,
+            }}
+          >
+            {headline}
+          </span>
+          {subtext && (
+            <span className="text-center" style={{ ...subtextStyle(ink), marginTop: '8px' }}>
+              {subtext}
+            </span>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  // Ivory Elegance: ivory paper, double gold frame with corner flourishes.
+  if (headerStyle === 'ivoryFrame' && !photoUrl) {
+    const GOLD = '#c9a96e';
+    return (
+      <div
+        className={`relative flex flex-col items-center justify-center overflow-hidden ${className}`}
+        style={{ height, background: headerBg }}
+      >
+        {/* Double gold frame */}
+        <div className="absolute pointer-events-none" style={{ inset: '10px', border: `1px solid ${GOLD}` }} aria-hidden="true" />
+        <div className="absolute pointer-events-none" style={{ inset: '15px', border: `0.5px solid ${GOLD}`, opacity: 0.7 }} aria-hidden="true" />
+        {/* Corner flourishes inside the inner frame */}
+        <svg viewBox="0 0 200 120" className="absolute inset-0 w-full h-full pointer-events-none" fill="none" aria-hidden="true">
+          {[
+            'M 26 34 Q 26 26 34 26',
+            'M 174 34 Q 174 26 166 26',
+            'M 26 86 Q 26 94 34 94',
+            'M 174 86 Q 174 94 166 94',
+          ].map((d, i) => (
+            <g key={i} stroke={GOLD} strokeWidth="0.8" strokeLinecap="round">
+              <path d={d} />
+              <circle
+                cx={[26, 174, 26, 174][i]}
+                cy={[34, 34, 86, 86][i]}
+                r="1.1"
+                fill={GOLD}
+                stroke="none"
+              />
+              <circle
+                cx={[34, 166, 34, 166][i]}
+                cy={[26, 26, 94, 94][i]}
+                r="1.1"
+                fill={GOLD}
+                stroke="none"
+              />
+            </g>
+          ))}
+        </svg>
+        <div className="relative z-10 flex flex-col items-center px-6">
+          <span
+            className="text-center"
+            style={{ ...fontStyle, color: ink, lineHeight: 1.15 }}
+          >
+            {headline}
+          </span>
+          {subtext && (
+            <span className="text-center" style={{ ...subtextStyle(ink), marginTop: '8px' }}>
+              {subtext}
+            </span>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  // Garden Party: sage & ivory, fine line-drawn leaves encircling the initials.
+  if (headerStyle === 'gardenLeaves' && !photoUrl) {
+    const SAGE = '#5e7a5a';
+    return (
+      <div
+        className={`relative flex flex-col items-center justify-center overflow-hidden ${className}`}
+        style={{ height, background: headerBg }}
+      >
+        <div className="relative">
+          <svg viewBox="0 0 120 96" className="w-[96px] h-auto" fill="none" aria-hidden="true">
+            {/* Fine line-drawn leaves in a loose ring around the initials */}
+            <g stroke={SAGE} strokeWidth="0.8" strokeLinecap="round">
+              {Array.from({ length: 12 }).map((_, i) => {
+                const deg = i * 30;
+                const a = (deg * Math.PI) / 180;
+                const bx = 60 + 33 * Math.cos(a);
+                const by = 48 - 33 * Math.sin(a);
+                return (
+                  <g key={i} transform={`translate(${bx} ${by}) rotate(${-deg})`}>
+                    <path d="M 0 0 Q 5 -3 10 0 Q 5 3 0 0 Z" fill={SAGE} fillOpacity="0.28" strokeWidth="0.5" />
+                    <path d="M 1 0 L 9 0" strokeWidth="0.4" strokeOpacity="0.6" />
+                  </g>
+                );
+              })}
+            </g>
+            {/* Hairline ring */}
+            <circle cx="60" cy="48" r="25" stroke={SAGE} strokeWidth="0.5" strokeOpacity="0.5" />
+          </svg>
+          <span
+            className="absolute inset-0 flex items-center justify-center"
+            style={{
+              fontFamily: "'Playfair Display', Georgia, serif",
+              fontSize: '19px',
+              fontWeight: 400,
+              letterSpacing: '0.08em',
+              color: SAGE,
+            }}
+          >
+            {initials || 'E & J'}
+          </span>
+        </div>
+        <span
+          className="relative z-10 text-center px-4 mt-1"
+          style={{ ...fontStyle, color: ink, lineHeight: 1.15 }}
+        >
+          {headline}
+        </span>
+        {subtext && (
+          <span className="relative z-10 text-center px-4" style={{ ...subtextStyle(ink), marginTop: '6px' }}>
+            {subtext}
+          </span>
+        )}
+      </div>
+    );
+  }
+
+  // Timeless: deep navy, gold art deco frame, cream type.
+  if (headerStyle === 'decoFrame' && !photoUrl) {
+    const GOLD = '#c9a96e';
+    return (
+      <div
+        className={`relative flex flex-col items-center justify-center overflow-hidden ${className}`}
+        style={{ height, background: headerBg }}
+      >
+        <svg viewBox="0 0 200 120" className="absolute inset-0 w-full h-full pointer-events-none" fill="none" aria-hidden="true" preserveAspectRatio="none">
+          {/* Art deco stepped frame */}
+          <g stroke={GOLD} strokeWidth="1">
+            <rect x="10" y="10" width="180" height="100" />
+            <rect x="15" y="15" width="170" height="90" strokeWidth="0.5" strokeOpacity="0.7" />
+          </g>
+          {/* Stepped corner details */}
+          <g stroke={GOLD} strokeWidth="0.8" strokeLinecap="square">
+            <path d="M10 26 V18 Q10 10 18 10 H26" />
+            <path d="M190 26 V18 Q190 10 182 10 H174" />
+            <path d="M10 94 V102 Q10 110 18 110 H26" />
+            <path d="M190 94 V102 Q190 110 182 110 H174" />
+          </g>
+          {/* Small deco fan at top center */}
+          <g stroke={GOLD} strokeWidth="0.7" strokeLinecap="round">
+            {[-40, -20, 0, 20, 40].map((deg) => {
+              const a = ((deg - 90) * Math.PI) / 180;
+              return (
+                <line
+                  key={deg}
+                  x1="100"
+                  y1="15"
+                  x2={100 + Math.cos(a) * 9}
+                  y2={15 - Math.sin(a) * -9}
+                />
+              );
+            })}
+          </g>
+        </svg>
+        <div className="relative z-10 flex flex-col items-center px-8">
+          <span
+            className="text-center"
+            style={{
+              ...fontStyle,
+              color: CREAM_INK,
+              lineHeight: 1.15,
+              textTransform: 'uppercase',
+              fontSize: '22px',
+              letterSpacing: '0.18em',
+            }}
+          >
+            {headline}
+          </span>
+          {subtext && (
+            <span className="text-center" style={{ ...subtextStyle(CREAM_INK), marginTop: '10px' }}>
+              {subtext}
+            </span>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   // When a photo is uploaded, replace the art with the photo + dark scrim.
   if (photoUrl) {
     return (
