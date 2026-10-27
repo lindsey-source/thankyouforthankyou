@@ -3,6 +3,7 @@ import { Heart } from 'lucide-react';
 import { HeaderArt } from './HeaderArt';
 import type { FontFamily, HeaderStyle } from './designTypes';
 import { cleanWeddingMessage, WEDDING_MESSAGE_EXAMPLE } from '@/lib/weddingMessages';
+import { resolveBabyDetails } from '@/lib/babyDetails';
 
 export interface LiveCardPreviewProps {
   /** Generic 4-color palette — used as a fallback when full Step 2 tokens are missing. */
@@ -49,6 +50,9 @@ export interface LiveCardPreviewProps {
   /** Wedding occasions: couple's names and wedding date (shown under the title and as the sign-off). */
   coupleNames?: string;
   weddingDate?: string;
+  babyName?: string;
+  babyDate?: string;
+  parentsNames?: string;
   className?: string;
 }
 
@@ -108,6 +112,9 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
   signatureStyle,
   coupleNames,
   weddingDate,
+  babyName,
+  babyDate,
+  parentsNames,
   className = '',
 }) => {
   // Resolved colors: design tokens win, palette is the fallback
@@ -120,6 +127,8 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
 
   // Resolved content
   const isWedding = coupleNames !== undefined || weddingDate !== undefined || designId?.startsWith('wedding-') === true;
+  const isBaby = babyName !== undefined || babyDate !== undefined || parentsNames !== undefined || designId?.startsWith('baby-') === true;
+  const babyDetails = resolveBabyDetails({ babyName, babyDate, parentsNames });
   const headline = messageHeadline?.trim() || headlineText || 'Thank You';
   const greeting = `Dear ${recipientName?.trim() || 'Friend'},`;
   const body =
@@ -127,12 +136,12 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
     (isWedding ? WEDDING_MESSAGE_EXAMPLE : 'Thank you so much for being part of our special day. Your presence and generosity meant the world to us.');
   const closingLine = closing?.trim() || 'With love,';
   // Wedding: the couple's names sign the card; fall back to senderName.
-  const sender = coupleNames?.trim() || senderName?.trim();
+  const sender = isBaby ? babyDetails.signOff : coupleNames?.trim() || senderName?.trim();
 
   // Small caps line under the title — soft example until the couple fills it in.
-  const weddingLine = isWedding
+  const occasionLine = isWedding
     ? `${coupleNames?.trim() || 'Emma & James'} · ${weddingDate?.trim() || 'June 14, 2027'}`
-    : undefined;
+    : isBaby ? babyDetails.titleLine : undefined;
   const initials = isWedding ? coupleInitials(coupleNames) : undefined;
 
   const signatureFont =
@@ -192,7 +201,7 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
             height="100%"
             photoUrl={photoUrl}
             headlineFont={fonts.heading}
-            subtext={weddingLine}
+            subtext={occasionLine}
             initials={initials}
           />
         </div>
@@ -219,12 +228,12 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
                 }}
               >
                 {headline}
-                {weddingLine && (
+                {occasionLine && (
                   <span
                     className="block"
                     style={{ fontSize: '10px', letterSpacing: '0.22em', textTransform: 'uppercase', opacity: 0.85, marginTop: '8px' }}
                   >
-                    {weddingLine}
+                    {occasionLine}
                   </span>
                 )}
               </span>
@@ -242,12 +251,12 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
                 }}
               >
                 {headline}
-                {weddingLine && (
+                {occasionLine && (
                   <span
                     className="block"
                     style={{ fontSize: '10px', letterSpacing: '0.22em', textTransform: 'uppercase', opacity: 0.85, marginTop: '8px' }}
                   >
-                    {weddingLine}
+                    {occasionLine}
                   </span>
                 )}
               </span>

@@ -213,6 +213,15 @@ export default function CreateCardStep3() {
   const isWedding = design.occasion === 'wedding';
   const [coupleNames, setCoupleNames] = useState(cardData.coupleNames || '');
   const [weddingDate, setWeddingDate] = useState(cardData.weddingDate || '');
+  const isBaby = design.occasion === 'baby';
+  const [babyName, setBabyName] = useState(cardData.babyName || '');
+  const [babyDate, setBabyDate] = useState(cardData.babyDate || '');
+  const [parentsNames, setParentsNames] = useState(cardData.parentsNames || '');
+
+  React.useEffect(() => {
+    if (isBaby) updateCardData({ babyName, babyDate, parentsNames });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isBaby, babyName, babyDate, parentsNames]);
   const fontFamily = FONT_CHOICES.find(f => f.id === fontChoice)?.family ?? FONT_CHOICES[0].family;
   const previewProps = {
     palette: {
@@ -250,6 +259,7 @@ export default function CreateCardStep3() {
     signatureStyle,
     // Wedding-only details (undefined for other occasions, so no caps line shows)
     ...(isWedding ? { coupleNames, weddingDate } : {}),
+    ...(isBaby ? { babyName, babyDate, parentsNames } : {}),
   };
 
   const handleNext = () => {
@@ -263,6 +273,7 @@ export default function CreateCardStep3() {
       messageBody,
       closing,
       ...(isWedding ? { coupleNames, weddingDate } : {}),
+      ...(isBaby ? { babyName, babyDate, parentsNames } : {}),
     });
     setCurrentStep(4);
     navigate('/create-card/step4');
@@ -396,6 +407,28 @@ export default function CreateCardStep3() {
                         onChange={(e) => setWeddingDate(e.target.value)}
                         placeholder="June 14, 2027"
                       />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {isBaby && (
+              <Card className="bg-card">
+                <CardContent className="p-6 space-y-5">
+                  <h2 className="text-xl text-foreground">Your little one</h2>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <Label htmlFor="baby-name" className="text-base mb-2 block">Baby's name</Label>
+                      <Input id="baby-name" value={babyName} onChange={(e) => setBabyName(e.target.value)} placeholder="Lily" />
+                    </div>
+                    <div>
+                      <Label htmlFor="baby-date" className="text-base mb-2 block">Birth or shower date</Label>
+                      <Input id="baby-date" value={babyDate} onChange={(e) => setBabyDate(e.target.value)} placeholder="March 3, 2027" />
+                    </div>
+                    <div className="sm:col-span-2">
+                      <Label htmlFor="parents-names" className="text-base mb-2 block">Parents' names</Label>
+                      <Input id="parents-names" value={parentsNames} onChange={(e) => setParentsNames(e.target.value)} placeholder="Emma & James" />
                     </div>
                   </div>
                 </CardContent>
