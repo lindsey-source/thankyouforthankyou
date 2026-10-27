@@ -636,11 +636,11 @@ const LandingPage = () => {
               Making every "thank you" a force for good
             </p>
             <div className="flex flex-wrap justify-center gap-x-8 gap-y-5 text-sm text-muted-foreground">
-              <a href="#" className="hover:text-primary transition-colors">About Us</a>
-              <a href="#" className="hover:text-primary transition-colors">Contact</a>
+              <Link to="/about" className="hover:text-primary transition-colors">About</Link>
+              <Link to="/contact" className="hover:text-primary transition-colors">Contact</Link>
               <Link to="/help" className="hover:text-primary transition-colors">Help</Link>
-              <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-primary transition-colors">Terms of Service</a>
+              <Link to="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
+              <Link to="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>
             </div>
           </div>
         </div>
