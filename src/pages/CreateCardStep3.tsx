@@ -19,6 +19,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { ChevronDown } from 'lucide-react';
 import { DESIGN_SETS } from './CreateCardStep2';
 import { readDesignFromPalette, type Design, type OccasionId } from '@/components/CardDesigner/designTypes';
+import { WEDDING_MESSAGE_EXAMPLE } from '@/lib/weddingMessages';
 
 /* ---------- Hardcoded last-resort design ----------
    Guarantees the page can ALWAYS render, even if DESIGN_SETS is missing,
@@ -212,7 +213,7 @@ export default function CreateCardStep3() {
   const isWedding = design.occasion === 'wedding';
   const [coupleNames, setCoupleNames] = useState(cardData.coupleNames || '');
   const [weddingDate, setWeddingDate] = useState(cardData.weddingDate || '');
-  const fontFamily = FONT_CHOICES.find(f => f.id === fontChoice)!.family;
+  const fontFamily = FONT_CHOICES.find(f => f.id === fontChoice)?.family ?? FONT_CHOICES[0].family;
   const previewProps = {
     palette: {
       primary: accentColor,
@@ -438,7 +439,7 @@ export default function CreateCardStep3() {
                     onChange={(e) => setMessageBody(e.target.value)}
                     rows={6}
                     className="resize-y min-h-[140px]"
-                    placeholder="Thank you so much for the beautiful gift — having you there meant the world to us."
+                    placeholder={isWedding ? WEDDING_MESSAGE_EXAMPLE : 'Thank you so much for the beautiful gift — having you there meant the world to us.'}
                   />
                 </div>
 

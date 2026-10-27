@@ -4,6 +4,8 @@
  * step can faithfully render the same card.
  */
 
+import { cleanWeddingDraft } from '@/lib/weddingMessages';
+
 export type HeaderStyle =
   | 'botanical'
   | 'monogram'
@@ -66,5 +68,5 @@ export function readDesignFromPalette(palette: any): Design | null {
   if (!palette.headerBg || !palette.headerStyle || !palette.ink || !palette.accent) {
     return null;
   }
-  return palette as Design;
+  return cleanWeddingDraft(palette) as Design;
 }

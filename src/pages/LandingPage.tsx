@@ -14,7 +14,7 @@ const HERO_CARDS = [
   {
     occasion: "wedding" as const,
     headline: "With Love & Gratitude",
-    greeting: "Dear Emma & James,",
+    greeting: "Dear Aunt Rachel,",
     body:
       "Thank you for celebrating our wedding with us — your presence made our day unforgettable.",
     charity: "$4 donated to Rainforest Alliance",
@@ -509,13 +509,13 @@ const LandingPage = () => {
                     fontSize: "16px",
                   }}
                 >
-                  Dear Emma & James,
+                  Dear Aunt Rachel,
                 </p>
                 <p
                   className="mt-1 text-sm leading-relaxed line-clamp-1"
                   style={{ color: "#2d2420", opacity: 0.7 }}
                 >
-                  Your wedding was the most beautiful day…
+                  Thank you for celebrating with us. Having you there meant the world to us.
                 </p>
 
               </div>
