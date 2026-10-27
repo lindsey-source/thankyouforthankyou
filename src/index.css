@@ -168,3 +168,27 @@
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
   }
 }
+/* Homepage editorial rhythm stays local to the homepage. */
+@layer components {
+  .homepage > section {
+    padding-block: 120px;
+  }
+
+  .homepage > .homepage-hero {
+    padding-top: 72px;
+  }
+
+  .homepage > .homepage-stats {
+    padding-block: 64px;
+  }
+
+  .homepage h1, .homepage h2, .homepage h3 {
+    letter-spacing: 0;
+  }
+
+  .homepage h2 {
+    max-width: 720px;
+    margin-inline: auto;
+    line-height: 1.35;
+  }
+}
