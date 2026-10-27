@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { cleanWeddingDraft } from './weddingMessages';
+import { cleanWeddingDraft } from '../src/lib/weddingMessages';
 
 test('restoring a wedding draft clears obsolete auto-filled messages and legacy fields', () => {
   const result = cleanWeddingDraft({
