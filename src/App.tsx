@@ -50,9 +50,9 @@ const App = () => (
               <Route path="/create-card/step1" element={<CreateCardStep1 />} />
               <Route path="/create-card/step2" element={<CreateCardStep2 />} />
               <Route path="/create-card/step3" element={<CreateCardStep3 />} />
-              <Route path="/create-card/step4" element={<Navigate to="/create-card/step3" replace />} />
-              <Route path="/create-card/impact" element={<CreateCardImpact />} />
-              <Route path="/create-card/step5" element={<CreateCardStep5 />} />
+                            <Route path="/create-card/step4" element={<CreateCardStep5 />} />
+              <Route path="/create-card/step5" element={<CreateCardImpact />} />
+              <Route path="/create-card/impact" element={<Navigate to="/create-card/step5" replace />} />
               <Route path="/create-card/step6" element={<ProtectedRoute><CreateCardStep6 /></ProtectedRoute>} />
               <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
               <Route path="/send-thanks" element={<SendThanks />} />

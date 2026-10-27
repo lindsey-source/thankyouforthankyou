@@ -120,7 +120,7 @@ export default function CreateCardStep5Impact() {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#faf7f2' }}>
-      <ProgressBar currentStep={7} totalSteps={7} stepNames={STEP_NAMES} />
+      <ProgressBar currentStep={6} />
 
       <div className="max-w-7xl mx-auto px-4 md:px-8 pt-6 pb-32">
         {/* Back link — top of page, matches other steps */}
@@ -448,7 +448,7 @@ export default function CreateCardStep5Impact() {
                 </p>
                 <button
                   type="button"
-                  onClick={() => navigate('/create-card/impact')}
+                  onClick={() => navigate('/create-card/step5')}
                   className="text-sm underline underline-offset-4 transition-opacity hover:opacity-70 flex-shrink-0"
                   style={{ color: '#8a8079' }}
                 >
