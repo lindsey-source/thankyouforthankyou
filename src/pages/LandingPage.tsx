@@ -5,6 +5,7 @@ import { Heart, ArrowRight, Upload, PenLine, Send, Palette, Leaf } from "lucide-
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { DESIGN_SETS } from "@/pages/CreateCardStep2";
+import { HeaderArt } from "@/components/CardDesigner/HeaderArt";
 
 /* ---------- Hero rotating-card content ----------
    Each entry reuses the FIRST design from its occasion in DESIGN_SETS
@@ -68,6 +69,7 @@ const LandingPage = () => {
   }, []);
   const heroCard = HERO_CARDS[heroIndex];
   const heroDesign = DESIGN_SETS[heroCard.occasion]?.[0] ?? DESIGN_SETS.general[0];
+  const weddingGalleryDesign = DESIGN_SETS.wedding[0];
   const heroDark = isDarkHeader(heroDesign.headerBg);
   const heroTitleInk = heroDark ? CREAM_INK : heroDesign.ink;
 
@@ -432,60 +434,16 @@ const LandingPage = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-20 lg:gap-24 max-w-5xl mx-auto">
-            {/* Card 1 — Wedding (Pink Rose Branch) */}
+            {/* Wedding — shared Rose Garden artwork and monogram */}
             <div
               className="stationery-card stationery-paper stationery-tilt-left group rounded-lg overflow-hidden bg-card border border-border"
             >
-              <div
-                className="stationery-header relative flex items-center justify-center"
-                style={{
-                  height: "240px",
-                  background:
-                    "linear-gradient(180deg, #fdf6f3 0%, #f9d9d2 100%)",
-                }}
-              >
-                <svg
-                  viewBox="0 0 200 120"
-                  className="absolute inset-0 w-full h-full opacity-40"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
-                >
-                  <path d="M30 100 C 60 80, 90 70, 170 30" stroke="#a87a6a" strokeWidth="0.9" />
-                  <path d="M70 78 C 64 72, 64 66, 70 64 C 74 68, 74 74, 70 78 Z" fill="#a8b89a" opacity="0.8" />
-                  <path d="M105 60 C 99 54, 99 48, 105 46 C 109 50, 109 56, 105 60 Z" fill="#a8b89a" opacity="0.8" />
-                  <path d="M140 44 C 134 38, 134 32, 140 30 C 144 34, 144 40, 140 44 Z" fill="#a8b89a" opacity="0.8" />
-                  <g transform="translate(60 70)">
-                    <circle cx="0" cy="0" r="6" fill="#c17b8a" opacity="0.85" />
-                    <circle cx="0" cy="0" r="3.5" fill="#b06070" opacity="0.9" />
-                    <circle cx="0" cy="0" r="1.5" fill="#8b4a5a" />
-                  </g>
-                  <g transform="translate(100 50)">
-                    <circle cx="0" cy="0" r="7" fill="#c17b8a" opacity="0.85" />
-                    <circle cx="0" cy="0" r="4" fill="#b06070" opacity="0.9" />
-                    <circle cx="0" cy="0" r="1.5" fill="#8b4a5a" />
-                  </g>
-                  <g transform="translate(150 32)">
-                    <circle cx="0" cy="0" r="6" fill="#c17b8a" opacity="0.85" />
-                    <circle cx="0" cy="0" r="3.5" fill="#b06070" opacity="0.9" />
-                    <circle cx="0" cy="0" r="1.5" fill="#8b4a5a" />
-                  </g>
-                </svg>
-                <span
-                  className="relative z-10 text-center px-4"
-                  style={{
-                    fontFamily: "'Playfair Display', Georgia, serif",
-                    fontWeight: 400,
-                    fontSize: "32px",
-                    color: "#7a3a4a",
-                    letterSpacing: "0.06em",
-                    lineHeight: 1.1,
-                  }}
-                >
-                  With Love & Gratitude
-                </span>
-              </div>
+              <HeaderArt
+                design={weddingGalleryDesign}
+                height="240px"
+                initials="E & J"
+                subtext="Emma & James · June 14, 2027"
+              />
               <div className="p-8 sm:p-10">
                 <div className="flex flex-wrap items-center gap-3 mb-6">
                   <span
@@ -512,10 +470,9 @@ const LandingPage = () => {
                   Dear Aunt Rachel,
                 </p>
                 <p
-                  className="mt-1 text-sm leading-relaxed line-clamp-1"
-                  style={{ color: "#2d2420", opacity: 0.7 }}
+                  className="mt-2 text-sm leading-relaxed text-muted-foreground"
                 >
-                  Thank you for celebrating with us. Having you there meant the world to us.
+                  {weddingGalleryDesign.body}
                 </p>
 
               </div>
