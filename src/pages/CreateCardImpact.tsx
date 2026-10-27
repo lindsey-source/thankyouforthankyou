@@ -142,7 +142,7 @@ export default function CreateCardImpact() {
 
   return (
     <div className="min-h-screen bg-brand-cream">
-      <ProgressBar currentStep={5} totalSteps={7} stepNames={STEP_NAMES} />
+      <ProgressBar currentStep={5} />
 
       <div className="max-w-6xl mx-auto px-4 md:px-8 pt-8 pb-40">
         {/* Header */}
@@ -167,7 +167,7 @@ export default function CreateCardImpact() {
 
         {/* Back */}
         <button
-          onClick={() => navigate('/create-card/step5')}
+          onClick={() => navigate('/create-card/step4')}
           className="inline-flex items-center gap-2 text-sm mb-8 text-muted-foreground hover:opacity-70 transition-opacity"
         >
           <ArrowLeft className="w-4 h-4" />

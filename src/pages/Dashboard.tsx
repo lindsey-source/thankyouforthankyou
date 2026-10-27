@@ -193,7 +193,7 @@ const Dashboard = () => {
                 <p className="text-sm text-muted-foreground mb-4 flex-1">
                   Skip ahead and upload your gift tracker — we'll prep your thank-you cards.
                 </p>
-                <Link to="/create-card/step5">
+                <Link to="/create-card/step4">
                   <Button variant="warm" size="sm" className="w-full gap-2">
                     <Upload className="h-4 w-4" />
                     Upload now

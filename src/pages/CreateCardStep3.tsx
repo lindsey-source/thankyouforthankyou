@@ -13,6 +13,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { ProgressBar } from '@/components/CardDesigner/ProgressBar';
 import { BreadcrumbNav } from '@/components/CardDesigner/BreadcrumbNav';
+import { WIZARD_STEPS } from '@/lib/wizardSteps';
 import { LiveCardPreview } from '@/components/CardDesigner/LiveCardPreview';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ChevronDown } from 'lucide-react';
@@ -240,7 +241,7 @@ export default function CreateCardStep3() {
       closing,
     });
     setCurrentStep(4);
-    navigate('/create-card/step5');
+    navigate('/create-card/step4');
   };
 
   const handleBack = () => {
@@ -250,8 +251,8 @@ export default function CreateCardStep3() {
 
   return (
     <div className="min-h-screen bg-gradient-hero p-4 md:p-8 pb-24 lg:pb-8">
-      <ProgressBar currentStep={3} totalSteps={6} stepNames={STEP_NAMES} />
-      <BreadcrumbNav currentStep={3} steps={STEPS} />
+      <ProgressBar currentStep={3} />
+      <BreadcrumbNav currentStep={3} steps={WIZARD_STEPS} />
 
       <div className="w-full max-w-7xl mx-auto">
         <div className="text-center mb-8">

@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCardWizard } from '@/contexts/CardWizardContext';
 import { motion } from 'framer-motion';
+import { ProgressBar } from '@/components/CardDesigner/ProgressBar';
 
 const TOTAL_STEPS = 7;
 
@@ -515,7 +516,7 @@ export default function CreateCardStep1() {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#faf7f2' }}>
-      <StepDots current={1} total={TOTAL_STEPS} />
+      <ProgressBar currentStep={1} />
 
       <div className="max-w-6xl mx-auto px-4 md:px-8 pt-12 md:pt-16 pb-24">
         {/* Header */}

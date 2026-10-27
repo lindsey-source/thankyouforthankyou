@@ -1,16 +1,17 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { WIZARD_STEP_NAMES, WIZARD_TOTAL_STEPS } from '@/lib/wizardSteps';
 
 interface ProgressBarProps {
   currentStep: number;
-  totalSteps: number;
-  stepNames: string[];
+  totalSteps?: number;
+  stepNames?: string[];
 }
 
 export const ProgressBar: React.FC<ProgressBarProps> = ({
   currentStep,
-  totalSteps,
-  stepNames,
+  totalSteps = WIZARD_TOTAL_STEPS,
+  stepNames = WIZARD_STEP_NAMES,
 }) => {
   const progress = (currentStep / totalSteps) * 100;
   const stepName = stepNames[currentStep - 1] ?? '';

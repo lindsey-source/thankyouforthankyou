@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Sparkles } from 'lucide-react';
 import { ProgressBar } from '@/components/CardDesigner/ProgressBar';
 import { BreadcrumbNav } from '@/components/CardDesigner/BreadcrumbNav';
+import { WIZARD_STEPS } from '@/lib/wizardSteps';
 import { GuestListUpload } from '@/components/CardDesigner/GuestListUpload';
 
 const STEPS = [
@@ -34,14 +35,14 @@ export default function CreateCardStep5() {
 
   const handleNext = () => {
     setCurrentStep(6);
-    navigate('/create-card/impact');
+    navigate('/create-card/step5');
   };
 
   return (
     <div className="min-h-screen bg-gradient-hero p-4 md:p-8">
       <div className="max-w-4xl mx-auto">
-        <ProgressBar currentStep={5} totalSteps={7} stepNames={STEP_NAMES} />
-        <BreadcrumbNav currentStep={5} steps={STEPS} />
+        <ProgressBar currentStep={4} />
+        <BreadcrumbNav currentStep={4} steps={WIZARD_STEPS} />
         <div className="text-center mb-8">
           <motion.h1
             className="text-3xl md:text-4xl font-bold text-stone-800 mb-2"
@@ -72,14 +73,14 @@ export default function CreateCardStep5() {
         <div className="mt-8 flex justify-between items-center">
           <Button
             variant="outline"
-            onClick={() => navigate('/create-card/step4')}
+            onClick={() => navigate('/create-card/step3')}
             className="bg-white/95"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back
           </Button>
 
-          <p className="text-sm text-stone-500">Step 5 of 7</p>
+          <p className="text-sm text-stone-500">Step 4 of 6</p>
 
           <Button variant="hero" onClick={handleNext}>
             Next
