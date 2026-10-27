@@ -1,4 +1,6 @@
 # Refinement tasks
+- [ ] Add baby fields, shared Style/preview details, and persistent sign-off.
+- [ ] Test baby personalization and verify the flow across screen sizes.
 - [x] Correct wedding message voice in all samples and previews.
 - [x] Clear obsolete sample messages from restored drafts while preserving personal writing.
 - [x] Verify empty Customize messages and wedding previews.
