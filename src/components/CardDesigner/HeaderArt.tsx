@@ -19,6 +19,8 @@ interface HeaderArtProps {
   headlineFont?: string;
   /** Optional small letter-spaced caps line under the headline (e.g. wedding couple + date). */
   subtext?: string;
+  /** Wedding crest: couple's initials inside the gold wreath (e.g. "E & J"). */
+  initials?: string;
 }
 
 /* Small letter-spaced caps line shown under the headline */
