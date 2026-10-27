@@ -193,6 +193,7 @@ export default function CreateCardStep5Impact() {
                   text: previewText,
                 }}
                 fonts={fonts}
+                designId={palette.id || palette.theme || cardData.templateId || undefined}
                 bg={palette.bg}
                 headerBg={palette.headerBg}
                 ink={palette.ink}

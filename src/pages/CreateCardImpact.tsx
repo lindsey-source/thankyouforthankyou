@@ -525,6 +525,7 @@ export default function CreateCardImpact() {
               text: palette.ink || '#2d2420',
             }}
             fonts={previewFonts}
+            designId={palette.id || palette.theme || cardData.templateId || undefined}
             bg={palette.bg}
             headerBg={palette.headerBg}
             ink={palette.ink}
