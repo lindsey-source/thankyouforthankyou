@@ -7,3 +7,5 @@
 - [ ] Four distinct mitzvah styles (Bold Star, Tallit Stripes, Mosaic Torah, Watercolor Bloom)
 - [ ] Corporate fields (company, sender name, title) + samples
 - [ ] Four distinct corporate styles (Clean Executive, Bold Geometric, Night Sky, Sketchbook)
+- [ ] General fields (sender name sign-off) + samples
+- [ ] Four distinct general styles (Big Type, Gilded Stripes, Pressed Botanicals, Doodle Thanks)
