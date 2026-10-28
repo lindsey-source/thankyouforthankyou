@@ -172,13 +172,13 @@ function lookFor(key: OccasionStyleKey, p: { subtext: string; first: string; pho
         bg: '#f4e9dc', ink: '#2a2440',
         art: (
           <svg viewBox="0 0 200 120" style={{ ...abs, inset: 0, width: '100%', height: '100%' }}>
-            {/* Matte shapes in the corners only — never behind the centered title */}
-            <path d="M16 100V80a20 20 0 0 1 40 0v20a4 4 0 0 1-4 4H20a4 4 0 0 1-4-4Z" fill="#e7a07d" />
-            <path d="M26 100V90a10 10 0 0 1 20 0v10a2 2 0 0 1-2 2H28a2 2 0 0 1-2-2Z" fill="#f4e9dc" />
-            <path d="M150 102V78a24 24 0 0 1 48 0v24a4 4 0 0 1-4 4h-40a4 4 0 0 1-4-4Z" fill="#3e5873" />
-            <circle cx="28" cy="26" r="12" fill="#7d9d8a" />
-            <circle cx="176" cy="24" r="9" fill="#e3b85b" />
-            <circle cx="184" cy="58" r="5" fill="#e7a07d" />
+            {/* Matte shapes tucked into the outer corners — clear of all text */}
+            <path d="M12 108V90a18 18 0 0 1 36 0v18a4 4 0 0 1-4 4H16a4 4 0 0 1-4-4Z" fill="#e7a07d" />
+            <path d="M21 108V97a9 9 0 0 1 18 0v11a2 2 0 0 1-2 2H23a2 2 0 0 1-2-2Z" fill="#f4e9dc" />
+            <path d="M158 108V92a16 16 0 0 1 32 0v16a4 4 0 0 1-4 4h-24a4 4 0 0 1-4-4Z" fill="#3e5873" />
+            <circle cx="22" cy="20" r="10" fill="#7d9d8a" />
+            <circle cx="180" cy="20" r="8" fill="#e3b85b" />
+            <circle cx="192" cy="62" r="4" fill="#e7a07d" />
           </svg>
         ),
       };
