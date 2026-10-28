@@ -4,6 +4,7 @@ import { HeaderArt } from './HeaderArt';
 import type { FontFamily, HeaderStyle } from './designTypes';
 import { cleanWeddingMessage, WEDDING_MESSAGE_EXAMPLE } from '@/lib/weddingMessages';
 import { resolveBabyDetails } from '@/lib/babyDetails';
+import { resolveGradDetails, resolveBirthdayDetails } from '@/lib/occasionDetails';
 
 export interface LiveCardPreviewProps {
   /** Generic 4-color palette — used as a fallback when full Step 2 tokens are missing. */
@@ -51,6 +52,12 @@ export interface LiveCardPreviewProps {
   coupleNames?: string;
   weddingDate?: string;
   babyName?: string;
+  gradName?: string;
+  gradYear?: string;
+  gradSchool?: string;
+  bdayName?: string;
+  bdayAge?: string;
+  bdayDate?: string;
   babyDate?: string;
   parentsNames?: string;
   className?: string;
@@ -113,6 +120,12 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
   coupleNames,
   weddingDate,
   babyName,
+  gradName,
+  gradYear,
+  gradSchool,
+  bdayName,
+  bdayAge,
+  bdayDate,
   babyDate,
   parentsNames,
   className = '',
@@ -129,19 +142,23 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
   const isWedding = coupleNames !== undefined || weddingDate !== undefined || designId?.startsWith('wedding-') === true;
   const isBaby = babyName !== undefined || babyDate !== undefined || parentsNames !== undefined || designId?.startsWith('baby-') === true;
   const babyDetails = resolveBabyDetails({ babyName, babyDate, parentsNames });
+  const isGrad = gradName !== undefined || gradYear !== undefined || gradSchool !== undefined || designId?.startsWith('grad-') === true;
+  const isBday = bdayName !== undefined || bdayAge !== undefined || bdayDate !== undefined || designId?.startsWith('bday-') === true;
+  const gradDetails = resolveGradDetails({ gradName, gradYear, gradSchool });
+  const bdayDetails = resolveBirthdayDetails({ bdayName, bdayAge, bdayDate });
   const headline = messageHeadline?.trim() || headlineText || 'Thank You';
   const greeting = `Dear ${recipientName?.trim() || 'Friend'},`;
   const body =
     cleanWeddingMessage(messageBody, isWedding).trim() ||
-    (isWedding ? WEDDING_MESSAGE_EXAMPLE : isBaby ? 'Thank you for welcoming our little one with so much love. Your thoughtfulness means the world to our growing family.' : 'Thank you so much for your kindness and generosity. It truly meant the world to me.');
+    (isWedding ? WEDDING_MESSAGE_EXAMPLE : isGrad ? 'Thank you so much for your generous gift and for cheering me on. Your support helped me reach graduation.' : isBday ? 'Thank you for coming to my birthday party and for the thoughtful gift. It made my day so special.' : isBaby ? 'Thank you for welcoming our little one with so much love. Your thoughtfulness means the world to our growing family.' : 'Thank you so much for your kindness and generosity. It truly meant the world to me.');
   const closingLine = closing?.trim() || 'With love,';
   // Wedding: the couple's names sign the card; fall back to senderName.
-  const sender = isBaby ? babyDetails.signOff : coupleNames?.trim() || senderName?.trim();
+  const sender = isBaby ? babyDetails.signOff : isGrad ? gradDetails.signOff : isBday ? bdayDetails.signOff : coupleNames?.trim() || senderName?.trim();
 
   // Small caps line under the title — soft example until the couple fills it in.
   const occasionLine = isWedding
     ? `${coupleNames?.trim() || 'Emma & James'} · ${weddingDate?.trim() || 'June 14, 2027'}`
-    : isBaby ? babyDetails.titleLine : undefined;
+    : isBaby ? babyDetails.titleLine : isGrad ? gradDetails.titleLine : isBday ? bdayDetails.titleLine : undefined;
   const initials = isWedding ? coupleInitials(coupleNames) : undefined;
 
   const signatureFont =
