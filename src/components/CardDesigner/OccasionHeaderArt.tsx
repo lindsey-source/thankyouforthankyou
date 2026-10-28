@@ -133,7 +133,7 @@ function lookFor(key: OccasionStyleKey, p: { subtext: string; first: string; pho
       return {
         bg: '#3e2236', ink: CREAM,
         art: (
-          <svg viewBox="0 0 120 92" style={{ ...abs, top: 8, left: '50%', transform: 'translateX(-50%)', width: 104 }} fill="none" stroke={GOLD} strokeWidth="1.1" strokeLinecap="round">
+          <svg viewBox="0 0 120 92" style={{ ...abs, top: 4, left: '50%', transform: 'translateX(-50%)', width: 132 }} fill="none" stroke={GOLD} strokeWidth="1.1" strokeLinecap="round">
             {/* Left flute, tilted in */}
             <g transform="rotate(-12 44 46)">
               <path d="M36 8h16l-2.5 26c-.8 7-4.5 10-5.5 10s-4.7-3-5.5-10Z" />
@@ -162,12 +162,12 @@ function lookFor(key: OccasionStyleKey, p: { subtext: string; first: string; pho
         art: (
           <svg viewBox="0 0 200 120" style={{ ...abs, inset: 0, width: '100%', height: '100%' }}>
             {/* Matte shapes kept fully inside the card, clear of the centered title */}
-            <path d="M14 108V84a22 22 0 0 1 44 0v24Z" fill="#e7a07d" />
-            <path d="M24 108V92a12 12 0 0 1 24 0v16Z" fill="#f4e9dc" />
-            <path d="M142 108V78a30 30 0 0 1 60 0v30Z" fill="#3e5873" transform="translate(-16 0)" />
-            <circle cx="30" cy="30" r="13" fill="#7d9d8a" />
+            <path d="M16 100V80a20 20 0 0 1 40 0v20a4 4 0 0 1-4 4H20a4 4 0 0 1-4-4Z" fill="#e7a07d" />
+            <path d="M26 100V90a10 10 0 0 1 20 0v10a2 2 0 0 1-2 2H28a2 2 0 0 1-2-2Z" fill="#f4e9dc" />
+            <path d="M140 100V74a26 26 0 0 1 52 0v26a4 4 0 0 1-4 4h-44a4 4 0 0 1-4-4Z" fill="#3e5873" />
+            <circle cx="30" cy="28" r="13" fill="#7d9d8a" />
             <circle cx="172" cy="26" r="9" fill="#e3b85b" />
-            <circle cx="180" cy="96" r="6" fill="#e7a07d" />
+            <circle cx="178" cy="58" r="5" fill="#e7a07d" />
           </svg>
         ),
       };
