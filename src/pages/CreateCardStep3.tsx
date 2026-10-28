@@ -256,7 +256,7 @@ export default function CreateCardStep3() {
 
     // Wording fields fixed to design — never altered by these controls.
     messageHeadline: design.headlineText,
-    messageBody,
+    messageBody: messageBody || (isWedding ? "" : design.body),
     closing,
     recipientName: cardData.recipientName || design.greeting.replace(/^Dear\s+/i, '').replace(/,$/, ''),
     senderName: cardData.senderName,
