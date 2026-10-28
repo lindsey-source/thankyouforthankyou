@@ -106,8 +106,19 @@ function lookFor(key: OccasionStyleKey, p: { subtext: string; first: string; pho
         ),
         title: (
           <>
-            <span style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: 96, lineHeight: 0.9, background: `linear-gradient(160deg, #f0dca6 0%, ${GOLD} 38%, #8f6d2e 62%, #e3c87f 88%, #b08d42)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{age}</span>
-            <span style={{ ...p.font, fontSize: 22, color: INK, marginTop: 8 }}>{p.headline}</span>
+            <svg viewBox="0 0 120 104" style={{ width: 104, height: 'auto', display: 'block' }} aria-hidden="true">
+              <defs>
+                <linearGradient id="bdayGoldNum" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stopColor="#f0dca6" />
+                  <stop offset="0.38" stopColor={GOLD} />
+                  <stop offset="0.62" stopColor="#8f6d2e" />
+                  <stop offset="0.88" stopColor="#e3c87f" />
+                  <stop offset="1" stopColor="#b08d42" />
+                </linearGradient>
+              </defs>
+              <text x="60" y="88" textAnchor="middle" fontFamily="'Playfair Display', Georgia, serif" fontSize="100" fill="url(#bdayGoldNum)">{age}</text>
+            </svg>
+            <span style={{ ...p.font, fontSize: 22, color: INK, marginTop: 4 }}>{p.headline}</span>
           </>
         ),
       };
@@ -158,16 +169,16 @@ function lookFor(key: OccasionStyleKey, p: { subtext: string; first: string; pho
       };
     case 'colorBlock':
       return {
-        bg: '#f4e9dc', ink: '#2a2440', chip: '#f4e9dc',
+        bg: '#f4e9dc', ink: '#2a2440',
         art: (
           <svg viewBox="0 0 200 120" style={{ ...abs, inset: 0, width: '100%', height: '100%' }}>
-            {/* Matte shapes kept fully inside the card, clear of the centered title */}
+            {/* Matte shapes in the corners only — never behind the centered title */}
             <path d="M16 100V80a20 20 0 0 1 40 0v20a4 4 0 0 1-4 4H20a4 4 0 0 1-4-4Z" fill="#e7a07d" />
             <path d="M26 100V90a10 10 0 0 1 20 0v10a2 2 0 0 1-2 2H28a2 2 0 0 1-2-2Z" fill="#f4e9dc" />
-            <path d="M140 100V74a26 26 0 0 1 52 0v26a4 4 0 0 1-4 4h-44a4 4 0 0 1-4-4Z" fill="#3e5873" />
-            <circle cx="30" cy="28" r="13" fill="#7d9d8a" />
-            <circle cx="172" cy="26" r="9" fill="#e3b85b" />
-            <circle cx="178" cy="58" r="5" fill="#e7a07d" />
+            <path d="M150 102V78a24 24 0 0 1 48 0v24a4 4 0 0 1-4 4h-40a4 4 0 0 1-4-4Z" fill="#3e5873" />
+            <circle cx="28" cy="26" r="12" fill="#7d9d8a" />
+            <circle cx="176" cy="24" r="9" fill="#e3b85b" />
+            <circle cx="184" cy="58" r="5" fill="#e7a07d" />
           </svg>
         ),
       };
