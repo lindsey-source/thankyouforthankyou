@@ -144,7 +144,7 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
     (isWedding ? WEDDING_MESSAGE_EXAMPLE : isBaby ? 'Thank you for welcoming our little one with so much love. Your thoughtfulness means the world to our growing family.' : 'Thank you so much for your kindness and generosity. It truly meant the world to me.');
   const closingLine = closing?.trim() || 'With love,';
   // Wedding: the couple's names sign the card; fall back to senderName.
-  const sender = isBaby ? babyDetails.signOff : occ ? (senderName?.trim() && detailOcc !== 'general' ? occ.signOff : occ.signOff) : coupleNames?.trim() || senderName?.trim();
+  const sender = isBaby ? babyDetails.signOff : occ ? occ.signOff : coupleNames?.trim() || senderName?.trim();
 
   // Small caps line under the title — soft example until the couple fills it in.
   const occasionLine = isWedding
