@@ -22,7 +22,7 @@ interface Props {
   photoUrl?: string | null;
 }
 
-type Look = { bg: string; ink: string; art?: React.ReactNode; title?: React.ReactNode; justify?: 'center' | 'flex-end' | 'flex-start'; pad?: string };
+type Look = { chip?: string; bg: string; ink: string; art?: React.ReactNode; title?: React.ReactNode; justify?: 'center' | 'flex-end' | 'flex-start'; pad?: string };
 
 const caps: React.CSSProperties = {
   fontFamily: "'Playfair Display', Georgia, serif", fontSize: 10, letterSpacing: '0.22em',
@@ -68,7 +68,7 @@ function lookFor(key: OccasionStyleKey, p: { subtext: string; first: string; pho
             <div style={{ ...abs, right: 0, top: 0, height: '34%', width: '62%', background: '#d9b25f' }} />
           </>
         ),
-        title: <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 800, fontSize: 38, lineHeight: 0.95, letterSpacing: '-0.02em', color: '#1f2b3d', background: '#f1e6d6', padding: '6px 12px', textTransform: 'uppercase' }}>{p.headline}</span>,
+        chip: '#f1e6d6', title: <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 800, fontSize: 38, lineHeight: 0.95, letterSpacing: '-0.02em', color: '#1f2b3d', textTransform: 'uppercase' }}>{p.headline}</span>,
       };
     case 'laurelCrest':
       return {
@@ -93,7 +93,12 @@ function lookFor(key: OccasionStyleKey, p: { subtext: string; first: string; pho
     case 'goldenNumber':
       return {
         bg: '#f8f1e4', ink: INK,
-        art: <span style={{ ...abs, top: '50%', left: '50%', transform: 'translate(-50%,-58%)', fontFamily: "'Playfair Display', Georgia, serif", fontSize: 150, lineHeight: 1, color: GOLD, opacity: 0.38, background: `linear-gradient(135deg, #e3c789, ${GOLD} 50%, #a8823f)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{age}</span>,
+        title: (
+          <>
+            <span style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: 92, lineHeight: 0.9, background: `linear-gradient(135deg, #e6cc8f, ${GOLD} 45%, #9c7836 80%, #d9bb76)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{age}</span>
+            <span style={{ ...p.font, fontSize: 22, color: INK, marginTop: 6 }}>{p.headline}</span>
+          </>
+        ),
       };
     case 'balloons':
       return { bg: '#fbf7f0', ink: INK, justify: 'flex-end', pad: '0 24px 18px', art: img(balloons, { top: 6, left: '50%', transform: 'translateX(-50%)', width: '55%', height: '58%' }) };
@@ -111,7 +116,7 @@ function lookFor(key: OccasionStyleKey, p: { subtext: string; first: string; pho
       };
     case 'colorBlock':
       return {
-        bg: '#f4e9dc', ink: '#2a2440',
+        bg: '#f4e9dc', ink: '#2a2440', chip: '#f4e9dc',
         art: (
           <svg viewBox="0 0 200 120" preserveAspectRatio="xMidYMax slice" style={{ ...abs, inset: 0, width: '100%', height: '100%' }}>
             <path d="M-10 120V70a40 40 0 0 1 80 0v50Z" fill="#e7a07d" />
@@ -324,7 +329,7 @@ export function OccasionHeaderArt({ styleKey, headline, subtext = '', height, cl
       style={{ height, background: look.bg, color: look.ink, justifyContent: look.justify || 'center', isolation: 'isolate' }}
     >
       <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>{look.art}</div>
-      <div className="relative flex flex-col items-center text-center" style={{ zIndex: 1, padding: look.pad || '0 24px', width: '100%', textWrap: 'balance' as any }}>
+      <div className="relative flex flex-col items-center text-center" style={{ zIndex: 1, padding: look.pad || '0 24px', width: look.chip ? 'auto' : '100%', maxWidth: '100%', textWrap: 'balance' as any, background: look.chip, ...(look.chip ? { paddingTop: 10, paddingBottom: 10, borderRadius: 4 } : {}) }}>
         {look.title ?? <span style={{ ...font, fontSize: 26, color: look.ink }}>{headline}</span>}
         {showCaps && <span style={{ ...caps, color: look.ink }}>{subtext}</span>}
       </div>
