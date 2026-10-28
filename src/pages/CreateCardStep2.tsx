@@ -10,6 +10,8 @@ import { HeaderArt } from '@/components/CardDesigner/HeaderArt';
 import type { Design, HeaderStyle, FontFamily, OccasionId } from '@/components/CardDesigner/designTypes';
 import { LiveCardPreview, coupleInitials } from '@/components/CardDesigner/LiveCardPreview';
 import { resolveBabyDetails } from '@/lib/babyDetails';
+import { detailOccasionFor, resolveOccasionDetails } from '@/lib/occasionDetails';
+const detailsFor = (occ: string, data: any) => { const o = detailOccasionFor(occ); return o ? resolveOccasionDetails(o, data) : undefined; };
 
 const STEP_NAMES = [
   'Choose Occasion',
@@ -1026,7 +1028,7 @@ Pick Your Style
                   subtext={
                     design.occasion === 'wedding'
                       ? `${cardData.coupleNames?.trim() || 'Emma & James'} · ${cardData.weddingDate?.trim() || 'June 14, 2027'}`
-                      : design.occasion === 'baby' ? resolveBabyDetails(cardData).titleLine : undefined
+                      : design.occasion === 'baby' ? resolveBabyDetails(cardData).titleLine : detailsFor(design.occasion, cardData)?.titleLine
                   }
                   initials={design.occasion === 'wedding' ? coupleInitials(cardData.coupleNames) : undefined}
                 />
@@ -1050,7 +1052,7 @@ Pick Your Style
                       className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs"
                       style={{ backgroundColor: design.donationBg, color: design.donationColor }}
                     >
-                      <Heart className="inline h-3 w-3 mr-1" strokeWidth={1.5} />A gift in your name
+                      <Heart className="inline h-3 w-3 mr-1" strokeWidth={1.5} />{detailsFor(design.occasion, cardData)?.giftLabel || 'A gift in your name'}
                     </span>
                   </div>
                   <p
@@ -1070,6 +1072,9 @@ Pick Your Style
                   </p>
                   {design.occasion === 'baby' && (
                     <p className="mt-3 text-sm text-foreground font-serif">With love,<br />{resolveBabyDetails(cardData).signOff}</p>
+                  )}
+                  {detailsFor(design.occasion, cardData) && (
+                    <p className="mt-3 text-sm text-foreground font-serif">With gratitude,<br />{detailsFor(design.occasion, cardData)!.signOff}</p>
                   )}
                   <div className="mt-5 flex items-center gap-2">
                     <div
@@ -1150,6 +1155,8 @@ Pick Your Style
               donationBg={previewDesign.donationBg}
               donationColor={previewDesign.donationColor}
               messageBody={previewDesign.body}
+              occasion={previewDesign.occasion}
+              details={cardData as any}
               charityName={previewDesign.donation}
               {...(previewDesign.occasion === 'wedding'
                 ? { coupleNames: cardData.coupleNames, weddingDate: cardData.weddingDate }
@@ -1213,7 +1220,7 @@ Pick Your Style
                   subtext={
                     design.occasion === 'wedding'
                       ? `${cardData.coupleNames?.trim() || 'Emma & James'} · ${cardData.weddingDate?.trim() || 'June 14, 2027'}`
-                      : design.occasion === 'baby' ? resolveBabyDetails(cardData).titleLine : undefined
+                      : design.occasion === 'baby' ? resolveBabyDetails(cardData).titleLine : detailsFor(design.occasion, cardData)?.titleLine
                   }
                   initials={design.occasion === 'wedding' ? coupleInitials(cardData.coupleNames) : undefined}
                 />
@@ -1231,7 +1238,7 @@ Pick Your Style
                       className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs"
                       style={{ backgroundColor: design.donationBg, color: design.donationColor }}
                     >
-                      <Heart className="inline h-3 w-3 mr-1" strokeWidth={1.5} />A gift in your name
+                      <Heart className="inline h-3 w-3 mr-1" strokeWidth={1.5} />{detailsFor(design.occasion, cardData)?.giftLabel || 'A gift in your name'}
                     </span>
                   </div>
 
@@ -1271,6 +1278,9 @@ Pick Your Style
                   {design.occasion === 'baby' && (
                     <p className="mt-1 text-base text-foreground font-serif">{resolveBabyDetails(cardData).signOff}</p>
                   )}
+                  {detailsFor(design.occasion, cardData) && (
+                    <p className="mt-1 text-base text-foreground font-serif">{detailsFor(design.occasion, cardData)!.signOff}</p>
+                  )}
 
                   {/* Charity donation badge */}
                   <div
@@ -1278,7 +1288,7 @@ Pick Your Style
                     style={{ backgroundColor: design.donationBg, color: design.donationColor }}
                   >
                     <p className="text-xs uppercase tracking-wider mb-1 opacity-80">
-                      A gift in your name
+                      {detailsFor(design.occasion, cardData)?.giftLabel || 'A gift in your name'}
                     </p>
                     <p className="text-base font-medium">
                       <Heart className="inline h-3 w-3 mr-1" strokeWidth={1.5} />{design.donation}
