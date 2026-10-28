@@ -1,15 +1,2 @@
 # Roadmap
-- [ ] Graduation fields (name, class year, school) + caps line + sign-off
-- [ ] Four distinct graduation styles (Gold Class, Cap & Tassel, Bold Type, Laurel Crest)
-- [ ] Birthday fields (name, age, date) + caps line + sign-off + guest-thanking samples
-- [ ] Four distinct birthday styles (Golden Number, Watercolor Balloons, Champagne Toast, Color Block Pop)
-- [ ] Mitzvah fields (name, date) + samples, no Hebrew lettering
-- [ ] Four distinct mitzvah styles (Bold Star, Tallit Stripes, Mosaic Torah, Watercolor Bloom)
-- [ ] Corporate fields (company, sender name, title) + samples
-- [ ] Four distinct corporate styles (Clean Executive, Bold Geometric, Night Sky, Sketchbook)
-- [ ] General fields (sender name sign-off) + samples
-- [ ] Four distinct general styles (Big Type, Gilded Stripes, Pressed Botanicals, Doodle Thanks)
-- [ ] Memorial fields + "A gift in memory of" + samples
-- [ ] Four memorial styles (Quiet Cream, Evening Candle, Olive Branch, Portrait Arch)
-- [ ] Charity fields (org, campaign) + samples
-- [ ] Four charity styles (Mission Minimal, Seedling Watercolor, Circle of Hands, New Day)
+All occasion detail fields and distinct styles (graduation, birthday, mitzvah, corporate, general, memorial, charity) — done.
