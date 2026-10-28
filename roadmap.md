@@ -2,3 +2,8 @@
 - [ ] Graduation fields (name, class year, school) + caps line + sign-off
 - [ ] Four distinct graduation styles (Gold Class, Cap & Tassel, Bold Type, Laurel Crest)
 - [ ] Birthday fields (name, age, date) + caps line + sign-off + guest-thanking samples
+- [ ] Four distinct birthday styles (Golden Number, Watercolor Balloons, Champagne Toast, Color Block Pop)
+- [ ] Mitzvah fields (name, date) + samples, no Hebrew lettering
+- [ ] Four distinct mitzvah styles (Bold Star, Tallit Stripes, Mosaic Torah, Watercolor Bloom)
+- [ ] Corporate fields (company, sender name, title) + samples
+- [ ] Four distinct corporate styles (Clean Executive, Bold Geometric, Night Sky, Sketchbook)
