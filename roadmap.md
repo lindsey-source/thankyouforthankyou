@@ -1,13 +1,2 @@
-# Refinement tasks
-- [x] Redesign four baby styles and verify matching personalized previews.
-- [x] Add baby fields, shared Style/preview details, and persistent sign-off.
-- [x] Test baby personalization and verify the flow across screen sizes.
-- [x] Correct wedding message voice in all samples and previews.
-- [x] Clear obsolete sample messages from restored drafts while preserving personal writing.
-- [x] Verify empty Customize messages and wedding previews.
-- [x] Give the four wedding styles distinct artwork and matching live title fonts.
-- [x] Verify wedding style selection and live previews.
-- [x] Make buttons smaller, dusty rose, 12px corners, and glow-free.
-- [x] Replace heavy shadows with faint soft shadows and thin warm borders.
-- [x] Remove floating decorative dots from the homepage hero.
-- [x] Verify homepage appearance and key links.
+# Roadmap
+All occasion detail fields and distinct styles (graduation, birthday, mitzvah, corporate, general, memorial, charity) — done.

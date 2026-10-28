@@ -40,6 +40,22 @@ export interface WizardCardData {
   babyName: string;
   babyDate: string;
   parentsNames: string;
+  gradName: string;
+  gradYear: string;
+  gradSchool: string;
+  bdayName: string;
+  bdayAge: string;
+  bdayDate: string;
+  memName: string;
+  memDates: string;
+  memFamily: string;
+  orgName: string;
+  orgCampaign: string;
+  mitzvahName: string;
+  mitzvahDate: string;
+  companyName: string;
+  corpSender: string;
+  corpTitle: string;
 
   // Guest list (multi-recipient)
   guests: GuestEntry[];
@@ -92,6 +108,22 @@ const initialCardData: WizardCardData = {
   babyName: '',
   babyDate: '',
   parentsNames: '',
+  gradName: '',
+  gradYear: '',
+  gradSchool: '',
+  bdayName: '',
+  bdayAge: '',
+  bdayDate: '',
+  memName: '',
+  memDates: '',
+  memFamily: '',
+  orgName: '',
+  orgCampaign: '',
+  mitzvahName: '',
+  mitzvahDate: '',
+  companyName: '',
+  corpSender: '',
+  corpTitle: '',
   guests: []
 };
 

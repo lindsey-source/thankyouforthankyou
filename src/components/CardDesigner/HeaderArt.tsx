@@ -4,6 +4,8 @@ import peonyCorner from '@/assets/watercolor-peony-corner.png';
 import marbleGold from '@/assets/wedding-marble-gold.jpg';
 import { BabyHeaderArt } from './BabyHeaderArt';
 import { babyStyleFor } from './babyStyles';
+import { OccasionHeaderArt } from './OccasionHeaderArt';
+import { occasionStyleFor } from './occasionStyles';
 
 interface HeaderArtProps {
   /** Full design from Step 2 (provides accent/ink/headerBg/headerStyle/headlineText/font). */
@@ -106,6 +108,10 @@ export const HeaderArt: React.FC<HeaderArtProps> = ({
   const babyStyle = babyStyleFor(id);
   if (babyStyle && !photoUrl) {
     return <BabyHeaderArt styleKey={babyStyle.headerStyle} height={height} className={className} headlineFont={headlineFont} subtext={subtext} />;
+  }
+  const occasionStyle = occasionStyleFor(id);
+  if (occasionStyle && (!photoUrl || occasionStyle.key === 'portraitArch')) {
+    return <OccasionHeaderArt styleKey={occasionStyle.key} headline={headline} subtext={subtext} height={height} className={className} headlineFont={headlineFont} photoUrl={photoUrl} />;
   }
 
   // Wedding stationery: gold wreath crest + script headline + serif names.
