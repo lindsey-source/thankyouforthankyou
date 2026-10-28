@@ -20,6 +20,7 @@ import { ChevronDown } from 'lucide-react';
 import { DESIGN_SETS } from './CreateCardStep2';
 import { readDesignFromPalette, type Design, type OccasionId } from '@/components/CardDesigner/designTypes';
 import { WEDDING_MESSAGE_EXAMPLE } from '@/lib/weddingMessages';
+import { OCCASION_FIELDS, DETAIL_KEYS, detailOccasionFor, type DetailValues } from '@/lib/occasionDetails';
 
 /* ---------- Hardcoded last-resort design ----------
    Guarantees the page can ALWAYS render, even if DESIGN_SETS is missing,
@@ -218,6 +219,15 @@ export default function CreateCardStep3() {
   const [babyDate, setBabyDate] = useState(cardData.babyDate || '');
   const [parentsNames, setParentsNames] = useState(cardData.parentsNames || '');
 
+  const detailOcc = detailOccasionFor(design.occasion);
+  const [details, setDetails] = useState<DetailValues>(() =>
+    Object.fromEntries(DETAIL_KEYS.map((k) => [k, (cardData as any)[k] || ''])) as DetailValues,
+  );
+  React.useEffect(() => {
+    if (detailOcc) updateCardData(Object.fromEntries(OCCASION_FIELDS[detailOcc].fields.map((f) => [f.key, details[f.key] || ''])) as any);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [detailOcc, details]);
+
   React.useEffect(() => {
     if (isBaby) updateCardData({ babyName, babyDate, parentsNames });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -260,6 +270,8 @@ export default function CreateCardStep3() {
     // Wedding-only details (undefined for other occasions, so no caps line shows)
     ...(isWedding ? { coupleNames, weddingDate } : {}),
     ...(isBaby ? { babyName, babyDate, parentsNames } : {}),
+    occasion: design.occasion,
+    details,
   };
 
   const handleNext = () => {
@@ -430,6 +442,29 @@ export default function CreateCardStep3() {
                       <Label htmlFor="parents-names" className="text-base mb-2 block">Parents' names</Label>
                       <Input id="parents-names" value={parentsNames} onChange={(e) => setParentsNames(e.target.value)} placeholder="Emma & James" />
                     </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {detailOcc && (
+              <Card className="bg-card">
+                <CardContent className="p-6 space-y-5">
+                  <h2 className="text-xl text-foreground">{OCCASION_FIELDS[detailOcc].heading}</h2>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {OCCASION_FIELDS[detailOcc].fields.map((f, i, arr) => (
+                      <div key={f.key} className={arr.length % 2 === 1 && i === arr.length - 1 ? 'sm:col-span-2' : ''}>
+                        <Label htmlFor={`detail-${f.key}`} className="text-base mb-2 block">
+                          {f.label}{f.optional && <span className="text-muted-foreground text-sm"> (optional)</span>}
+                        </Label>
+                        <Input
+                          id={`detail-${f.key}`}
+                          value={details[f.key] || ''}
+                          onChange={(e) => setDetails((d) => ({ ...d, [f.key]: e.target.value }))}
+                          placeholder={f.placeholder}
+                        />
+                      </div>
+                    ))}
                   </div>
                 </CardContent>
               </Card>
