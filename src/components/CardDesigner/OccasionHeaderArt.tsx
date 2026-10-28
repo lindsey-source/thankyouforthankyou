@@ -93,37 +93,81 @@ function lookFor(key: OccasionStyleKey, p: { subtext: string; first: string; pho
     case 'goldenNumber':
       return {
         bg: '#f8f1e4', ink: INK,
+        art: (
+          <svg viewBox="0 0 200 140" style={{ ...abs, top: '50%', left: '50%', width: '72%', maxWidth: 260, transform: 'translate(-50%,-54%)' }} fill="none">
+            {/* Thin gold arch framing the numeral */}
+            <path d="M30 140V70a70 70 0 0 1 140 0v70" stroke={GOLD} strokeWidth="1" />
+            <path d="M38 140V72a62 62 0 0 1 124 0v68" stroke={GOLD} strokeWidth="0.5" opacity="0.55" />
+            {/* Tiny gold confetti */}
+            {[[18, 30], [42, 12], [160, 16], [184, 34], [12, 74], [190, 78], [30, 108], [172, 104]].map(([x, y], i) => (
+              <g key={i}>{i % 2 ? <circle cx={x} cy={y} r="1.6" fill={GOLD} /> : <rect x={x - 1.4} y={y - 1.4} width="2.8" height="2.8" fill={GOLD} transform={`rotate(45 ${x} ${y})`} />}</g>
+            ))}
+          </svg>
+        ),
         title: (
           <>
-            <span style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: 92, lineHeight: 0.9, background: `linear-gradient(135deg, #e6cc8f, ${GOLD} 45%, #9c7836 80%, #d9bb76)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{age}</span>
-            <span style={{ ...p.font, fontSize: 22, color: INK, marginTop: 6 }}>{p.headline}</span>
+            <span style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: 96, lineHeight: 0.9, background: `linear-gradient(160deg, #f0dca6 0%, ${GOLD} 38%, #8f6d2e 62%, #e3c87f 88%, #b08d42)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{age}</span>
+            <span style={{ ...p.font, fontSize: 22, color: INK, marginTop: 8 }}>{p.headline}</span>
           </>
         ),
       };
     case 'balloons':
-      return { bg: '#fbf7f0', ink: INK, justify: 'flex-end', pad: '0 24px 18px', art: img(balloons, { top: 6, left: '50%', transform: 'translateX(-50%)', width: '55%', height: '58%' }) };
+      return {
+        bg: '#faf5ec', ink: INK, justify: 'flex-end', pad: '0 24px 18px',
+        art: (
+          <>
+            {/* Soft bunting along the top */}
+            <svg viewBox="0 0 200 26" preserveAspectRatio="none" style={{ ...abs, top: 0, left: 0, width: '100%', height: 22 }}>
+              <path d="M0 2Q50 14 100 8T200 4" fill="none" stroke="#d8c09a" strokeWidth="0.7" />
+              {Array.from({ length: 9 }).map((_, i) => {
+                const x = 10 + i * 22.5;
+                const y = 3.4 + Math.sin((i / 8) * Math.PI) * 6.5;
+                return <path key={i} d={`M${x - 6} ${y}L${x + 6} ${y}L${x} ${y + 11}Z`} fill={['#e8b7c0', '#a9c2a4', '#e5cf9a'][i % 3]} opacity="0.75" />;
+              })}
+            </svg>
+            {img(balloons, { top: 18, left: '50%', transform: 'translateX(-50%)', width: '55%', height: '56%' })}
+          </>
+        ),
+      };
     case 'champagne':
       return {
         bg: '#3e2236', ink: CREAM,
         art: (
-          <svg viewBox="0 0 80 60" style={{ ...abs, top: 14, left: '50%', transform: 'translateX(-50%)', width: 70 }} fill="none" stroke={GOLD} strokeWidth="1.1" strokeLinecap="round">
-            <path d="M28 6l4 20c1 5-3 8-6 8s-7-3-6-8l4-20Z" transform="rotate(-14 26 30)" /><path d="M24 34v16M18 52h12" transform="rotate(-14 26 30)" />
-            <path d="M48 6l-4 20c-1 5 3 8 6 8s7-3 6-8l-4-20Z" transform="rotate(14 54 30)" /><path d="M56 34v16M50 52h12" transform="rotate(14 54 30)" />
-            <path d="M40 2v4M34 4l2 3M46 4l-2 3" />
+          <svg viewBox="0 0 120 92" style={{ ...abs, top: 4, left: '50%', transform: 'translateX(-50%)', width: 132 }} fill="none" stroke={GOLD} strokeWidth="1.1" strokeLinecap="round">
+            {/* Left flute, tilted in */}
+            <g transform="rotate(-12 44 46)">
+              <path d="M36 8h16l-2.5 26c-.8 7-4.5 10-5.5 10s-4.7-3-5.5-10Z" />
+              <path d="M37.5 20h13" opacity="0.7" />
+              <path d="M44 44v30" /><path d="M36 76h16" />
+              {[40, 44, 48].map((x, i) => <circle key={i} cx={x} cy={26 + i * 4} r="0.9" fill={GOLD} stroke="none" opacity="0.85" />)}
+            </g>
+            {/* Right flute, tilted in */}
+            <g transform="rotate(12 76 46)">
+              <path d="M68 8h16l-2.5 26c-.8 7-4.5 10-5.5 10s-4.7-3-5.5-10Z" />
+              <path d="M69.5 20h13" opacity="0.7" />
+              <path d="M76 44v30" /><path d="M68 76h16" />
+              {[72, 76, 80].map((x, i) => <circle key={i} cx={x} cy={24 + i * 5} r="0.9" fill={GOLD} stroke="none" opacity="0.85" />)}
+            </g>
+            {/* Rising bubbles where the flutes meet */}
+            {[[58, 12, 1.4], [62, 20, 1], [56, 26, 0.8], [64, 6, 0.9], [54, 4, 0.7]].map(([x, y, r], i) => (
+              <circle key={i} cx={x} cy={y} r={r} stroke={GOLD} strokeWidth="0.6" opacity="0.8" />
+            ))}
           </svg>
         ),
-        justify: 'flex-end', pad: '0 24px 22px',
+        justify: 'flex-end', pad: '0 24px 20px',
       };
     case 'colorBlock':
       return {
         bg: '#f4e9dc', ink: '#2a2440', chip: '#f4e9dc',
         art: (
-          <svg viewBox="0 0 200 120" preserveAspectRatio="xMidYMax slice" style={{ ...abs, inset: 0, width: '100%', height: '100%' }}>
-            <path d="M-10 120V70a40 40 0 0 1 80 0v50Z" fill="#e7a07d" />
-            <path d="M10 120V82a20 20 0 0 1 40 0v38Z" fill="#f4e9dc" />
-            <circle cx="168" cy="26" r="20" fill="#7d9d8a" />
-            <path d="M140 120V88a30 30 0 0 1 60 0v32Z" fill="#3e5873" />
-            <circle cx="150" cy="44" r="7" fill="#e3b85b" />
+          <svg viewBox="0 0 200 120" style={{ ...abs, inset: 0, width: '100%', height: '100%' }}>
+            {/* Matte shapes kept fully inside the card, clear of the centered title */}
+            <path d="M16 100V80a20 20 0 0 1 40 0v20a4 4 0 0 1-4 4H20a4 4 0 0 1-4-4Z" fill="#e7a07d" />
+            <path d="M26 100V90a10 10 0 0 1 20 0v10a2 2 0 0 1-2 2H28a2 2 0 0 1-2-2Z" fill="#f4e9dc" />
+            <path d="M140 100V74a26 26 0 0 1 52 0v26a4 4 0 0 1-4 4h-44a4 4 0 0 1-4-4Z" fill="#3e5873" />
+            <circle cx="30" cy="28" r="13" fill="#7d9d8a" />
+            <circle cx="172" cy="26" r="9" fill="#e3b85b" />
+            <circle cx="178" cy="58" r="5" fill="#e7a07d" />
           </svg>
         ),
       };
