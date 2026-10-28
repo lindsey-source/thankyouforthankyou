@@ -9,3 +9,7 @@
 - [ ] Four distinct corporate styles (Clean Executive, Bold Geometric, Night Sky, Sketchbook)
 - [ ] General fields (sender name sign-off) + samples
 - [ ] Four distinct general styles (Big Type, Gilded Stripes, Pressed Botanicals, Doodle Thanks)
+- [ ] Memorial fields + "A gift in memory of" + samples
+- [ ] Four memorial styles (Quiet Cream, Evening Candle, Olive Branch, Portrait Arch)
+- [ ] Charity fields (org, campaign) + samples
+- [ ] Four charity styles (Mission Minimal, Seedling Watercolor, Circle of Hands, New Day)
