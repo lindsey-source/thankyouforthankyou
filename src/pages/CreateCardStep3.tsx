@@ -507,7 +507,7 @@ export default function CreateCardStep3() {
                     onChange={(e) => setMessageBody(e.target.value)}
                     rows={6}
                     className="resize-y min-h-[140px]"
-                    placeholder={isWedding ? WEDDING_MESSAGE_EXAMPLE : 'Thank you so much for the beautiful gift — having you there meant the world to us.'}
+                    placeholder={isWedding ? WEDDING_MESSAGE_EXAMPLE : design.body}
                   />
                 </div>
 
