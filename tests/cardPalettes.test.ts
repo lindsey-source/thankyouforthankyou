@@ -1,8 +1,21 @@
 import { describe, expect, test } from 'bun:test';
-import { STYLE_DEFAULTS, swatchesFor, paletteFor } from '../src/lib/cardPalettes';
+import { STYLE_DEFAULTS, SWATCHES, swatchesFor, paletteFor } from '../src/lib/cardPalettes';
 
 const ids = Object.keys(STYLE_DEFAULTS);
 describe('card palettes', () => {
+  test('orange card text has readable contrast', () => {
+    const luminance = (hex: string) => {
+      const channels = [1, 3, 5].map((start) => {
+        const value = parseInt(hex.slice(start, start + 2), 16) / 255;
+        return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+      });
+      return channels[0] * 0.2126 + channels[1] * 0.7152 + channels[2] * 0.0722;
+    };
+    const { bg, ink } = SWATCHES.terracotta;
+    const light = Math.max(luminance(bg), luminance(ink));
+    const dark = Math.min(luminance(bg), luminance(ink));
+    expect((light + 0.05) / (dark + 0.05)).toBeGreaterThanOrEqual(4.5);
+  });
   test('no two styles in an occasion share a default color', () => {
     const byOcc: Record<string, string[]> = {};
     ids.forEach((id) => (byOcc[id.split('-')[0]] ||= []).push(STYLE_DEFAULTS[id]));

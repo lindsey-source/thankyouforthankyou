@@ -116,7 +116,7 @@ const HeaderArtInner: React.FC<HeaderArtProps> = ({
     id,
   } = design;
   const isDarkBg = isDarkBackground(headerBg);
-  const headlineColor = isDarkBg ? CREAM_INK : ink;
+  const headlineColor = swatch?.ink || (isDarkBg ? CREAM_INK : ink);
   const fontStyle = fontStyleFor(font, headlineFont);
   const headline = headlineOverride?.trim() || headlineText;
   // Stable IDs also upgrade restored baby drafts without reintroducing old artwork.
