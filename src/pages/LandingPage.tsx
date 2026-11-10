@@ -1,82 +1,51 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Heart, ArrowRight, Upload, PenLine, Send, Palette, Leaf } from "lucide-react";
+import { Heart, ArrowRight, Upload, PenLine, Send, Palette, Leaf, Gem, Baby, Cake, GraduationCap, Flower2, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { DESIGN_SETS } from "@/pages/CreateCardStep2";
 import { HeaderArt } from "@/components/CardDesigner/HeaderArt";
+import { HeroEnvelope } from "@/components/stationery/HeroEnvelope";
+import { IconCircle } from "@/components/stationery/IconCircle";
 
-/* ---------- Hero rotating-card content ----------
-   Each entry reuses the FIRST design from its occasion in DESIGN_SETS
-   (so colors/header style stay on-brand) and overrides only the
-   per-card copy that the hero shows. */
-const HERO_CARDS = [
-  {
-    occasion: "wedding" as const,
-    headline: "With Love & Gratitude",
-    greeting: "Dear Aunt Rachel,",
-    body:
-      "Thank you for celebrating our wedding with us — your presence made our day unforgettable.",
-    charity: "$4 donated to Rainforest Alliance",
-  },
-  {
-    occasion: "baby" as const,
-    headline: "Little One",
-    greeting: "Dear Aunt Rachel,",
-    body:
-      "Your beautiful gift for baby Lily means so much to us. Thank you for your love and generosity.",
-    charity: "$3 donated to UNICEF",
-  },
-  {
-    occasion: "graduation" as const,
-    headline: "With Gratitude",
-    greeting: "Dear Professor Kim,",
-    body:
-      "Thank you for guiding me through these years. Your belief in me made all the difference.",
-    charity: "$4 donated to Scholarship America",
-  },
-  {
-    occasion: "general" as const,
-    headline: "Thank You",
-    greeting: "Dear Friend,",
-    body:
-      "Your kindness and generosity have meant the world to us. We are so grateful for you.",
-    charity: "$3 donated to Feeding America",
-  },
+const OCCASIONS = [
+  { label: "Wedding", Icon: Gem, tone: "blush" as const },
+  { label: "Baby", Icon: Baby, tone: "sky" as const },
+  { label: "Birthday", Icon: Cake, tone: "butter" as const },
+  { label: "Graduation", Icon: GraduationCap, tone: "sage" as const },
+  { label: "Memorial", Icon: Flower2, tone: "lilac" as const },
 ];
 
-/* Homepage-only: detect dark card headers so titles switch to warm cream. */
-const isDarkHeader = (bg: string) => {
-  const m = bg.match(/#([0-9a-f]{6})/i);
-  if (!m) return false;
-  const n = parseInt(m[1], 16);
-  const r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
-  return 0.299 * r + 0.587 * g + 0.114 * b < 110;
-};
-const CREAM_INK = "#f3e7d3";
+const STEPS = [
+  { Icon: Upload, tone: "blush" as const, title: "Upload your guest list", description: "Drop in a spreadsheet of names and emails." },
+  { Icon: PenLine, tone: "sage" as const, title: "Write your message", description: "Choose a design and say thank you your way." },
+  { Icon: Send, tone: "sky" as const, title: "We send the cards", description: "A personal e-card arrives for every guest." },
+  { Icon: Heart, tone: "butter" as const, title: "Postage becomes giving", description: "What you'd spend on stamps goes to charity." },
+];
+
+const FEATURES = [
+  { Icon: Mail, tone: "lilac" as const, title: "For life's moments", description: "Weddings, babies, birthdays, milestones and more." },
+  { Icon: Palette, tone: "blush" as const, title: "Artist-designed", description: "Elegant cards, many made with partner charities." },
+  { Icon: Leaf, tone: "sage" as const, title: "Savings to good", description: "Skip paper and postage. Give that instead." },
+];
+
+const SectionHeading = ({ eyebrow, title, intro }: { eyebrow?: string; title: string; intro?: string }) => (
+  <div className="text-center mb-16">
+    {eyebrow && <p className="eyebrow mb-5">{eyebrow}</p>}
+    <h2 className="section-heading text-4xl md:text-5xl mb-6">{title}</h2>
+    <hr className="gold-hairline mb-6" />
+    {intro && <p className="text-sm md:text-base leading-loose text-muted-foreground max-w-md mx-auto">{intro}</p>}
+  </div>
+);
 
 const LandingPage = () => {
   const { isLoaded, isSignedIn } = useAuth();
-
-  // Rotate the hero demo card through 4 occasions every 4s.
-  const [heroIndex, setHeroIndex] = useState(0);
-  useEffect(() => {
-    const id = window.setInterval(() => {
-      setHeroIndex((i) => (i + 1) % HERO_CARDS.length);
-    }, 4000);
-    return () => window.clearInterval(id);
-  }, []);
-  const heroCard = HERO_CARDS[heroIndex];
-  const heroDesign = DESIGN_SETS[heroCard.occasion]?.[0] ?? DESIGN_SETS.general[0];
   const weddingGalleryDesign = DESIGN_SETS.wedding[0];
-  const heroDark = isDarkHeader(heroDesign.headerBg);
-  const heroTitleInk = heroDark ? CREAM_INK : heroDesign.ink;
 
   return (
-    <div className="homepage min-h-screen bg-background">
+    <div className="homepage min-h-screen">
       {/* Navigation */}
-      <nav className="bg-background/80 backdrop-blur-sm border-b border-border sticky top-0 z-50">
+      <nav className="bg-card/80 backdrop-blur-sm border-b border-border sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-12">
           <div className="flex justify-between items-center h-20">
             <div className="flex items-center">
@@ -106,316 +75,105 @@ const LandingPage = () => {
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="homepage-hero bg-background">
+
+      {/* Hero */}
+      <section className="homepage-hero linen-surface">
         <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-12">
           <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-20 md:gap-16 lg:gap-24">
-            {/* Left: Headline + CTAs */}
-            <div className="text-center md:text-left" style={{ color: "#2d2420" }}>
-              <h1 className="text-4xl sm:text-5xl xl:text-6xl mb-8 leading-[1.25]" style={{ color: "#2d2420" }}>
+            <div className="text-center md:text-left">
+              <p className="eyebrow mb-6">The postage you save becomes the gift</p>
+              <h1 className="text-4xl sm:text-5xl xl:text-6xl mb-8 leading-[1.2] text-foreground">
                 Thank Differently.
                 <br />
                 <span className="text-primary">Give Meaningfully.</span>
               </h1>
-              <p className="text-sm md:text-base mb-10 leading-loose max-w-md mx-auto md:mx-0" style={{ color: "#2d2420", opacity: 0.75 }}>
-                Every thank-you you send plants a seed of generosity. Your heartfelt note arrives
-                alongside a real donation to a cause that matters — making your gratitude twice as meaningful.
+              <p className="text-sm md:text-base mb-10 leading-loose max-w-md mx-auto md:mx-0 text-muted-foreground">
+                Send beautiful thank-you cards online. Instead of buying stamps, each card carries a
+                small donation to a cause you choose.
               </p>
-              <div className="flex flex-col items-center md:items-start gap-3">
+              <div className="flex flex-col items-center md:items-start gap-4">
                 <Link to="/signup">
                   <Button variant="hero" size="default">
                     Start sending thank-yous
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
-                <a
-                  href="#how-it-works"
-                  className="text-sm underline-offset-4 hover:underline"
-                  style={{ color: "#2d2420", opacity: 0.7 }}
-                >
+                <a href="#how-it-works" className="text-sm text-muted-foreground underline-offset-4 hover:underline">
                   See how it works
                 </a>
               </div>
-              <p className="mt-3 text-sm text-stone-500 text-center md:text-left">
-                Free to start · No credit card required
-              </p>
-
+              <p className="mt-4 text-xs text-muted-foreground">Free to start · No credit card required</p>
             </div>
-
-            {/* Right: Product mockup card */}
-            <div className="relative flex items-center justify-center min-h-[450px] md:min-h-[480px]">
-              {/* Back card (peeking, rotated +3deg) */}
-              <div
-                className="absolute w-[280px] sm:w-[300px] aspect-[3/4] rounded-xl shadow-soft border border-border"
-                style={{
-                  transform: "rotate(3deg) translate(28px, 16px)",
-                  backgroundColor: "hsl(var(--muted))",
-                }}
-                aria-hidden="true"
-              />
-
-              {/* Front card (rotated -3deg) — rotates through 4 occasions */}
-              <div
-                className="stationery-card stationery-paper relative w-[280px] sm:w-[300px] aspect-[3/4] rounded-xl border border-border overflow-hidden"
-                style={{
-                  transform: "rotate(-3deg)",
-                  backgroundColor: heroDesign.bg,
-                }}
-                role="img"
-                aria-label={`Example ${heroCard.occasion} thank-you e-card preview`}
-              >
-                {/* Crossfading content keyed on occasion */}
-                <div
-                  key={heroCard.occasion}
-                  className="absolute inset-0 animate-fade-in"
-                >
-                  {/* Header band — uses the design's headerBg + ink */}
-                  <div
-                    className={`stationery-header relative flex flex-col items-center justify-center ${heroDark ? "is-dark" : ""}`}
-                    style={{
-                      height: "240px",
-                      background: heroDesign.headerBg,
-                    }}
-                  >
-                    <span
-                      className="relative z-10 text-center px-4"
-                      style={{
-                        fontFamily: "'Playfair Display', Georgia, serif",
-                        fontWeight: 400,
-                        fontSize: "30px",
-                        color: heroTitleInk,
-                        letterSpacing: "0.06em",
-                        lineHeight: 1.1,
-                      }}
-                    >
-                      {heroCard.headline}
-                    </span>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "8px",
-                        marginTop: "14px",
-                        opacity: 0.6,
-                      }}
-                      aria-hidden="true"
-                    >
-                      <div style={{ width: "30px", height: "1px", backgroundColor: heroDark ? CREAM_INK : heroDesign.accent }} />
-                      <div
-                        style={{
-                          width: "4px",
-                          height: "4px",
-                          backgroundColor: heroDark ? CREAM_INK : heroDesign.accent,
-                          transform: "rotate(45deg)",
-                        }}
-                      />
-                      <div style={{ width: "30px", height: "1px", backgroundColor: heroDark ? CREAM_INK : heroDesign.accent }} />
-                    </div>
-                  </div>
-
-                  {/* Card body */}
-                  <div className="p-5 flex flex-col h-[58%]">
-                    <p
-                      className="text-xl mb-2"
-                      style={{
-                        fontFamily: "'Playfair Display', Georgia, serif",
-                        color: heroDesign.ink,
-                      }}
-                    >
-                      {heroCard.greeting}
-                    </p>
-                    <p
-                      className="text-sm leading-relaxed flex-1"
-                      style={{ color: heroDesign.inkSoft, opacity: 0.85 }}
-                    >
-                      {heroCard.body}
-                    </p>
-
-                    {/* Donation badge */}
-                    <div className="mt-3">
-                      <div
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold"
-                        style={{
-                          backgroundColor: heroDesign.donationBg,
-                          color: heroDesign.donationColor,
-                        }}
-                      >
-                        <Heart className="h-3 w-3" strokeWidth={1.5} style={{ color: "#8faa8b" }} />
-                        {heroCard.charity}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
+            <div className="flex items-center justify-center min-h-[420px]">
+              <HeroEnvelope />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Gift tracker callout */}
-      <section className="bg-muted/30">
-        <div className="max-w-3xl mx-auto px-6 sm:px-10 text-center">
-          <h2 className="text-3xl md:text-4xl mb-8 text-foreground">
-            Having an Event? Plan ahead.
-          </h2>
-          <p className="text-sm md:text-base leading-loose text-muted-foreground max-w-md mx-auto mb-10">
-            Download the gift tracker before your big day — fill it in as you open gifts, then upload when you're ready to send thank-yous.
-          </p>
-          <Link to="/gift-tracker">
-            <Button variant="hero" size="lg">
-              Download the template
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </Link>
+      {/* Occasions */}
+      <section className="band-blush">
+        <div className="max-w-5xl mx-auto px-6 sm:px-10">
+          <SectionHeading eyebrow="Occasions" title="A thank-you for every moment" />
+          <div className="flex flex-wrap justify-center gap-x-12 gap-y-10 mb-14">
+            {OCCASIONS.map(({ label, Icon, tone }) => (
+              <Link key={label} to="/signup" className="occasion-link flex flex-col items-center gap-3 text-sm text-foreground">
+                <IconCircle Icon={Icon} tone={tone} />
+                <span className="tracking-wide">{label}</span>
+              </Link>
+            ))}
+          </div>
+          <div className="text-center">
+            <a href="#card-gallery">
+              <Button variant="hero" size="lg">Browse designs</Button>
+            </a>
+          </div>
         </div>
       </section>
 
-      {/* One quiet, honest line */}
-      <section className="homepage-statement bg-background">
-        <div className="max-w-2xl mx-auto px-6 sm:px-10 text-center">
-          <p
-            className="text-2xl md:text-[28px] leading-[1.7] font-light"
-            style={{ fontFamily: "'Playfair Display', Georgia, serif", color: "#2d2420" }}
-          >
-            Now welcoming our first families.
-          </p>
-        </div>
-      </section>
-
-      {/* How It Works — 4-step workflow */}
-      <section id="how-it-works" className="bg-background scroll-mt-20">
+      {/* How it works */}
+      <section id="how-it-works" className="band-white scroll-mt-20">
         <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-12">
-          <div className="text-center mb-20">
-            <h2 className="text-5xl mb-4" style={{ color: "#2d2420" }}>How It Works</h2>
-            <p className="text-sm md:text-base leading-loose max-w-md mx-auto" style={{ color: "#2d2420", opacity: 0.7 }}>
-              From your guest list to a real-world donation in four simple steps.
-            </p>
+          <SectionHeading eyebrow="How it works" title="Four quiet steps" intro="From your guest list to a real donation." />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+            {STEPS.map(({ Icon, tone, title, description }, i) => (
+              <div key={title} className="text-center">
+                <IconCircle Icon={Icon} tone={tone} />
+                <p className="eyebrow mt-5 mb-2">Step {i + 1}</p>
+                <h3 className="text-xl mb-2 text-foreground" style={{ fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 400 }}>{title}</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground max-w-[220px] mx-auto">{description}</p>
+              </div>
+            ))}
           </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 lg:gap-16 max-w-4xl mx-auto">
-            {[
-              {
-                icon: Upload,
-                title: "Upload Your Guest List",
-                description: "Drop in a CSV with names and emails. We'll handle the rest.",
-              },
-              {
-                icon: PenLine,
-                title: "Write Your Message",
-                description: "Compose a heartfelt thank-you and pick a card design you love.",
-              },
-              {
-                icon: Send,
-                title: "We Send the Cards",
-                description: "Personalized e-cards delivered to every guest in your list.",
-              },
-              {
-                icon: Heart,
-                title: "Costs Become Donations",
-                description: "What you saved on paper and postage goes directly to charity.",
-              },
-            ].map((step, index) => {
-              const Icon = step.icon;
-              return (
-                <div key={index} className="relative">
-                  <div
-                    className="h-full rounded-lg p-8 sm:p-10 border border-border bg-card shadow-soft"
-                  >
-                    <div className="relative w-14 h-14 mb-5">
-                      <div
-                        className="h-14 w-14 rounded-2xl flex items-center justify-center text-primary"
-                        style={{ backgroundColor: "rgba(193, 123, 138, 0.14)" }}
-                      >
-                        <Icon className="h-6 w-6" strokeWidth={1.75} />
-                      </div>
-                      <div className="absolute -top-2 -right-2 h-7 w-7 rounded-full bg-primary text-primary-foreground text-xs font-bold flex items-center justify-center border border-border shadow-soft">
-                        {index + 1}
-                      </div>
-                    </div>
-                    <h3 className="text-lg font-semibold mb-2" style={{ color: "#2d2420" }}>
-                      {step.title}
-                    </h3>
-                    <p className="text-sm leading-relaxed" style={{ color: "#2d2420", opacity: 0.7 }}>
-                      {step.description}
-                    </p>
-                  </div>
-
-                </div>
-              );
-            })}
+          <div className="text-center">
+            <Link to="/signup"><Button variant="hero" size="lg">Get started</Button></Link>
           </div>
         </div>
       </section>
 
       {/* Features */}
-      <section>
-        <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-12">
-          <div className="text-center mb-20">
-            <h2 className="text-5xl text-foreground mb-5">Thoughtful. Effortless. Impactful.</h2>
-            <p className="text-sm md:text-base leading-loose text-muted-foreground max-w-md mx-auto">
-              Perfect for weddings, celebrations, and life's meaningful moments that deserve appreciation
-            </p>
+      <section className="band-blush">
+        <div className="max-w-5xl mx-auto px-6 sm:px-10 lg:px-12">
+          <SectionHeading eyebrow="Why it matters" title="Thoughtful. Effortless. Impactful." />
+          <div className="grid md:grid-cols-3 gap-14 mb-16">
+            {FEATURES.map(({ Icon, tone, title, description }) => (
+              <div key={title} className="text-center">
+                <IconCircle Icon={Icon} tone={tone} />
+                <h3 className="text-xl mt-6 mb-2 text-foreground" style={{ fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 400 }}>{title}</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground max-w-[240px] mx-auto">{description}</p>
+              </div>
+            ))}
           </div>
-
-          <div className="grid md:grid-cols-3 gap-10 lg:gap-16">
-            {[
-              {
-                title: "Perfect for Life's Moments",
-                description: "Ideal for weddings, baby showers, birthdays, bar/bat mitzvahs, and any celebration worth remembering.",
-                Icon: Heart,
-              },
-              {
-                title: "Artist-Designed Cards",
-                description: "Choose from elegant designs created by talented artists, many partnered with the charities you support.",
-                Icon: Palette,
-              },
-              {
-                title: "Redirect Savings to Good",
-                description: "Skip paper, printing, envelopes, and postage. Redirect those savings into meaningful charitable donations.",
-                Icon: Leaf,
-              },
-            ].map((feature, index) => {
-              const FeatureIcon = feature.Icon;
-              return (
-                <Card
-                  key={index}
-                  className="bg-card border-border rounded-lg shadow-soft"
-                >
-                  <CardContent className="p-8 lg:p-10">
-                    <div
-                      className="mb-5 inline-flex items-center justify-center rounded-md transition-colors duration-300"
-                      style={{
-                        width: "44px",
-                        height: "44px",
-                        backgroundColor: "#f5ede9",
-                      }}
-                      onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#e8c4b8")}
-                      onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#f5ede9")}
-                    >
-                      <FeatureIcon size={20} color="#c17b8a" strokeWidth={1.75} />
-                    </div>
-                    <h3
-                      className="text-xl mb-3"
-                      style={{
-                        fontFamily: "'Playfair Display', Georgia, serif",
-                        fontWeight: 500,
-                        color: "#2d2420",
-                      }}
-                    >
-                      {feature.title}
-                    </h3>
-                    <p className="text-sm leading-loose text-muted-foreground">{feature.description}</p>
-                  </CardContent>
-                </Card>
-              );
-            })}
+          <div className="text-center">
+            <Link to="/gift-tracker"><Button variant="hero" size="lg">Download the gift tracker</Button></Link>
           </div>
         </div>
       </section>
 
+      <div className="gold-divider" aria-hidden="true" />
+
       {/* Card Design Gallery */}
-      <section id="card-gallery" className="homepage-paper scroll-mt-20">
+      <section id="card-gallery" className="band-white scroll-mt-20">
         <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-12">
           <div className="text-center mb-20">
             <h2
@@ -561,28 +319,30 @@ const LandingPage = () => {
             </div>
 
           </div>
+          <div className="text-center mt-20">
+            <Link to="/signup"><Button variant="hero" size="lg">Design your card</Button></Link>
+          </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="bg-brand-sage-soft text-brand-dark">
+
+      {/* Closing */}
+      <section className="band-blush">
         <div className="max-w-3xl mx-auto text-center px-6 sm:px-10">
-          <h2 className="text-4xl md:text-5xl mb-8">Start Your Gratitude Campaign</h2>
-          <p className="text-sm md:text-base leading-loose mb-10 text-muted-foreground max-w-md mx-auto">
-            Transform your thank-you process into something beautiful, meaningful, and impactful.
-            Your first 3 cards are on us.
-          </p>
+          <SectionHeading title="Start your gratitude campaign" intro="Your first 3 cards are on us." />
           <Link to="/signup">
-            <Button variant="hero" size="xl">
-              Get Started Free
-              <ArrowRight className="ml-2 h-5 w-5" />
+            <Button variant="hero" size="lg">
+              Get started free
+              <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </Link>
         </div>
       </section>
 
+      <div className="gold-divider" aria-hidden="true" />
+
       {/* Footer */}
-      <footer className="bg-background py-20">
+      <footer className="linen-surface py-20">
         <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-12">
           <div className="text-center">
             <div className="flex items-center justify-center gap-2 mb-4">

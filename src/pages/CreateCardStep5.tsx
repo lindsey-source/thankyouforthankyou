@@ -32,8 +32,8 @@ export default function CreateCardStep5() {
 
   return (
     <div className="min-h-screen bg-gradient-hero p-4 md:p-8">
+      <ProgressBar currentStep={4} bleed />
       <div className="max-w-6xl mx-auto">
-        <ProgressBar currentStep={4} />
         <BreadcrumbNav currentStep={4} steps={WIZARD_STEPS} />
         <div className="text-center mb-8">
           <motion.h1

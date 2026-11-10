@@ -1,3 +1,4 @@
+import { PostageStamp } from '@/components/stationery/PostageStamp';
 import React from 'react';
 import { Heart } from 'lucide-react';
 import { HeaderArt } from './HeaderArt';
@@ -352,8 +353,17 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
     </div>
   );
 
+  const stamp = hasDonation ? (
+    <PostageStamp
+      amount={donationAmount > 0 ? `$${Math.round(donationAmount)}` : 'Gift'}
+      className="card-linen-stamp"
+    />
+  ) : null;
+
   if (!hasEnvelope) {
     return (
+      <div className="card-linen-stage linen-surface">
+      {stamp}
       <div
         className={`relative w-full aspect-[3/4] rounded-2xl border shadow-soft overflow-hidden ${className}`}
         style={{ borderColor: 'rgba(45, 36, 32, 0.08)' }}
@@ -362,10 +372,13 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
       >
         {cardFace}
       </div>
+      </div>
     );
   }
 
   return (
+    <div className="card-linen-stage linen-surface">
+    {stamp}
     <div
       className={`relative w-full aspect-[3/4] ${className}`}
       role="img"
@@ -404,6 +417,7 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
       >
         {cardFace}
       </div>
+    </div>
     </div>
   );
 };
