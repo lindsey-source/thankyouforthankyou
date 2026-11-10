@@ -184,6 +184,7 @@ export default function CreateCardStep5Impact() {
             <EnvelopeReveal
               recipientName={recipientName}
               envelopeColor={cardData.envelopeColor}
+              designId={palette.id || palette.theme || cardData.templateId || undefined}
             >
               <LiveCardPreview
                 palette={{
@@ -222,6 +223,7 @@ export default function CreateCardStep5Impact() {
                   ? { babyName: cardData.babyName, babyDate: cardData.babyDate, parentsNames: cardData.parentsNames }
                   : {})}
                 className="h-full"
+                bare
               />
             </EnvelopeReveal>
           </div>

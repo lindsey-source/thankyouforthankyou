@@ -1,4 +1,5 @@
 import { PostageStamp } from '@/components/stationery/PostageStamp';
+import { SuiteEnvelope } from '@/components/stationery/SuiteEnvelope';
 import React from 'react';
 import { Heart } from 'lucide-react';
 import { HeaderArt } from './HeaderArt';
@@ -59,6 +60,8 @@ export interface LiveCardPreviewProps {
   babyDate?: string;
   parentsNames?: string;
   className?: string;
+  /** Render only the card (no linen/envelope suite), e.g. inside the Review envelope. */
+  bare?: boolean;
 }
 
 /** "Lindsey & Josh" → "L & J"; falls back to the soft example initials. */
@@ -123,6 +126,7 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
   babyDate,
   parentsNames,
   className = '',
+  bare = false,
 }) => {
   // Resolved colors: design tokens win, palette is the fallback
   const cardBg = bg || '#ffffff';
@@ -353,71 +357,35 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
     </div>
   );
 
-  const stamp = hasDonation ? (
+  const stamp = (
     <PostageStamp
-      amount={donationAmount > 0 ? `$${Math.round(donationAmount)}` : 'Gift'}
-      className="card-linen-stamp"
+      amount={donationAmount > 0 ? `$${Math.round(donationAmount)}` : '$3'}
+      className="suite-stamp"
     />
-  ) : null;
+  );
 
-  if (!hasEnvelope) {
+  if (bare) {
     return (
-      <div className="card-linen-stage linen-surface">
-      {stamp}
-      <div
-        className={`relative w-full aspect-[3/4] rounded-2xl border shadow-soft overflow-hidden ${className}`}
-        style={{ borderColor: 'rgba(45, 36, 32, 0.08)' }}
-        role="img"
-        aria-label="Live card preview"
-      >
+      <div className={`cotton-deckle relative w-full aspect-[3/4] overflow-hidden ${className}`} role="img" aria-label="Live card preview">
         {cardFace}
-      </div>
       </div>
     );
   }
 
+  // Designer suite: cotton card on linen, its envelope (with the style's liner) tucked behind.
   return (
-    <div className="card-linen-stage linen-surface">
-    {stamp}
-    <div
-      className={`relative w-full aspect-[3/4] ${className}`}
-      role="img"
-      aria-label="Live card preview with envelope"
-    >
-      <div
-        className="absolute inset-0 rounded-2xl shadow-warm"
-        style={{
-          backgroundColor: envelopeColor!,
-          backgroundImage:
-            'repeating-linear-gradient(45deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 5px)',
-        }}
-        aria-hidden="true"
-      />
-      <div
-        className="absolute top-0 left-0 right-0 overflow-hidden rounded-t-2xl"
-        style={{ height: '18%' }}
-        aria-hidden="true"
-      >
+    <div className="style-suite linen-surface" data-has-envelope={hasEnvelope ? 'true' : undefined}>
+      <SuiteEnvelope designId={designId} color={envelopeColor} />
+      {stamp}
+      <div className="suite-card cotton-shadow">
         <div
-          className="absolute inset-x-0 top-0"
-          style={{
-            height: '200%',
-            background: envelopeColor!,
-            clipPath: 'polygon(0 0, 100% 0, 50% 50%)',
-            filter: 'brightness(0.92)',
-          }}
-        />
+          className={`cotton-deckle relative w-full aspect-[3/4] overflow-hidden ${className}`}
+          role="img"
+          aria-label="Live card preview"
+        >
+          {cardFace}
+        </div>
       </div>
-      <div
-        className="absolute left-[6%] right-[6%] top-[14%] bottom-[6%] rounded-lg overflow-hidden border"
-        style={{
-          borderColor: 'rgba(45, 36, 32, 0.12)',
-          boxShadow: '0 6px 14px -4px rgba(0,0,0,0.18), 0 2px 4px -1px rgba(0,0,0,0.08)',
-        }}
-      >
-        {cardFace}
-      </div>
-    </div>
     </div>
   );
 };

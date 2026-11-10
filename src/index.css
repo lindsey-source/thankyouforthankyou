@@ -434,3 +434,39 @@ div.min-h-screen:has(.wizard-topbar) .bg-muted, div.min-h-screen:has(.wizard-top
 }
 .occasion-tile-line { font-size: 12.5px; line-height: 1.6; color: hsl(var(--foreground) / 0.58); max-width: 24ch; }
 div.min-h-screen:has(.wizard-topbar) h3.font-semibold { font-family: 'Playfair Display', Georgia, serif; font-weight: 400; }
+
+/* ===== Designer stationery finish (all styles) ===== */
+/* Letterpress title with a faint gold-foil highlight */
+.stationery-art span, .stationery-art h1, .stationery-art h2, .stationery-art p {
+  text-shadow: 0 1px 0 hsl(0 0% 100% / 0.45), 0 -0.5px 0 hsl(25 30% 15% / 0.18), 0 0 0.6px hsl(42 75% 62% / 0.55);
+}
+/* Hand-finished print: fine fibre grain + soft press vignette over the art (beneath text weight) */
+.stationery-art { position: relative; }
+.stationery-art::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 1;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.28 0 0 0 0 0.2 0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  box-shadow: inset 0 0 28px hsl(30 30% 20% / 0.07);
+  mix-blend-mode: multiply;
+}
+/* Cotton paper with a soft deckled edge */
+.cotton-deckle {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 400' preserveAspectRatio='none'%3E%3Cfilter id='d' x='-5%25' y='-5%25' width='110%25' height='110%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='2'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='4'/%3E%3C/filter%3E%3Crect x='2.5' y='2.5' width='295' height='395' rx='3' fill='white' filter='url(%23d)'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 400' preserveAspectRatio='none'%3E%3Cfilter id='d' x='-5%25' y='-5%25' width='110%25' height='110%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='2'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='4'/%3E%3C/filter%3E%3Crect x='2.5' y='2.5' width='295' height='395' rx='3' fill='white' filter='url(%23d)'/%3E%3C/svg%3E");
+  -webkit-mask-size: 100% 100%; mask-size: 100% 100%;
+}
+.cotton-shadow { filter: drop-shadow(0 1px 1px hsl(25 30% 20% / 0.08)) drop-shadow(0 14px 22px hsl(25 30% 20% / 0.12)); }
+
+/* Suite: card on linen with its envelope tucked behind */
+.style-suite { position: relative; padding: 46px 18px 18px; border-radius: 20px; border: 1px solid hsl(var(--gold-hairline) / 0.18); }
+.style-suite .suite-envelope { position: absolute; top: 14px; left: 50%; width: 78%; height: 46%; transform: translateX(-38%) rotate(5deg); z-index: 0; }
+.style-suite > .suite-card { position: relative; z-index: 2; }
+.style-suite .suite-stamp { position: absolute; top: 56px; right: 26px; z-index: 30; transform: rotate(6deg) scale(.62); transform-origin: top right; }
+.suite-envelope { filter: drop-shadow(0 8px 14px hsl(25 30% 20% / 0.14)); }
+.suite-envelope-back { position: absolute; inset: 0; border-radius: 6px; }
+.suite-envelope-flap { position: absolute; left: 0; right: 0; bottom: 100%; height: 55%; clip-path: polygon(0 100%, 50% 0, 100% 100%); margin-bottom: -1px; }
+.suite-envelope-pocket { position: absolute; inset: 18% 0 0 0; border-radius: 0 0 6px 6px; background: var(--env); clip-path: polygon(0 0, 50% 38%, 100% 0, 100% 100%, 0 100%); box-shadow: inset 0 1px 0 hsl(0 0% 100% / .5); }
+.style-suite .suite-envelope { height: 34%; top: 40px; }
+.style-suite { padding-top: 74px; overflow: hidden; }
+.style-suite .suite-envelope { top: 58px; }
+.style-suite .suite-envelope-flap { height: 42%; }
+.style-suite .suite-stamp { top: 82px; }

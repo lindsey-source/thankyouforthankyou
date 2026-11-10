@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Heart, RotateCcw } from 'lucide-react';
+import { linerBackground, linerFor } from '@/lib/envelopeLiners';
 
 interface EnvelopeRevealProps {
   /** The card face to reveal (e.g. LiveCardPreview). */
@@ -10,6 +11,8 @@ interface EnvelopeRevealProps {
   envelopeColor?: string | null;
   /** Liner color peeking from the flap — defaults to dusty rose. */
   linerColor?: string;
+  /** Card style — picks the matching patterned liner. */
+  designId?: string | null;
 }
 
 /**
@@ -22,7 +25,9 @@ export const EnvelopeReveal: React.FC<EnvelopeRevealProps> = ({
   recipientName,
   envelopeColor,
   linerColor = '#c17b8a',
+  designId,
 }) => {
+  const liner = linerBackground(linerFor(designId));
   const [open, setOpen] = useState(false);
   const [revealed, setRevealed] = useState(false);
 
@@ -47,6 +52,12 @@ export const EnvelopeReveal: React.FC<EnvelopeRevealProps> = ({
             className="relative w-[320px] sm:w-[360px]"
             style={{ perspective: '1200px' }}
           >
+            {/* Inside of the envelope: the style's liner, seen once the flap opens */}
+            <div
+              className="absolute left-[3%] right-[3%] top-0 h-[55%] z-[5] rounded-t-2xl"
+              style={{ background: liner, clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)' }}
+              aria-hidden="true"
+            />
             {/* Card rising out of the envelope — clipped below the envelope's bottom edge
                 so it stays hidden until it rises above the flap line */}
             <div
@@ -139,7 +150,7 @@ export const EnvelopeReveal: React.FC<EnvelopeRevealProps> = ({
               <div
                 className="absolute inset-0 rounded-t-2xl"
                 style={{
-                  background: linerColor,
+                  background: liner,
                   clipPath: 'polygon(0 0, 100% 0, 50% 100%)',
                   transform: 'rotateX(180deg)',
                   backfaceVisibility: 'hidden',

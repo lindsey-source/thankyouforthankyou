@@ -81,7 +81,14 @@ const monogramStyle = (color: string): React.CSSProperties => ({
  * Reusable header art renderer used by Step 2 (design grid) and Step 3 (live preview).
  * Pure & color-driven from the saved Design tokens.
  */
-export const HeaderArt: React.FC<HeaderArtProps> = ({
+/** Shared designer finish: letterpress + gold-foil title and hand-finished print grain over every style's art. */
+export const HeaderArt: React.FC<HeaderArtProps> = (props) => (
+  <div className="stationery-art" style={{ height: props.height === '100%' ? '100%' : undefined }}>
+    <HeaderArtInner {...props} />
+  </div>
+);
+
+const HeaderArtInner: React.FC<HeaderArtProps> = ({
   design,
   height = '220px',
   className = '',

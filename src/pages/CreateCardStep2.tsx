@@ -6,6 +6,8 @@ import { ArrowLeft, ArrowRight, Check, X, Heart } from "lucide-react";
 import { AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
 import { ProgressBar } from '@/components/CardDesigner/ProgressBar';
+import { SuiteEnvelope } from '@/components/stationery/SuiteEnvelope';
+import { PostageStamp } from '@/components/stationery/PostageStamp';
 import { HeaderArt } from '@/components/CardDesigner/HeaderArt';
 import type { Design, HeaderStyle, FontFamily, OccasionId } from '@/components/CardDesigner/designTypes';
 import { LiveCardPreview, coupleInitials } from '@/components/CardDesigner/LiveCardPreview';
@@ -997,26 +999,30 @@ Pick Your Style
           {designs.map((design, index) => {
             const isSelected = selectedId === design.id;
             return (
-              <motion.button
+              <motion.div
                 key={design.id}
-                type="button"
-                onClick={() => setSelectedId(design.id)}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.07, duration: 0.4 }}
                 whileHover={{ y: -4 }}
-                className="card-stationery group relative text-left rounded-2xl overflow-hidden transition-all duration-300"
+                className="style-suite linen-surface"
                 style={{
-                  backgroundColor: design.bg,
-                  border: isSelected ? '2px solid #c17b8a' : '1px solid #ede8e3',
-                  boxShadow: isSelected
-                    ? '0 16px 44px rgba(193, 123, 138, 0.22)'
-                    : '0 1px 2px rgba(45, 36, 32, 0.05), 0 10px 24px -16px rgba(45, 36, 32, 0.16)',
+                  borderColor: isSelected ? 'hsl(var(--brand-rose))' : undefined,
+                  boxShadow: isSelected ? '0 0 0 1px hsl(var(--brand-rose)), 0 16px 44px -18px hsl(var(--brand-rose) / 0.35)' : undefined,
                 }}
+              >
+                <SuiteEnvelope designId={design.id} />
+                <PostageStamp amount="$3" className="suite-stamp" />
+                <div className="suite-card cotton-shadow">
+              <button
+                type="button"
+                onClick={() => setSelectedId(design.id)}
+                className="card-stationery cotton-deckle group relative block w-full text-left overflow-hidden"
+                style={{ backgroundColor: design.bg }}
               >
                 {isSelected && (
                   <div
-                    className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full flex items-center justify-center shadow-md"
+                    className="absolute top-4 left-4 z-20 w-9 h-9 rounded-full flex items-center justify-center shadow-md"
                     style={{ backgroundColor: '#c17b8a' }}
                   >
                     <Check className="w-5 h-5 text-white" strokeWidth={2.5} />
@@ -1025,6 +1031,7 @@ Pick Your Style
 
                 <HeaderArt
                   design={design}
+                  height="280px"
                   subtext={
                     design.occasion === 'wedding'
                       ? `${cardData.coupleNames?.trim() || 'Emma & James'} · ${cardData.weddingDate?.trim() || 'June 14, 2027'}`
@@ -1122,7 +1129,9 @@ Pick Your Style
                     </div>
                   </div>
                 </div>
-              </motion.button>
+              </button>
+                </div>
+              </motion.div>
             );
           })}
         </div>
