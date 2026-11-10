@@ -313,9 +313,7 @@ export default function CreateCardStep3() {
                           onClick={() => updateCardData({ colorId: i === 0 ? null : sw.id } as any)}
                           className={`swatch-chip p-0 shrink-0 ${active ? 'is-active' : ''}`}
                           style={{ background: sw.bg }}
-                        >
-                          <span className="swatch-chip-accent" style={{ background: sw.accent }} />
-                        </Button>
+                        />
                       );
                     })}
                   </div>
