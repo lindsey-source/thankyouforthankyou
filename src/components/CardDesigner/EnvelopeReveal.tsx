@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Heart, RotateCcw } from 'lucide-react';
 import { linerBackground, linerFor } from '@/lib/envelopeLiners';
+import { SuiteEnvelope } from '@/components/stationery/SuiteEnvelope';
 
 interface EnvelopeRevealProps {
   /** The card face to reveal (e.g. LiveCardPreview). */
@@ -42,7 +43,7 @@ export const EnvelopeReveal: React.FC<EnvelopeRevealProps> = ({
   };
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center pt-28">
       <AnimatePresence mode="wait">
         {!revealed ? (
           <motion.div
@@ -71,7 +72,7 @@ export const EnvelopeReveal: React.FC<EnvelopeRevealProps> = ({
                 style={{ x: '-50%', top: '10%' }}
                 initial={false}
                 animate={open ? { y: '-56%' } : { y: '4%' }}
-                transition={{ delay: open ? 0.45 : 0, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ delay: open ? 1.2 : 0, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
                 onAnimationComplete={() => {
                   if (open) setRevealed(true);
                 }}
@@ -188,7 +189,10 @@ export const EnvelopeReveal: React.FC<EnvelopeRevealProps> = ({
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
             className="w-[300px] sm:w-[340px]"
           >
-            {children}
+            <div className="style-suite linen-surface">
+              <SuiteEnvelope designId={designId} colorId={colorId} color={envelopeColor} />
+              <div className="suite-card">{children}</div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

@@ -9,3 +9,7 @@
 - [x] Style step: cards on linen with envelope behind, larger art; live panel matches with stamp + liner
 - [x] Wider color range: no shared dominant color per occasion, navy max one style
 - [x] Customize color picker: 6-8 swatches per style recoloring background, accents, liner
+- [x] Richer hand-illustrated art across occasions, Corporate checked first
+- [x] Smaller stamps, uncropped liners, and desktop/mobile preview checks
+- [x] Baby thank-you wording: tile, headlines, baby's name beneath, and parent-voice gift samples
+- [ ] Verify final Review opening with a signed-in Clerk session (blocked: Review redirects to login)

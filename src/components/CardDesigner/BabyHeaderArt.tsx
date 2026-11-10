@@ -2,6 +2,8 @@ import React from 'react';
 import type { Swatch } from '@/lib/cardPalettes';
 import wash from '@/assets/baby-watercolor-wash.jpg';
 import rainbow from '@/assets/baby-watercolor-rainbow-cutout.png';
+import moon from '@/assets/stationery-baby-moon.png';
+import { resolveBabyDetails } from '@/lib/babyDetails';
 
 interface BabyHeaderArtProps {
   styleKey: 'babyMoon' | 'babyWash' | 'babyMinimal' | 'babyRainbow';
@@ -16,21 +18,14 @@ export function BabyHeaderArt({ styleKey, height, className = '', headlineFont, 
   const styleClass = { babyMoon: 'baby-header--babyMoon', babyWash: 'baby-header--babyWash', babyMinimal: 'baby-header--babyMinimal', babyRainbow: 'baby-header--babyRainbow' }[styleKey];
   const line = subtext || 'Baby Lily · March 3, 2027';
   const name = line.split(' · ')[0].replace(/^Baby\s+/i, '');
-  const title = styleKey === 'babyMinimal' ? name : styleKey === 'babyMoon' ? 'Welcome, Little Star' : styleKey === 'babyRainbow' ? 'Hello, Little Wonder' : 'Welcome, Little One';
+  const details = resolveBabyDetails({ babyName: name });
+  const title = details.headline;
   return (
     <div className={`baby-header ${styleClass} ${className}`} style={{ height, ...(swatch ? { background: swatch.bg, color: swatch.ink, ['--swatch-accent' as string]: swatch.accent } : {}) }}>
       {styleKey === 'babyWash' && <img src={wash} width={1200} height={800} loading="lazy" alt="" className="baby-wash-art" aria-hidden="true" />}
       {styleKey === 'babyRainbow' && <img src={rainbow} width={1086} height={549} loading="lazy" alt="" className="baby-rainbow-art" aria-hidden="true" />}
       {styleKey === 'babyMoon' && (
-        <svg className="baby-moon-art" viewBox="0 0 220 85" fill="none" aria-hidden="true">
-          <path d="M119 7C97 5 84 19 86 37C88 56 107 68 126 58C109 58 99 47 99 33C99 22 106 12 119 7Z" fill="currentColor" />
-          <g stroke="currentColor" strokeWidth="1" strokeLinejoin="round">
-            <path d="M53 20l2 6 6 2-6 2-2 6-2-6-6-2 6-2Z" />
-            <path d="M162 11l2 5 5 2-5 2-2 5-2-5-5-2 5-2Z" />
-            <path d="M181 49l2 7 7 2-7 2-2 7-2-7-7-2 7-2Z" />
-            <path d="M34 53l2 4 4 2-4 2-2 4-2-4-4-2 4-2Z" />
-          </g>
-        </svg>
+        <img src={moon} alt="" aria-hidden="true" width={1152} height={576} loading="lazy" className="baby-moon-art" />
       )}
       {styleKey === 'babyMinimal' && (
         <div className="baby-minimal-crest" aria-hidden="true">
@@ -40,8 +35,9 @@ export function BabyHeaderArt({ styleKey, height, className = '', headlineFont, 
       )}
       <div className="baby-header-copy">
         {styleKey === 'babyMinimal' && <div className="baby-minimal-arch" aria-hidden="true" />}
-        <span className={`baby-header-title${styleKey === 'babyMinimal' ? ' baby-header-name' : ''}`} style={headlineFont ? { fontFamily: headlineFont } : undefined}>{title}</span>
-        <span className="baby-header-details">{line}</span>
+        <span className="baby-header-title" style={headlineFont ? { fontFamily: headlineFont } : undefined}>{title}</span>
+        <span className="baby-header-from">{details.fromLine}</span>
+        <span className="baby-header-details">{line.split(' · ').slice(1).join(' · ')}</span>
       </div>
     </div>
   );

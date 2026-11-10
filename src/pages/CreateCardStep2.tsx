@@ -11,7 +11,7 @@ import { PostageStamp } from '@/components/stationery/PostageStamp';
 import { HeaderArt } from '@/components/CardDesigner/HeaderArt';
 import type { Design, HeaderStyle, FontFamily, OccasionId } from '@/components/CardDesigner/designTypes';
 import { LiveCardPreview, coupleInitials } from '@/components/CardDesigner/LiveCardPreview';
-import { resolveBabyDetails } from '@/lib/babyDetails';
+import { resolveBabyDetails, BABY_GIFT_SAMPLES } from '@/lib/babyDetails';
 import { detailOccasionFor, resolveOccasionDetails } from '@/lib/occasionDetails';
 const detailsFor = (occ: string, data: any) => { const o = detailOccasionFor(occ); return o ? resolveOccasionDetails(o, data) : undefined; };
 
@@ -140,10 +140,10 @@ export const DESIGN_SETS: Record<OccasionId, Design[]> = {
       donationBg: '#f5ede9',
       donationColor: '#8b4a5a',
       headerStyle: 'babyMoon',
-      headlineText: 'Welcome, Little Star',
+      headlineText: 'Thank You',
       font: 'serifClassic',
       greeting: 'Dear Sarah,',
-      body: 'Thank you for welcoming our little one with so much love. Your kindness lights up these first days for our family.',
+      body: BABY_GIFT_SAMPLES.babyMoon,
       donation: '$3 to UNICEF',
       fontChoice: 'playfair',
     },
@@ -163,10 +163,10 @@ export const DESIGN_SETS: Record<OccasionId, Design[]> = {
       donationBg: '#eef2e8',
       donationColor: '#3d5a3a',
       headerStyle: 'babyWash',
-      headlineText: 'Welcome, Little One',
+      headlineText: 'Thank You',
       font: 'serifClassic',
       greeting: 'Dear Aunt Mary,',
-      body: 'Thank you for the sweet gift and the warm wishes. Our newest arrival is already surrounded by so much love.',
+      body: BABY_GIFT_SAMPLES.babyWash,
       donation: '$3 to March of Dimes',
       fontChoice: 'playfair',
     },
@@ -186,10 +186,10 @@ export const DESIGN_SETS: Record<OccasionId, Design[]> = {
       donationBg: '#eef2e8',
       donationColor: '#3d5a3a',
       headerStyle: 'babyMinimal',
-      headlineText: 'Lily',
+      headlineText: 'Thank You',
       font: 'serifClassic',
       greeting: 'Dear Grandma,',
-      body: 'Thank you for celebrating our baby with us. Your thoughtfulness means the world to our growing family.',
+      body: BABY_GIFT_SAMPLES.babyMinimal,
       donation: '$3 to Save the Children',
       fontChoice: 'playfair',
     },
@@ -209,10 +209,10 @@ export const DESIGN_SETS: Record<OccasionId, Design[]> = {
       donationBg: '#eef2e8',
       donationColor: '#3d5a3a',
       headerStyle: 'babyRainbow',
-      headlineText: 'Hello, Little Wonder',
+      headlineText: 'Thank You',
       font: 'serifClassic',
       greeting: 'Dear Friends,',
-      body: "Thank you for showering our little one with love. We can't wait for you to meet our baby soon.",
+      body: BABY_GIFT_SAMPLES.babyRainbow,
       donation: '$3 to UNICEF',
       fontChoice: 'playfair',
     },
@@ -1227,6 +1227,7 @@ Pick Your Style
                 {/* Header art */}
                 <HeaderArt
                   design={design}
+                  height="320px"
                   subtext={
                     design.occasion === 'wedding'
                       ? `${cardData.coupleNames?.trim() || 'Emma & James'} · ${cardData.weddingDate?.trim() || 'June 14, 2027'}`

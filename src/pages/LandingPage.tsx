@@ -280,7 +280,8 @@ const LandingPage = () => {
                     lineHeight: 1.1,
                   }}
                 >
-                  Welcome, Little One
+                  Thank You
+                  <span className="block text-lg mt-2">from Baby Lily</span>
                 </span>
               </div>
               <div className="p-8 sm:p-10">
@@ -289,7 +290,7 @@ const LandingPage = () => {
                     className="inline-block px-3 py-1 rounded-full text-xs"
                     style={{ backgroundColor: "#eef2e8", color: "#3d5a3a" }}
                   >
-                    Baby Showers & Birthdays
+                  Baby Gifts & Showers
                   </span>
                   <span
                     className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs"
@@ -312,7 +313,7 @@ const LandingPage = () => {
                   className="mt-1 text-sm leading-relaxed line-clamp-1"
                   style={{ color: "#2d2420", opacity: 0.7 }}
                 >
-                  We're so thrilled to celebrate baby Lily…
+                  Thank you for your thoughtful gift for baby Lily. We are so grateful for your kindness.
                 </p>
 
               </div>

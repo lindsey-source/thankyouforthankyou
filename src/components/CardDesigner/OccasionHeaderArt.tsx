@@ -7,6 +7,7 @@ import seedlings from '@/assets/charity-watercolor-seedlings.png';
 import sunrise from '@/assets/charity-watercolor-sunrise.jpg';
 import type { OccasionStyleKey } from './occasionStyles';
 import type { Swatch } from '@/lib/cardPalettes';
+import { StationeryIllustration, hasStationeryIllustration } from './StationeryIllustration';
 
 /* Design-led palette for these headers (artwork, not accent-driven). */
 const BASE_GOLD = '#c8a464';
@@ -374,17 +375,22 @@ export function OccasionHeaderArt({ styleKey, headline, subtext = '', height, cl
   const showCaps = !!subtext;
   return (
     <div
-      className={`relative flex flex-col items-center overflow-hidden ${className}`}
-      style={{ height, background: look.bg, color: look.ink, justifyContent: look.justify || 'center', isolation: 'isolate' }}
+      className={`occasion-art-header occasion-art-header--${styleKey} ${className}`}
+      style={{ height, background: look.bg, color: look.ink, isolation: 'isolate', ['--illustration-accent' as string]: swatch?.accent || BASE_GOLD }}
     >
-      <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>{look.art}</div>
-      <div className="relative flex flex-col items-center text-center" style={{ zIndex: 1, padding: look.pad || '0 24px', width: look.chip ? 'auto' : '100%', maxWidth: '100%', textWrap: 'balance' as any, background: look.chip, ...(look.chip ? { paddingTop: 10, paddingBottom: 10, borderRadius: 4 } : {}) }}>
-        <div className="flex flex-col items-center" style={look.frame}>
-          {look.stack && <div style={{ marginBottom: 10, display: 'flex', justifyContent: 'center' }}>{look.stack}</div>}
-          {look.title ?? <span style={{ ...font, fontSize: look.titleSize || 26, color: look.ink }}>{headline}</span>}
-          {showCaps && <span style={{ ...caps, color: look.ink }}>{subtext}</span>}
-        </div>
+      <div className="occasion-artwork" aria-hidden="true">
+        {hasStationeryIllustration(styleKey)
+          ? <StationeryIllustration styleKey={styleKey} />
+          : look.stack || look.art}
+        {styleKey === 'laurelCrest' && <span className="illustration-initials">{first.charAt(0) || 'M'}</span>}
       </div>
+      <div className="occasion-art-copy">
+        {styleKey === 'laurelCrest'
+          ? <span style={{ ...font, fontSize: 26 }}>{headline}</span>
+          : look.title ?? <span style={{ ...font, fontSize: look.titleSize || 26 }}>{headline}</span>}
+        {showCaps && <span className="occasion-art-details">{subtext}</span>}
+      </div>
+      {styleKey === 'goldenNumber' && <div className="birthday-number-frame" aria-hidden="true" />}
     </div>
   );
 }

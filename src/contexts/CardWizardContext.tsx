@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { cleanWeddingDraft } from '@/lib/weddingMessages';
+import { cleanBabyDraft } from '@/lib/babyDetails';
 
 export interface WizardCardData {
   // Step 1
@@ -136,7 +137,7 @@ const loadPersistedData = (): { cardData: WizardCardData; currentStep: number } 
     if (!raw) return { cardData: initialCardData, currentStep: 1 };
     const parsed = JSON.parse(raw);
     return {
-      cardData: cleanWeddingDraft({ ...initialCardData, ...(parsed.cardData || {}) }),
+      cardData: cleanBabyDraft(cleanWeddingDraft({ ...initialCardData, ...(parsed.cardData || {}) })),
       currentStep: typeof parsed.currentStep === 'number' ? parsed.currentStep : 1,
     };
   } catch {
@@ -165,7 +166,7 @@ export const CardWizardProvider: React.FC<{ children: ReactNode }> = ({ children
   }, [cardData, currentStep]);
 
   const updateCardData = (data: Partial<WizardCardData>) => {
-    setCardData(prev => cleanWeddingDraft({ ...prev, ...data }));
+    setCardData(prev => cleanBabyDraft(cleanWeddingDraft({ ...prev, ...data })));
   };
 
   const resetWizard = () => {

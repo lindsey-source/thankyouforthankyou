@@ -40,7 +40,7 @@ export interface OccasionTile {
  */
 export const OCCASION_TILES: OccasionTile[] = [
   { id: 'wedding', name: 'Wedding', line: 'For the day, and all the days after', Icon: Heart, tone: 'blush' },
-  { id: 'baby', name: 'Baby', line: 'Welcome to the world, little one', Icon: Baby, tone: 'sky' },
+  { id: 'baby', name: 'Baby', line: 'For gifts, showers and sweet surprises', Icon: Baby, tone: 'sky' },
   { id: 'graduation', name: 'Graduation', line: 'For the next chapter', Icon: GraduationCap, tone: 'sage' },
   { id: 'birthday', name: 'Birthday', line: 'For another year well lived', Icon: Cake, tone: 'butter' },
   { id: 'mitzvah', name: 'Bar / Bat Mitzvah', line: 'For a milestone worth marking', Icon: Star, tone: 'lilac' },

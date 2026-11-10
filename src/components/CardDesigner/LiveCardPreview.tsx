@@ -5,7 +5,7 @@ import { Heart } from 'lucide-react';
 import { HeaderArt } from './HeaderArt';
 import type { FontFamily, HeaderStyle } from './designTypes';
 import { cleanWeddingMessage, WEDDING_MESSAGE_EXAMPLE } from '@/lib/weddingMessages';
-import { resolveBabyDetails } from '@/lib/babyDetails';
+import { resolveBabyDetails, BABY_GIFT_SAMPLES } from '@/lib/babyDetails';
 import { detailOccasionFor, resolveOccasionDetails, type DetailValues } from '@/lib/occasionDetails';
 
 export interface LiveCardPreviewProps {
@@ -148,7 +148,7 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
   const greeting = `Dear ${recipientName?.trim() || 'Friend'},`;
   const body =
     cleanWeddingMessage(messageBody, isWedding).trim() ||
-    (isWedding ? WEDDING_MESSAGE_EXAMPLE : isBaby ? 'Thank you for welcoming our little one with so much love. Your thoughtfulness means the world to our growing family.' : 'Thank you so much for your kindness and generosity. It truly meant the world to me.');
+    (isWedding ? WEDDING_MESSAGE_EXAMPLE : isBaby ? BABY_GIFT_SAMPLES.babyMoon : 'Thank you so much for your kindness and generosity. It truly meant the world to me.');
   const closingLine = closing?.trim() || 'With love,';
   // Wedding: the couple's names sign the card; fall back to senderName.
   const sender = isBaby ? babyDetails.signOff : occ ? occ.signOff : coupleNames?.trim() || senderName?.trim();
@@ -202,7 +202,7 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
         </>
       )}
       {useDesignHeader ? (
-        <div style={{ height: '42%' }}>
+        <div style={{ height: '50%' }}>
           <HeaderArt
             design={{
               id: designId || 'preview',
@@ -296,7 +296,7 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
       {/* Body */}
       <div
         className="px-5 pt-4 pb-3 flex flex-col"
-        style={{ height: hasDonation ? '46%' : '58%' }}
+        style={{ height: hasDonation ? '38%' : '50%' }}
       >
         <p className="text-lg mb-2" style={{ fontFamily: fonts.heading, color: inkColor }}>
           {greeting}
@@ -369,7 +369,7 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
 
   if (bare) {
     return (
-      <div className={`cotton-deckle relative w-full aspect-[3/4] overflow-hidden ${className}`} role="img" aria-label="Live card preview">
+      <div className={`cotton-deckle relative w-full aspect-[3/5] overflow-hidden ${className}`} role="img" aria-label="Live card preview">
         {cardFace}
       </div>
     );
@@ -382,7 +382,7 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
       {stamp}
       <div className="suite-card cotton-shadow">
         <div
-          className={`cotton-deckle relative w-full aspect-[3/4] overflow-hidden ${className}`}
+          className={`cotton-deckle relative w-full aspect-[3/5] overflow-hidden ${className}`}
           role="img"
           aria-label="Live card preview"
         >

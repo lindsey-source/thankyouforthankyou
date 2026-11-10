@@ -18,8 +18,8 @@ const occasions: { id: Occasion; label: string; description: string; icon: strin
   },
   {
     id: 'baby',
-    label: 'Baby/Birth',
-    description: 'Welcome your little one with gratitude',
+    label: 'Baby',
+    description: 'For gifts, showers and sweet surprises',
     icon: '👶'
   },
   {

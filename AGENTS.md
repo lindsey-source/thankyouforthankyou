@@ -11,3 +11,5 @@
 - Homepage and card-builder stationery surfaces (linen, postage stamp, pastel icon circles, gold hairlines) use shared classes in the global stylesheet and components in src/components/stationery so donation stamps and textures stay identical everywhere.
 - Envelope liners resolve by stable design ID through src/lib/envelopeLiners and render via SuiteEnvelope/EnvelopeReveal, so every preview shows the same per-style liner; shared stationery finish (letterpress title, print grain, cotton deckle) lives in HeaderArt's wrapper and global CSS.
 - Card colors resolve by stable design ID through src/lib/cardPalettes (default swatch first, chosen colorId falls back to default) and flow through HeaderArt and linerFor, so card, art accents and liner always recolor together.
+- Occasion illustrations resolve through StationeryIllustration by stable style key and occupy a separate in-flow region above title/details, preventing artwork-text collisions across all preview sizes.
+- Baby gift samples and title/name lines resolve through babyDetails; draft hydration and updates migrate only known obsolete announcement defaults to preserve personal writing.

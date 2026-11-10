@@ -457,19 +457,43 @@ div.min-h-screen:has(.wizard-topbar) h3.font-semibold { font-family: 'Playfair D
 .cotton-shadow { filter: drop-shadow(0 1px 1px hsl(25 30% 20% / 0.08)) drop-shadow(0 14px 22px hsl(25 30% 20% / 0.12)); }
 
 /* Suite: card on linen with its envelope tucked behind */
-.style-suite { position: relative; padding: 46px 18px 18px; border-radius: 20px; border: 1px solid hsl(var(--gold-hairline) / 0.18); }
-.style-suite .suite-envelope { position: absolute; top: 14px; left: 50%; width: 78%; height: 46%; transform: translateX(-38%) rotate(5deg); z-index: 0; }
+.style-suite { position: relative; padding: 162px 18px 18px; border-radius: 20px; border: 1px solid hsl(var(--gold-hairline) / 0.18); overflow: visible; }
+.style-suite .suite-envelope { position: absolute; top: 100px; left: 50%; width: 86%; height: 120px; transform: translateX(-50%); z-index: 0; }
 .style-suite > .suite-card { position: relative; z-index: 2; }
-.style-suite .suite-stamp { position: absolute; top: 56px; right: 26px; z-index: 30; transform: rotate(6deg) scale(.62); transform-origin: top right; }
+.style-suite .suite-stamp { position: absolute; top: 172px; right: 26px; z-index: 30; transform: rotate(6deg) scale(.372); transform-origin: top right; }
 .suite-envelope { filter: drop-shadow(0 8px 14px hsl(25 30% 20% / 0.14)); }
 .suite-envelope-back { position: absolute; inset: 0; border-radius: 6px; }
 .suite-envelope-flap { position: absolute; left: 0; right: 0; bottom: 100%; height: 55%; clip-path: polygon(0 100%, 50% 0, 100% 100%); margin-bottom: -1px; }
 .suite-envelope-pocket { position: absolute; inset: 18% 0 0 0; border-radius: 0 0 6px 6px; background: var(--env); clip-path: polygon(0 0, 50% 38%, 100% 0, 100% 100%, 0 100%); box-shadow: inset 0 1px 0 hsl(0 0% 100% / .5); }
-.style-suite .suite-envelope { height: 34%; top: 40px; }
-.style-suite { padding-top: 74px; overflow: hidden; }
-.style-suite .suite-envelope { top: 58px; }
-.style-suite .suite-envelope-flap { height: 42%; }
-.style-suite .suite-stamp { top: 82px; }
+.style-suite .suite-envelope-flap { height: 76px; }
+
+/* Each illustration owns its space: artwork, title, then details. */
+.occasion-art-header { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; padding: 20px 18px 18px; gap: 12px; }
+.occasion-artwork { position: relative; display: flex; align-items: center; justify-content: center; width: 100%; height: 55%; min-height: 72px; flex-shrink: 1; }
+.stationery-illustration { display: block; width: 100%; height: 100%; object-fit: contain; }
+.stationery-illustration--balloons, .stationery-illustration--capTassel, .stationery-illustration--bloom, .stationery-illustration--pressed, .stationery-illustration--seedling { mix-blend-mode: multiply; }
+.occasion-art-copy { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; text-align: center; width: 100%; text-wrap: balance; overflow-wrap: anywhere; }
+.occasion-art-copy > span { color: inherit !important; background: transparent !important; letter-spacing: 0 !important; }
+.occasion-art-details { display: block; font-family: 'Playfair Display', Georgia, serif; font-size: 9px; line-height: 1.7; text-transform: uppercase; margin-top: 8px; opacity: .9; }
+.illustration-initials { position: absolute; font-family: 'Playfair Display', Georgia, serif; font-size: 30px; }
+.occasion-artwork > svg { max-width: 100%; max-height: 100%; }
+.occasion-art-header--goldenNumber .occasion-artwork { height: 48%; }
+.occasion-art-header--goldenNumber .occasion-artwork svg { width: 94px !important; height: 100% !important; }
+.birthday-number-frame { position: absolute; inset: 8px 12px; border: 1px solid var(--illustration-accent); border-radius: 50% 50% 2px 2px; pointer-events: none; }
+.occasion-art-header--quietCream .occasion-artwork, .occasion-art-header--bigType .occasion-artwork { display: none; }
+.occasion-art-header--bigType .occasion-art-copy > span { font-size: 44px !important; }
+.baby-rainbow-art { position: relative; top: auto; width: 94%; height: 52%; margin-bottom: 14px; }
+.baby-header--babyRainbow { justify-content: center; }
+.baby-header--babyRainbow .baby-header-copy { padding-bottom: 0; }
+.baby-moon-art { width: 92%; height: 110px; }
+.baby-header-from { display: block; margin-top: 6px; font-family: 'Playfair Display', Georgia, serif; font-size: 16px; line-height: 1.4; }
+.wedding-rose-header { gap: 10px; }
+.wedding-peony-art { display: block; width: 92%; height: 48%; object-fit: contain; mix-blend-mode: multiply; }
+.wedding-rose-copy { text-align: center; }
+.occasion-art-header--goldClass .occasion-art-copy > span:not(.occasion-art-details):last-of-type { font-size: 24px; }
+.occasion-art-header--portraitArch .occasion-artwork > div { position: relative !important; inset: auto !important; width: 55% !important; height: 100% !important; }
+.occasion-art-header--mission .occasion-artwork { height: 20%; min-height: 20px; }
+.occasion-art-header--mission .occasion-artwork > div { position: relative !important; inset: auto !important; width: 70% !important; height: 6px; background: var(--illustration-accent) !important; }
 
 /* Customize step color swatches */
 .swatch-chip { position: relative; width: 40px; height: 40px; border-radius: 9999px; border: 1px solid hsl(var(--gold-hairline) / 0.5); box-shadow: 0 1px 3px hsl(var(--brand-dark, 20 18% 15%) / 0.08); transition: transform .15s ease, box-shadow .15s ease; }

@@ -7,6 +7,8 @@ import { babyStyleFor } from './babyStyles';
 import { OccasionHeaderArt } from './OccasionHeaderArt';
 import { occasionStyleFor } from './occasionStyles';
 import { paletteFor } from '@/lib/cardPalettes';
+import laurel from '@/assets/stationery-laurel-engraving.png';
+import executive from '@/assets/corporate-executive-engraving.png';
 
 interface HeaderArtProps {
   /** Full design from Step 2 (provides accent/ink/headerBg/headerStyle/headlineText/font). */
@@ -149,30 +151,7 @@ const HeaderArtInner: React.FC<HeaderArtProps> = ({
         />
         {/* Thin gold wreath with the couple's initials */}
         <div className="relative">
-        <svg viewBox="0 0 120 96" className="w-[92px] h-auto" fill="none" aria-hidden="true">
-          {/* Full thin gold wreath — ring plus laurel leaves, tied at the bottom */}
-          <g stroke={GOLD_CREST} strokeWidth="1" strokeLinecap="round">
-            <circle cx="60" cy="48" r="34" />
-            {/* Leaves around the ring, paired on each side */}
-            {[15, 45, 75, 105, 135, 165].map((deg) => {
-              const a = (deg * Math.PI) / 180;
-              const bx = 60 + 34 * Math.cos(a);
-              const by = 48 - 34 * Math.sin(a);
-              const tangent = -deg;
-              return (
-                <g key={deg} transform={`translate(${bx} ${by}) rotate(${tangent})`}>
-                  <path d="M 0 0 Q 5 -3 10 0 Q 5 3 0 0 Z" fill={GOLD_CREST} fillOpacity="0.55" stroke="none" />
-                  <path d="M 2 2 Q 6 5 4 10 Q 1 6 2 2 Z" fill={GOLD_CREST} fillOpacity="0.4" stroke="none" />
-                </g>
-              );
-            })}
-            {/* Small bow where the branches meet at the bottom */}
-            <path d="M 54 84 Q 60 78 66 84" strokeWidth="0.8" />
-            <path d="M 56 85 L 54 90 M 64 85 L 66 90" strokeWidth="0.7" />
-          </g>
-          {/* Fine inner ring */}
-          <circle cx="60" cy="48" r="26" stroke={GOLD_CREST} strokeWidth="0.5" strokeOpacity="0.6" />
-        </svg>
+        <img src={laurel} alt="" aria-hidden="true" loading="lazy" width={992} height={672} className="w-[170px] h-[110px] object-contain" />
         {/* Initials inside the wreath */}
         <span
           className="absolute inset-0 flex items-center justify-center"
@@ -212,7 +191,7 @@ const HeaderArtInner: React.FC<HeaderArtProps> = ({
     const GOLD = '#c9a96e';
     return (
       <div
-        className={`relative flex flex-col items-center justify-center overflow-hidden ${className}`}
+        className={`wedding-rose-header relative flex flex-col items-center justify-center overflow-hidden ${className}`}
         style={{ height, background: headerBg }}
       >
         <img
@@ -221,10 +200,10 @@ const HeaderArtInner: React.FC<HeaderArtProps> = ({
           loading="lazy"
           width={1024}
           height={1024}
-          className="absolute -top-5 -left-5 w-[58%] max-w-[200px] pointer-events-none select-none"
+          className="wedding-peony-art pointer-events-none select-none"
           aria-hidden="true"
         />
-        <div className="relative z-10 flex flex-col items-center px-6">
+        <div className="wedding-rose-copy relative z-10 flex flex-col items-center px-6">
           <span style={monogramStyle(ink)}>{initials || 'E & J'}</span>
           <RingsMotif color={GOLD} className="mt-1.5" />
           <span
@@ -321,7 +300,8 @@ const HeaderArtInner: React.FC<HeaderArtProps> = ({
         className={`relative flex flex-col items-center justify-center overflow-hidden ${className}`}
         style={{ height, background: headerBg }}
       >
-        <svg viewBox="0 0 200 120" className="absolute inset-0 w-full h-full pointer-events-none" fill="none" aria-hidden="true" preserveAspectRatio="none">
+        <img src={executive} alt="" aria-hidden="true" loading="lazy" width={1152} height={576} className="w-[92%] h-[45%] object-contain mb-3" />
+        <svg viewBox="0 0 200 120" className="absolute inset-0 w-full h-full pointer-events-none opacity-40" fill="none" aria-hidden="true" preserveAspectRatio="none">
           {/* Art deco stepped frame */}
           <g stroke={GOLD} strokeWidth="1">
             <rect x="10" y="10" width="180" height="100" />
