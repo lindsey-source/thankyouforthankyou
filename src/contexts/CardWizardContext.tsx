@@ -9,6 +9,8 @@ export interface WizardCardData {
   templateId: string | null;
   colorPalette: any;
   fontChoice: string | null;
+  /** Chosen card color swatch id; empty means the style's default. */
+  colorId?: string | null;
   
   // Step 3
   messageHeadline: string;

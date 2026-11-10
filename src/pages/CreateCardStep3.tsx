@@ -20,6 +20,7 @@ import { ChevronDown } from 'lucide-react';
 import { DESIGN_SETS } from './CreateCardStep2';
 import { readDesignFromPalette, type Design, type OccasionId } from '@/components/CardDesigner/designTypes';
 import { WEDDING_MESSAGE_EXAMPLE } from '@/lib/weddingMessages';
+import { swatchesFor, paletteFor } from '@/lib/cardPalettes';
 import { OCCASION_FIELDS, DETAIL_KEYS, detailOccasionFor, type DetailValues } from '@/lib/occasionDetails';
 
 /* ---------- Hardcoded last-resort design ----------
@@ -242,6 +243,7 @@ export default function CreateCardStep3() {
     },
     fonts: { heading: fontFamily, body: fontFamily },
     designId: design.id,
+    colorId: cardData.colorId,
     bg: design.bg,
     headerBg: design.headerBg,
     ink: design.ink,
@@ -420,6 +422,38 @@ export default function CreateCardStep3() {
                         placeholder="June 14, 2027"
                       />
                     </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {swatchesFor(design.id).length > 0 && (
+              <Card className="bg-card">
+                <CardContent className="p-6 space-y-4">
+                  <div className="flex items-baseline justify-between gap-3">
+                    <h2 className="text-xl text-foreground">Color</h2>
+                    <span className="text-sm text-muted-foreground">{paletteFor(design.id, cardData.colorId)?.name}</span>
+                  </div>
+                  <p className="text-sm text-muted-foreground">Recolors the card, its accents and the envelope liner together.</p>
+                  <div className="flex flex-wrap gap-3" role="radiogroup" aria-label="Card color">
+                    {swatchesFor(design.id).map((sw, i) => {
+                      const active = paletteFor(design.id, cardData.colorId)?.id === sw.id;
+                      return (
+                        <button
+                          key={sw.id}
+                          type="button"
+                          role="radio"
+                          aria-checked={active}
+                          aria-label={`${sw.name}${i === 0 ? ' (recommended)' : ''}`}
+                          title={sw.name}
+                          onClick={() => updateCardData({ colorId: i === 0 ? null : sw.id } as any)}
+                          className={`swatch-chip ${active ? 'is-active' : ''}`}
+                          style={{ background: sw.bg }}
+                        >
+                          <span className="swatch-chip-accent" style={{ background: sw.accent }} />
+                        </button>
+                      );
+                    })}
                   </div>
                 </CardContent>
               </Card>

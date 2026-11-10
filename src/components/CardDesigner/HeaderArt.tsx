@@ -6,6 +6,7 @@ import { BabyHeaderArt } from './BabyHeaderArt';
 import { babyStyleFor } from './babyStyles';
 import { OccasionHeaderArt } from './OccasionHeaderArt';
 import { occasionStyleFor } from './occasionStyles';
+import { paletteFor } from '@/lib/cardPalettes';
 
 interface HeaderArtProps {
   /** Full design from Step 2 (provides accent/ink/headerBg/headerStyle/headlineText/font). */
@@ -27,6 +28,8 @@ interface HeaderArtProps {
   subtext?: string;
   /** Wedding crest: couple's initials inside the gold wreath (e.g. "E & J"). */
   initials?: string;
+  /** Chosen card color swatch (Customize step); falls back to the style default. */
+  colorId?: string | null;
 }
 
 /* Small letter-spaced caps line shown under the headline */
@@ -89,7 +92,7 @@ export const HeaderArt: React.FC<HeaderArtProps> = (props) => (
 );
 
 const HeaderArtInner: React.FC<HeaderArtProps> = ({
-  design,
+  design: rawDesign,
   height = '220px',
   className = '',
   headlineOverride,
@@ -97,7 +100,10 @@ const HeaderArtInner: React.FC<HeaderArtProps> = ({
   headlineFont,
   subtext,
   initials,
+  colorId,
 }) => {
+  const swatch = paletteFor(rawDesign.id, colorId);
+  const design = swatch ? { ...rawDesign, headerBg: swatch.bg, ink: swatch.ink, accent: swatch.accent } : rawDesign;
   const {
     headerStyle,
     accent = '#c17b8a',
@@ -114,11 +120,11 @@ const HeaderArtInner: React.FC<HeaderArtProps> = ({
   // Stable IDs also upgrade restored baby drafts without reintroducing old artwork.
   const babyStyle = babyStyleFor(id);
   if (babyStyle && !photoUrl) {
-    return <BabyHeaderArt styleKey={babyStyle.headerStyle} height={height} className={className} headlineFont={headlineFont} subtext={subtext} />;
+    return <BabyHeaderArt swatch={swatch} styleKey={babyStyle.headerStyle} height={height} className={className} headlineFont={headlineFont} subtext={subtext} />;
   }
   const occasionStyle = occasionStyleFor(id);
   if (occasionStyle && (!photoUrl || occasionStyle.key === 'portraitArch')) {
-    return <OccasionHeaderArt styleKey={occasionStyle.key} headline={headline} subtext={subtext} height={height} className={className} headlineFont={headlineFont} photoUrl={photoUrl} />;
+    return <OccasionHeaderArt swatch={swatch} styleKey={occasionStyle.key} headline={headline} subtext={subtext} height={height} className={className} headlineFont={headlineFont} photoUrl={photoUrl} />;
   }
 
   // Wedding stationery: gold wreath crest + script headline + serif names.

@@ -185,6 +185,7 @@ export default function CreateCardStep5Impact() {
               recipientName={recipientName}
               envelopeColor={cardData.envelopeColor}
               designId={palette.id || palette.theme || cardData.templateId || undefined}
+              colorId={cardData.colorId}
             >
               <LiveCardPreview
                 palette={{
@@ -195,6 +196,7 @@ export default function CreateCardStep5Impact() {
                 }}
                 fonts={fonts}
                 designId={palette.id || palette.theme || cardData.templateId || undefined}
+              colorId={cardData.colorId}
                 bg={palette.bg}
                 headerBg={palette.headerBg}
                 ink={palette.ink}

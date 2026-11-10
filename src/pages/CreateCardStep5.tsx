@@ -79,6 +79,7 @@ export default function CreateCardStep5() {
               }}
               fonts={fonts}
               designId={palette.id || palette.theme || cardData.templateId || undefined}
+              colorId={cardData.colorId}
               bg={palette.bg}
               headerBg={palette.headerBg}
               ink={palette.ink}

@@ -932,6 +932,7 @@ export default function CreateCardStep2() {
     if (!design) return;
 
     updateCardData({
+      colorId: null,
       templateId: design.id,
       colorPalette: {
         theme: design.id,

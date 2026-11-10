@@ -7,3 +7,5 @@
 - [x] Shared designer finish on all styles: letterpress/gold-foil titles, cotton deckled card, stamp top corner
 - [x] Per-style envelope liners (preview + Review opening), no dot grids
 - [x] Style step: cards on linen with envelope behind, larger art; live panel matches with stamp + liner
+- [x] Wider color range: no shared dominant color per occasion, navy max one style
+- [x] Customize color picker: 6-8 swatches per style recoloring background, accents, liner

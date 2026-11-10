@@ -1,4 +1,5 @@
 import React from 'react';
+import type { Swatch } from '@/lib/cardPalettes';
 import wash from '@/assets/baby-watercolor-wash.jpg';
 import rainbow from '@/assets/baby-watercolor-rainbow-cutout.png';
 
@@ -8,15 +9,16 @@ interface BabyHeaderArtProps {
   className?: string;
   headlineFont?: string;
   subtext?: string;
+  swatch?: Swatch;
 }
 
-export function BabyHeaderArt({ styleKey, height, className = '', headlineFont, subtext }: BabyHeaderArtProps) {
+export function BabyHeaderArt({ styleKey, height, className = '', headlineFont, subtext, swatch }: BabyHeaderArtProps) {
   const styleClass = { babyMoon: 'baby-header--babyMoon', babyWash: 'baby-header--babyWash', babyMinimal: 'baby-header--babyMinimal', babyRainbow: 'baby-header--babyRainbow' }[styleKey];
   const line = subtext || 'Baby Lily · March 3, 2027';
   const name = line.split(' · ')[0].replace(/^Baby\s+/i, '');
   const title = styleKey === 'babyMinimal' ? name : styleKey === 'babyMoon' ? 'Welcome, Little Star' : styleKey === 'babyRainbow' ? 'Hello, Little Wonder' : 'Welcome, Little One';
   return (
-    <div className={`baby-header ${styleClass} ${className}`} style={{ height }}>
+    <div className={`baby-header ${styleClass} ${className}`} style={{ height, ...(swatch ? { background: swatch.bg, color: swatch.ink, ['--swatch-accent' as string]: swatch.accent } : {}) }}>
       {styleKey === 'babyWash' && <img src={wash} width={1200} height={800} loading="lazy" alt="" className="baby-wash-art" aria-hidden="true" />}
       {styleKey === 'babyRainbow' && <img src={rainbow} width={1086} height={549} loading="lazy" alt="" className="baby-rainbow-art" aria-hidden="true" />}
       {styleKey === 'babyMoon' && (

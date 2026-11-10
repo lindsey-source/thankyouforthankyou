@@ -52,10 +52,16 @@ export const LINERS: Record<string, Liner> = {
   'charity-grateful-gold': { pattern: 'watercolor', tint: '#eab07a', ground: '#fff8f0' },
 };
 
+import { paletteFor } from './cardPalettes';
+
 const FALLBACK: Liner = { pattern: 'botanical', tint: '#c17b8a', ground: '#fbf3f1' };
 
-export const linerFor = (designId?: string | null): Liner =>
-  (designId && LINERS[designId]) || FALLBACK;
+export const linerFor = (designId?: string | null, colorId?: string | null): Liner => {
+  const base = (designId && LINERS[designId]) || FALLBACK;
+  const sw = paletteFor(designId, colorId);
+  // Liner follows the card color: tinted ground with the swatch accent as pattern ink.
+  return sw ? { pattern: base.pattern, tint: sw.accent, ground: sw.bg } : base;
+};
 
 const enc = (c: string) => encodeURIComponent(c);
 

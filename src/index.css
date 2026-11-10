@@ -470,3 +470,9 @@ div.min-h-screen:has(.wizard-topbar) h3.font-semibold { font-family: 'Playfair D
 .style-suite .suite-envelope { top: 58px; }
 .style-suite .suite-envelope-flap { height: 42%; }
 .style-suite .suite-stamp { top: 82px; }
+
+/* Customize step color swatches */
+.swatch-chip { position: relative; width: 40px; height: 40px; border-radius: 9999px; border: 1px solid hsl(var(--gold-hairline) / 0.5); box-shadow: 0 1px 3px hsl(var(--brand-dark, 20 18% 15%) / 0.08); transition: transform .15s ease, box-shadow .15s ease; }
+.swatch-chip:hover { transform: translateY(-1px); }
+.swatch-chip.is-active { box-shadow: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--primary)); }
+.swatch-chip-accent { position: absolute; right: 5px; bottom: 5px; width: 10px; height: 10px; border-radius: 9999px; border: 1px solid hsl(0 0% 100% / 0.6); }

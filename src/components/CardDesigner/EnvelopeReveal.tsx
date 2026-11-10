@@ -13,6 +13,7 @@ interface EnvelopeRevealProps {
   linerColor?: string;
   /** Card style — picks the matching patterned liner. */
   designId?: string | null;
+  colorId?: string | null;
 }
 
 /**
@@ -26,8 +27,9 @@ export const EnvelopeReveal: React.FC<EnvelopeRevealProps> = ({
   envelopeColor,
   linerColor = '#c17b8a',
   designId,
+  colorId,
 }) => {
-  const liner = linerBackground(linerFor(designId));
+  const liner = linerBackground(linerFor(designId, colorId));
   const [open, setOpen] = useState(false);
   const [revealed, setRevealed] = useState(false);
 

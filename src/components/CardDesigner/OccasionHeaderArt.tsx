@@ -6,9 +6,10 @@ import ferns from '@/assets/general-pressed-ferns.png';
 import seedlings from '@/assets/charity-watercolor-seedlings.png';
 import sunrise from '@/assets/charity-watercolor-sunrise.jpg';
 import type { OccasionStyleKey } from './occasionStyles';
+import type { Swatch } from '@/lib/cardPalettes';
 
 /* Design-led palette for these headers (artwork, not accent-driven). */
-const GOLD = '#c8a464';
+const BASE_GOLD = '#c8a464';
 const CREAM = '#f6efe3';
 const INK = '#2d2420';
 
@@ -20,6 +21,7 @@ interface Props {
   className?: string;
   headlineFont?: string;
   photoUrl?: string | null;
+  swatch?: Swatch;
 }
 
 type Look = { chip?: string; bg: string; ink: string; art?: React.ReactNode; title?: React.ReactNode; justify?: 'center' | 'flex-end' | 'flex-start'; pad?: string; stack?: React.ReactNode; frame?: React.CSSProperties; titleSize?: number };
@@ -36,7 +38,8 @@ const img = (src: string, style: React.CSSProperties, w = 1024, h = 768) => (
 const star = (cx: number, cy: number, r: number) =>
   `M${cx} ${cy - r}l${r * 0.25} ${r * 0.75} ${r * 0.75} ${r * 0.25} -${r * 0.75} ${r * 0.25} -${r * 0.25} ${r * 0.75} -${r * 0.25} -${r * 0.75} -${r * 0.75} -${r * 0.25} ${r * 0.75} -${r * 0.25}Z`;
 
-function lookFor(key: OccasionStyleKey, p: { subtext: string; first: string; photoUrl?: string | null; font: React.CSSProperties; headline: string }): Look {
+function lookFor(key: OccasionStyleKey, p: { subtext: string; first: string; photoUrl?: string | null; font: React.CSSProperties; headline: string; accent?: string }): Look {
+  const GOLD = p.accent || BASE_GOLD;
   const year = p.subtext.match(/class of\s*(\S+)/i)?.[1] || '2027';
   const age = p.subtext.match(/turns\s+(\S+)/i)?.[1] || '7';
   const initials = p.first.split(/[\s&]+/).filter(Boolean).map((w) => w[0]?.toUpperCase()).slice(0, 2).join('');
@@ -360,11 +363,13 @@ function lookFor(key: OccasionStyleKey, p: { subtext: string; first: string; pho
   }
 }
 
-export function OccasionHeaderArt({ styleKey, headline, subtext = '', height, className = '', headlineFont, photoUrl }: Props) {
+export function OccasionHeaderArt({ styleKey, headline, subtext = '', height, className = '', headlineFont, photoUrl, swatch }: Props) {
   const font: React.CSSProperties = { fontFamily: headlineFont || "'Playfair Display', Georgia, serif", fontWeight: 400, letterSpacing: '0.04em', lineHeight: 1.2 };
   const memorialName = subtext.match(/memory of (.+?)(?: · |$)/i)?.[1];
   const first = memorialName || subtext.split(' · ')[0] || '';
-  const look = lookFor(styleKey, { subtext, first, photoUrl, font, headline });
+  const base = lookFor(styleKey, { subtext, first, photoUrl, font, headline, accent: swatch?.accent });
+  // The chosen swatch recolors the card ground and type; art keeps its shapes.
+  const look = swatch ? { ...base, bg: swatch.bg, ink: swatch.ink } : base;
   // Memorial "Quiet Cream" shows the name large; avoid repeating it in caps.
   const showCaps = !!subtext;
   return (

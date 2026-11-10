@@ -26,6 +26,7 @@ export interface LiveCardPreviewProps {
      When provided, these take precedence so the preview faithfully matches
      the design picked on Step 2 (e.g. Golden Cap → navy header + gold starburst). */
   designId?: string;
+  colorId?: string | null;
   bg?: string;                    // card body background
   headerBg?: string;              // header band background (gradient or solid)
   ink?: string;                   // primary ink (greeting, signature)
@@ -96,6 +97,7 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
   palette,
   fonts,
   designId,
+  colorId,
   bg,
   headerBg,
   ink,
@@ -216,6 +218,7 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
             headlineFont={fonts.heading}
             subtext={occasionLine}
             initials={initials}
+            colorId={colorId}
           />
         </div>
       ) : (
@@ -375,7 +378,7 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
   // Designer suite: cotton card on linen, its envelope (with the style's liner) tucked behind.
   return (
     <div className="style-suite linen-surface" data-has-envelope={hasEnvelope ? 'true' : undefined}>
-      <SuiteEnvelope designId={designId} color={envelopeColor} />
+      <SuiteEnvelope designId={designId} colorId={colorId} color={envelopeColor} />
       {stamp}
       <div className="suite-card cotton-shadow">
         <div
