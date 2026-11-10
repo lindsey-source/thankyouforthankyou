@@ -22,7 +22,7 @@ interface Props {
   photoUrl?: string | null;
 }
 
-type Look = { chip?: string; bg: string; ink: string; art?: React.ReactNode; title?: React.ReactNode; justify?: 'center' | 'flex-end' | 'flex-start'; pad?: string };
+type Look = { chip?: string; bg: string; ink: string; art?: React.ReactNode; title?: React.ReactNode; justify?: 'center' | 'flex-end' | 'flex-start'; pad?: string; stack?: React.ReactNode; frame?: React.CSSProperties; titleSize?: number };
 
 const caps: React.CSSProperties = {
   fontFamily: "'Playfair Display', Georgia, serif", fontSize: 10, letterSpacing: '0.22em',
@@ -94,91 +94,80 @@ function lookFor(key: OccasionStyleKey, p: { subtext: string; first: string; pho
       return {
         bg: '#f8f1e4', ink: INK,
         art: (
-          <svg viewBox="0 0 200 140" style={{ ...abs, top: '50%', left: '50%', width: '72%', maxWidth: 260, transform: 'translate(-50%,-54%)' }} fill="none">
-            {/* Thin gold arch framing the numeral */}
-            <path d="M30 140V70a70 70 0 0 1 140 0v70" stroke={GOLD} strokeWidth="1" />
-            <path d="M38 140V72a62 62 0 0 1 124 0v68" stroke={GOLD} strokeWidth="0.5" opacity="0.55" />
-            {/* Tiny gold confetti */}
-            {[[18, 30], [42, 12], [160, 16], [184, 34], [12, 74], [190, 78], [30, 108], [172, 104]].map(([x, y], i) => (
-              <g key={i}>{i % 2 ? <circle cx={x} cy={y} r="1.6" fill={GOLD} /> : <rect x={x - 1.4} y={y - 1.4} width="2.8" height="2.8" fill={GOLD} transform={`rotate(45 ${x} ${y})`} />}</g>
+          <svg viewBox="0 0 200 120" preserveAspectRatio="none" style={{ ...abs, inset: 0, width: '100%', height: '100%' }}>
+            {/* Tiny gold confetti in the outer margins only */}
+            {[[10, 14], [24, 6], [178, 8], [192, 18], [8, 60], [193, 64], [12, 104], [188, 106]].map(([x, y], i) => (
+              <circle key={i} cx={x} cy={y} r={i % 2 ? 1.2 : 1.6} fill={GOLD} />
             ))}
           </svg>
         ),
-        title: (
-          <>
-            <svg viewBox="0 0 120 104" style={{ width: 104, height: 'auto', display: 'block' }} aria-hidden="true">
-              <defs>
-                <linearGradient id="bdayGoldNum" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stopColor="#f0dca6" />
-                  <stop offset="0.38" stopColor={GOLD} />
-                  <stop offset="0.62" stopColor="#8f6d2e" />
-                  <stop offset="0.88" stopColor="#e3c87f" />
-                  <stop offset="1" stopColor="#b08d42" />
-                </linearGradient>
-              </defs>
-              <text x="60" y="88" textAnchor="middle" fontFamily="'Playfair Display', Georgia, serif" fontSize="100" fill="url(#bdayGoldNum)">{age}</text>
-            </svg>
-            <span style={{ ...p.font, fontSize: 22, color: INK, marginTop: 4 }}>{p.headline}</span>
-          </>
+        // The arch frames the whole stack: numeral, title and date sit inside it.
+        frame: { border: `1px solid ${GOLD}`, borderBottom: 'none', borderRadius: '999px 999px 0 0', padding: '26px 34px 12px', boxShadow: `inset 0 0 0 5px ${'#f8f1e4'}, inset 0 0 0 5.5px rgba(200,164,100,0.5)`, minWidth: 210 },
+        stack: (
+          <svg viewBox="0 0 120 104" style={{ width: 70, height: 'auto', display: 'block' }} aria-hidden="true">
+            <defs>
+              <linearGradient id="bdayGoldNum" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stopColor="#f0dca6" />
+                <stop offset="0.38" stopColor={GOLD} />
+                <stop offset="0.62" stopColor="#8f6d2e" />
+                <stop offset="0.88" stopColor="#e3c87f" />
+                <stop offset="1" stopColor="#b08d42" />
+              </linearGradient>
+            </defs>
+            <text x="60" y="90" textAnchor="middle" fontFamily="'Playfair Display', Georgia, serif" fontSize="104" fill="url(#bdayGoldNum)">{age}</text>
+          </svg>
         ),
+        titleSize: 22,
       };
     case 'balloons':
       return {
-        bg: '#faf5ec', ink: INK, justify: 'flex-end', pad: '0 24px 18px',
+        bg: '#faf5ec', ink: INK, pad: '18px 24px 0',
         art: (
-          <>
-            {/* Soft bunting along the top */}
-            <svg viewBox="0 0 200 26" preserveAspectRatio="none" style={{ ...abs, top: 0, left: 0, width: '100%', height: 22 }}>
-              <path d="M0 2Q50 14 100 8T200 4" fill="none" stroke="#d8c09a" strokeWidth="0.7" />
-              {Array.from({ length: 9 }).map((_, i) => {
-                const x = 10 + i * 22.5;
-                const y = 3.4 + Math.sin((i / 8) * Math.PI) * 6.5;
-                return <path key={i} d={`M${x - 6} ${y}L${x + 6} ${y}L${x} ${y + 11}Z`} fill={['#e8b7c0', '#a9c2a4', '#e5cf9a'][i % 3]} opacity="0.75" />;
-              })}
-            </svg>
-            {img(balloons, { top: 18, left: '50%', transform: 'translateX(-50%)', width: '55%', height: '56%' })}
-          </>
+          <svg viewBox="0 0 200 26" preserveAspectRatio="none" style={{ ...abs, top: 0, left: 0, width: '100%', height: 22 }}>
+            <path d="M0 2Q50 14 100 8T200 4" fill="none" stroke="#d8c09a" strokeWidth="0.7" />
+            {Array.from({ length: 9 }).map((_, i) => {
+              const x = 10 + i * 22.5;
+              const y = 3.4 + Math.sin((i / 8) * Math.PI) * 6.5;
+              return <path key={i} d={`M${x - 6} ${y}L${x + 6} ${y}L${x} ${y + 11}Z`} fill={['#e8b7c0', '#a9c2a4', '#e5cf9a'][i % 3]} opacity="0.75" />;
+            })}
+          </svg>
         ),
+        stack: <img src={balloons} alt="" aria-hidden="true" width={1024} height={768} loading="lazy" style={{ height: 100, width: 'auto', maxWidth: '70%', margin: '-8px 0 -6px', objectFit: 'contain', display: 'block' }} />,
       };
     case 'champagne':
       return {
         bg: '#3e2236', ink: CREAM,
-        art: (
-          <svg viewBox="0 0 120 92" style={{ ...abs, top: 4, left: '50%', transform: 'translateX(-50%)', width: 132 }} fill="none" stroke={GOLD} strokeWidth="1.1" strokeLinecap="round">
-            {/* Left flute, tilted in */}
+        stack: (
+          <svg viewBox="0 0 120 80" style={{ width: 104, height: 'auto', display: 'block' }} fill="none" stroke={GOLD} strokeWidth="1.1" strokeLinecap="round" aria-hidden="true">
             <g transform="rotate(-12 44 46)">
               <path d="M36 8h16l-2.5 26c-.8 7-4.5 10-5.5 10s-4.7-3-5.5-10Z" />
               <path d="M37.5 20h13" opacity="0.7" />
               <path d="M44 44v30" /><path d="M36 76h16" />
               {[40, 44, 48].map((x, i) => <circle key={i} cx={x} cy={26 + i * 4} r="0.9" fill={GOLD} stroke="none" opacity="0.85" />)}
             </g>
-            {/* Right flute, tilted in */}
             <g transform="rotate(12 76 46)">
               <path d="M68 8h16l-2.5 26c-.8 7-4.5 10-5.5 10s-4.7-3-5.5-10Z" />
               <path d="M69.5 20h13" opacity="0.7" />
               <path d="M76 44v30" /><path d="M68 76h16" />
               {[72, 76, 80].map((x, i) => <circle key={i} cx={x} cy={24 + i * 5} r="0.9" fill={GOLD} stroke="none" opacity="0.85" />)}
             </g>
-            {/* Rising bubbles where the flutes meet */}
             {[[58, 12, 1.4], [62, 20, 1], [56, 26, 0.8], [64, 6, 0.9], [54, 4, 0.7]].map(([x, y, r], i) => (
               <circle key={i} cx={x} cy={y} r={r} stroke={GOLD} strokeWidth="0.6" opacity="0.8" />
             ))}
           </svg>
         ),
-        justify: 'flex-end', pad: '0 24px 20px',
       };
     case 'colorBlock':
       return {
         bg: '#f4e9dc', ink: '#2a2440',
-        art: (
-          <svg viewBox="0 0 200 120" style={{ ...abs, inset: 0, width: '100%', height: '100%' }}>
-            {/* Matte shapes tucked into the outer corners — clear of all text */}
-            <path d="M12 108V90a18 18 0 0 1 36 0v18a4 4 0 0 1-4 4H16a4 4 0 0 1-4-4Z" fill="#e7a07d" />
-            <path d="M21 108V97a9 9 0 0 1 18 0v11a2 2 0 0 1-2 2H23a2 2 0 0 1-2-2Z" fill="#f4e9dc" />
-            <path d="M158 108V92a16 16 0 0 1 32 0v16a4 4 0 0 1-4 4h-24a4 4 0 0 1-4-4Z" fill="#3e5873" />
-            <circle cx="22" cy="20" r="10" fill="#7d9d8a" />
-            <circle cx="180" cy="20" r="8" fill="#e3b85b" />
-            <circle cx="192" cy="62" r="4" fill="#e7a07d" />
+        stack: (
+          <svg viewBox="0 0 120 50" style={{ width: 120, height: 'auto', display: 'block' }} aria-hidden="true">
+            <path d="M22 48V30a14 14 0 0 1 28 0v18Z" fill="#e7a07d" />
+            <path d="M30 48V34a6 6 0 0 1 12 0v14Z" fill="#f4e9dc" />
+            <path d="M70 48V24a16 16 0 0 1 32 0v24Z" fill="#3e5873" />
+            <circle cx="60" cy="14" r="9" fill="#7d9d8a" />
+            <circle cx="104" cy="10" r="5" fill="#e3b85b" />
+            <circle cx="14" cy="20" r="3.5" fill="#e3b85b" />
           </svg>
         ),
       };
@@ -385,8 +374,11 @@ export function OccasionHeaderArt({ styleKey, headline, subtext = '', height, cl
     >
       <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>{look.art}</div>
       <div className="relative flex flex-col items-center text-center" style={{ zIndex: 1, padding: look.pad || '0 24px', width: look.chip ? 'auto' : '100%', maxWidth: '100%', textWrap: 'balance' as any, background: look.chip, ...(look.chip ? { paddingTop: 10, paddingBottom: 10, borderRadius: 4 } : {}) }}>
-        {look.title ?? <span style={{ ...font, fontSize: 26, color: look.ink }}>{headline}</span>}
-        {showCaps && <span style={{ ...caps, color: look.ink }}>{subtext}</span>}
+        <div className="flex flex-col items-center" style={look.frame}>
+          {look.stack && <div style={{ marginBottom: 10, display: 'flex', justifyContent: 'center' }}>{look.stack}</div>}
+          {look.title ?? <span style={{ ...font, fontSize: look.titleSize || 26, color: look.ink }}>{headline}</span>}
+          {showCaps && <span style={{ ...caps, color: look.ink }}>{subtext}</span>}
+        </div>
       </div>
     </div>
   );
