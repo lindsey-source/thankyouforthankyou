@@ -67,12 +67,6 @@ const STEP_NAMES = [
   'Preview & Send',
 ];
 
-/* ---------- Section 1: Accent Color (8 fixed swatches) ---------- */
-const ACCENT_SWATCHES = [
-  '#8B4A5A', '#1B2A4A', '#3D6B4F', '#7B3F6E',
-  '#5B8FA8', '#C17B8A', '#8B6914', '#5A5A6A',
-];
-
 /* ---------- Section 2: Font (3 pill choices) ---------- */
 type FontChoiceId = 'playfair' | 'dancing' | 'inter';
 const FONT_CHOICES: { id: FontChoiceId; label: string; family: string }[] = [
@@ -115,32 +109,6 @@ const MESSAGE_TONES: { label: string; text: string }[] = [
   },
 ];
 
-/* ---------- Helpers ---------- */
-// Parse "#rrggbb" → {r,g,b}; tolerate gradients/non-hex by returning null.
-const hexToRgb = (hex: string): { r: number; g: number; b: number } | null => {
-  if (typeof hex !== 'string') return null;
-  const m = hex.trim().match(/^#?([a-f0-9]{6})$/i);
-  if (!m) return null;
-  const n = parseInt(m[1], 16);
-  return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
-};
-const colorDistance = (a: string, b: string): number => {
-  const ra = hexToRgb(a); const rb = hexToRgb(b);
-  if (!ra || !rb) return Number.POSITIVE_INFINITY;
-  const dr = ra.r - rb.r, dg = ra.g - rb.g, db = ra.b - rb.b;
-  return dr*dr + dg*dg + db*db;
-};
-const closestSwatch = (target: string | undefined): string => {
-  if (!target) return ACCENT_SWATCHES[0];
-  let best = ACCENT_SWATCHES[0];
-  let bestD = Number.POSITIVE_INFINITY;
-  for (const s of ACCENT_SWATCHES) {
-    const d = colorDistance(s, target);
-    if (d < bestD) { bestD = d; best = s; }
-  }
-  return best;
-};
-
 /* =========================================================================
    CreateCardStep3 — controls only retint/restyle. Wording NEVER changes.
    ========================================================================= */
@@ -164,7 +132,7 @@ export default function CreateCardStep3() {
   }, [cardData?.colorPalette, cardData?.occasion]);
 
   // Local control state — these only retint/restyle the preview.
-  const [accentColor, setAccentColor] = useState<string>(() => closestSwatch(design.accent));
+  const accentColor = paletteFor(design.id, cardData.colorId)?.accent ?? design.accent;
   const [fontChoice, setFontChoice] = useState<FontChoiceId>(() => {
     const fromCard = cardData.fontChoice as FontChoiceId | null | undefined;
     if (fromCard && FONT_CHOICES.some(f => f.id === fromCard)) return fromCard;
@@ -275,7 +243,7 @@ export default function CreateCardStep3() {
 
   const handleNext = () => {
     updateCardData({
-      // Persist the (still-complete) design object plus the user's accent override.
+      // Persist the design with the selected curated palette accent.
       colorPalette: { ...design, accent: accentColor } as any,
       fontChoice,
       envelopeColor,
@@ -308,12 +276,6 @@ export default function CreateCardStep3() {
           >
             Customize your design
           </motion.h1>
-          <motion.p
-            className="text-lg text-stone-500"
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}
-          >
-            Pick an accent, a font, and finishing touches — your message stays put
-          </motion.p>
         </div>
 
         <div className="customize-mobile-preview md:hidden sticky top-0 z-30 bg-background border-b border-border py-3 mb-6">
@@ -329,37 +291,37 @@ export default function CreateCardStep3() {
           {/* ============= LEFT: Controls ============= */}
           <div className="space-y-6 min-w-0">
 
-            {/* Section 1 — Accent Color */}
-            <Card className="bg-white/95 backdrop-blur-sm">
-              <CardContent className="p-6">
-                <Label className="text-xl font-bold mb-1 block">Accent Color</Label>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Tints the card header — nothing else changes
-                </p>
-                <div className="flex flex-wrap gap-3">
-                  {ACCENT_SWATCHES.map((color) => {
-                    const selected = accentColor.toLowerCase() === color.toLowerCase();
-                    return (
-                      <button
-                        key={color}
-                        type="button"
-                        onClick={() => setAccentColor(color)}
-                        aria-label={`Accent ${color}`}
-                        aria-pressed={selected}
-                        className={`relative w-11 h-11 rounded-full transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#c17b8a] ${
-                          selected ? 'ring-2 ring-offset-2 ring-[#2d2420] scale-110' : ''
-                        }`}
-                        style={{ backgroundColor: color }}
-                      >
-                        {selected && (
-                          <Check className="absolute inset-0 m-auto w-5 h-5 text-white drop-shadow" strokeWidth={3} />
-                        )}
-                      </button>
-                    );
-                  })}
-                </div>
-              </CardContent>
-            </Card>
+            {swatchesFor(design.id).length > 0 && (
+              <Card className="bg-card">
+                <CardContent className="p-6 space-y-4">
+                  <div className="flex items-baseline justify-between gap-3">
+                    <h2 className="text-xl text-foreground">Color</h2>
+                    <span className="text-sm text-muted-foreground">{paletteFor(design.id, cardData.colorId)?.name}</span>
+                  </div>
+                  <div className="flex flex-wrap gap-3" role="radiogroup" aria-label="Card color">
+                    {swatchesFor(design.id).map((sw, i) => {
+                      const active = paletteFor(design.id, cardData.colorId)?.id === sw.id;
+                      return (
+                        <Button
+                          key={sw.id}
+                          variant="ghost"
+                          type="button"
+                          role="radio"
+                          aria-checked={active}
+                          aria-label={`${sw.name}${i === 0 ? ' (recommended)' : ''}`}
+                          title={sw.name}
+                          onClick={() => updateCardData({ colorId: i === 0 ? null : sw.id } as any)}
+                          className={`swatch-chip p-0 shrink-0 ${active ? 'is-active' : ''}`}
+                          style={{ background: sw.bg }}
+                        >
+                          <span className="swatch-chip-accent" style={{ background: sw.accent }} />
+                        </Button>
+                      );
+                    })}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
 
             {/* Section 2 — Font */}
             <Card className="bg-white/95 backdrop-blur-sm">
@@ -430,37 +392,7 @@ export default function CreateCardStep3() {
               </Card>
             )}
 
-            {swatchesFor(design.id).length > 0 && (
-              <Card className="bg-card">
-                <CardContent className="p-6 space-y-4">
-                  <div className="flex items-baseline justify-between gap-3">
-                    <h2 className="text-xl text-foreground">Color</h2>
-                    <span className="text-sm text-muted-foreground">{paletteFor(design.id, cardData.colorId)?.name}</span>
-                  </div>
-                  <p className="text-sm text-muted-foreground">Recolors the card, its accents and the envelope liner together.</p>
-                  <div className="flex flex-wrap gap-3" role="radiogroup" aria-label="Card color">
-                    {swatchesFor(design.id).map((sw, i) => {
-                      const active = paletteFor(design.id, cardData.colorId)?.id === sw.id;
-                      return (
-                        <button
-                          key={sw.id}
-                          type="button"
-                          role="radio"
-                          aria-checked={active}
-                          aria-label={`${sw.name}${i === 0 ? ' (recommended)' : ''}`}
-                          title={sw.name}
-                          onClick={() => updateCardData({ colorId: i === 0 ? null : sw.id } as any)}
-                          className={`swatch-chip ${active ? 'is-active' : ''}`}
-                          style={{ background: sw.bg }}
-                        >
-                          <span className="swatch-chip-accent" style={{ background: sw.accent }} />
-                        </button>
-                      );
-                    })}
-                  </div>
-                </CardContent>
-              </Card>
-            )}
+
 
             {isBaby && (
               <Card className="bg-card">
