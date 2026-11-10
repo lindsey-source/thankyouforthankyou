@@ -485,7 +485,7 @@ div.min-h-screen:has(.wizard-topbar) h3.font-semibold { font-family: 'Playfair D
 .baby-rainbow-art { position: relative; top: auto; width: 94%; height: 52%; margin-bottom: 14px; }
 .baby-header--babyRainbow { justify-content: center; }
 .baby-header--babyRainbow .baby-header-copy { padding-bottom: 0; }
-.baby-moon-art { width: 92%; height: 110px; }
+.baby-moon-art { width: 92%; height: 110px; object-fit: contain; object-position: center; }
 .baby-header-from { display: block; margin-top: 6px; font-family: 'Playfair Display', Georgia, serif; font-size: 16px; line-height: 1.4; }
 .wedding-rose-header { gap: 10px; }
 .wedding-peony-art { display: block; width: 92%; height: 48%; object-fit: contain; mix-blend-mode: multiply; }
