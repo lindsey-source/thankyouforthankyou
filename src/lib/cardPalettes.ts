@@ -13,7 +13,7 @@ export const SWATCHES: Record<string, Swatch> = {
   dustyRose: S('dustyRose', 'Dusty Rose', '#d8a7a7', '#3a2023', '#7f3f4a'),
   sage: S('sage', 'Sage', '#cdd9c5', '#2c3829', '#6c8a64'),
   eucalyptus: S('eucalyptus', 'Eucalyptus', '#a7beb3', '#1d2d27', '#47685b'),
-  terracotta: S('terracotta', 'Terracotta', '#c4704f', '#2d2420', '#f3d3a2'),
+  terracotta: S('terracotta', 'Terracotta', '#c4704f', '#201815', '#f3d3a2'),
   marigold: S('marigold', 'Marigold', '#ebbd52', '#3a2a10', '#8a5612'),
   lavender: S('lavender', 'Lavender', '#dbd2ec', '#2f2a45', '#7a6ba6'),
   powderBlue: S('powderBlue', 'Powder Blue', '#cfe0ee', '#1f3248', '#5a7ea6'),
