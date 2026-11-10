@@ -77,7 +77,7 @@ const LandingPage = () => {
 
 
       {/* Hero */}
-      <section className="homepage-hero linen-surface">
+      <section className="homepage-hero paper-grain">
         <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-12">
           <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-20 md:gap-16 lg:gap-24">
             <div className="text-center md:text-left">

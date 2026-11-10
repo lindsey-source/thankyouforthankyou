@@ -44,6 +44,10 @@
     --pastel-sky: 205 50% 93%;
     --pastel-butter: 45 70% 91%;
     --pastel-lilac: 270 35% 94%;
+    --pastel-stone: 30 14% 92%;
+    --pastel-rose: 347 48% 93%;
+    --pastel-sand: 33 40% 91%;
+    --pastel-mint: 152 32% 92%;
     --stationery-gold: 39 46% 61%;
     --baby-twilight: 216 30% 22%;
     --baby-paper: 42 45% 96%;
@@ -314,6 +318,12 @@
     repeating-linear-gradient(90deg, hsl(30 20% 40% / 0.022) 0 1px, transparent 1px 4px);
 }
 .homepage { background-color: hsl(var(--paper-white)); }
+/* Hero surface: plain warm white with a barely-there paper grain — no visible pattern. */
+.paper-grain {
+  background-color: hsl(var(--paper-white));
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.30 0 0 0 0 0.26 0 0 0 0 0.20 0 0 0 0.028 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
 .homepage > section.band-white { background-color: hsl(var(--paper-white)); }
 .homepage > section.band-blush { background-color: hsl(var(--blush-band)); }
 .homepage .section-heading { font-family: 'Playfair Display', Georgia, serif; font-weight: 400; text-align: center; color: hsl(var(--foreground)); }
@@ -329,6 +339,10 @@
 .icon-circle-sky { background: hsl(var(--pastel-sky)); }
 .icon-circle-butter { background: hsl(var(--pastel-butter)); }
 .icon-circle-lilac { background: hsl(var(--pastel-lilac)); }
+.icon-circle-stone { background: hsl(var(--pastel-stone)); }
+.icon-circle-rose { background: hsl(var(--pastel-rose)); }
+.icon-circle-sand { background: hsl(var(--pastel-sand)); }
+.icon-circle-mint { background: hsl(var(--pastel-mint)); }
 .occasion-link:hover .icon-circle { transform: translateY(-3px); }
 
 /* Postage stamp */
@@ -399,4 +413,24 @@ div.min-h-screen:has(.wizard-topbar) .bg-card.border {
 div.min-h-screen:has(.wizard-topbar) .bg-muted, div.min-h-screen:has(.wizard-topbar) .bg-gray-100 { background-color: hsl(var(--blush-band)); }
 .card-linen-stage { position: relative; padding: 22px; border-radius: 20px; border: 1px solid hsl(var(--gold-hairline) / 0.18); box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.6); }
 .card-linen-stage .card-linen-stamp { position: absolute; top: 4px; right: 4px; z-index: 20; transform: rotate(6deg) scale(.82); transform-origin: top right; }
+
+/* Occasion tiles (builder step 1): white stationery tiles, hairline gold border, soft shadow */
+.occasion-tile {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+  min-height: 236px; padding: 34px 24px; border-radius: 14px; text-align: center;
+  background: hsl(0 0% 100%);
+  border: 1px solid hsl(var(--gold-hairline) / 0.42);
+  box-shadow: 0 1px 2px hsl(25 20% 20% / 0.04), 0 14px 30px -22px hsl(25 25% 20% / 0.22);
+  transition: box-shadow .3s ease, border-color .3s ease;
+}
+.occasion-tile:hover { box-shadow: 0 1px 2px hsl(25 20% 20% / 0.05), 0 22px 40px -24px hsl(25 25% 20% / 0.3); }
+.occasion-tile.is-selected {
+  border-color: hsl(var(--brand-rose));
+  box-shadow: 0 1px 2px hsl(347 35% 62% / 0.1), 0 18px 36px -22px hsl(347 35% 62% / 0.45);
+}
+.occasion-tile-title {
+  font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-size: 19px;
+  letter-spacing: 0; color: hsl(var(--foreground)); line-height: 1.3;
+}
+.occasion-tile-line { font-size: 12.5px; line-height: 1.6; color: hsl(var(--foreground) / 0.58); max-width: 24ch; }
 div.min-h-screen:has(.wizard-topbar) h3.font-semibold { font-family: 'Playfair Display', Georgia, serif; font-weight: 400; }
