@@ -7,6 +7,7 @@ import type { FontFamily, HeaderStyle } from './designTypes';
 import { cleanWeddingMessage, WEDDING_MESSAGE_EXAMPLE } from '@/lib/weddingMessages';
 import { resolveBabyDetails, BABY_GIFT_SAMPLES } from '@/lib/babyDetails';
 import { detailOccasionFor, resolveOccasionDetails, type DetailValues } from '@/lib/occasionDetails';
+import { SCRIPT_FONT } from '@/lib/cardFonts';
 
 export interface LiveCardPreviewProps {
   /** Generic 4-color palette — used as a fallback when full Step 2 tokens are missing. */
@@ -161,7 +162,7 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
 
   const signatureFont =
     signatureStyle === 'handwritten'
-      ? "'Dancing Script', cursive"
+      ? SCRIPT_FONT
       : signatureStyle === 'typed'
       ? fonts.body
       : fonts.heading;

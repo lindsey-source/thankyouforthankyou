@@ -9,12 +9,13 @@ import { BreadcrumbNav } from '@/components/CardDesigner/BreadcrumbNav';
 import { WIZARD_STEPS } from '@/lib/wizardSteps';
 import { GuestListUpload } from '@/components/CardDesigner/GuestListUpload';
 import { LiveCardPreview } from '@/components/CardDesigner/LiveCardPreview';
+import { fontsFor } from '@/lib/cardFonts';
 
 const FONT_MAP: Record<string, { heading: string; body: string }> = {
-  default: { heading: "'Playfair Display', Georgia, serif", body: "'Inter', sans-serif" },
-  playfair: { heading: "'Playfair Display', Georgia, serif", body: "'Inter', sans-serif" },
-  dancing: { heading: "'Dancing Script', cursive", body: "'Inter', sans-serif" },
-  inter: { heading: "'Inter', sans-serif", body: "'Inter', sans-serif" },
+  default: fontsFor(null),
+  playfair: fontsFor('playfair'),
+  dancing: fontsFor('dancing'),
+  inter: fontsFor('inter'),
 };
 
 export default function CreateCardStep5() {

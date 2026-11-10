@@ -9,6 +9,7 @@ import { toast } from 'sonner';
 import { ProgressBar } from '@/components/CardDesigner/ProgressBar';
 import { LiveCardPreview } from '@/components/CardDesigner/LiveCardPreview';
 import { EnvelopeReveal } from '@/components/CardDesigner/EnvelopeReveal';
+import { SCRIPT_FONT } from '@/lib/cardFonts';
 
 const STEP_NAMES = [
   'Choose Occasion',
@@ -59,7 +60,7 @@ export default function CreateCardStep5Impact() {
     default: { heading: "'Playfair Display', Georgia, serif", body: "'Inter', sans-serif" },
     serif: { heading: "'Cormorant Garamond', Georgia, serif", body: "'Crimson Text', serif" },
     modern: { heading: "'Poppins', sans-serif", body: "'Inter', sans-serif" },
-    script: { heading: "'Dancing Script', cursive", body: "'Montserrat', sans-serif" },
+    script: { heading: SCRIPT_FONT, body: "'Montserrat', sans-serif" },
   };
   const fonts = fontMap[cardData.fontChoice || 'default'] || fontMap.default;
 

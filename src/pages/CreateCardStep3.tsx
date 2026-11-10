@@ -13,6 +13,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { ProgressBar } from '@/components/CardDesigner/ProgressBar';
 import { BreadcrumbNav } from '@/components/CardDesigner/BreadcrumbNav';
+import { fontsFor, SCRIPT_FONT } from '@/lib/cardFonts';
 import { WIZARD_STEPS } from '@/lib/wizardSteps';
 import { LiveCardPreview } from '@/components/CardDesigner/LiveCardPreview';
 import { DESIGN_SETS } from './CreateCardStep2';
@@ -71,17 +72,11 @@ const STEP_NAMES = [
 type FontChoiceId = 'playfair' | 'dancing' | 'inter';
 const FONT_CHOICES: { id: FontChoiceId; label: string; family: string }[] = [
   { id: 'playfair', label: 'Playfair', family: "'Playfair Display', Georgia, serif" },
-  { id: 'dancing',  label: 'Script',   family: "'Dancing Script', cursive" },
+  { id: 'dancing',  label: 'Script',   family: SCRIPT_FONT },
   { id: 'inter',    label: 'Modern',   family: "'Inter', system-ui, sans-serif" },
 ];
 
 /* ---------- Section 3: Finishing Touches ---------- */
-const ENVELOPE_COLORS = [
-  { id: 'cream',  color: '#F5E6D3', name: 'Cream'  },
-  { id: 'blush',  color: '#FFD9DC', name: 'Blush'  },
-  { id: 'sage',   color: '#9DB5A5', name: 'Sage'   },
-  { id: 'navy',   color: '#4A6FA5', name: 'Navy'   },
-];
 const TEXTURES = [
   { id: 'smooth',     name: 'Smooth' },
   { id: 'linen',      name: 'Linen' },
@@ -140,7 +135,6 @@ export default function CreateCardStep3() {
     if (fromDesign && FONT_CHOICES.some(f => f.id === fromDesign)) return fromDesign;
     return 'playfair';
   });
-  const [envelopeColor, setEnvelopeColor] = useState<string | null>(cardData.envelopeColor ?? null);
   const [texture, setTexture] = useState<string>(cardData.texture ?? 'smooth');
   const [signatureStyle, setSignatureStyle] = useState<string>(cardData.signatureStyle ?? 'handwritten');
 
@@ -198,7 +192,6 @@ export default function CreateCardStep3() {
     if (isBaby) updateCardData({ babyName, babyDate, parentsNames });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isBaby, babyName, babyDate, parentsNames]);
-  const fontFamily = FONT_CHOICES.find(f => f.id === fontChoice)?.family ?? FONT_CHOICES[0].family;
   const previewProps = {
     palette: {
       primary: accentColor,
@@ -206,7 +199,7 @@ export default function CreateCardStep3() {
       accent: accentColor,
       text: design.ink,
     },
-    fonts: { heading: fontFamily, body: fontFamily },
+    fonts: fontsFor(fontChoice),
     designId: design.id,
     colorId: cardData.colorId,
     bg: design.bg,
@@ -231,7 +224,6 @@ export default function CreateCardStep3() {
     photoUrl: cardData.photoUrl,
     charityName: cardData.charityName,
     donationAmount: cardData.donationAmount,
-    envelopeColor,
     texture,
     signatureStyle,
     // Wedding-only details (undefined for other occasions, so no caps line shows)
@@ -246,7 +238,6 @@ export default function CreateCardStep3() {
       // Persist the design with the selected curated palette accent.
       colorPalette: { ...design, accent: accentColor } as any,
       fontChoice,
-      envelopeColor,
       texture,
       signatureStyle,
       messageBody,
@@ -533,45 +524,6 @@ export default function CreateCardStep3() {
                       <p className="text-xs text-gray-400 mt-1">JPG, PNG, GIF or WEBP — up to 10MB</p>
                     </div>
                   )}
-                </div>
-
-                {/* Envelope */}
-                <div>
-                  <Label className="text-base font-semibold mb-2 block">Envelope Color</Label>
-                  <div className="flex flex-wrap gap-3">
-                    <button
-                      type="button"
-                      onClick={() => setEnvelopeColor(null)}
-                      aria-pressed={envelopeColor === null}
-                      className={`px-4 h-11 rounded-full border-2 text-sm transition-all ${
-                        envelopeColor === null
-                          ? 'border-[#c17b8a] bg-[#c17b8a]/10'
-                          : 'border-gray-200 hover:border-gray-300 bg-white'
-                      }`}
-                    >
-                      No envelope
-                    </button>
-                    {ENVELOPE_COLORS.map((e) => {
-                      const selected = envelopeColor === e.color;
-                      return (
-                        <button
-                          key={e.id}
-                          type="button"
-                          onClick={() => setEnvelopeColor(e.color)}
-                          aria-label={`Envelope ${e.name}`}
-                          aria-pressed={selected}
-                          className={`relative w-11 h-11 rounded-full transition-transform hover:scale-110 ${
-                            selected ? 'ring-2 ring-offset-2 ring-[#2d2420] scale-110' : ''
-                          }`}
-                          style={{ backgroundColor: e.color }}
-                        >
-                          {selected && (
-                            <Check className="absolute inset-0 m-auto w-5 h-5 text-white drop-shadow" strokeWidth={3} />
-                          )}
-                        </button>
-                      );
-                    })}
-                  </div>
                 </div>
 
                 {/* Texture */}

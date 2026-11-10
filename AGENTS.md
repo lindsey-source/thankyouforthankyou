@@ -14,3 +14,4 @@
 - Occasion illustrations resolve through StationeryIllustration by stable style key and occupy a separate in-flow region above title/details, preventing artwork-text collisions across all preview sizes.
 - Baby gift samples and title/name lines resolve through babyDetails; draft hydration and updates migrate only known obsolete announcement defaults to preserve personal writing.
 - Customize keeps a sticky shared LiveCardPreview beside tablet/desktop controls and a compact visible version on mobile so edits remain visible at every screen size.
+- Card typography resolves through src/lib/cardFonts (fontsFor), so a script choice restyles headings and the handwritten sign-off only and body copy always stays on the readable body face.

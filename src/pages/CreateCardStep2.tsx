@@ -12,6 +12,7 @@ import { HeaderArt } from '@/components/CardDesigner/HeaderArt';
 import type { Design, HeaderStyle, FontFamily, OccasionId } from '@/components/CardDesigner/designTypes';
 import { LiveCardPreview, coupleInitials } from '@/components/CardDesigner/LiveCardPreview';
 import { resolveBabyDetails, BABY_GIFT_SAMPLES } from '@/lib/babyDetails';
+import { fontsFor } from '@/lib/cardFonts';
 import { detailOccasionFor, resolveOccasionDetails } from '@/lib/occasionDetails';
 const detailsFor = (occ: string, data: any) => { const o = detailOccasionFor(occ); return o ? resolveOccasionDetails(o, data) : undefined; };
 
@@ -916,12 +917,7 @@ export default function CreateCardStep2() {
 
   // Large live preview follows the selected design (first design until one is picked)
   const previewDesign = designs.find((d) => d.id === (previewId || selectedId)) || designs[0];
-  const previewFonts =
-    previewDesign?.fontChoice === 'dancing'
-      ? { heading: "'Dancing Script', cursive", body: "'Inter', sans-serif" }
-      : previewDesign?.fontChoice === 'inter'
-        ? { heading: "'Inter', sans-serif", body: "'Inter', sans-serif" }
-        : { heading: "'Playfair Display', Georgia, serif", body: "'Inter', sans-serif" };
+  const previewFonts = fontsFor(previewDesign?.fontChoice);
 
   const handleContinue = () => {
     if (!selectedId) {

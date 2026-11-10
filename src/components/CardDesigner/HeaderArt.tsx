@@ -7,6 +7,7 @@ import { babyStyleFor } from './babyStyles';
 import { OccasionHeaderArt } from './OccasionHeaderArt';
 import { occasionStyleFor } from './occasionStyles';
 import { paletteFor } from '@/lib/cardPalettes';
+import { SCRIPT_FONT } from '@/lib/cardFonts';
 import laurel from '@/assets/stationery-laurel-engraving.png';
 import executive from '@/assets/corporate-executive-engraving.png';
 
@@ -134,7 +135,7 @@ const HeaderArtInner: React.FC<HeaderArtProps> = ({
     const GOLD_CREST = '#c9a96e';
     const scriptStyle: React.CSSProperties = {
       ...fontStyle,
-      fontFamily: headlineFont || "'Dancing Script', cursive",
+      fontFamily: headlineFont || SCRIPT_FONT,
       fontSize: '34px',
       letterSpacing: '0.02em',
     };
@@ -210,7 +211,7 @@ const HeaderArtInner: React.FC<HeaderArtProps> = ({
             className="text-center mt-1"
             style={{
               ...fontStyle,
-              fontFamily: headlineFont || "'Dancing Script', cursive",
+              fontFamily: headlineFont || SCRIPT_FONT,
               fontSize: '30px',
               letterSpacing: '0.02em',
               color: ink,

@@ -11,6 +11,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useCardWizard } from '@/contexts/CardWizardContext';
 import { ProgressBar } from '@/components/CardDesigner/ProgressBar';
 import { LiveCardPreview } from '@/components/CardDesigner/LiveCardPreview';
+import { fontsFor } from '@/lib/cardFonts';
 
 type Charity = {
   id: string;
@@ -132,12 +133,7 @@ export default function CreateCardImpact() {
   };
 
   const palette = (cardData.colorPalette as any) || {};
-  const previewFonts =
-    cardData.fontChoice === 'dancing'
-      ? { heading: "'Dancing Script', cursive", body: "'Inter', sans-serif" }
-      : cardData.fontChoice === 'inter'
-        ? { heading: "'Inter', sans-serif", body: "'Inter', sans-serif" }
-        : { heading: "'Playfair Display', Georgia, serif", body: "'Inter', sans-serif" };
+  const previewFonts = fontsFor(cardData.fontChoice);
 
   return (
     <div className="min-h-screen bg-brand-cream">

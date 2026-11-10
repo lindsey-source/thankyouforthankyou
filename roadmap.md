@@ -16,3 +16,6 @@
 - [x] Balance Baby Modern Minimal artwork and title proportions
 - [x] Scale Baby artwork proportionally in larger previews
 - [x] Keep the card visible and updating while customizing
+- [x] Swap the hard-to-read script font for a clearer one everywhere it appears
+- [x] Fix the purple card's writing so it is easy to read
+- [x] Remove the envelope color choice from Customize (accent already recolors the envelope)
