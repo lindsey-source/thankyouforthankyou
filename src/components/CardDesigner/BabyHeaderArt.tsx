@@ -34,7 +34,6 @@ export function BabyHeaderArt({ styleKey, height, className = '', headlineFont, 
         </div>
       )}
       <div className="baby-header-copy">
-        {styleKey === 'babyMinimal' && <div className="baby-minimal-arch" aria-hidden="true" />}
         <span className="baby-header-title" style={headlineFont ? { fontFamily: headlineFont } : undefined}>{title}</span>
         <span className="baby-header-from">{details.fromLine}</span>
         <span className="baby-header-details">{line.split(' · ').slice(1).join(' · ')}</span>

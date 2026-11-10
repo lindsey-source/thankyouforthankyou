@@ -13,3 +13,6 @@
 - [x] Smaller stamps, uncropped liners, and desktop/mobile preview checks
 - [x] Baby thank-you wording: tile, headlines, baby's name beneath, and parent-voice gift samples
 - [ ] Verify final Review opening with a signed-in Clerk session (blocked: Review redirects to login)
+- [x] Balance Baby Modern Minimal artwork and title proportions
+- [x] Scale Baby artwork proportionally in larger previews
+- [x] Keep the card visible and updating while customizing

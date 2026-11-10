@@ -15,8 +15,6 @@ import { ProgressBar } from '@/components/CardDesigner/ProgressBar';
 import { BreadcrumbNav } from '@/components/CardDesigner/BreadcrumbNav';
 import { WIZARD_STEPS } from '@/lib/wizardSteps';
 import { LiveCardPreview } from '@/components/CardDesigner/LiveCardPreview';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { ChevronDown } from 'lucide-react';
 import { DESIGN_SETS } from './CreateCardStep2';
 import { readDesignFromPalette, type Design, type OccasionId } from '@/components/CardDesigner/designTypes';
 import { WEDDING_MESSAGE_EXAMPLE } from '@/lib/weddingMessages';
@@ -177,7 +175,6 @@ export default function CreateCardStep3() {
   const [envelopeColor, setEnvelopeColor] = useState<string | null>(cardData.envelopeColor ?? null);
   const [texture, setTexture] = useState<string>(cardData.texture ?? 'smooth');
   const [signatureStyle, setSignatureStyle] = useState<string>(cardData.signatureStyle ?? 'handwritten');
-  const [mobilePreviewOpen, setMobilePreviewOpen] = useState(false);
 
   // Message + closing — start EMPTY (soft placeholder in the box), never pre-fill
   // the gallery teaser text. Saved user text is restored; tone buttons fill drafts.
@@ -299,7 +296,7 @@ export default function CreateCardStep3() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-hero p-4 md:p-8 pb-24 lg:pb-8">
+    <div className="customize-page min-h-screen bg-gradient-hero p-4 md:p-8 pb-24 lg:pb-8">
       <ProgressBar currentStep={3} bleed />
       <BreadcrumbNav currentStep={3} steps={WIZARD_STEPS} />
 
@@ -319,8 +316,14 @@ export default function CreateCardStep3() {
           </motion.p>
         </div>
 
+        <div className="customize-mobile-preview md:hidden sticky top-0 z-30 bg-background border-b border-border py-3 mb-6">
+          <div className="customize-preview-mini mx-auto">
+            <LiveCardPreview {...previewProps} bare />
+          </div>
+        </div>
+
         <motion.div
-          className="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-6 lg:gap-10"
+          className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_300px] xl:grid-cols-[minmax(0,1fr)_420px] gap-6 lg:gap-10"
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
         >
           {/* ============= LEFT: Controls ============= */}
@@ -693,38 +696,6 @@ export default function CreateCardStep3() {
               </CardContent>
             </Card>
 
-            {/* Mobile-only collapsible Live Preview (below controls) */}
-            <div className="lg:hidden">
-              <Collapsible open={mobilePreviewOpen} onOpenChange={setMobilePreviewOpen}>
-                <Card className="bg-white/95 backdrop-blur-sm">
-                  <CollapsibleTrigger asChild>
-                    <button
-                      type="button"
-                      className="w-full flex items-center justify-between p-4 text-left"
-                      aria-expanded={mobilePreviewOpen}
-                    >
-                      <span className="text-base font-semibold text-[#2d2420]">
-                        Preview your card
-                      </span>
-                      <ChevronDown
-                        className={`w-5 h-5 text-[#2d2420] transition-transform ${
-                          mobilePreviewOpen ? 'rotate-180' : ''
-                        }`}
-                      />
-                    </button>
-                  </CollapsibleTrigger>
-                  <CollapsibleContent>
-                    <CardContent className="p-5 pt-0">
-                      <p className="text-xs uppercase tracking-wider text-muted-foreground mb-3 text-center">
-                        Live Preview
-                      </p>
-                      <LiveCardPreview {...previewProps} />
-                    </CardContent>
-                  </CollapsibleContent>
-                </Card>
-              </Collapsible>
-            </div>
-
             {/* Nav buttons (desktop) */}
             <div className="hidden lg:flex items-center justify-between pt-2">
               <Button variant="outline" onClick={handleBack} className="bg-white/95">
@@ -737,15 +708,13 @@ export default function CreateCardStep3() {
           </div>
 
           {/* ============= RIGHT: Sticky Live Preview (desktop only) ============= */}
-          <div className="hidden lg:block lg:sticky lg:top-24 lg:self-start">
-            <Card className="bg-white/95 backdrop-blur-sm">
-              <CardContent className="p-5">
+          <div className="customize-desktop-preview hidden md:block sticky top-4 self-start">
+              <div>
                 <p className="text-xs uppercase tracking-wider text-muted-foreground mb-3 text-center">
                   Live Preview
                 </p>
                 <LiveCardPreview {...previewProps} />
-              </CardContent>
-            </Card>
+              </div>
           </div>
         </motion.div>
       </div>

@@ -173,10 +173,9 @@
   .baby-header-copy { position: relative; z-index: 1; width: 100%; text-align: center; padding: 0 26px; }
   .baby-header-title { display: block; font-family: 'Playfair Display', Georgia, serif; font-size: 25px; font-weight: 400; line-height: 1.25; letter-spacing: 0; text-wrap: balance; overflow-wrap: anywhere; }
   .baby-header-name { font-size: 42px; line-height: 1.15; }
-  .baby-minimal-crest { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; width: 46px; height: 46px; margin-bottom: 14px; flex-shrink: 0; }
-  .baby-minimal-initial { display: flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 50%; border: 1px solid hsl(var(--baby-gold)); color: hsl(var(--baby-gold)); font-family: 'Playfair Display', Georgia, serif; font-size: 21px; font-weight: 400; letter-spacing: 0.04em; }
+  .baby-minimal-crest { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; width: 24%; min-width: 64px; max-width: 110px; aspect-ratio: 1; margin-bottom: 22px; flex-shrink: 0; }
+  .baby-minimal-initial { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; border-radius: 50%; border: 1px solid var(--swatch-accent, hsl(var(--baby-gold))); color: inherit; font-family: 'Playfair Display', Georgia, serif; font-size: 28px; font-weight: 400; letter-spacing: 0; }
   .baby-minimal-star { position: absolute; top: -5px; right: -7px; width: 11px; height: 11px; color: hsl(var(--baby-gold)); }
-  .baby-minimal-arch { position: absolute; z-index: -1; inset: -20px 12% -16px; background: #e9dcc3; border-radius: 999px 999px 12px 12px; }
   .baby-header--babyMinimal .baby-header-details { display: flex; align-items: center; justify-content: center; gap: 12px; }
   .baby-header--babyMinimal .baby-header-details::before, .baby-header--babyMinimal .baby-header-details::after { content: ''; width: 28px; height: 1px; background: hsl(var(--baby-gold)); opacity: 0.75; flex-shrink: 0; }
   .baby-header-details { display: block; margin-top: 12px; font-family: 'Playfair Display', Georgia, serif; font-size: 9px; line-height: 1.7; letter-spacing: 0.16em; text-transform: uppercase; text-wrap: balance; overflow-wrap: anywhere; }
@@ -485,7 +484,7 @@ div.min-h-screen:has(.wizard-topbar) h3.font-semibold { font-family: 'Playfair D
 .baby-rainbow-art { position: relative; top: auto; width: 94%; height: 52%; margin-bottom: 14px; }
 .baby-header--babyRainbow { justify-content: center; }
 .baby-header--babyRainbow .baby-header-copy { padding-bottom: 0; }
-.baby-moon-art { width: 92%; height: 110px; object-fit: contain; object-position: center; }
+.baby-moon-art { width: 92%; height: 48%; object-fit: contain; object-position: center; }
 .baby-header-from { display: block; margin-top: 6px; font-family: 'Playfair Display', Georgia, serif; font-size: 16px; line-height: 1.4; }
 .wedding-rose-header { gap: 10px; }
 .wedding-peony-art { display: block; width: 92%; height: 48%; object-fit: contain; mix-blend-mode: multiply; }
@@ -499,4 +498,10 @@ div.min-h-screen:has(.wizard-topbar) h3.font-semibold { font-family: 'Playfair D
 .swatch-chip { position: relative; width: 40px; height: 40px; border-radius: 9999px; border: 1px solid hsl(var(--gold-hairline) / 0.5); box-shadow: 0 1px 3px hsl(var(--brand-dark, 20 18% 15%) / 0.08); transition: transform .15s ease, box-shadow .15s ease; }
 .swatch-chip:hover { transform: translateY(-1px); }
 .swatch-chip.is-active { box-shadow: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--primary)); }
+.customize-preview-mini { width: 300px; zoom: .5; }
+.customize-page .customize-mobile-preview, .customize-page .customize-desktop-preview { top: 72px; }
+.customize-desktop-preview .style-suite { padding: 104px 14px 14px; }
+.customize-desktop-preview .style-suite .suite-envelope { top: 76px; height: 90px; }
+.customize-desktop-preview .style-suite .suite-envelope-flap { height: 60px; }
+.customize-desktop-preview .style-suite .suite-stamp { top: 114px; right: 22px; }
 .swatch-chip-accent { position: absolute; right: 5px; bottom: 5px; width: 10px; height: 10px; border-radius: 9999px; border: 1px solid hsl(0 0% 100% / 0.6); }
