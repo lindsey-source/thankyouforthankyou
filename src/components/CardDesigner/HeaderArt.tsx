@@ -9,7 +9,6 @@ import { occasionStyleFor } from './occasionStyles';
 import { paletteFor } from '@/lib/cardPalettes';
 import { SCRIPT_FONT } from '@/lib/cardFonts';
 import laurel from '@/assets/stationery-laurel-engraving.png';
-import executive from '@/assets/corporate-executive-engraving.png';
 
 interface HeaderArtProps {
   /** Full design from Step 2 (provides accent/ink/headerBg/headerStyle/headlineText/font). */
@@ -293,15 +292,24 @@ const HeaderArtInner: React.FC<HeaderArtProps> = ({
     );
   }
 
-  // Timeless: deep navy, gold art deco geometry and cream type. No florals.
+  // Timeless: a proportion-preserving foil fan above an uncluttered centered title.
   if (headerStyle === 'decoFrame' && !photoUrl) {
-    const GOLD = '#c9a96e';
+    const GOLD = accent;
     return (
       <div
         className={`relative flex flex-col items-center justify-center overflow-hidden ${className}`}
         style={{ height, background: headerBg }}
       >
-        <img src={executive} alt="" aria-hidden="true" loading="lazy" width={1152} height={576} className="w-[92%] h-[45%] object-contain mb-3" />
+        <svg viewBox="0 0 280 120" className="relative w-[78%] h-[40%] shrink-0 mb-4" fill="none" stroke={GOLD} strokeWidth="1" aria-hidden="true">
+          {/* Fine stepped fan: open linework, no shaded architectural forms. */}
+          <path d="M30 105H250M42 99H238" strokeOpacity=".65" />
+          <path d="M140 98L48 68V90L140 108L232 90V68L140 98Z" fill={GOLD} fillOpacity=".04" />
+          <path d="M140 98L62 40V64L140 108L218 64V40L140 98Z" fill={GOLD} fillOpacity=".06" />
+          <path d="M140 98L86 20V48L140 108L194 48V20L140 98Z" fill={GOLD} fillOpacity=".08" />
+          <path d="M140 108L114 32V14L140 4L166 14V32L140 108Z" fill={GOLD} fillOpacity=".1" />
+          <path d="M140 4V108M114 14L140 24L166 14M86 20L140 76L194 20M62 40L140 88L218 40" strokeOpacity=".5" strokeWidth=".6" />
+          <path d="M16 102L22 96L28 102L22 108ZM252 102L258 96L264 102L258 108Z" fill={GOLD} fillOpacity=".35" />
+        </svg>
         <svg viewBox="0 0 200 120" className="absolute inset-0 w-full h-full pointer-events-none opacity-40" fill="none" aria-hidden="true" preserveAspectRatio="none">
           {/* Art deco stepped frame */}
           <g stroke={GOLD} strokeWidth="1">
@@ -312,7 +320,6 @@ const HeaderArtInner: React.FC<HeaderArtProps> = ({
           <g stroke={GOLD} strokeWidth="0.8" strokeLinecap="square">
             <path d="M10 30 H20 V20 H30 V10 M170 10 V20 H180 V30 H190" />
             <path d="M10 90 H20 V100 H30 V110 M170 110 V100 H180 V90 H190" />
-            <path d="M88 15 L100 23 L112 15 M88 105 L100 97 L112 105" />
           </g>
         </svg>
         <div className="relative z-10 flex flex-col items-center px-8">
@@ -321,7 +328,7 @@ const HeaderArtInner: React.FC<HeaderArtProps> = ({
             className="text-center mt-1"
             style={{
               ...fontStyle,
-              color: CREAM_INK,
+              color: headlineColor,
               lineHeight: 1.15,
               textTransform: 'uppercase',
               fontSize: '22px',
@@ -331,7 +338,7 @@ const HeaderArtInner: React.FC<HeaderArtProps> = ({
             {headline}
           </span>
           {subtext && (
-            <span className="text-center" style={{ ...subtextStyle(CREAM_INK), marginTop: '8px' }}>
+            <span className="text-center" style={{ ...subtextStyle(headlineColor), marginTop: '8px' }}>
               {subtext}
             </span>
           )}
