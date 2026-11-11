@@ -10,9 +10,8 @@ import { SuiteEnvelope } from '@/components/stationery/SuiteEnvelope';
 import { PostageStamp } from '@/components/stationery/PostageStamp';
 import { HeaderArt } from '@/components/CardDesigner/HeaderArt';
 import type { Design, HeaderStyle, FontFamily, OccasionId } from '@/components/CardDesigner/designTypes';
-import { LiveCardPreview, coupleInitials } from '@/components/CardDesigner/LiveCardPreview';
+import { coupleInitials } from '@/components/CardDesigner/LiveCardPreview';
 import { resolveBabyDetails, BABY_GIFT_SAMPLES } from '@/lib/babyDetails';
-import { fontsFor } from '@/lib/cardFonts';
 import { detailOccasionFor, resolveOccasionDetails } from '@/lib/occasionDetails';
 const detailsFor = (occ: string, data: any) => { const o = detailOccasionFor(occ); return o ? resolveOccasionDetails(o, data) : undefined; };
 
@@ -915,10 +914,6 @@ export default function CreateCardStep2() {
     return DESIGN_SETS[occasion] || DESIGN_SETS.general;
   }, [occasion]);
 
-  // Large live preview follows the selected design (first design until one is picked)
-  const previewDesign = designs.find((d) => d.id === (previewId || selectedId)) || designs[0];
-  const previewFonts = fontsFor(previewDesign?.fontChoice);
-
   const handleContinue = () => {
     if (!selectedId) {
       toast.error('Please choose a design');
@@ -990,7 +985,6 @@ Pick Your Style
           Back to occasions
         </button>
 
-        <div className="lg:grid lg:grid-cols-[1fr_360px] lg:gap-12 items-start">
         {/* Design grid — 2 columns */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
           {designs.map((design, index) => {
@@ -1131,54 +1125,6 @@ Pick Your Style
               </motion.div>
             );
           })}
-        </div>
-
-        {/* Large live preview — sticky on desktop, stacked below on phones */}
-        {previewDesign && (
-          <div className="mt-12 lg:mt-0 lg:sticky lg:top-24">
-            <p
-              className="text-xs uppercase tracking-[0.2em] text-center mb-4"
-              style={{ color: '#8a9a82' }}
-            >
-              Your card, live
-            </p>
-            <LiveCardPreview
-              palette={{
-                primary: previewDesign.headerBg,
-                secondary: previewDesign.bg,
-                accent: previewDesign.accent,
-                text: previewDesign.ink,
-              }}
-              fonts={previewFonts}
-              designId={previewDesign.id}
-              bg={previewDesign.bg}
-              headerBg={previewDesign.headerBg}
-              ink={previewDesign.ink}
-              inkSoft={previewDesign.inkSoft}
-              headerStyle={previewDesign.headerStyle}
-              headlineText={previewDesign.headlineText}
-              font={previewDesign.font}
-              donationBg={previewDesign.donationBg}
-              donationColor={previewDesign.donationColor}
-              messageBody={previewDesign.body}
-              occasion={previewDesign.occasion}
-              details={cardData as any}
-              charityName={previewDesign.donation}
-              {...(previewDesign.occasion === 'wedding'
-                ? { coupleNames: cardData.coupleNames, weddingDate: cardData.weddingDate }
-                : {})}
-              {...(previewDesign.occasion === 'baby'
-                ? { babyName: cardData.babyName, babyDate: cardData.babyDate, parentsNames: cardData.parentsNames }
-                : {})}
-            />
-            <p
-              className="text-center text-sm mt-4"
-              style={{ fontFamily: "'Playfair Display', Georgia, serif", color: '#6b6259' }}
-            >
-              {previewDesign.name}
-            </p>
-          </div>
-        )}
         </div>
       </div>
 
