@@ -578,13 +578,13 @@ export default function CreateCardStep3() {
               </CardContent>
             </Card>
 
-            {/* Nav buttons (desktop) */}
-            <div className="hidden lg:flex items-center justify-between pt-2">
-              <Button variant="outline" onClick={handleBack} className="bg-white/95">
+            {/* Clear end of the customization options at every screen size. */}
+            <div className="flex items-center justify-between gap-3 border-t border-border pt-6 pb-4">
+              <Button variant="outline" onClick={handleBack}>
                 <ArrowLeft className="w-4 h-4 mr-2" /> Back
               </Button>
-              <Button onClick={handleNext} className="bg-[#c17b8a] hover:bg-[#a8697a] text-white">
-                Next <ArrowRight className="w-4 h-4 ml-2" />
+              <Button onClick={handleNext}>
+                Write message <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </div>
           </div>
@@ -606,8 +606,8 @@ export default function CreateCardStep3() {
         <Button variant="outline" onClick={handleBack} className="flex-1">
           <ArrowLeft className="w-4 h-4 mr-2" /> Back
         </Button>
-        <Button onClick={handleNext} className="flex-1 bg-[#c17b8a] hover:bg-[#a8697a] text-white">
-          Next <ArrowRight className="w-4 h-4 ml-2" />
+        <Button onClick={handleNext} className="flex-1">
+          Write message <ArrowRight className="w-4 h-4 ml-2" />
         </Button>
       </div>
     </div>

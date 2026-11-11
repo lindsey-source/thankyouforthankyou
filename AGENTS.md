@@ -15,3 +15,4 @@
 - Baby gift samples and title/name lines resolve through babyDetails; draft hydration and updates migrate only known obsolete announcement defaults to preserve personal writing.
 - Customize keeps a sticky shared LiveCardPreview beside tablet/desktop controls and a compact visible version on mobile so edits remain visible at every screen size.
 - Card typography resolves through src/lib/cardFonts (fontsFor), applying the selected face to both headings and message text so all previews update consistently; explicit signature settings remain independent.
+- LiveCardPreview uses in-flow message, signature, and donation sections with an expandable card height so signature changes never truncate writing; paper finishes overlay the full card without intercepting controls.

@@ -74,17 +74,6 @@ export const coupleInitials = (names?: string | null): string => {
   return 'E & J';
 };
 
-const textureBackground = (texture: string | null | undefined, baseBg: string) => {
-  const key = (texture || 'smooth').toLowerCase();
-  if (key === 'linen') {
-    return `repeating-linear-gradient(45deg, rgba(120,100,80,0.06) 0px, rgba(120,100,80,0.06) 1px, transparent 1px, transparent 4px), ${baseBg}`;
-  }
-  if (key === 'watercolor') {
-    return `radial-gradient(ellipse at 20% 10%, rgba(193,123,138,0.14), transparent 60%), radial-gradient(ellipse at 80% 90%, rgba(143,170,139,0.14), transparent 60%), ${baseBg}`;
-  }
-  return baseBg;
-};
-
 /**
  * Live preview of the full card face. Pure, prop-driven, real-time.
  *
@@ -177,12 +166,13 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
 
   const cardFace = (
     <div
-      className="card-stationery relative w-full h-full overflow-hidden"
+      className="card-stationery relative w-full flex flex-col overflow-hidden"
+      data-texture={(texture || 'smooth').toLowerCase()}
     >
       {/* Paper layer: background + (wedding) deckled edge. Kept under all content so no filter ever touches text. */}
       <div
         className={`absolute inset-0 -z-10 pointer-events-none${isWedding ? ' card-deckle' : ''}`}
-        style={{ background: textureBackground(texture, cardBg) }}
+        style={{ background: cardBg }}
         aria-hidden="true"
       />
       {isWedding && (
@@ -203,7 +193,7 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
         </>
       )}
       {useDesignHeader ? (
-        <div style={{ height: '50%' }}>
+        <div className="w-full aspect-[6/5] shrink-0">
           <HeaderArt
             design={{
               id: designId || 'preview',
@@ -224,9 +214,8 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
         </div>
       ) : (
         <div
-          className="relative flex flex-col items-center justify-center overflow-hidden"
+          className="relative w-full aspect-[10/7] shrink-0 flex flex-col items-center justify-center overflow-hidden"
           style={{
-            height: '42%',
             background:
               accent || headerBg || `linear-gradient(135deg, ${palette.secondary} 0%, ${palette.primary} 100%)`,
           }}
@@ -296,26 +285,22 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
 
       {/* Body */}
       <div
-        className="px-5 pt-4 pb-3 flex flex-col"
-        style={{ height: hasDonation ? '38%' : '50%' }}
+        className="px-5 pt-4 pb-5 flex flex-col flex-1 min-w-0"
       >
         <p className="text-lg mb-2" style={{ fontFamily: fonts.heading, color: inkColor }}>
           {greeting}
         </p>
         <p
-          className="text-sm leading-relaxed flex-1 overflow-hidden"
+          className="text-sm leading-relaxed whitespace-pre-wrap break-words shrink-0"
           style={{
             fontFamily: fonts.body,
             color: inkSoftColor,
             opacity: 0.9,
-            display: '-webkit-box',
-            WebkitLineClamp: 5,
-            WebkitBoxOrient: 'vertical',
           }}
         >
           {body}
         </p>
-        <div className="mt-2">
+        <div className="pt-3 mt-auto shrink-0 break-words">
           <p className="text-sm" style={{ fontFamily: fonts.body, color: inkSoftColor, opacity: 0.9 }}>
             {closingLine}
           </p>
@@ -333,11 +318,10 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
       {/* Donation badge — uses design.donationBg / donationColor when provided */}
       {hasDonation && (
         <div
-          className="absolute bottom-0 left-0 right-0 px-4 py-3 flex items-center gap-2"
+          className="relative shrink-0 px-4 py-3 flex items-center gap-2"
           style={{
             backgroundColor: donationBgColor,
             color: donationTextColor,
-            height: '12%',
           }}
         >
           <Heart className="w-4 h-4 flex-shrink-0" strokeWidth={1.5} />
@@ -370,7 +354,7 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
 
   if (bare) {
     return (
-      <div className={`cotton-deckle relative w-full aspect-[3/5] overflow-hidden ${className}`} role="img" aria-label="Live card preview">
+      <div className={`live-card-frame cotton-deckle relative w-full overflow-hidden ${className}`} role="img" aria-label="Live card preview">
         {cardFace}
       </div>
     );
@@ -383,7 +367,7 @@ export const LiveCardPreview: React.FC<LiveCardPreviewProps> = ({
       {stamp}
       <div className="suite-card cotton-shadow">
         <div
-          className={`cotton-deckle relative w-full aspect-[3/5] overflow-hidden ${className}`}
+          className={`live-card-frame cotton-deckle relative w-full overflow-hidden ${className}`}
           role="img"
           aria-label="Live card preview"
         >
