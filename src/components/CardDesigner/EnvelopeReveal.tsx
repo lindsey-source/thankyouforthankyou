@@ -43,7 +43,7 @@ export const EnvelopeReveal: React.FC<EnvelopeRevealProps> = ({
   };
 
   return (
-    <div className="flex flex-col items-center pt-28">
+    <div className="flex w-full min-w-0 flex-col items-center pt-28">
       <AnimatePresence mode="wait">
         {!revealed ? (
           <motion.div
@@ -187,7 +187,7 @@ export const EnvelopeReveal: React.FC<EnvelopeRevealProps> = ({
             initial={{ opacity: 0, scale: 0.92, y: -10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-            className="w-[300px] sm:w-[340px]"
+            className="w-full max-w-[480px]"
           >
             <div className="style-suite linen-surface">
               <SuiteEnvelope designId={designId} colorId={colorId} color={envelopeColor} />
