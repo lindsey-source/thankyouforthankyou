@@ -1,9 +1,7 @@
 /**
  * Shared card typography.
  *
- * The script face is for headlines and the handwritten sign-off only — body copy
- * always stays on the readable body face, so a script choice never turns the
- * whole message into script.
+ * The selected face applies to both the headline and the card message.
  */
 export const SCRIPT_FONT = "'Satisfy', cursive";
 export const SERIF_FONT = "'Playfair Display', Georgia, serif";
@@ -15,10 +13,10 @@ export interface CardFonts {
   body: string;
 }
 
-/** Heading face follows the chosen style; body copy never does. */
-export const fontsFor = (choice?: string | null): CardFonts => ({
-  heading: choice === 'dancing' ? SCRIPT_FONT : choice === 'inter' ? SANS_FONT : SERIF_FONT,
-  body: BODY_FONT,
-});
+/** Keep heading and message typography aligned across all previews. */
+export const fontsFor = (choice?: string | null): CardFonts => {
+  const face = choice === 'dancing' ? SCRIPT_FONT : choice === 'inter' ? SANS_FONT : SERIF_FONT;
+  return { heading: face, body: face };
+};
 
 export default fontsFor;
