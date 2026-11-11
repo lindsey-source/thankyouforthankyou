@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Design, FontFamily, HeaderStyle } from './designTypes';
-import peonyCorner from '@/assets/watercolor-peony-corner.png';
+import peonyArrangement from '@/assets/watercolor-peony-arrangement.png';
 import marbleGold from '@/assets/wedding-marble-gold.jpg';
 import { BabyHeaderArt } from './BabyHeaderArt';
 import { babyStyleFor } from './babyStyles';
@@ -187,7 +187,7 @@ const HeaderArtInner: React.FC<HeaderArtProps> = ({
     );
   }
 
-  // Rose Garden: cream paper, watercolor blush peonies spilling from the top-left corner.
+  // Rose Garden: an airy horizontal watercolor spray above centered wedding text.
   if (headerStyle === 'roseStem' && !photoUrl) {
     const GOLD = '#c9a96e';
     return (
@@ -196,11 +196,11 @@ const HeaderArtInner: React.FC<HeaderArtProps> = ({
         style={{ height, background: headerBg }}
       >
         <img
-          src={peonyCorner}
+          src={peonyArrangement}
           alt=""
           loading="lazy"
-          width={1024}
-          height={1024}
+          width={1200}
+          height={600}
           className="wedding-peony-art pointer-events-none select-none"
           aria-hidden="true"
         />
